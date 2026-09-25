@@ -72,68 +72,70 @@
 
         <!-- Középső fő terület, immár teljesen középre igazítva -->
         <!-- Középső fő terület, a függőleges vágás javítva -->
+<!-- Középső fő terület -->
 <main class="flex-1 bg-[#f0f2f5] relative w-full p-6 overflow-y-auto">
     
-    <!-- Projektterv Dokumentum Nézet (mx-auto a vízszintes középre igazításhoz) -->
-    <div class="bg-white p-8 md:p-16 w-full max-w-4xl mx-auto shadow-sm border border-gray-300 font-serif text-black">
+    <!-- Projektterv Dokumentum Nézet (Kisebb betűméretekkel és arányosabb margókkal) -->
+    <div class="bg-white p-8 md:p-12 w-full max-w-4xl mx-auto shadow-sm border border-gray-300 font-serif text-black">
         
-        <h1 class="text-4xl md:text-5xl font-bold mb-10 tracking-wider">PROJEKTTERV</h1>
+        <!-- Cím mérete csökkentve -->
+        <h1 class="text-3xl md:text-4xl font-bold mb-8 tracking-wider">PROJEKTTERV</h1>
         
         <!-- Csoport és feladat adatok -->
-        <div class="mb-10 text-xl md:text-2xl space-y-4">
+        <div class="mb-8 text-lg md:text-xl space-y-3">
             <p>Csoport neve: ME-nthetetlenek</p>
             <p>Feladat sorszáma: 19</p>
             <p class="leading-relaxed">Feladat címe: Az uni-app jelenlegi funkcióinak gyakorlatiasabb átdolgozása</p>
         </div>
         
-        <div class="mb-8">
-            <p class="text-lg">Gyakorlatvezető:</p>
-            <p class="text-2xl md:text-3xl mt-1 uppercase">TOMPA TAMÁS</p>
+        <div class="mb-6">
+            <p class="text-base">Gyakorlatvezető:</p>
+            <p class="text-xl md:text-2xl mt-1 uppercase">TOMPA TAMÁS</p>
         </div>
 
-        <div class="mb-4">
-            <p class="text-xl md:text-2xl">Csoporttagok:</p>
+        <div class="mb-3">
+            <p class="text-lg md:text-xl">Csoporttagok:</p>
         </div>
 
-        <!-- Táblázat dupla külső szegéllyel szimulálva -->
+        <!-- Táblázat kisebb betűkkel és finomított belső cellatávolságokkal -->
         <div class="overflow-x-auto border-[3px] border-black p-[2px]">
-            <table class="w-full border-collapse border border-black text-base md:text-lg break-words">
+            <table class="w-full border-collapse border border-black text-sm md:text-base break-words">
                 <tbody>
                     <tr class="border-b border-black">
-                        <td class="border-r border-black p-3 w-2/5">Csoportvezető: Dávid Gergő</td>
-                        <td class="border-r border-black p-3 w-1/5">G2-BP1</td>
-                        <td class="p-3 w-2/5">gergo.david@student.uni-miskolc.hu</td>
+                        <td class="border-r border-black p-2 md:p-3 w-2/5">Csoportvezető: Dávid Gergő</td>
+                        <td class="border-r border-black p-2 md:p-3 w-1/5">G2-BP1</td>
+                        <td class="p-2 md:p-3 w-2/5">gergo.david@student.uni-miskolc.hu</td>
                     </tr>
                     <tr class="border-b border-black">
-                        <td class="border-r border-black p-3">Győri Kristóf</td>
-                        <td class="border-r border-black p-3">G2-BP1</td>
-                        <td class="p-3">kristof.gyori@student.uni-miskolc.hu</td>
+                        <td class="border-r border-black p-2 md:p-3">Győri Kristóf</td>
+                        <td class="border-r border-black p-2 md:p-3">G2-BP1</td>
+                        <td class="p-2 md:p-3">kristof.gyori@student.uni-miskolc.hu</td>
                     </tr>
                     <tr class="border-b border-black">
-                        <td class="border-r border-black p-3">Maklári Máté</td>
-                        <td class="border-r border-black p-3">GE-BGI</td>
-                        <td class="p-3">mate.mate.165@gmail.com</td>
+                        <td class="border-r border-black p-2 md:p-3">Maklári Máté</td>
+                        <td class="border-r border-black p-2 md:p-3">GE-BGI</td>
+                        <td class="p-2 md:p-3">mate.mate.165@gmail.com</td>
                     </tr>
                     <tr class="border-b border-black">
-                        <td class="border-r border-black p-3">Dávid Gergő</td>
-                        <td class="border-r border-black p-3">G2-BP1</td>
-                        <td class="p-3">gergo.david@student.uni-miskolc.hu</td>
+                        <td class="border-r border-black p-2 md:p-3">Dávid Gergő</td>
+                        <td class="border-r border-black p-2 md:p-3">G2-BP1</td>
+                        <td class="p-2 md:p-3">gergo.david@student.uni-miskolc.hu</td>
                     </tr>
                     <tr class="border-b border-black">
-                        <td class="border-r border-black p-3">Balázs Csenge Málna</td>
-                        <td class="border-r border-black p-3">GE-BGI</td>
-                        <td class="p-3">csenge.balazs.malna@student.uni-miskolc.hu</td>
+                        <td class="border-r border-black p-2 md:p-3">Balázs Csenge Málna</td>
+                        <td class="border-r border-black p-2 md:p-3">GE-BGI</td>
+                        <td class="p-2 md:p-3">csenge.balazs.malna@student.uni-miskolc.hu</td>
                     </tr>
                     <tr>
-                        <td class="border-r border-black p-3">Nagy Virág</td>
-                        <td class="border-r border-black p-3">GE-BGI</td>
-                        <td class="p-3">virag.nagy@student.uni-miskolc.hu</td>
+                        <td class="border-r border-black p-2 md:p-3">Nagy Virág</td>
+                        <td class="border-r border-black p-2 md:p-3">GE-BGI</td>
+                        <td class="p-2 md:p-3">virag.nagy@student.uni-miskolc.hu</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="mt-12 text-lg">
+        <div class="mt-10 text-base">
             <p>Beadás dátuma: <strong>2026.09.25</strong></p>
         </div>
 
