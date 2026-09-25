@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H1 beadandó - Vezérlőpult</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Közös CSS fájl csatolása -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Sima gördülés az oldalon belüli linkekhez (pl. tartalomjegyzék) */
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden font-sans bg-gray-100">
+
+    <!-- 1. FELSŐ SÁV -->
+    <header class="bg-topbar text-white h-[60px] flex items-center justify-between w-full z-40 px-4 md:px-0 relative">
+        <div class="flex items-center h-full">
+            <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white mr-4 transition">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <div class="md:w-64 h-full flex flex-col justify-center md:px-4 shrink-0">
+                <a href="index.html" class="leading-none select-none block text-white hover:text-gray-200">
+                    <span class="block font-semibold text-[17px] tracking-wide">MISKOLCI</span>
+                    <span class="block font-semibold text-[17px] tracking-wide mt-[2px]">EGYETEM</span>
+                    <span class="block text-[8px] tracking-widest text-gray-400 mt-1">UNIVERSITY OF MISKOLC</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex-1 flex items-center justify-end px-4"></div>
+    </header>
+
+    <div class="h-[2px] w-full flex shrink-0 z-20">
+        <div class="w-1/3 bg-red-600"></div>
+        <div class="w-1/3 bg-white"></div>
+        <div class="w-1/3 bg-green-600"></div>
+    </div>
+
+    <!-- 2. ALSÓ RÉSZ (Menü és Tartalom) -->
+    <div class="flex flex-1 overflow-hidden relative">
+        
+        <!-- Bal menü oszlop -->
+        <aside id="sidebar" class="hidden md:block w-full md:w-64 bg-sidebar shrink-0 relative shadow-[inset_-2px_0_5px_rgba(0,0,0,0.1)] transition-all duration-300 overflow-y-auto z-30">
+            <nav class="flex flex-col py-4 text-gray-200 text-sm font-medium">
+                <a href="index.html" class="menu-item">
+                    <i class="fas fa-home w-5 text-center"></i>
+                    <span>Főoldal</span>
+                </a>
+                <div class="border-b border-[rgba(255,255,255,0.1)] mx-4 my-2"></div>
+                <a href="h1.html" class="menu-item border-l-4 border-blue-400 bg-[#16487a] text-white">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H1 beadandó</span>
+                </a>
+                <a href="h2.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H2 beadandó</span>
+                </a>
+                <a href="h3.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H3 beadandó</span>
+                </a>
+                <a href="h4.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H4 beadandó</span>
+                </a>
+                <a href="h5.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H5 beadandó</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Középső fő terület -->
+        <main class="flex-1 bg-[#f0f2f5] relative w-full p-4 md:p-6 overflow-y-auto">
+            
+            <!-- H1 DOKUMENTUM NÉZET -->
+            <div class="bg-white p-6 md:p-12 w-full max-w-4xl mx-auto shadow-sm border border-gray-300 font-serif text-black leading-relaxed">
+                
+                <h1 id="tortenet" class="text-2xl md:text-3xl font-bold mb-4 mt-0 text-gray-900">Történet</h1>
+                
+                <div class="overflow-x-auto mb-10">
+                    <table class="w-full border-collapse border border-gray-400 text-sm md:text-base">
+                        <thead class="bg-gray-100 text-left">
+                            <tr>
+                                <th class="border border-gray-400 p-2 md:p-3">Dátum</th>
+                                <th class="border border-gray-400 p-2 md:p-3">Verzió</th>
+                                <th class="border border-gray-400 p-2 md:p-3">Leírás</th>
+                                <th class="border border-gray-400 p-2 md:p-3">Szerző</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-gray-400 p-2 md:p-3">2026. 09. 25.</td>
+                                <td class="border border-gray-400 p-2 md:p-3">0.9</td>
+                                <td class="border border-gray-400 p-2 md:p-3">H1-projektterv munkaváltozata</td>
+                                <td class="border border-gray-400 p-2 md:p-3">ME-nthetetlenek</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h1 class="text-2xl md:text-3xl font-bold mb-4 text-gray-900">Tartalomjegyzék</h1>
+                <ol class="list-decimal list-inside bg-gray-50 border border-gray-300 p-5 mb-10 space-y-2">
+                    <li><a href="#s1" class="text-[#174777] underline underline-offset-2 hover:text-blue-800">Csoport tagjai, struktúrája</a></li>
+                    <li><a href="#s2" class="text-[#174777] underline underline-offset-2 hover:text-blue-800">Fejlesztési terv: mérföldkövek, eredmények</a></li>
+                    <li><a href="#s3" class="text-[#174777] underline underline-offset-2 hover:text-blue-800">Programozói nyelvek, fejlesztő eszközök</a></li>
+                    <li><a href="#s4" class="text-[#174777] underline underline-offset-2 hover:text-blue-800">Használni tervezett eszközök, technikák</a></li>
+                    <li><a href="#s5" class="text-[#174777] underline underline-offset-2 hover:text-blue-800">Leendő produktumok és létrejöttük ideje</a></li>
+                    <li><a href="#s6" class="text-[#174777] underline underline-offset-2 hover:text-blue-800">Tesztelési követelmények</a></li>
+                    <li><a href="#s7" class="text-[#174777] underline underline-offset-2 hover:text-blue-800">Bemutatás és szállítás módja, ideje</a></li>
+                    <li><a href="#s8" class="text-[#174777] underline underline-offset-2 hover:text-blue-800">Információforrások</a></li>
+                </ol>
+
+                <h1 id="s1" class="text-2xl md:text-3xl font-bold mt-10 mb-4 text-gray-900 pt-4">1. Csoport tagjai, struktúrája</h1>
+                <p class="mb-4">A csapat összesen öt tagból áll. Az alábbi feladatoknál csak a korábban egyeztetett szerepeket tüntetjük fel.</p>
+                <div class="overflow-x-auto mb-8">
+                    <table class="w-full border-collapse border border-gray-400 text-sm md:text-base">
+                        <thead class="bg-gray-100 text-left">
+                            <tr>
+                                <th class="border border-gray-400 p-2 md:p-3">Csoporttag</th>
+                                <th class="border border-gray-400 p-2 md:p-3">Feladat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-gray-400 p-2 md:p-3">Dávid Gergő</td>
+                                <td class="border border-gray-400 p-2 md:p-3">Csoportvezető; Backend fejlesztés</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-400 p-2 md:p-3">Maklári Máté</td>
+                                <td class="border border-gray-400 p-2 md:p-3">Backend fejlesztés</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-400 p-2 md:p-3">Győri Kristóf</td>
+                                <td class="border border-gray-400 p-2 md:p-3">Projektötletek és a dokumentáció kidolgozása.</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-400 p-2 md:p-3">Balázs Csenge Málna</td>
+                                <td class="border border-gray-400 p-2 md:p-3">Megjelenés, vizuális tervek és frontend.</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-400 p-2 md:p-3">Nagy Virág</td>
+                                <td class="border border-gray-400 p-2 md:p-3">Megjelenés, vizuális tervek és frontend.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h1 id="s2" class="text-2xl md:text-3xl font-bold mt-10 mb-4 text-gray-900 pt-4">2. Fejlesztési terv: mérföldkövek, eredmények</h1>
+                <p class="mb-4"> Ez <strong>ötletlista</strong>, nem megvalósítási ígéret vagy végleges időrend.</p>
+                <ul class="list-disc list-inside mb-4 space-y-1 ml-4">
+                    <li>Bejelentkezési rendszer Neptun-/Microsoft-belépéssel, valamint tanári és adminisztrátori hozzáféréssel.</li>
+                    <li>Meglévő belső funkciók beépítése vagy átdolgozása.</li>
+                    <li>Campustérkép létrehozása.</li>
+                    <li>Szűrhető eseménynaptár.</li>
+                    <li>Hírek menüpont.</li>
+                    <li>„Unikredit” ötlete: egyetemi területen egyszerűbb fizetés, például fizetőóránál.</li>
+                    <li>Parkolóhelykereső kamerák, zónák és szabadhely-jelzések ötletével.</li>
+                    <li>MVK-menetrend megjelenítése.</li>
+                    <li>Oktatói információkat tartalmazó adatbázis.</li>
+                    <li>Lidl-akciók menüpontja.</li>
+                    <li>Menzával kapcsolatos információk.</li>
+                    <li>„Egyetemi Waze”: hibabejelentő felület.</li>
+                    <li>Ügyintézési időpontfoglalás.</li>
+                </ul>
+
+                <h1 id="s3" class="text-2xl md:text-3xl font-bold mt-10 mb-4 text-gray-900 pt-4">3. Programozói nyelvek, fejlesztő eszközök</h1>
+                <p class="mb-4">A csoport ötletgyűjtésében az alábbi technológiák és eszközök merültek fel; a végleges technológiai választás még nem történt meg.</p>
+                <div class="overflow-x-auto mb-8">
+                    <table class="w-full border-collapse border border-gray-400 text-sm md:text-base">
+                        <thead class="bg-gray-100 text-left">
+                            <tr>
+                                <th class="border border-gray-400 p-2 md:p-3">Kategória</th>
+                                <th class="border border-gray-400 p-2 md:p-3">Felmerült elemek</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-gray-400 p-2 md:p-3">Programozási és leíró nyelvek</td>
+                                <td class="border border-gray-400 p-2 md:p-3">HTML, JavaScript, C++, SQL</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-400 p-2 md:p-3">Fejlesztőeszközök</td>
+                                <td class="border border-gray-400 p-2 md:p-3">Visual Studio Code, MySQL, Android Studio, Xcode (iOS), PowerShell</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-400 p-2 md:p-3">Belépéshez kapcsolódó ötletek</td>
+                                <td class="border border-gray-400 p-2 md:p-3">API-kulcsok, Microsoft Authenticator</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h1 id="s4" class="text-2xl md:text-3xl font-bold mt-10 mb-4 text-gray-900 pt-4">4. Használni tervezett eszközök, technikák</h1>
+                <p class="mb-4">A funkciók fejlesztéséhez az alábbiakra lesz szükség: <div></div> számítógép, Linux-szerver, telefon, domain-szolgáltató és IoT-eszközök (Arduino/ESP32 szenzorokhoz) szerepelnek. <div></div>Ezek tervezett lehetőségek,így ez a lista még bővülhet, nincs végleges döntés.</p>
+
+                <h1 id="s5" class="text-2xl md:text-3xl font-bold mt-10 mb-4 text-gray-900 pt-4">5. Leendő produktumok és létrejöttük ideje</h1>
+                <p class="mb-2">A félév során az alábbi mérföldkövek mentén adjuk le a projekt dokumentációit és prezentáljuk az eredményeket az ütemterv alapján:</p>
+                <ul class="list-disc list-inside mb-4 space-y-2 ml-4">
+                    <li><strong>3. oktatási hét (H1 határidő):</strong> A hallgatói feladatok prezentációja, a projektterv véglegesítése.</li>
+                    <li><strong>6. oktatási hét (H2 határidő):</strong> A Vízió dokumentum elkészítése és prezentációja.</li>
+                    <li><strong>8. oktatási hét (H3 határidő):</strong> Az SRS (Szoftverkövetelmény-specifikáció) dokumentum elkészítése és prezentációja.</li>
+                    <li><strong>11. oktatási hét (H4 határidő):</strong> A szoftverhez tartozó tervezési munkák bemutatása.</li>
+                    <li><strong>12. oktatási héttől:</strong> Részletes tervezési és implementációs munkák, az egyéni beszámolók írása, valamint a végső prezentáció elkészítése.</li>
+                </ul>
+                <h1 id="s6" class="text-2xl md:text-3xl font-bold mt-10 mb-4 text-gray-900 pt-4">6. Tesztelési követelmények</h1>
+                <p class="mb-2">Az ötletgyűjtésben felmerült ellenőrzési szempontok:</p>
+                <ul class="list-disc list-inside mb-8 space-y-1 ml-4">
+                    <li>A felület használhatósága számítógépen, Androidon és iOS-en.</li>
+                    <li>Ha a parkolási ötlet megvalósul: az autók felismerése és a parkolóhelyek megfelelő kezelése.</li>
+                    <li>Felhasználóbarát működés. </li>
+                </ul>
+
+                <h1 id="s7" class="text-2xl md:text-3xl font-bold mt-10 mb-4 text-gray-900 pt-4">7. Bemutatás (demó) és szállítás módja, ideje</h1>
+                <p class="mb-4">A projekt bemutatása és átadása a tantárgyi követelményekkel összhangban, több szakaszban történik:</p>
+                <ul class="list-disc list-inside mb-8 space-y-2 ml-4">
+                    <li><strong>Bemutatás (demó) módja és ideje:</strong> Rendszeres szóbeli prezentációkat tartunk a gyakorlati órákon az ütemtervben meghatározott mérföldköveknél (a 3., 6., 8. és 11. oktatási heteken). A kész szoftver funkcióinak végső bemutatása a félév végén történik.</li>
+                    <li><strong>Szállítás módja:</strong> A projekt során elkészült dokumentációkat (Vízió, SRS, tervezési dokumentumok) webes felületen (HTML formátumban) és a tanszéki követelményeknek megfelelő formában nyújtjuk be.</li>
+                    <li><strong>Belső fejlesztési ütem:</strong> A csapat a belső feladatmegosztás során átlagosan 2 hét/funkció fejlesztési idővel számol, hogy a félév végi végső prezentációra a szoftver demózható állapotba kerüljön.</li>
+                </ul>
+                <h1 id="s8" class="text-2xl md:text-3xl font-bold mt-10 mb-4 text-gray-900 pt-4">8. Információforrások</h1>
+                <p class="mb-4">A projekt tervezése és megvalósítása során az alábbi információforrásokra és hivatalos dokumentációkra támaszkodunk:</p>
+                <ul class="list-disc list-inside mb-8 space-y-2 ml-4">
+                    <li><strong>Egyetemi specifikus források:</strong> A Miskolci Egyetem hivatalos weboldala (www.uni-miskolc.hu) és a jelenlegi Uni-App rendszere, amelyek alapul szolgálnak a meglévő funkciók (térkép, hírfolyam, menetrend) továbbfejlesztéséhez és átdolgozásához.</li>
+                    <li><strong>Tantárgyi segédanyagok:</strong> A Szoftvertechnológia tantárgy hivatalos követelményrendszere, ütemterve, valamint a H1 szerkezetéhez használt tárgyi minták (<a href="https://users.iit.uni-miskolc.hu/~mileff/szt/Projektterv.html" class="text-[#174777] underline underline-offset-2 hover:text-blue-800">Projektterv minta</a>, <a href="https://users.iit.uni-miskolc.hu/~mileff/szt/dokformat.html" class="text-[#174777] underline underline-offset-2 hover:text-blue-800">dokumentumformátum</a>).</li>
+                    <li><strong>Fejlesztői dokumentációk:</strong> A kiválasztott keretrendszerek és technológiák hivatalos leírásai (Tailwind CSS a reszponzív megjelenéshez, MDN Web Docs a HTML/JS kódoláshoz, valamint a Visual Studio Code, MySQL és Android Studio útmutatói).</li>
+                    <li><strong>Mesterséges intelligencia (AI):</strong> Generatív nyelvi modellek (LLM) használata asszisztensként a frontend dizájn kialakításához, a projektterv webre történő strukturálásához, valamint a reszponzív kódolási feladatok felgyorsításához.</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <!-- Közös JS fájl csatolása a menü működéséhez -->
+    <script src="script.js"></script>
+</body>
+</html>
