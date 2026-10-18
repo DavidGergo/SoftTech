@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>H2 beadandó - Vezérlőpult</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #1f2933; max-width: 960px; margin: 0 auto; padding: 0 1rem 3rem; }
+    header { border-bottom: 2px solid #1f2933; padding: 1rem 0; margin-bottom: 1rem; }
+    header a { color: #1f2933; font-weight: 600; text-decoration: none; }
+    nav { margin-bottom: 2rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    nav a { padding: 0.35rem 0.7rem; border: 1px solid #cbd2d9; border-radius: 4px; color: #1f2933; text-decoration: none; font-size: 0.95rem; }
+    nav a.active { background: #1f2933; color: #fff; }
+    h1 { font-size: 1.9rem; margin-top: 0; }
+    h2 { font-size: 1.4rem; margin-top: 2.2rem; border-bottom: 1px solid #e4e7eb; padding-bottom: 0.25rem; }
+    h3 { font-size: 1.1rem; margin-top: 1.4rem; }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 0.95rem; }
+    th, td { border: 1px solid #cbd2d9; padding: 0.5rem 0.6rem; text-align: left; vertical-align: top; }
+    th { background: #f0f4f8; }
+    .note { background: #f0f4f8; border-left: 4px solid #3e4c59; padding: 0.6rem 0.9rem; margin: 1rem 0; }
+    footer { margin-top: 3rem; border-top: 1px solid #cbd2d9; padding-top: 1rem; font-size: 0.9rem; color: #52606d; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="https://davidgergo.github.io/SoftTech/index.html">MISKOLCI EGYETEM · UNIVERSITY OF MISKOLC</a>
+</header>
+
+<nav>
+  <a href="https://davidgergo.github.io/SoftTech/index.html">Főoldal</a>
+  <a href="https://davidgergo.github.io/SoftTech/h1.html">H1 beadandó</a>
+  <a href="https://davidgergo.github.io/SoftTech/h2.html" class="active">H2 beadandó</a>
+  <a href="https://davidgergo.github.io/SoftTech/h3.html">H3 beadandó</a>
+  <a href="https://davidgergo.github.io/SoftTech/h4.html">H4 beadandó</a>
+  <a href="https://davidgergo.github.io/SoftTech/h5.html">H5 beadandó</a>
+</nav>
+
+<main>
+
+<h1>H2 – Vízió dokumentum</h1>
+<p>Csoport: ME-nthetetlenek · Dátum: 2026. 10. 13. · Verzió: 0.1</p>
+
+<h2 id="tortenet">Történet</h2>
+<table>
+  <thead><tr><th>Dátum</th><th>Verzió</th><th>Leírás</th><th>Szerző</th></tr></thead>
+  <tbody><tr><td>2026. 10. 13.</td><td>0.1</td><td>H2 vízió dokumentum első vázlata</td><td>ME-nthetetlenek</td></tr></tbody>
+</table>
+
+<h2>Tartalomjegyzék</h2>
+<ol>
+  <li><a href="#s1">Bevezetés</a></li>
+  <li><a href="#s2">Az alkalmazás helye</a></li>
+  <li><a href="#s3">Érintettek és felhasználók</a></li>
+  <li><a href="#s4">A végtermék áttekintése</a></li>
+  <li><a href="#s5">A végtermék jellemzői, biztosított szolgáltatások</a></li>
+  <li><a href="#s6">Korlátozások</a></li>
+  <li><a href="#s7">Minőségi elvárások</a></li>
+  <li><a href="#s8">Dokumentációval kapcsolatos követelmények</a></li>
+  <li><a href="#s9">Kockázatlista</a></li>
+  <li><a href="#s10">Szótár</a></li>
+</ol>
+
+<h2 id="s1">1. Bevezetés</h2>
+<p>A termék egy egységes felület a Miskolci Egyetem hallgatóinak, oktatóinak és munkatársainak. Egy helyen mutatja meg azokat az információkat, amelyekhez ma több külön rendszeren keresztül lehet eljutni.</p>
+<p>Munkanév: <strong>Vezérlőpult</strong>. A végleges nevet a csapat később dönti el.</p>
+
+<h3>1.1 A dokumentum célja</h3>
+<p>Ez a vízió dokumentum a projekt legfontosabb kiindulópontja. Rögzíti, hogy a csapat mit akar megvalósítani, kiknek, miért, és milyen kereteken belül. Későbbi dokumentumok, az SRS és a tervezési anyagok, erre a leírásra épülnek.</p>
+
+<h3>1.2 Az előzmények</h3>
+<p>A projekt ötlete a H1 projektterv ötletgyűjtéséből született. A gyűjtés során több ötlet került elő: bejelentkezési rendszer, campustérkép, eseménynaptár, hírek, menza-információk, menetrend, oktatói adatbázis, parkolóhelykereső, egyetemi fizetés és hibabejelentő felület.</p>
+
+<h3>1.3 A dokumentum felépítése</h3>
+<p>A dokumentum tíz fejezetből áll. Az első három a problémát és a felhasználókat írja le. A negyedik és ötödik fejezet a terméket mutatja be. A hatodik és hetedik a korlátozásokat és a minőségi elvárásokat rögzíti. A nyolcadik a dokumentációs követelményeket, a kilencedik a kockázatokat, a tizedik a szakkifejezéseket tartalmazza.</p>
+
+<h2 id="s2">2. Az alkalmazás helye</h2>
+<p>Ennek a fejezetnek a célja, hogy a termék által megoldott probléma helyet kapjon a környezetében.</p>
+
+<h3>2.1 Üzleti lehetőségek</h3>
+<p>A termék a hallgatói élményt javítja: ugyanazok az információk egy helyen érhetők el, nem három külön oldalon. Az egyetem számára ez kevesebb ügyintézési kérdést és jobb eligazodást jelent.</p>
+
+<h3>2.2 A probléma megfogalmazása</h3>
+<p>Az egyetemen az információk szétszórtak. Egy új hallgató nem tudja, hol van az épület, mikor kezdődik az esemény, vagy hol kell ügyet intézni.</p>
+
+<h3>2.3 Az elkészült termék helye</h3>
+<p>A terméket a Miskolci Egyetem hallgatóinak és munkatársainak készítjük. Első lépésben webes alkalmazás, később mobilalkalmazás is lehet belőle.</p>
+<table>
+  <thead><tr><th>Megoldás</th><th>Előny</th><th>Hátrány</th></tr></thead>
+  <tbody>
+    <tr><td>Egyetemi honlap (uni-miskolc.hu)</td><td>Hivatalos, megbízható</td><td>Nincs egységes felület, a funkciók szétszórtak</td></tr>
+    <tr><td>Uni-App (jelenlegi)</td><td>Több funkciót egyesít</td><td>Átdolgozásra szorul, a felülete nem gyakorlatias</td></tr>
+    <tr><td>Neptun</td><td>Tanulmányi adatok, hivatalos</td><td>Nem a campus-információkat és a hírek egyesítését szolgálja</td></tr>
+    <tr><td><strong>Vezérlőpult (mi)</strong></td><td>Egy felület, a funkciók együtt</td><td>Új fejlesztés, a működés még nem bizonyított</td></tr>
+  </tbody>
+</table>
+
+<h3>2.4 A probléma részletes leírása</h3>
+<p>Egy elsőéves hallgató az első héten több helyen keres választ: a honlapon az órarendet és a tanulmányi szabályzatot, a Neptunban a kurzusfelvételt, az Uni-Appban a térképet és a menzát, a közösségi oldalakon az eseményeket. Az információk hasznosak lennének, de különböző helyeken, különböző formában vannak. Ez időt visz el, és sokszor hibás döntéshez vezet.</p>
+<ul>
+  <li>Az információk szétszórtak, és nincs közös kereső.</li>
+  <li>Az Uni-App funkciói egymástól elszigeteltek.</li>
+  <li>Az új hallgatók és a látogatók nem találják meg a fontos helyeket és időpontokat.</li>
+  <li>Az oktatók elérhetősége és fogadóideje nehezen követhető.</li>
+  <li>Az ügyintézési időpontfoglalás nincs egy helyen, a hibabejelentések nem jutnak el az illetékesekhez.</li>
+</ul>
+
+<h3>2.5 A siker mérése</h3>
+<ul>
+  <li>A felhasználók egy percen belül megtalálják a keresett információt.</li>
+  <li>A legfontosabb funkciókat a félév végi bemutatóra mindegyik csapattag be tudja mutatni.</li>
+  <li>A tesztelők legalább öt különböző szerepkörből adnak visszajelzést, és ezek többsége pozitív.</li>
+  <li>Az egyetem munkatársai szerint csökken a hasonló kérdések száma.</li>
+</ul>
+
+<h2 id="s3">3. Érintettek és felhasználók</h2>
+
+<h3>3.1 Az érintettek összefoglalása</h3>
+<table>
+  <thead><tr><th>Elnevezés</th><th>Leírás</th><th>Szerep a fejlesztésben</th></tr></thead>
+  <tbody>
+    <tr><td>Egyetemi vezetés</td><td>Dönt a termék egyetemi használatáról</td><td>Jóváhagyja a működést és az adatkezelést</td></tr>
+    <tr><td>Tanszék, gyakorlatvezető</td><td>Értékeli a projektet és a tantárgyi követelményeket</td><td>Visszajelzést és elfogadást ad</td></tr>
+    <tr><td>Egyetemi informatika</td><td>Üzemelteti a belépési és adatforrási rendszereket</td><td>Engedélyezi a Neptun/Microsoft-belépést és az adatelérést</td></tr>
+  </tbody>
+</table>
+
+<h3>3.2 A felhasználók összefoglalása</h3>
+<table>
+  <thead><tr><th>Elnevezés</th><th>Leírás</th><th>Illetékes</th></tr></thead>
+  <tbody>
+    <tr><td>Hallgató</td><td>Keresi az órákat, az eseményeket és az ügyintézést</td><td>Csapat</td></tr>
+    <tr><td>Oktató</td><td>Megnézi az elérhetőségeket és a fogadóórákat</td><td>Csapat</td></tr>
+    <tr><td>Adminisztráció</td><td>Frissíti az információkat és az időpontfoglalást</td><td>Csapat (később egyeztetve)</td></tr>
+    <tr><td>Látogató, új hallgató</td><td>Eligazodik a campuson</td><td>Csapat</td></tr>
+  </tbody>
+</table>
+
+<h3>3.3 Felhasználói környezet</h3>
+<ul>
+  <li>Platform: elsősorban webböngésző, később mobilalkalmazás (Android, iOS).</li>
+  <li>Egyidejű felhasználók: kb. 500 fő.</li>
+  <li>Használati idő: rövid, alkalmi látogatások.</li>
+  <li>Integrációk: Neptun/Microsoft-belépés, menza- és menetrendadatok, esetleg campustérkép.</li>
+</ul>
+
+<h3>3.4 Illetékesek adatai</h3>
+<p>A csapat tagjai és elérhetőségeik a főoldalon találhatók.</p>
+
+<h3>3.5 Felhasználók adatai</h3>
+<p>A felhasználók adatait a termék nem gyűjti, kivéve a belépéshez szükséges azonosítókat.</p>
+
+<h3>3.6 Felhasználói szerepek részletesen</h3>
+<p><strong>Hallgató.</strong> Az órarendet, a campustérképet, az eseménynaptárt és a menzát látja. Hibát jelenthet, és időpontot foglalhat az ügyintézésre.</p>
+<p><strong>Oktató.</strong> Az oktatói adatbázisban a saját elérhetőségét és fogadóóráit szerkesztheti. Látja a tanszékéhez tartozó hibabejelentéseket.</p>
+<p><strong>Adminisztrátor.</strong> A híreket, az eseményeket és a menza-információkat karbantartja. Kezeli az ügyintézési időpontokat és válaszol a hibabejelentésekre. Csak az egyetem által kijelölt személyek kaphatják meg.</p>
+<p><strong>Látogató.</strong> Belépés nélkül használható, csak a nyilvános információkat látja: térkép, események, hírek, menza.</p>
+
+<h3>3.7 Használati forgatókönyvek</h3>
+<ul>
+  <li><strong>Első nap, új hallgató.</strong> Megnézi a térképen az első előadás épületét, és az eseménynaptárban a tájékoztató napot. Belépés nélkül is elvégzi ezeket.</li>
+  <li><strong>Fogadóóra-változás.</strong> Egy oktató módosítja a fogadóóráját, és a változás azonnal látszik a hallgatóknál.</li>
+  <li><strong>Hibabejelentés.</strong> Egy hallgató jelzi, hogy egy lámpa nem működik a könyvtárban. A bejelentés az illetékes adminisztrátorhoz kerül.</li>
+</ul>
+
+<h2 id="s4">4. A végtermék áttekintése</h2>
+
+<h3>4.1 A termék kapcsolatai</h3>
+<p>A termék önálló webes felület. Adatokat olvas külső forrásokból (egyetemi honlap, menza, menetrend). A belépést, ha megvalósul, a Neptun vagy a Microsoft fiók adja.</p>
+
+<h3>4.2 A termék használatának előnyei</h3>
+<table>
+  <thead><tr><th>A megrendelő haszna</th><th>A támogató jellemző</th></tr></thead>
+  <tbody>
+    <tr><td>Egy helyen érhetők el az információk</td><td>Egységes felület, közös kereső</td></tr>
+    <tr><td>Gyorsabb eligazodás új hallgatóknak</td><td>Campustérkép és eseménynaptár</td></tr>
+    <tr><td>Kevesebb ügyintézési kérdés</td><td>Közérthető, egy oldalas szerkezet</td></tr>
+  </tbody>
+</table>
+
+<h3>4.3 Feltételezések és függőségek</h3>
+<ul>
+  <li>Az egyetemi honlap és a menza adatai elérhetők, és nem változnak nagyon gyakran.</li>
+  <li>A Neptun/Microsoft-belépéshez az egyetem engedélye szükséges.</li>
+  <li>A csapat hetente legalább 8–10 órát tud a projektre fordítani.</li>
+</ul>
+
+<h3>4.4 Költségbecslés (becslés, nem végleges)</h3>
+<table>
+  <thead><tr><th>Tétel</th><th>Hallgatói változat</th><th>Cégi változat (éves)</th></tr></thead>
+  <tbody>
+    <tr><td>Munkaidő</td><td>kb. 500–600 óra (5 fő, 12 hét)</td><td>bérköltségként számolva</td></tr>
+    <tr><td>Domain</td><td>kb. 5–10 ezer Ft</td><td>kb. 5–10 ezer Ft</td></tr>
+    <tr><td>Szerver</td><td>GitHub Pages (ingyenes) statikus oldalhoz; VPS kb. havi 3–10 ezer Ft, ha adatbázis kell</td><td>kb. havi 3–10 ezer Ft, nagyobb terheléshez több</td></tr>
+    <tr><td>Karbantartás</td><td>nincs külön</td><td>a fejlesztési költség kb. 15–25%-a évente</td></tr>
+    <tr><td>Összesen (pénz)</td><td>kb. 15–30 ezer Ft/év</td><td>a munkaidő és a karbantartás miatt jóval több</td></tr>
+  </tbody>
+</table>
+
+<h3>4.5 Installáció</h3>
+<p>Webes változat: a statikus fájlok egy tárhelyre töltődnek fel. Adatbázisos változathoz telepítő program és üzemeltetési útmutató szükséges.</p>
+
+<h3>4.6 A termék felépítése</h3>
+<ul>
+  <li><strong>Eligazodás:</strong> campustérkép és épületkeresés.</li>
+  <li><strong>Események és hírek:</strong> eseménynaptár, szűrők és hírfolyam.</li>
+  <li><strong>Mindennapi szolgáltatások:</strong> menza, menetrend és ügyintézési időpontfoglalás.</li>
+  <li><strong>Közösség és visszajelzés:</strong> hibabejelentő felület és oktatói adatbázis.</li>
+</ul>
+
+<h3>4.7 Az egységes felület indoklása</h3>
+<p>A három külön rendszer egyesítése nem csak technikai kérdés. Egy közös felület csökkenti a tanulási időt, és az információk összekapcsolhatók: egy esemény mellett megjelenik a helyszín a térképen, egy oktató neve mellett a fogadóóra.</p>
+
+<h3>4.8 Ütemezés és mérföldkövek</h3>
+<p>A félév első három hete a tervezésé és a dokumentumoké. A 3., 6., 8. és 11. hét a kötelező bemutatók ideje: H1, H2, H3, H4. A 12. héttől a részletes implementáció és a végső bemutató készítése következik.</p>
+
+<h2 id="s5">5. A végtermék jellemzői, biztosított szolgáltatások</h2>
+<p>A felsorolt funkciók a termék fő részei. A sorrend a javasolt építési sorrend.</p>
+<table>
+  <thead><tr><th>Sorrend</th><th>Funkció</th><th>Felhasználói haszon</th><th>Függőség</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Bejelentkezés (Neptun/Microsoft), tanári és adminisztrátori szerepek</td><td>Csak a jogosultak érik el a belső funkciókat</td><td>Egyetemi engedély</td></tr>
+    <tr><td>2</td><td>Campustérkép</td><td>Eligazodás az épületek között</td><td>Térképadatok</td></tr>
+    <tr><td>3</td><td>Szűrhető eseménynaptár</td><td>Események megtalálása</td><td>Eseményadatok</td></tr>
+    <tr><td>4</td><td>Hírek</td><td>Friss egyetemi információk</td><td>Hírforrás</td></tr>
+    <tr><td>5</td><td>Menza-információk</td><td>Napi étlap, nyitvatartás</td><td>Menzaadatok</td></tr>
+    <tr><td>6</td><td>MVK-menetrend</td><td>Busz- és vonatindulások</td><td>Menetrendadat</td></tr>
+    <tr><td>7</td><td>Oktatói adatbázis</td><td>Elérhetőség, fogadóóra</td><td>Oktatói adatok</td></tr>
+    <tr><td>8</td><td>Ügyintézési időpontfoglalás</td><td>Ügyintézés időpontfoglalással</td><td>Adminisztrációs rendszer</td></tr>
+    <tr><td>9</td><td>Hibabejelentő felület</td><td>Problémák jelentése</td><td>Bejelentkezés</td></tr>
+    <tr><td>10</td><td>Parkolóhelykereső</td><td>Szabad parkolóhelyek</td><td>Kamerák, érzékelők</td></tr>
+    <tr><td>11</td><td>Egyetemi fizetés (UniCredit-ötlet)</td><td>Fizetés fizetőóránál</td><td>Bankpartner</td></tr>
+    <tr><td>12</td><td>Lidl-akciók</td><td>Akciók megjelenítése</td><td>Partnerengedély</td></tr>
+  </tbody>
+</table>
+<div class="note">A 11. és 12. funkció külső partnerséget igényel, ezért a félévi célok után kerül megvalósításra, ha a partner egyetért.</div>
+
+<h3>5.1 Az egyes funkciók leírása</h3>
+<p><strong>Bejelentkezés.</strong> A hallgatók, oktatók és adminisztrátorok az egyetemi fiókjukkal lépnek be. A látogatók belépés nélkül használhatják a nyilvános részt.</p>
+<p><strong>Campustérkép.</strong> Az épületek, termek és közös területek egy térképen láthatók. A keresőbe beírt név alapján a térkép odairányít.</p>
+<p><strong>Szűrhető eseménynaptár.</strong> Az események dátum, típus, kar és helyszín szerint szűrhetők.</p>
+<p><strong>Hírek.</strong> Az egyetemi hírek egy folyamban jelennek meg, a legfrissebb felül.</p>
+<p><strong>Menza-információk.</strong> A napi étlap, az árak és a nyitvatartás egy helyen.</p>
+<p><strong>MVK-menetrend.</strong> A buszok és vonatok indulási idői a legközelebbi megállótól.</p>
+<p><strong>Oktatói adatbázis.</strong> Az oktatók neve, elérhetősége, tanszéke és fogadóórája. Az oktatók a saját adataikat szerkeszthetik.</p>
+<p><strong>Ügyintézési időpontfoglalás.</strong> A hallgató kiválasztja az ügyintézés típusát és egy szabad időpontot.</p>
+<p><strong>Hibabejelentő felület.</strong> A hallgató jelzi a hibát a helyszín és a leírás megadásával. A bejelentés állapota követhető.</p>
+<p><strong>Parkolóhelykereső.</strong> A parkolók zónánként láthatók, a szabad helyek jelzéssel. Csak akkor működik, ha az érzékelők és kamerák adatai rendelkezésre állnak.</p>
+
+<h2 id="s6">6. Korlátozások</h2>
+<ul>
+  <li><strong>Idő:</strong> a félév 12 hete alatt kell elkészülni, a tanulmányi munka mellett.</li>
+  <li><strong>Csapat:</strong> öt fő, eltérő tudással és kötelezettségekkel.</li>
+  <li><strong>Hozzáférés:</strong> a belső adatforrásokhoz csak az egyetem engedélyével lehet hozzáférni.</li>
+  <li><strong>Platform:</strong> a web az első szint, a mobilalkalmazás később készül.</li>
+  <li><strong>Adatvédelem:</strong> a személyes adatokat az egyetemi adatvédelmi szabályok (GDPR) szerint kell kezelni.</li>
+</ul>
+
+<h2 id="s7">7. Minőségi elvárások</h2>
+<ul>
+  <li><strong>Használhatóság:</strong> a felület működik számítógépen, Androidon és iOS-en. Egy új hallgató a legfontosabb funkciókat segítség nélkül megtalálja.</li>
+  <li><strong>Teljesítmény:</strong> az oldal az első betöltéstől számítva körülbelül három másodpercen belül megjelenik. Az 500 egyidejű felhasználót a rendszer kiszolgálja.</li>
+  <li><strong>Biztonság:</strong> a belépéshez tartozó adatokat a rendszer nem tárolja nyílt szövegként, és a kapcsolat titkosított.</li>
+  <li><strong>Akadálymentesség:</strong> a kontraszt legalább a WCAG alapszintjének megfelelő, a betűméret állítható.</li>
+  <li><strong>Többnyelvűség:</strong> alapnyelv a magyar, az angol változat a következő verzióban készülhet el.</li>
+</ul>
+
+<h2 id="s8">8. Dokumentációval kapcsolatos követelmények</h2>
+<ul>
+  <li><strong>Vízió dokumentum (H2):</strong> ez a dokumentum, HTML formátumban.</li>
+  <li><strong>SRS (H3):</strong> szoftverkövetelmény-specifikáció.</li>
+  <li><strong>Tervezési dokumentumok (H4):</strong> architektúra és adatmodell.</li>
+  <li><strong>Felhasználói útmutató:</strong> a végső változathoz, rövid, képekkel.</li>
+  <li><strong>Forráskód:</strong> közös tárolóban, kommentekkel.</li>
+</ul>
+
+<h2 id="s9">9. Kockázatlista</h2>
+<table>
+  <thead><tr><th>Kockázat</th><th>Valószínűség</th><th>Hatás</th><th>Csökkentés</th></tr></thead>
+  <tbody>
+    <tr><td>Időhiány, a funkciók nem készülnek el</td><td>Magas</td><td>Magas</td><td>A funkciók sorrendje (5. fejezet), a bővítések a félévi célokon kívül</td></tr>
+    <tr><td>Neptun/Microsoft-belépés nem engedélyezett</td><td>Közepes</td><td>Magas</td><td>Korai egyeztetés, tesztbelépés helyi azonosítókkal</td></tr>
+    <tr><td>Külső adatforrás nem elérhető</td><td>Közepes</td><td>Közepes</td><td>Adatok ideiglenes tárolása, a funkció csak stabil adat esetén kerül be</td></tr>
+    <tr><td>Partnerek nem működnek együtt</td><td>Magas</td><td>Közepes</td><td>Ezek bővítések, nem alapfunkciók</td></tr>
+    <tr><td>Adatvédelmi hiba</td><td>Alacsony</td><td>Magas</td><td>A személyes adatok minimalizálása, a GDPR betartása</td></tr>
+    <tr><td>Csapat-koordináció</td><td>Közepes</td><td>Közepes</td><td>Heti egyeztetés, közös feladatlista</td></tr>
+    <tr><td>Parkolóérzékelők hiánya</td><td>Magas</td><td>Alacsony</td><td>A parkolóhelykereső csak akkor készül el, ha az eszköz rendelkezésre áll</td></tr>
+    <tr><td>500 egyidejű felhasználó túlterhelése</td><td>Alacsony</td><td>Közepes</td><td>Statikus tárhely, terhelésteszt a demó előtt</td></tr>
+  </tbody>
+</table>
+
+<h2 id="s10">10. Szótár</h2>
+<table>
+  <thead><tr><th>Kifejezés</th><th>Magyarázat</th></tr></thead>
+  <tbody>
+    <tr><td>Vízió dokumentum</td><td>A projekt célját és környezetét leíró dokumentum, a RUP módszertan első lépése.</td></tr>
+    <tr><td>Érintett</td><td>Olyan személy vagy szervezet, akit a termék érint, de nem feltétlenül használja.</td></tr>
+    <tr><td>Felhasználó</td><td>Aki a terméket ténylegesen használja.</td></tr>
+    <tr><td>Neptun</td><td>Az egyetem tanulmányi nyilvántartó rendszere.</td></tr>
+    <tr><td>Microsoft-belépés</td><td>Az egyetemi Microsoft-fiókkal történő bejelentkezés.</td></tr>
+    <tr><td>GDPR</td><td>Az Európai Unió általános adatvédelmi rendelete.</td></tr>
+    <tr><td>Statikus oldal</td><td>Olyan weboldal, amelynek tartalma nem változik a látogatótól függően, adatbázis nélkül.</td></tr>
+    <tr><td>VPS</td><td>Virtuális szerver, amelyet havi díjért bérelhetünk.</td></tr>
+    <tr><td>Bővítés</td><td>Olyan funkció, amely a félévi célok után, külső partnerséggel vagy több idővel készülhet el.</td></tr>
+    <tr><td>Szerep</td><td>A felhasználó jogosultsági köre, például hallgató, oktató, adminisztrátor vagy látogató.</td></tr>
+    <tr><td>WCAG</td><td>A webes akadálymentességi irányelvek nemzetközi szabványa.</td></tr>
+  </tbody>
+</table>
+
+</main>
+
+<footer>
+  Készítette: ME-nthetetlenek · Szoftver technológiák · Miskolci Egyetem
+</footer>
+
+</body>
+</html>
