@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H3 beadandó - Vezérlőpult</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        html { scroll-behavior: smooth; }
+    </style>
+    <style type="text/tailwindcss">
+        .doc .h-part { @apply text-3xl md:text-4xl font-bold mt-16 mb-6 pb-3 text-gray-900 border-b-2 border-gray-800 uppercase tracking-wide; }
+        .doc .h-sec  { @apply text-2xl md:text-3xl font-bold mt-10 mb-4 text-gray-900 pt-4; }
+        .doc .h-sub  { @apply text-xl font-bold mt-8 mb-3 text-gray-900; }
+        .doc .h-sub2 { @apply text-lg font-bold mt-6 mb-2 text-gray-900; }
+        .doc p { @apply mb-4; }
+        .doc ul { @apply list-disc pl-6 mb-4; }
+        .doc ol { @apply list-decimal pl-6 mb-4; }
+        .doc li { @apply mb-1; }
+        .doc td > ul, .doc td > ol { @apply mb-0; }
+        .doc .tbl { @apply overflow-x-auto mb-6; }
+        .doc table { @apply w-full border-collapse border border-gray-400 text-sm md:text-base; }
+        .doc th, .doc td { @apply border border-gray-400 p-2 md:p-3 align-top text-left; }
+        .doc th { @apply bg-gray-100; }
+        .doc .uc th { @apply w-1/4 font-semibold; }
+        .doc a { @apply text-[#174777] underline underline-offset-2 hover:text-blue-800; }
+        .doc .toc { @apply bg-gray-50 border border-gray-300 p-5 mb-10; }
+        .doc .toc ol ol { @apply mt-1 mb-1; }
+        .doc .note { @apply italic border-l-4 border-gray-400 pl-4 bg-gray-50 py-2 mb-4; }
+        .doc .fill { @apply text-gray-400; }
+    </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden font-sans bg-gray-100">
+
+    <header class="bg-topbar text-white h-[60px] flex items-center justify-between w-full z-40 px-4 md:px-0 relative">
+        <div class="flex items-center h-full">
+            <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white mr-4 transition">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <div class="md:w-64 h-full flex flex-col justify-center md:px-4 shrink-0">
+                <a href="index.html" class="leading-none select-none block text-white hover:text-gray-200">
+                    <span class="block font-semibold text-[17px] tracking-wide">MISKOLCI</span>
+                    <span class="block font-semibold text-[17px] tracking-wide mt-[2px]">EGYETEM</span>
+                    <span class="block text-[8px] tracking-widest text-gray-400 mt-1">UNIVERSITY OF MISKOLC</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex-1 flex items-center justify-end px-4"></div>
+    </header>
+
+    <div class="h-[2px] w-full flex shrink-0 z-20">
+        <div class="w-1/3 bg-red-600"></div>
+        <div class="w-1/3 bg-white"></div>
+        <div class="w-1/3 bg-green-600"></div>
+    </div>
+
+    <div class="flex flex-1 overflow-hidden relative">
+
+        <aside id="sidebar" class="hidden md:block w-full md:w-64 bg-sidebar shrink-0 relative shadow-[inset_-2px_0_5px_rgba(0,0,0,0.1)] transition-all duration-300 overflow-y-auto z-30">
+            <nav class="flex flex-col py-4 text-gray-200 text-sm font-medium">
+                <a href="index.html" class="menu-item">
+                    <i class="fas fa-home w-5 text-center"></i>
+                    <span>Főoldal</span>
+                </a>
+                <div class="border-b border-[rgba(255,255,255,0.1)] mx-4 my-2"></div>
+                <a href="h1.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H1 beadandó</span>
+                </a>
+                <a href="h2.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H2 beadandó</span>
+                </a>
+                <a href="h3.html" class="menu-item border-l-4 border-blue-400 bg-[#16487a] text-white">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H3 beadandó</span>
+                </a>
+                <a href="h4.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H4 beadandó</span>
+                </a>
+                <a href="h5.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H5 beadandó</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 bg-[#f0f2f5] relative w-full p-4 md:p-6 overflow-y-auto">
+            <div class="doc bg-white p-6 md:p-12 w-full max-w-4xl mx-auto shadow-sm border border-gray-300 font-serif text-black leading-relaxed">
+
+                <h1 class="text-2xl md:text-3xl font-bold mb-2 mt-0 text-gray-900">H3 – A specifikációs fázis dokumentumai</h1>
+                <p class="text-gray-700">Csoport: ME-nthetetlenek · Feladat sorszáma: 19 · Dátum: 2026. 11. 03. · Verzió: 0.3</p>
+
+                <p>Ez az oldal a H3 határidőre leadandó dokumentumokat tartalmazza. A tantárgyi követelmény szerint ezek a következők: a szoftverkövetelmény-specifikáció (SRS), az önálló szótár, a felhasználói kézikönyv első verziója és a munkanapló. A négy dokumentum egymásra épül: a szótár az SRS fogalmait magyarázza, a felhasználói kézikönyv az SRS-ben leírt funkciók használatát mutatja be.</p>
+
+                <h1 id="tortenet" class="h-sec mt-6">Történet</h1>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Dátum</th><th>Verzió</th><th>Leírás</th><th>Szerző</th></tr></thead>
+                        <tbody>
+                            <tr><td>2026. 11. 03.</td><td>0.1</td><td>SRS 1–3. fejezet: bevezetés, áttekintés és a rendszer funkciói (use case modell, 18 use case)</td><td>ME-nthetetlenek</td></tr>
+                            <tr><td>2026. 11. 03.</td><td>0.2</td><td>SRS 4–13. fejezet: használhatóság, megbízhatóság, teljesítmény, támogatottság, tervezési korlátozások, súgó, kész komponensek, interfészek, szabványok, mellékletek</td><td>ME-nthetetlenek</td></tr>
+                            <tr><td>2026. 11. 03.</td><td>0.3</td><td>Szótár (71 fogalom), felhasználói kézikönyv (1. verzió) és munkanapló</td><td>ME-nthetetlenek</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h1 class="h-sec">Tartalomjegyzék</h1>
+                <div class="toc">
+                    <ol>
+                        <li><a href="#resz-1">Szoftverkövetelmény-specifikáció (SRS)</a>
+                            <ol>
+                                <li><a href="#srs-1">Bevezetés</a></li>
+                                <li><a href="#srs-2">Áttekintés</a></li>
+                                <li><a href="#srs-3">A rendszer funkciói</a></li>
+                                <li><a href="#srs-4">Használhatóság</a></li>
+                                <li><a href="#srs-5">Megbízhatóság</a></li>
+                                <li><a href="#srs-6">Teljesítmény</a></li>
+                                <li><a href="#srs-7">Támogatottság</a></li>
+                                <li><a href="#srs-8">Tervezési korlátozások</a></li>
+                                <li><a href="#srs-9">On-line dokumentáció és súgórendszer</a></li>
+                                <li><a href="#srs-10">Felhasznált kész komponensek</a></li>
+                                <li><a href="#srs-11">Interfészek</a></li>
+                                <li><a href="#srs-12">Alkalmazott szabványok</a></li>
+                                <li><a href="#srs-13">Mellékletek</a></li>
+                            </ol>
+                        </li>
+                        <li><a href="#resz-2">Szótár</a></li>
+                        <li><a href="#resz-3">Felhasználói kézikönyv (1. verzió)</a></li>
+                        <li><a href="#resz-4">Munkanapló</a></li>
+                    </ol>
+                </div>
+
+                <!-- ============================================================ -->
+                <!-- I. SRS -->
+                <!-- ============================================================ -->
+
+                <h1 id="resz-1" class="h-part">I. Szoftverkövetelmény-specifikáció</h1>
+
+                <h1 id="srs-1" class="h-sec">1. Bevezetés</h1>
+
+                <h2 class="h-sub">1.1 A dokumentum célja</h2>
+                <p>Ez a dokumentum a Vezérlőpult nevű rendszerrel szemben támasztott funkcionális és nem funkcionális követelményeket foglalja össze. A célja az, hogy a tervezési munka (H4) ebből a leírásból kiindulva megkezdhető legyen, és hogy a gyakorlatvezető, aki a projektben a megrendelő képviselőjének szerepét is betölti, meggyőződhessen arról, hogy a megfelelő rendszer fog elkészülni.</p>
+                <p>A dokumentum a H2 vízió dokumentumra épül. A vízió a problémát, a felhasználókat és a fő funkciókat írta le általánosan. Ez a dokumentum ugyanezeket a funkciókat ellenőrizhető követelményekre és használati esetekre (use case-ekre) bontja.</p>
+
+                <h2 class="h-sub">1.2 A termék rövid leírása</h2>
+                <p>A Vezérlőpult egy webes felület a Miskolci Egyetem hallgatóinak, oktatóinak, munkatársainak és látogatóinak. Egy helyen mutatja meg azokat az információkat és szolgáltatásokat, amelyek ma több külön rendszerben, különböző formában érhetők el: a campustérképet, a parkolók foglaltságát, az eseményeket, a híreket, a menza étlapját, a helyi tömegközlekedés menetrendjét és az oktatók elérhetőségét. A bejelentkezett felhasználók ezen felül ügyintézési időpontot foglalhatnak és hibát jelenthetnek be. A rendszer adminisztrátorai a tartalmat, az időpontokat és a bejelentéseket kezelik.</p>
+
+                <h2 class="h-sub">1.3 Hatókör</h2>
+                <p>A dokumentum a rendszer első, a félév végi bemutatóra tervezett változatát specifikálja. Ebbe a H2 vízió 5. fejezetében felsorolt fő funkciók tartoznak (1–10. funkció).</p>
+                <p>A következők <strong>nem</strong> részei az első változatnak, ezért részletes követelmény sem tartozik hozzájuk (lásd a 3.8 pontot):</p>
+                <ul>
+                    <li>az egyetemi fizetés (UniCredit-ötlet) és a Lidl-akciók, amelyek külső partner együttműködését igénylik;</li>
+                    <li>a natív mobilalkalmazás Androidra és iOS-re; az első változat mobilböngészőből használható;</li>
+                    <li>a Neptun tanulmányi adatainak (például az órarendnek) a megjelenítése, mert ehhez az egyetem engedélye szükséges;</li>
+                    <li>az angol nyelvű felület.</li>
+                </ul>
+
+                <h2 class="h-sub">1.4 Kapcsolódó dokumentumok</h2>
+                <ul>
+                    <li><a href="h1.html">H1 – Projektterv</a>: a csapat, az ütemterv és a felmerült technológiák.</li>
+                    <li><a href="h2.html">H2 – Vízió dokumentum</a>: a probléma, az érintettek, a fő funkciók és a kockázatok.</li>
+                    <li><a href="#resz-2">II. Szótár</a>: az ebben a dokumentumban használt fogalmak magyarázata.</li>
+                    <li><a href="#resz-3">III. Felhasználói kézikönyv</a>: a funkciók használata a felhasználó szemszögéből.</li>
+                </ul>
+
+                <h2 class="h-sub">1.5 Jelölések</h2>
+                <p>A dokumentumban a következő azonosítókat használjuk, hogy a későbbi tervezési és tesztelési dokumentumok pontosan hivatkozhassanak rájuk:</p>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Jelölés</th><th>Jelentés</th><th>Példa</th></tr></thead>
+                        <tbody>
+                            <tr><td>K-xx</td><td>Természetes nyelven megfogalmazott funkcionális követelmény</td><td>K-09</td></tr>
+                            <tr><td>A-xx</td><td>Aktor (a rendszerrel kapcsolatba lépő személy vagy rendszer)</td><td>A-02 Hallgató</td></tr>
+                            <tr><td>UC-xx</td><td>Use case (használati eset)</td><td>UC-11</td></tr>
+                            <tr><td>F-xx</td><td>Feltételezés vagy függőség</td><td>F-03</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>A követelmények prioritása háromféle lehet:</p>
+                <ul>
+                    <li><strong>Kötelező:</strong> a félév végi bemutatóra el kell készülnie, nélküle a rendszer nem tölti be a célját.</li>
+                    <li><strong>Ajánlott:</strong> jelentősen javítja a használatot; ha az idő engedi, elkészül.</li>
+                    <li><strong>Opcionális:</strong> csak külső feltétel teljesülése (például egyetemi engedély) vagy elegendő idő esetén készül el.</li>
+                </ul>
+
+                <h1 id="srs-2" class="h-sec">2. Áttekintés</h1>
+                <p>Ez a fejezet nem tartalmaz konkrét követelményeket. A célja az, hogy összefoglalja azokat a körülményeket, amelyek a 3–12. fejezet követelményeinek megértéséhez szükségesek.</p>
+
+                <h2 class="h-sub">2.1 A termék környezete</h2>
+                <p>A Vezérlőpult önálló webes alkalmazás. A felhasználók böngészőből érik el számítógépen, telefonon és táblagépen. A rendszer három részből áll: a böngészőben futó felületből, egy Node.js alapú alkalmazásszerverből és egy MySQL adatbázisból. Az alkalmazásszerver egy Linux operációs rendszerű szerveren fut.</p>
+                <p>A rendszer a következő külső szereplőkkel tart kapcsolatot:</p>
+                <ul>
+                    <li>az egyetemi azonosító szolgáltatással (Microsoft Entra ID), amely a bejelentkezést ellenőrzi;</li>
+                    <li>az MVK menetrendadatával, amelyből a megállók indulásait számolja;</li>
+                    <li>a parkolóérzékelő-rendszerrel, amely a parkolózónák foglaltságát küldi;</li>
+                    <li>az OpenStreetMap térképszolgáltatással, amely a térkép háttérképét adja;</li>
+                    <li>egy e-mail-küldő szolgáltatással, amely a visszaigazolásokat és értesítéseket továbbítja;</li>
+                    <li>az egyetem hivatalos honlapjával, amelyre a hírek teljes szövegénél hivatkozik.</li>
+                </ul>
+                <p>A projekt dokumentációja (ez az oldal is) továbbra is a GitHub Pages szolgáltatáson érhető el. Az alkalmazás maga adatbázist használ, ezért nem futtatható statikus tárhelyen; ehhez a H2 költségbecslésében szereplő bérelt virtuális szerver szükséges.</p>
+
+                <h2 class="h-sub">2.2 A legfontosabb funkciók</h2>
+                <ul>
+                    <li>Bejelentkezés egyetemi Microsoft-fiókkal, szerepkör szerinti jogosultságokkal.</li>
+                    <li>Campustérkép kereséssel, és a parkolózónák szabad helyeinek megjelenítése.</li>
+                    <li>Szűrhető eseménynaptár és hírfolyam.</li>
+                    <li>A menza étlapja és nyitvatartása, az MVK-menetrend és az oktatói adatbázis.</li>
+                    <li>Ügyintézési időpontfoglalás és hibabejelentés állapotkövetéssel.</li>
+                    <li>Adminisztrációs felület a tartalom, az időpontok, a bejelentések és a szerepkörök kezelésére.</li>
+                </ul>
+
+                <h2 class="h-sub">2.3 A felhasználók jellemzői</h2>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Felhasználói csoport</th><th>Informatikai gyakorlottság</th><th>Használat gyakorisága</th><th>Legfontosabb igény</th></tr></thead>
+                        <tbody>
+                            <tr><td>Látogató, új hallgató</td><td>Változó, nem feltételezhető</td><td>Alkalmi, főleg a félév elején és rendezvényeken</td><td>Gyors eligazodás bejelentkezés nélkül</td></tr>
+                            <tr><td>Hallgató</td><td>Általában magas, főleg telefonról használja</td><td>Naponta vagy hetente, rövid alkalmakkal</td><td>Menza, menetrend, események, ügyintézés</td></tr>
+                            <tr><td>Oktató</td><td>Közepes vagy magas</td><td>Hetente, főleg számítógépről</td><td>Saját adatai naprakészen tartása, tanszéki bejelentések</td></tr>
+                            <tr><td>Adminisztrátor</td><td>Közepes; adminisztrációs rendszerekhez szokott</td><td>Naponta, munkaidőben</td><td>Gyors tartalomfeltöltés, átlátható listák</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>A H2 vízió alapján a rendszernek egyidejűleg kb. 500 felhasználót kell kiszolgálnia. A használat jellemzően rövid: egy látogatás néhány perc.</p>
+
+                <h2 class="h-sub">2.4 Korlátozások</h2>
+                <p>A fejlesztés legfontosabb korlátai az idő (a félév 12 hete), a csapat mérete (öt fő), a külső adatforrásokhoz való hozzáférés és az adatvédelmi előírások. A tervezést és a megvalósítást érintő korlátozásokat a 8. fejezet részletezi.</p>
+
+                <h2 class="h-sub">2.5 Feltételezések és függőségek</h2>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Azonosító</th><th>Feltételezés vagy függőség</th><th>Ha nem teljesül</th></tr></thead>
+                        <tbody>
+                            <tr><td>F-01</td><td>Az egyetem engedélyezi, hogy a rendszer az egyetemi Microsoft-fiókokkal való bejelentkezést használja.</td><td>A bemutatóhoz tesztfiókokkal működő, helyi bejelentkezés készül; a valódi bejelentkezés később kerül be.</td></tr>
+                            <tr><td>F-02</td><td>Az MVK menetrendadata letölthető formában (például GTFS-állományként) elérhető.</td><td>Az adminisztrátor a legfontosabb megállók menetrendjét kézzel tölti fel.</td></tr>
+                            <tr><td>F-03</td><td>A parkolóérzékelők legalább egy parkolózónában a bemutatóig működnek.</td><td>A parkolás funkció szimulált adatokkal mutatható be; élesben „nincs adat” jelzés jelenik meg.</td></tr>
+                            <tr><td>F-04</td><td>A menza étlapját és a híreket az adminisztrátorok rendszeresen feltöltik.</td><td>A funkció működik, de elavult adatot mutat; ezt a felület dátummal jelzi.</td></tr>
+                            <tr><td>F-05</td><td>A rendszer egyetemi címről küldhet e-mailt.</td><td>Az értesítések csak a felületen jelennek meg.</td></tr>
+                            <tr><td>F-06</td><td>A csapattagok hetente legalább 8–10 órát fordítanak a projektre.</td><td>Az ajánlott és opcionális követelmények elmaradnak.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="h-sub">2.6 A követelmények csoportosítása</h2>
+                <p>A funkcionális követelményeket a 3. fejezet hat csomagba sorolja. A csomagok a H2 vízió 4.6 pontjában leírt termékfelépítést követik, kiegészítve a bejelentkezéssel és az adminisztrációval:</p>
+                <ol>
+                    <li>Hitelesítés és szerepkörök (3.2)</li>
+                    <li>Eligazodás (3.3)</li>
+                    <li>Események és hírek (3.4)</li>
+                    <li>Mindennapi szolgáltatások (3.5)</li>
+                    <li>Ügyintézés és visszajelzés (3.6)</li>
+                    <li>Adminisztráció (3.7)</li>
+                </ol>
+                <p>A nem funkcionális követelmények a 4–12. fejezetben, témakörönként szerepelnek.</p>
+
+                <h1 id="srs-3" class="h-sec">3. A rendszer funkciói</h1>
+                <p>Ez a fejezet a rendszer funkcionális követelményeit tartalmazza. Minden csomagnál először természetes nyelven, azonosítóval és prioritással felsoroljuk a követelményeket, majd a csomag use case-eit a minta szerinti szerkezetben írjuk le: név, rövid leírás, aktorok, prekondíciók, posztkondíciók, szokásos működés, alternatív esetek és kivételes esetek.</p>
+
+                <h2 id="srs-3-1" class="h-sub">3.1 A teljes rendszer use case modellje</h2>
+                <p>Az 1. ábra a teljes rendszer use case diagramja. A diagramon minden aktor és minden use case szerepel; a színek a csomagokat jelölik.</p>
+
+                <div class="overflow-x-auto mb-2 border border-gray-300 bg-white">
+                    <svg viewBox="0 0 920 1010" class="w-full h-auto min-w-[640px]" role="img" aria-label="A Vezérlőpult teljes use case diagramja" font-family="ui-sans-serif, system-ui, sans-serif">
+                        <defs>
+                            <marker id="gen" viewBox="0 0 14 14" refX="13" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">
+                                <path d="M1,1 L13,7 L1,13 z" fill="#ffffff" stroke="#374151" stroke-width="1.3"/>
+                            </marker>
+                        </defs>
+
+                        <!-- rendszerhatár -->
+                        <text x="470" y="28" text-anchor="middle" font-size="15" font-weight="700" fill="#111827">Vezérlőpult</text>
+                        <rect x="255" y="40" width="430" height="955" rx="6" fill="none" stroke="#374151" stroke-width="1.5"/>
+
+                        <!-- asszociációk: Látogató -->
+                        <g stroke="#4b5563" stroke-width="1.2">
+                            <line x1="125" y1="218" x2="280" y2="78"/>
+                            <line x1="125" y1="218" x2="280" y2="130"/>
+                            <line x1="125" y1="218" x2="280" y2="182"/>
+                            <line x1="125" y1="218" x2="280" y2="234"/>
+                            <line x1="125" y1="218" x2="280" y2="286"/>
+                            <line x1="125" y1="218" x2="280" y2="338"/>
+                            <line x1="125" y1="218" x2="280" y2="390"/>
+                            <!-- Hallgató -->
+                            <line x1="125" y1="563" x2="280" y2="442"/>
+                            <line x1="125" y1="563" x2="280" y2="494"/>
+                            <line x1="125" y1="563" x2="280" y2="546"/>
+                            <line x1="125" y1="563" x2="280" y2="598"/>
+                            <line x1="125" y1="563" x2="280" y2="650"/>
+                            <line x1="125" y1="563" x2="280" y2="702"/>
+                            <!-- Oktató -->
+                            <line x1="125" y1="768" x2="280" y2="754"/>
+                            <line x1="125" y1="768" x2="280" y2="806"/>
+                            <!-- Adminisztrátor -->
+                            <line x1="125" y1="903" x2="280" y2="442"/>
+                            <line x1="125" y1="903" x2="280" y2="494"/>
+                            <line x1="125" y1="903" x2="280" y2="806"/>
+                            <line x1="125" y1="903" x2="280" y2="858"/>
+                            <line x1="125" y1="903" x2="280" y2="910"/>
+                            <line x1="125" y1="903" x2="280" y2="962"/>
+                            <!-- külső rendszerek -->
+                            <line x1="795" y1="138" x2="660" y2="130"/>
+                            <line x1="795" y1="333" x2="660" y2="338"/>
+                            <line x1="795" y1="518" x2="660" y2="442"/>
+                        </g>
+
+                        <!-- általánosítások -->
+                        <line x1="105" y1="532" x2="105" y2="286" stroke="#374151" stroke-width="1.3" marker-end="url(#gen)"/>
+                        <line x1="105" y1="737" x2="105" y2="629" stroke="#374151" stroke-width="1.3" marker-end="url(#gen)"/>
+
+                        <!-- use case-ek -->
+                        <g stroke="#374151" stroke-width="1.2" font-size="13" fill="#111827">
+                            <ellipse cx="470" cy="78"  rx="190" ry="21" fill="#e8f1fb"/>
+                            <ellipse cx="470" cy="130" rx="190" ry="21" fill="#e8f1fb"/>
+                            <ellipse cx="470" cy="182" rx="190" ry="21" fill="#e8f1fb"/>
+                            <ellipse cx="470" cy="234" rx="190" ry="21" fill="#e8f1fb"/>
+                            <ellipse cx="470" cy="286" rx="190" ry="21" fill="#e8f1fb"/>
+                            <ellipse cx="470" cy="338" rx="190" ry="21" fill="#e8f1fb"/>
+                            <ellipse cx="470" cy="390" rx="190" ry="21" fill="#e8f1fb"/>
+                            <ellipse cx="470" cy="442" rx="190" ry="21" fill="#fdf3e1"/>
+                            <ellipse cx="470" cy="494" rx="190" ry="21" fill="#fdf3e1"/>
+                            <ellipse cx="470" cy="546" rx="190" ry="21" fill="#e9f7ec"/>
+                            <ellipse cx="470" cy="598" rx="190" ry="21" fill="#e9f7ec"/>
+                            <ellipse cx="470" cy="650" rx="190" ry="21" fill="#e9f7ec"/>
+                            <ellipse cx="470" cy="702" rx="190" ry="21" fill="#e9f7ec"/>
+                            <ellipse cx="470" cy="754" rx="190" ry="21" fill="#f1ecfb"/>
+                            <ellipse cx="470" cy="806" rx="190" ry="21" fill="#f1ecfb"/>
+                            <ellipse cx="470" cy="858" rx="190" ry="21" fill="#fbeaea"/>
+                            <ellipse cx="470" cy="910" rx="190" ry="21" fill="#fbeaea"/>
+                            <ellipse cx="470" cy="962" rx="190" ry="21" fill="#fbeaea"/>
+                        </g>
+                        <g font-size="13" fill="#111827" text-anchor="middle">
+                            <text x="470" y="83"><tspan font-weight="700">UC-03</tspan> Hely keresése a campustérképen</text>
+                            <text x="470" y="135"><tspan font-weight="700">UC-04</tspan> Szabad parkolóhelyek megtekintése</text>
+                            <text x="470" y="187"><tspan font-weight="700">UC-05</tspan> Események böngészése és szűrése</text>
+                            <text x="470" y="239"><tspan font-weight="700">UC-06</tspan> Hírek olvasása</text>
+                            <text x="470" y="291"><tspan font-weight="700">UC-07</tspan> Menza-információk megtekintése</text>
+                            <text x="470" y="343"><tspan font-weight="700">UC-08</tspan> MVK-menetrend megtekintése</text>
+                            <text x="470" y="395"><tspan font-weight="700">UC-09</tspan> Oktató keresése</text>
+                            <text x="470" y="447"><tspan font-weight="700">UC-01</tspan> Bejelentkezés</text>
+                            <text x="470" y="499"><tspan font-weight="700">UC-02</tspan> Kijelentkezés</text>
+                            <text x="470" y="551"><tspan font-weight="700">UC-11</tspan> Ügyintézési időpont foglalása</text>
+                            <text x="470" y="603"><tspan font-weight="700">UC-12</tspan> Saját foglalások kezelése</text>
+                            <text x="470" y="655"><tspan font-weight="700">UC-13</tspan> Hibabejelentés beküldése</text>
+                            <text x="470" y="707"><tspan font-weight="700">UC-14</tspan> Hibabejelentés állapotának követése</text>
+                            <text x="470" y="759"><tspan font-weight="700">UC-10</tspan> Saját oktatói adatok szerkesztése</text>
+                            <text x="470" y="811"><tspan font-weight="700">UC-17</tspan> Hibabejelentések kezelése</text>
+                            <text x="470" y="863"><tspan font-weight="700">UC-15</tspan> Tartalom kezelése</text>
+                            <text x="470" y="915"><tspan font-weight="700">UC-16</tspan> Ügyintézési időpontok kezelése</text>
+                            <text x="470" y="967"><tspan font-weight="700">UC-18</tspan> Szerepkörök kezelése</text>
+                        </g>
+
+                        <!-- aktorok (bal oldal) -->
+                        <g stroke="#111827" stroke-width="1.6" fill="none">
+                            <!-- Látogató y=230 -->
+                            <circle cx="105" cy="198" r="11" fill="#ffffff"/>
+                            <line x1="105" y1="209" x2="105" y2="236"/>
+                            <line x1="87" y1="218" x2="123" y2="218"/>
+                            <line x1="105" y1="236" x2="90" y2="258"/>
+                            <line x1="105" y1="236" x2="120" y2="258"/>
+                            <!-- Hallgató y=575 -->
+                            <circle cx="105" cy="543" r="11" fill="#ffffff"/>
+                            <line x1="105" y1="554" x2="105" y2="581"/>
+                            <line x1="87" y1="563" x2="123" y2="563"/>
+                            <line x1="105" y1="581" x2="90" y2="603"/>
+                            <line x1="105" y1="581" x2="120" y2="603"/>
+                            <!-- Oktató y=780 -->
+                            <circle cx="105" cy="748" r="11" fill="#ffffff"/>
+                            <line x1="105" y1="759" x2="105" y2="786"/>
+                            <line x1="87" y1="768" x2="123" y2="768"/>
+                            <line x1="105" y1="786" x2="90" y2="808"/>
+                            <line x1="105" y1="786" x2="120" y2="808"/>
+                            <!-- Adminisztrátor y=915 -->
+                            <circle cx="105" cy="883" r="11" fill="#ffffff"/>
+                            <line x1="105" y1="894" x2="105" y2="921"/>
+                            <line x1="87" y1="903" x2="123" y2="903"/>
+                            <line x1="105" y1="921" x2="90" y2="943"/>
+                            <line x1="105" y1="921" x2="120" y2="943"/>
+                        </g>
+                        <g font-size="14" font-weight="700" fill="#111827" text-anchor="middle">
+                            <text x="105" y="278">Látogató</text>
+                            <text x="105" y="623">Hallgató</text>
+                            <text x="105" y="828">Oktató</text>
+                            <text x="105" y="963">Adminisztrátor</text>
+                        </g>
+
+                        <!-- aktorok (jobb oldal, külső rendszerek) -->
+                        <g stroke="#111827" stroke-width="1.6" fill="none">
+                            <circle cx="815" cy="118" r="11" fill="#ffffff"/>
+                            <line x1="815" y1="129" x2="815" y2="156"/>
+                            <line x1="797" y1="138" x2="833" y2="138"/>
+                            <line x1="815" y1="156" x2="800" y2="178"/>
+                            <line x1="815" y1="156" x2="830" y2="178"/>
+
+                            <circle cx="815" cy="313" r="11" fill="#ffffff"/>
+                            <line x1="815" y1="324" x2="815" y2="351"/>
+                            <line x1="797" y1="333" x2="833" y2="333"/>
+                            <line x1="815" y1="351" x2="800" y2="373"/>
+                            <line x1="815" y1="351" x2="830" y2="373"/>
+
+                            <circle cx="815" cy="498" r="11" fill="#ffffff"/>
+                            <line x1="815" y1="509" x2="815" y2="536"/>
+                            <line x1="797" y1="518" x2="833" y2="518"/>
+                            <line x1="815" y1="536" x2="800" y2="558"/>
+                            <line x1="815" y1="536" x2="830" y2="558"/>
+                        </g>
+                        <g fill="#111827" text-anchor="middle">
+                            <text x="815" y="196" font-size="11" fill="#4b5563">«külső rendszer»</text>
+                            <text x="815" y="212" font-size="13" font-weight="700">Parkolóérzékelő-</text>
+                            <text x="815" y="228" font-size="13" font-weight="700">rendszer</text>
+
+                            <text x="815" y="391" font-size="11" fill="#4b5563">«külső rendszer»</text>
+                            <text x="815" y="407" font-size="13" font-weight="700">Menetrend-adatforrás</text>
+                            <text x="815" y="423" font-size="13" font-weight="700">(MVK)</text>
+
+                            <text x="815" y="576" font-size="11" fill="#4b5563">«külső rendszer»</text>
+                            <text x="815" y="592" font-size="13" font-weight="700">Egyetemi azonosító</text>
+                            <text x="815" y="608" font-size="13" font-weight="700">szolgáltatás</text>
+                        </g>
+                    </svg>
+                </div>
+                <p class="text-sm text-gray-700 mb-2"><strong>1. ábra.</strong> A Vezérlőpult teljes use case diagramja.</p>
+                <p class="text-sm text-gray-700">Színek: <span class="px-1" style="background:#e8f1fb">kék</span> – nyilvános funkciók (3.3–3.5); <span class="px-1" style="background:#fdf3e1">sárga</span> – hitelesítés (3.2); <span class="px-1" style="background:#e9f7ec">zöld</span> – ügyintézés és visszajelzés (3.6); <span class="px-1" style="background:#f1ecfb">lila</span> – oktatói funkciók (3.5, 3.7); <span class="px-1" style="background:#fbeaea">piros</span> – adminisztráció (3.7). Az üres hegyű nyíl általánosítást jelöl: a Hallgató a Látogató, az Oktató a Hallgató minden funkcióját eléri.</p>
+
+                <h3 id="srs-3-1-1" class="h-sub2">3.1.1 Aktorok</h3>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Azonosító</th><th>Aktor</th><th>Definíció</th></tr></thead>
+                        <tbody>
+                            <tr><td>A-01</td><td>Látogató</td><td>Bárki, aki bejelentkezés nélkül használja a rendszert: leendő és új hallgatók, vendégek, valamint a be nem jelentkezett egyetemi polgárok. Csak a nyilvános funkciókat éri el.</td></tr>
+                            <tr><td>A-02</td><td>Hallgató</td><td>Bejelentkezett felhasználó hallgató szerepkörrel. A Látogató minden funkcióját eléri (általánosítás), emellett ügyintézési időpontot foglalhat és hibát jelenthet be.</td></tr>
+                            <tr><td>A-03</td><td>Oktató</td><td>Bejelentkezett felhasználó oktató szerepkörrel, aki egy tanszékhez tartozik. A Hallgató minden funkcióját eléri (általánosítás), emellett szerkesztheti a saját oktatói adatlapját, és kezelheti a tanszékéhez rendelt hibabejelentéseket.</td></tr>
+                            <tr><td>A-04</td><td>Adminisztrátor</td><td>Az egyetem által kijelölt munkatárs adminisztrátor szerepkörrel. Kezeli a tartalmat, az ügyintézési időpontokat, az összes hibabejelentést és a szerepköröket. A nyilvános funkciókat ő is használhatja; ezt az áttekinthetőség kedvéért a diagram nem jelöli külön általánosítással.</td></tr>
+                            <tr><td>A-05</td><td>Egyetemi azonosító szolgáltatás</td><td>Külső rendszer: az egyetemi Microsoft-fiókokat kezelő azonosítási szolgáltatás (Microsoft Entra ID). Ellenőrzi a felhasználó belépési adatait, és visszaadja a rendszernek a felhasználó azonosítóját, nevét és egyetemi e-mail-címét.</td></tr>
+                            <tr><td>A-06</td><td>Menetrend-adatforrás (MVK)</td><td>Külső rendszer: a miskolci helyi tömegközlekedés menetrendi adatai (megállók, járatok, indulási idők), amelyeket a rendszer rendszeresen betölt.</td></tr>
+                            <tr><td>A-07</td><td>Parkolóérzékelő-rendszer</td><td>Külső rendszer: a parkolókban elhelyezett érzékelők és az adataikat továbbító eszközök. Zónánként küldi a foglalt helyek számát a rendszernek.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="srs-3-1-2" class="h-sub2">3.1.2 A use case-ek áttekintése</h3>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Azonosító</th><th>Use case</th><th>Csomag</th><th>Aktorok</th><th>Prioritás</th></tr></thead>
+                        <tbody>
+                            <tr><td>UC-01</td><td><a href="#uc-01">Bejelentkezés</a></td><td>3.2</td><td>A-02, A-03, A-04, A-05</td><td>Kötelező</td></tr>
+                            <tr><td>UC-02</td><td><a href="#uc-02">Kijelentkezés</a></td><td>3.2</td><td>A-02, A-03, A-04</td><td>Kötelező</td></tr>
+                            <tr><td>UC-03</td><td><a href="#uc-03">Hely keresése a campustérképen</a></td><td>3.3</td><td>A-01</td><td>Kötelező</td></tr>
+                            <tr><td>UC-04</td><td><a href="#uc-04">Szabad parkolóhelyek megtekintése</a></td><td>3.3</td><td>A-01, A-07</td><td>Kötelező</td></tr>
+                            <tr><td>UC-05</td><td><a href="#uc-05">Események böngészése és szűrése</a></td><td>3.4</td><td>A-01</td><td>Kötelező</td></tr>
+                            <tr><td>UC-06</td><td><a href="#uc-06">Hírek olvasása</a></td><td>3.4</td><td>A-01</td><td>Kötelező</td></tr>
+                            <tr><td>UC-07</td><td><a href="#uc-07">Menza-információk megtekintése</a></td><td>3.5</td><td>A-01</td><td>Kötelező</td></tr>
+                            <tr><td>UC-08</td><td><a href="#uc-08">MVK-menetrend megtekintése</a></td><td>3.5</td><td>A-01, A-06</td><td>Kötelező</td></tr>
+                            <tr><td>UC-09</td><td><a href="#uc-09">Oktató keresése</a></td><td>3.5</td><td>A-01</td><td>Kötelező</td></tr>
+                            <tr><td>UC-10</td><td><a href="#uc-10">Saját oktatói adatok szerkesztése</a></td><td>3.5</td><td>A-03</td><td>Kötelező</td></tr>
+                            <tr><td>UC-11</td><td><a href="#uc-11">Ügyintézési időpont foglalása</a></td><td>3.6</td><td>A-02</td><td>Kötelező</td></tr>
+                            <tr><td>UC-12</td><td><a href="#uc-12">Saját foglalások kezelése</a></td><td>3.6</td><td>A-02</td><td>Kötelező</td></tr>
+                            <tr><td>UC-13</td><td><a href="#uc-13">Hibabejelentés beküldése</a></td><td>3.6</td><td>A-02</td><td>Kötelező</td></tr>
+                            <tr><td>UC-14</td><td><a href="#uc-14">Hibabejelentés állapotának követése</a></td><td>3.6</td><td>A-02</td><td>Kötelező</td></tr>
+                            <tr><td>UC-15</td><td><a href="#uc-15">Tartalom kezelése</a></td><td>3.7</td><td>A-04</td><td>Kötelező</td></tr>
+                            <tr><td>UC-16</td><td><a href="#uc-16">Ügyintézési időpontok kezelése</a></td><td>3.7</td><td>A-04</td><td>Kötelező</td></tr>
+                            <tr><td>UC-17</td><td><a href="#uc-17">Hibabejelentések kezelése</a></td><td>3.7</td><td>A-03, A-04</td><td>Kötelező</td></tr>
+                            <tr><td>UC-18</td><td><a href="#uc-18">Szerepkörök kezelése</a></td><td>3.7</td><td>A-04</td><td>Kötelező</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="srs-3-1-3" class="h-sub2">3.1.3 A diagram kapcsolatai</h3>
+                <ul>
+                    <li><strong>Általánosítás:</strong> a Hallgató (A-02) a Látogató (A-01) specializációja, ezért minden nyilvános use case-t elér. Az Oktató (A-03) a Hallgató specializációja, ezért a hallgatói use case-eket (UC-01, UC-02, UC-11–UC-14) is eléri.</li>
+                    <li><strong>Asszociációk:</strong> a diagramon minden vonal azt jelenti, hogy az aktor kezdeményezi a use case-t, vagy (külső rendszer esetén) adatot szolgáltat hozzá. Az Egyetemi azonosító szolgáltatás az UC-01-hez, a Menetrend-adatforrás az UC-08-hoz, a Parkolóérzékelő-rendszer az UC-04-hez kapcsolódik.</li>
+                    <li><strong>A bejelentkezés mint előfeltétel:</strong> a bejelentkezést igénylő use case-ek (UC-02 és UC-10–UC-18) prekondíciójaként szerepel, hogy a felhasználó be van jelentkezve. Ezt nem «include» kapcsolattal jelöljük, mert a bejelentkezés egyszer történik meg egy munkamenetben, nem minden use case részeként.</li>
+                    <li><strong>Navigáció a use case-ek között:</strong> több use case-ből át lehet lépni a térképre (például egy esemény helyszínére kattintva). Ez a felület navigációja, nem «extend» kapcsolat, ezért a diagram nem jelöli; a leírásokban alternatív esetként szerepel.</li>
+                </ul>
+
+                <!-- 3.2 -->
+                <h2 id="srs-3-2" class="h-sub">3.2 Hitelesítés és szerepkörök</h2>
+                <p>A csomag a bejelentkezést, a kijelentkezést és a szerepkörök alapján történő jogosultságkezelést írja le. Aktorok: A-02 Hallgató, A-03 Oktató, A-04 Adminisztrátor, A-05 Egyetemi azonosító szolgáltatás (definíciójuk: 3.1.1). A csomagra a teljes diagram (1. ábra) sárga része vonatkozik.</p>
+
+                <h3 class="h-sub2">3.2.1 Követelmények</h3>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Azonosító</th><th>Követelmény</th><th>Prioritás</th></tr></thead>
+                        <tbody>
+                            <tr><td>K-01</td><td>A rendszer nyilvános részei (térkép, parkolás, események, hírek, menza, menetrend, oktatókereső) bejelentkezés nélkül is elérhetők.</td><td>Kötelező</td></tr>
+                            <tr><td>K-02</td><td>A bejelentkezés az egyetemi Microsoft-fiókkal történik. A rendszer jelszót nem kér be és nem tárol.</td><td>Kötelező</td></tr>
+                            <tr><td>K-03</td><td>A rendszer a bejelentkezett felhasználóhoz szerepkört rendel: hallgató, oktató vagy adminisztrátor. Egy felhasználónak több szerepköre is lehet.</td><td>Kötelező</td></tr>
+                            <tr><td>K-04</td><td>Első bejelentkezéskor a felhasználó hallgató szerepkört kap. Oktatói és adminisztrátori szerepkört csak adminisztrátor rendelhet hozzá (UC-18).</td><td>Kötelező</td></tr>
+                            <tr><td>K-05</td><td>A rendszer a felhasználóról csak a fiókból kapott azonosítót, nevet és egyetemi e-mail-címet, valamint a szerepköreit (oktatónál a tanszékét) tárolja. Más személyes adatot nem gyűjt.</td><td>Kötelező</td></tr>
+                            <tr><td>K-06</td><td>A munkamenet 30 perc tétlenség után lejár. A felhasználó bármikor kijelentkezhet.</td><td>Kötelező</td></tr>
+                            <tr><td>K-07</td><td>Neptun-azonosítóval történő belépés csak az egyetem engedélye esetén készül el.</td><td>Opcionális</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="uc-01" class="h-sub2">3.2.2 UC-01 – Bejelentkezés</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Bejelentkezés</td></tr>
+                        <tr><th>Rövid leírás</th><td>A felhasználó az egyetemi Microsoft-fiókjával belép a rendszerbe, és a szerepkörének megfelelő funkciókat kapja meg.</td></tr>
+                        <tr><th>Aktorok</th><td>Elsődleges: A-02 Hallgató, A-03 Oktató (a Hallgatótól örökölve), A-04 Adminisztrátor. Másodlagos: A-05 Egyetemi azonosító szolgáltatás.</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul>
+                            <li>A felhasználó nincs bejelentkezve.</li>
+                            <li>A felhasználónak érvényes egyetemi Microsoft-fiókja van.</li>
+                        </ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>Siker esetén aktív munkamenet jön létre; a fejlécben megjelenik a felhasználó neve, a menüben a szerepköréhez tartozó funkciók.</li>
+                            <li>Első belépéskor létrejön a felhasználó rekordja hallgató szerepkörrel (K-04).</li>
+                            <li>Sikertelen belépés esetén nem jön létre munkamenet; a nyilvános funkciók elérhetők maradnak.</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A felhasználó a fejlécben a „Bejelentkezés” gombra kattint.</li>
+                            <li>A rendszer átirányítja az egyetemi bejelentkezési oldalra.</li>
+                            <li>A felhasználó az egyetemi oldalon megadja a fiókja adatait, és ha szükséges, jóváhagyja a kétlépcsős azonosítást.</li>
+                            <li>Az azonosító szolgáltatás a sikeres azonosítás eredményével visszairányítja a felhasználót a rendszerbe.</li>
+                            <li>A rendszer ellenőrzi az eredményt, és betölti a felhasználó rekordját.</li>
+                            <li>A rendszer elindítja a munkamenetet, és visszaviszi a felhasználót arra az oldalra, ahonnan a bejelentkezést kezdte.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Védett funkcióból indul:</strong> a felhasználó bejelentkezés nélkül nyit meg egy belépést igénylő funkciót (például a hibabejelentést). A rendszer a 2. lépéssel folytatja, majd a 6. lépésben a kért funkcióhoz viszi vissza.</li>
+                            <li><strong>A2 – Megszakított belépés:</strong> a felhasználó az egyetemi oldalon a „Mégse” lehetőséget választja. A rendszer a kezdőlapra lép vissza, nyilvános módban.</li>
+                            <li><strong>A3 – Első belépés:</strong> az 5. lépésben a rendszer nem talál rekordot, ezért létrehozza azt hallgató szerepkörrel, majd a 6. lépéssel folytatja.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Az azonosító szolgáltatás nem érhető el:</strong> a rendszer „A bejelentkezés jelenleg nem elérhető” üzenetet mutat. A nyilvános funkciók továbbra is működnek.</li>
+                            <li><strong>E2 – Érvénytelen vagy lejárt azonosítás:</strong> a rendszer elutasítja a belépést, és felajánlja az újrapróbálást.</li>
+                            <li><strong>E3 – Letiltott fiók:</strong> a rendszer üzenetben jelzi, hogy a fiók le van tiltva, és megadja az adminisztrátorok elérhetőségét. Munkamenet nem jön létre.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <h3 id="uc-02" class="h-sub2">3.2.3 UC-02 – Kijelentkezés</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Kijelentkezés</td></tr>
+                        <tr><th>Rövid leírás</th><td>A bejelentkezett felhasználó lezárja a munkamenetét.</td></tr>
+                        <tr><th>Aktorok</th><td>A-02 Hallgató, A-03 Oktató, A-04 Adminisztrátor.</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul><li>A felhasználónak aktív munkamenete van.</li></ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>A munkamenet megszűnt; a felület nyilvános módban jelenik meg.</li>
+                            <li>A böngésző „Vissza” gombjával sem érhető el védett oldal.</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A felhasználó a fejlécben a nevére, majd a „Kijelentkezés” menüpontra kattint.</li>
+                            <li>A rendszer megszünteti a munkamenetet.</li>
+                            <li>A rendszer a kezdőlapra irányít, és megerősítő üzenetet mutat.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Automatikus kijelentkezés:</strong> 30 perc tétlenség után a munkamenet lejár (K-06). A felhasználó következő műveleténél a rendszer jelzi ezt, és bejelentkezést kínál.</li>
+                            <li><strong>A2 – Mentetlen adat:</strong> ha a felhasználónál kitöltött, de el nem küldött űrlap van (például félkész hibabejelentés), a rendszer megerősítést kér a kijelentkezés előtt.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Hálózati hiba:</strong> ha a szerver nem érhető el, a böngésző törli a munkamenet helyi adatait; a szerveren a munkamenet a lejáratkor szűnik meg.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <!-- 3.3 -->
+                <h2 id="srs-3-3" class="h-sub">3.3 Eligazodás</h2>
+                <p>A csomag a campustérképet és a parkolók foglaltságának megjelenítését írja le. Aktorok: A-01 Látogató és az általánosítás miatt minden bejelentkezett felhasználó, valamint A-07 Parkolóérzékelő-rendszer (definíciójuk: 3.1.1).</p>
+
+                <h3 class="h-sub2">3.3.1 Követelmények</h3>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Azonosító</th><th>Követelmény</th><th>Prioritás</th></tr></thead>
+                        <tbody>
+                            <tr><td>K-08</td><td>A rendszer megjeleníti a campus térképét az épületekkel és a fontos pontokkal (bejáratok, megállók, parkolók, menza, könyvtár).</td><td>Kötelező</td></tr>
+                            <tr><td>K-09</td><td>A felhasználó épületre, teremre vagy szolgáltatásra kereshet; a találatot a térkép kiemeli, és ráközelít.</td><td>Kötelező</td></tr>
+                            <tr><td>K-10</td><td>A keresés nem különbözteti meg a kis- és nagybetűt, nem érzékeny az ékezetekre, és részleges egyezést is elfogad (például „a1” → „A/1 épület”).</td><td>Ajánlott</td></tr>
+                            <tr><td>K-11</td><td>Egy hely kiválasztásakor megjelenik a hely neve, rövid leírása, és ha van, a nyitvatartása.</td><td>Kötelező</td></tr>
+                            <tr><td>K-12</td><td>A rendszer zónánként megjeleníti a parkolók szabad helyeinek számát, ha az érzékelőadat elérhető.</td><td>Kötelező</td></tr>
+                            <tr><td>K-13</td><td>Ha a parkolóadat 10 percnél régebbi, a rendszer „nem friss” jelzést mutat; ha egyáltalán nincs adat, „nincs adat” jelzést.</td><td>Kötelező</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="uc-03" class="h-sub2">3.3.2 UC-03 – Hely keresése a campustérképen</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Hely keresése a campustérképen</td></tr>
+                        <tr><th>Rövid leírás</th><td>A felhasználó megkeres egy épületet, termet vagy szolgáltatást, és megnézi a helyét és az adatait a térképen.</td></tr>
+                        <tr><th>Aktorok</th><td>A-01 Látogató (és általánosítással minden bejelentkezett felhasználó).</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul><li>A helyek adatai (név, kategória, koordináta) fel vannak töltve a rendszerbe.</li></ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>A keresett hely ki van emelve, a térkép ráközelít, és megjelenik a hely adatlapja.</li>
+                            <li>A use case a rendszer adatait nem módosítja.</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A felhasználó megnyitja a „Térkép” menüpontot.</li>
+                            <li>A rendszer megjeleníti a campust az épületekkel és a fontos pontokkal.</li>
+                            <li>A felhasználó beír egy keresőkifejezést a keresőmezőbe.</li>
+                            <li>A rendszer gépelés közben legfeljebb 8 javaslatot mutat.</li>
+                            <li>A felhasználó kiválaszt egy javaslatot.</li>
+                            <li>A rendszer kiemeli a helyet, ráközelít, és megjeleníti az adatlapját (K-11).</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Kattintás a térképen:</strong> a felhasználó keresés helyett közvetlenül egy épületre kattint; a rendszer a 6. lépéssel folytatja.</li>
+                            <li><strong>A2 – Kategóriaszűrő:</strong> a felhasználó kategóriát választ (például menza, parkoló, könyvtár); a rendszer csak az adott kategória helyeit jelöli.</li>
+                            <li><strong>A3 – Érkezés más funkcióból:</strong> a felhasználó egy esemény helyszínére vagy egy oktató irodájára kattint; a rendszer a térképet megnyitva a 6. lépéssel indul.</li>
+                            <li><strong>A4 – Hibabejelentés innen:</strong> a hely adatlapján a „Hiba bejelentése itt” gombra kattintva a felhasználó az UC-13-ra lép át, előre kitöltött helyszínnel.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Nincs találat:</strong> a rendszer „Nincs ilyen nevű hely” üzenetet mutat, és hasonló nevű helyeket ajánl.</li>
+                            <li><strong>E2 – A térkép háttere nem töltődik be:</strong> a rendszer a helyek kereshető listáját jeleníti meg térkép nélkül, és jelzi a hibát.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <h3 id="uc-04" class="h-sub2">3.3.3 UC-04 – Szabad parkolóhelyek megtekintése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Szabad parkolóhelyek megtekintése</td></tr>
+                        <tr><th>Rövid leírás</th><td>A felhasználó megnézi, hogy az egyetem parkolózónáiban hány szabad hely van.</td></tr>
+                        <tr><th>Aktorok</th><td>Elsődleges: A-01 Látogató. Másodlagos: A-07 Parkolóérzékelő-rendszer.</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul>
+                            <li>A parkolózónák (név, hely, kapacitás) fel vannak véve a rendszerbe.</li>
+                            <li>A parkolóérzékelő-rendszer adatot küld (ha nem, lásd E1).</li>
+                        </ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>A felhasználó látja a zónákat a szabad helyek számával és az adat időpontjával.</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A felhasználó megnyitja a „Parkolás” menüpontot.</li>
+                            <li>A rendszer lekéri a zónák legfrissebb adatait.</li>
+                            <li>A rendszer térképen és listában megjeleníti a zónákat, a szabad helyek számát és egy színjelölést: zöld, ha a helyek több mint 20%-a szabad; sárga, ha 1–20%; piros, ha a zóna tele van.</li>
+                            <li>A felhasználó egy zónára kattint.</li>
+                            <li>A rendszer megjeleníti a zóna kapacitását és az utolsó frissítés idejét.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Automatikus frissítés:</strong> amíg az oldal nyitva van, a rendszer percenként frissíti az adatokat.</li>
+                            <li><strong>A2 – Átlépés a térképre:</strong> a felhasználó a zóna adatlapjáról a teljes campustérképre léphet (UC-03), ahol a zóna ki van emelve.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Nincs érzékelőadat:</strong> a zónánál „nincs adat” jelzés jelenik meg, a kapacitás látható marad (K-13).</li>
+                            <li><strong>E2 – Elavult adat:</strong> ha az utolsó adat 10 percnél régebbi, a rendszer „nem friss” jelzést mutat az utolsó frissítés idejével.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <!-- 3.4 -->
+                <h2 id="srs-3-4" class="h-sub">3.4 Események és hírek</h2>
+                <p>A csomag az eseménynaptárt és a hírfolyamot írja le. Aktor: A-01 Látogató és általánosítással minden bejelentkezett felhasználó (definíció: 3.1.1). Az események és hírek feltöltését az UC-15 (3.7) írja le.</p>
+
+                <h3 class="h-sub2">3.4.1 Követelmények</h3>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Azonosító</th><th>Követelmény</th><th>Prioritás</th></tr></thead>
+                        <tbody>
+                            <tr><td>K-14</td><td>Az események listanézetben és naptárnézetben (havi és heti) is böngészhetők.</td><td>Kötelező</td></tr>
+                            <tr><td>K-15</td><td>Az események dátum, típus, kar és helyszín szerint szűrhetők; a szűrők kombinálhatók.</td><td>Kötelező</td></tr>
+                            <tr><td>K-16</td><td>Egy esemény részletes nézete tartalmazza a címet, a leírást, az időpontot, a helyszínt (a térképre mutató hivatkozással) és a szervezőt.</td><td>Kötelező</td></tr>
+                            <tr><td>K-17</td><td>A múltbeli események alapértelmezésben nem jelennek meg, de szűrővel előhívhatók.</td><td>Ajánlott</td></tr>
+                            <tr><td>K-18</td><td>A hírek időrendben, a legfrissebbel kezdve jelennek meg, és témakör szerint szűrhetők.</td><td>Kötelező</td></tr>
+                            <tr><td>K-19</td><td>Minden hír tartalmaz egy rövid összefoglalót és egy hivatkozást a teljes cikkre az egyetem hivatalos honlapján.</td><td>Kötelező</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="uc-05" class="h-sub2">3.4.2 UC-05 – Események böngészése és szűrése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Események böngészése és szűrése</td></tr>
+                        <tr><th>Rövid leírás</th><td>A felhasználó megnézi a közelgő egyetemi eseményeket, szűrőkkel leszűkíti őket, és megnyitja egy esemény részleteit.</td></tr>
+                        <tr><th>Aktorok</th><td>A-01 Látogató (és általánosítással minden bejelentkezett felhasználó).</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul><li>Nincs különleges előfeltétel; a funkció bejelentkezés nélkül is elérhető.</li></ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>A felhasználó a szűrőknek megfelelő eseményeket látja.</li>
+                            <li>A beállított szűrők az oldal elhagyásáig megmaradnak; a rendszer adatai nem változnak.</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A felhasználó megnyitja az „Események” menüpontot.</li>
+                            <li>A rendszer a következő 30 nap eseményeit időrendben, listanézetben mutatja.</li>
+                            <li>A felhasználó szűrőket állít be (dátumtartomány, típus, kar, helyszín).</li>
+                            <li>A rendszer frissíti a listát a szűrők szerint.</li>
+                            <li>A felhasználó kiválaszt egy eseményt.</li>
+                            <li>A rendszer megjeleníti az esemény részleteit (K-16).</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Naptárnézet:</strong> a felhasználó havi vagy heti naptárnézetre vált; a szűrők ott is érvényesek.</li>
+                            <li><strong>A2 – Múltbeli események:</strong> a felhasználó bekapcsolja a „Korábbi események is” szűrőt (K-17).</li>
+                            <li><strong>A3 – Helyszín a térképen:</strong> a részletes nézetben a helyszínre kattintva a rendszer az UC-03-ra lép át.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Nincs megfelelő esemény:</strong> a rendszer „Nincs a szűrőknek megfelelő esemény” üzenetet és „Szűrők törlése” gombot mutat.</li>
+                            <li><strong>E2 – Betöltési hiba:</strong> ha az adatok nem tölthetők be, a rendszer hibaüzenetet és „Újra” gombot mutat.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <h3 id="uc-06" class="h-sub2">3.4.3 UC-06 – Hírek olvasása</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Hírek olvasása</td></tr>
+                        <tr><th>Rövid leírás</th><td>A felhasználó átnézi az egyetemi híreket, és szükség esetén megnyitja a teljes cikket a hivatalos honlapon.</td></tr>
+                        <tr><th>Aktorok</th><td>A-01 Látogató (és általánosítással minden bejelentkezett felhasználó).</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul><li>Nincs különleges előfeltétel.</li></ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul><li>A felhasználó elolvasta a kiválasztott hír összefoglalóját; a rendszer adatai nem változnak.</li></ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A felhasználó megnyitja a „Hírek” menüpontot.</li>
+                            <li>A rendszer a legfrissebb 10 hírt mutatja címmel, dátummal és összefoglalóval.</li>
+                            <li>A felhasználó témakört választ, ha szűrni szeretne.</li>
+                            <li>A felhasználó egy hírre kattint.</li>
+                            <li>A rendszer megjeleníti a hír összefoglalóját és a teljes cikkre mutató hivatkozást.</li>
+                            <li>A hivatkozásra kattintva a hivatalos honlap új lapon nyílik meg.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Kezdőlapról:</strong> a kezdőlap a legfrissebb 3 hírt mutatja; ezekre kattintva a felhasználó az 5. lépésnél kapcsolódik be.</li>
+                            <li><strong>A2 – További hírek:</strong> a lista alján a „Továbbiak betöltése” gombbal újabb 10 hír jelenik meg.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – A hivatalos honlap nem érhető el:</strong> az összefoglaló a Vezérlőpultban továbbra is olvasható.</li>
+                            <li><strong>E2 – Betöltési hiba:</strong> a rendszer hibaüzenetet és „Újra” gombot mutat.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <!-- 3.5 -->
+                <h2 id="srs-3-5" class="h-sub">3.5 Mindennapi szolgáltatások</h2>
+                <p>A csomag a menza-információkat, az MVK-menetrendet és az oktatói adatbázist írja le. Aktorok: A-01 Látogató, A-03 Oktató, A-06 Menetrend-adatforrás (definíciójuk: 3.1.1).</p>
+
+                <h3 class="h-sub2">3.5.1 Követelmények</h3>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Azonosító</th><th>Követelmény</th><th>Prioritás</th></tr></thead>
+                        <tbody>
+                            <tr><td>K-20</td><td>A rendszer megjeleníti a menza napi és heti étlapját árakkal.</td><td>Kötelező</td></tr>
+                            <tr><td>K-21</td><td>A rendszer megjeleníti a menza nyitvatartását; zárva tartáskor ezt jelzi, és megmutatja a következő nyitás időpontját.</td><td>Kötelező</td></tr>
+                            <tr><td>K-22</td><td>Az étlapon jelölhetők az allergének és a vegetáriánus ételek, ha az adat rendelkezésre áll.</td><td>Ajánlott</td></tr>
+                            <tr><td>K-23</td><td>A rendszer menetrend szerint megjeleníti az egyetemhez legközelebbi MVK-megállók következő három indulását járatonként.</td><td>Kötelező</td></tr>
+                            <tr><td>K-24</td><td>A felhasználó kiválaszthatja a megállót és az irányt.</td><td>Ajánlott</td></tr>
+                            <tr><td>K-25</td><td>Az oktatók név, tanszék és kar szerint kereshetők.</td><td>Kötelező</td></tr>
+                            <tr><td>K-26</td><td>Az oktató adatlapján szerepel a neve, a tanszéke, az irodája (a térképre mutató hivatkozással), az egyetemi e-mail-címe és a fogadóórája.</td><td>Kötelező</td></tr>
+                            <tr><td>K-27</td><td>Az oktató a saját adatlapján az irodáját és a fogadóóráját módosíthatja, a nevét és az e-mail-címét nem.</td><td>Kötelező</td></tr>
+                            <tr><td>K-28</td><td>Az oktatói adatlap módosítása a mentés után azonnal látható a többi felhasználó számára.</td><td>Kötelező</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="uc-07" class="h-sub2">3.5.2 UC-07 – Menza-információk megtekintése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Menza-információk megtekintése</td></tr>
+                        <tr><th>Rövid leírás</th><td>A felhasználó megnézi a menza aznapi vagy heti étlapját, az árakat és a nyitvatartást.</td></tr>
+                        <tr><th>Aktorok</th><td>A-01 Látogató (és általánosítással minden bejelentkezett felhasználó).</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul><li>Az adminisztrátor feltöltötte az adott hét étlapját (UC-15).</li></ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul><li>A felhasználó látja a kért nap étlapját; a rendszer adatai nem változnak.</li></ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A felhasználó megnyitja a „Menza” menüpontot.</li>
+                            <li>A rendszer megjeleníti a mai étlapot árakkal és a mai nyitvatartást.</li>
+                            <li>A felhasználó a heti nézetre vált.</li>
+                            <li>A rendszer a hét minden napjának étlapját mutatja.</li>
+                            <li>A felhasználó egy ételre kattint.</li>
+                            <li>A rendszer megjeleníti az étel allergénjeit és a vegetáriánus jelölést, ha ezek meg vannak adva (K-22).</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Zárva tartás:</strong> hétvégén vagy szünetben a rendszer „A menza ma zárva tart” üzenetet és a következő nyitás időpontját mutatja.</li>
+                            <li><strong>A2 – Kezdőlapi kártya:</strong> a kezdőlapon a mai menü röviden is megjelenik; erre kattintva a felhasználó a 2. lépésnél kapcsolódik be.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Nincs feltöltött étlap:</strong> a rendszer „Az étlap még nem érhető el” üzenetet mutat, a nyitvatartás ettől függetlenül látható.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <h3 id="uc-08" class="h-sub2">3.5.3 UC-08 – MVK-menetrend megtekintése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>MVK-menetrend megtekintése</td></tr>
+                        <tr><th>Rövid leírás</th><td>A felhasználó megnézi, hogy az egyetemhez közeli megállókból mikor indulnak a következő autóbusz- és villamosjáratok.</td></tr>
+                        <tr><th>Aktorok</th><td>Elsődleges: A-01 Látogató. Másodlagos: A-06 Menetrend-adatforrás (MVK).</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul><li>A rendszerben van betöltött, érvényes menetrend (F-02).</li></ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul><li>A felhasználó látja a kiválasztott megálló következő indulásait; a rendszer adatai nem változnak.</li></ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A felhasználó megnyitja a „Menetrend” menüpontot.</li>
+                            <li>A rendszer kiválasztja az alapértelmezett, az egyetemhez legközelebbi megállót.</li>
+                            <li>A rendszer járatonként és irányonként megjeleníti a következő három indulást, időpontként és „ennyi perc múlva” formában is.</li>
+                            <li>A felhasználó szükség esetén másik irányt választ (K-24).</li>
+                            <li>Amíg az oldal nyitva van, a rendszer percenként frissíti a hátralévő időket.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Másik megálló:</strong> a felhasználó listából másik megállót választ; a rendszer a 3. lépéssel folytatja.</li>
+                            <li><strong>A2 – Megálló a térképen:</strong> a megálló nevére kattintva a rendszer az UC-03-ra lép át.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Az adatforrás nem érhető el:</strong> a rendszer az utoljára betöltött menetrendet mutatja, és jelzi, hogy az adat nem friss.</li>
+                            <li><strong>E2 – Nincs több indulás aznap:</strong> a rendszer „Ma már nincs több indulás” üzenetet és a következő napi első indulást mutatja.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+                <p class="note">A rendszer a menetrend szerinti indulásokat mutatja. A járművek valós idejű helyzete és a késések megjelenítése nem része az első változatnak, mert ehhez valós idejű adatforrás szükséges.</p>
+
+                <h3 id="uc-09" class="h-sub2">3.5.4 UC-09 – Oktató keresése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Oktató keresése</td></tr>
+                        <tr><th>Rövid leírás</th><td>A felhasználó megkeres egy oktatót, és megnézi az elérhetőségét, az irodáját és a fogadóóráját.</td></tr>
+                        <tr><th>Aktorok</th><td>A-01 Látogató (és általánosítással minden bejelentkezett felhasználó).</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul><li>Az oktatói adatlapok fel vannak töltve a rendszerbe.</li></ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul><li>A felhasználó látja a kiválasztott oktató adatlapját; a rendszer adatai nem változnak.</li></ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A felhasználó megnyitja az „Oktatók” menüpontot.</li>
+                            <li>A rendszer megjeleníti a keresőmezőt és a kar, illetve tanszék szerinti szűrőt.</li>
+                            <li>A felhasználó beírja az oktató nevének egy részét.</li>
+                            <li>A rendszer listázza a találatokat névvel és tanszékkel.</li>
+                            <li>A felhasználó kiválaszt egy oktatót.</li>
+                            <li>A rendszer megjeleníti az oktató adatlapját (K-26).</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Böngészés tanszék szerint:</strong> a felhasználó név helyett tanszéket választ; a rendszer a tanszék összes oktatóját listázza.</li>
+                            <li><strong>A2 – Iroda a térképen:</strong> az iroda nevére kattintva a rendszer az UC-03-ra lép át.</li>
+                            <li><strong>A3 – E-mail:</strong> az e-mail-címre kattintva megnyílik a felhasználó levelezőprogramja.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Nincs találat:</strong> a rendszer „Nincs ilyen nevű oktató” üzenetet mutat.</li>
+                            <li><strong>E2 – Hiányos adatlap:</strong> a ki nem töltött mezők helyén „nincs megadva” felirat jelenik meg.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <h3 id="uc-10" class="h-sub2">3.5.5 UC-10 – Saját oktatói adatok szerkesztése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Saját oktatói adatok szerkesztése</td></tr>
+                        <tr><th>Rövid leírás</th><td>Az oktató módosítja az adatlapján az irodáját és a fogadóóráját.</td></tr>
+                        <tr><th>Aktorok</th><td>A-03 Oktató.</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul>
+                            <li>A felhasználó be van jelentkezve, és oktató szerepköre van.</li>
+                            <li>A fiókjához oktatói adatlap van rendelve (UC-18, A1).</li>
+                        </ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>A módosított adatok mentésre kerültek, és azonnal láthatók (K-28).</li>
+                            <li>A rendszer naplózza a módosítást.</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>Az oktató a fejlécben a nevére, majd az „Oktatói adatlapom” menüpontra kattint.</li>
+                            <li>A rendszer megjeleníti az adatlapot; az iroda és a fogadóóra szerkeszthető, a név és az e-mail-cím nem (K-27).</li>
+                            <li>Az oktató módosítja az irodát, illetve a fogadóóra napját, kezdetét, végét és megjegyzését.</li>
+                            <li>Az oktató a „Mentés” gombra kattint.</li>
+                            <li>A rendszer ellenőrzi az adatokat (például hogy a kezdés korábbi a befejezésnél).</li>
+                            <li>A rendszer menti az adatokat, és visszajelzést ad a sikeres mentésről.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Több fogadóóra:</strong> az oktató több idősávot is felvehet (például kedd és csütörtök).</li>
+                            <li><strong>A2 – Ideiglenes megjegyzés:</strong> az oktató rövid megjegyzést írhat (például „ezen a héten elmarad”), amely az adatlap tetején kiemelve jelenik meg.</li>
+                            <li><strong>A3 – Mégse:</strong> az oktató a „Mégse” gombbal elveti a módosításokat.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Érvénytelen adat:</strong> a rendszer kiemeli a hibás mezőt, és nem ment.</li>
+                            <li><strong>E2 – Megszakadt kapcsolat:</strong> a beírt adatok az űrlapon maradnak, és a rendszer újrapróbálást kínál.</li>
+                            <li><strong>E3 – Nincs hozzárendelt adatlap:</strong> a rendszer jelzi, hogy az adatlap hozzárendeléséhez az adminisztrátorhoz kell fordulni.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <!-- 3.6 -->
+                <h2 id="srs-3-6" class="h-sub">3.6 Ügyintézés és visszajelzés</h2>
+                <p>A csomag az ügyintézési időpontfoglalást és a hibabejelentést írja le. Aktor: A-02 Hallgató, és általánosítással A-03 Oktató (definíciójuk: 3.1.1). Az időpontok és a bejelentések adminisztrátori kezelését a 3.7 csomag írja le.</p>
+
+                <h3 class="h-sub2">3.6.1 Követelmények</h3>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Azonosító</th><th>Követelmény</th><th>Prioritás</th></tr></thead>
+                        <tbody>
+                            <tr><td>K-29</td><td>A hallgató ügytípust választhat (például igazolás kérése, tanulmányi ügy, kollégiumi ügy), és megtekintheti a hozzá tartozó szabad időpontokat a következő 14 napra.</td><td>Kötelező</td></tr>
+                            <tr><td>K-30</td><td>Egy hallgatónak ugyanarra az ügytípusra egyszerre legfeljebb egy aktív foglalása lehet.</td><td>Kötelező</td></tr>
+                            <tr><td>K-31</td><td>Foglaláskor a rendszer visszaigazolást küld a hallgató egyetemi e-mail-címére, és az időpontot megelőző napon emlékeztetőt küld.</td><td>Ajánlott</td></tr>
+                            <tr><td>K-32</td><td>A hallgató a foglalását legkésőbb 2 órával az időpont előtt lemondhatja; a felszabaduló időpont azonnal újra foglalható.</td><td>Kötelező</td></tr>
+                            <tr><td>K-33</td><td>A hallgató hibát jelenthet be kategória, helyszín (listából vagy a térképen kijelölve) és szöveges leírás megadásával.</td><td>Kötelező</td></tr>
+                            <tr><td>K-34</td><td>A bejelentéshez egy legfeljebb 5 MB-os JPEG vagy PNG kép csatolható.</td><td>Ajánlott</td></tr>
+                            <tr><td>K-35</td><td>A bejelentésnek négy állapota lehet: Új, Folyamatban, Megoldva, Elutasítva.</td><td>Kötelező</td></tr>
+                            <tr><td>K-36</td><td>A bejelentő a saját bejelentéseit és azok állapotát egy listában látja.</td><td>Kötelező</td></tr>
+                            <tr><td>K-37</td><td>A bejelentő e-mailben értesítést kap, ha a bejelentésének állapota megváltozik.</td><td>Ajánlott</td></tr>
+                            <tr><td>K-38</td><td>Egy hallgató bejelentéseit más hallgatók nem látják.</td><td>Kötelező</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="uc-11" class="h-sub2">3.6.2 UC-11 – Ügyintézési időpont foglalása</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Ügyintézési időpont foglalása</td></tr>
+                        <tr><th>Rövid leírás</th><td>A hallgató kiválaszt egy ügytípust és egy szabad időpontot, és lefoglalja azt.</td></tr>
+                        <tr><th>Aktorok</th><td>A-02 Hallgató (és általánosítással A-03 Oktató).</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul>
+                            <li>A felhasználó be van jelentkezve.</li>
+                            <li>Van legalább egy ügytípus, amelyhez az adminisztrátor időpontsávot rögzített (UC-16).</li>
+                        </ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>A foglalás rögzítve van, az időpont mások számára foglaltként jelenik meg.</li>
+                            <li>A hallgató visszaigazolást kapott a felületen és e-mailben (K-31).</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A hallgató az „Ügyintézés” menüpontban az „Új foglalás” gombra kattint.</li>
+                            <li>A rendszer listázza az ügytípusokat rövid leírással.</li>
+                            <li>A hallgató kiválaszt egy ügytípust.</li>
+                            <li>A rendszer naptárban mutatja a következő 14 nap szabad időpontjait.</li>
+                            <li>A hallgató kiválaszt egy időpontot.</li>
+                            <li>A rendszer összegzést mutat (ügytípus, dátum, időpont, helyszín).</li>
+                            <li>A hallgató a „Foglalás megerősítése” gombra kattint.</li>
+                            <li>A rendszer ellenőrzi, hogy az időpont még szabad-e, és hogy a hallgatónak nincs-e aktív foglalása erre az ügytípusra (K-30).</li>
+                            <li>A rendszer rögzíti a foglalást, visszaigazoló képernyőt mutat, és e-mailt küld.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Nincs szabad időpont 14 napon belül:</strong> a rendszer jelzi ezt, és megmutatja a legközelebbi szabad időpontot.</li>
+                            <li><strong>A2 – Másik időpont:</strong> a 6. lépésnél a hallgató visszalép, és másik időpontot választ.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Az időpontot közben más lefoglalta:</strong> a rendszer üzenetben jelzi ezt, és a 4. lépéshez tér vissza frissített naptárral.</li>
+                            <li><strong>E2 – Már van aktív foglalás:</strong> a rendszer jelzi, hogy erre az ügytípusra már van foglalása, és hivatkozást ad a meglévő foglalásra (UC-12).</li>
+                            <li><strong>E3 – Sikertelen e-mail-küldés:</strong> a foglalás érvényes marad; a visszaigazolás a „Foglalásaim” oldalon látható.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <h3 id="uc-12" class="h-sub2">3.6.3 UC-12 – Saját foglalások kezelése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Saját foglalások kezelése</td></tr>
+                        <tr><th>Rövid leírás</th><td>A hallgató megnézi a foglalásait, és szükség esetén lemond egy aktív foglalást.</td></tr>
+                        <tr><th>Aktorok</th><td>A-02 Hallgató (és általánosítással A-03 Oktató).</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul><li>A felhasználó be van jelentkezve.</li></ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>Lemondás esetén a foglalás „lemondva” állapotú, az időpont újra szabad (K-32).</li>
+                            <li>Megtekintés esetén a rendszer adatai nem változnak.</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A hallgató megnyitja a „Foglalásaim” oldalt.</li>
+                            <li>A rendszer külön listában mutatja az aktív és a korábbi foglalásokat.</li>
+                            <li>A hallgató kiválaszt egy aktív foglalást.</li>
+                            <li>A hallgató a „Lemondás” gombra kattint.</li>
+                            <li>A rendszer megerősítést kér.</li>
+                            <li>A hallgató megerősíti a lemondást.</li>
+                            <li>A rendszer lemondja a foglalást, felszabadítja az időpontot, és visszajelzést ad.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Csak megtekintés:</strong> a hallgató a 2. lépés után nem választ műveletet.</li>
+                            <li><strong>A2 – Időpont módosítása:</strong> a lemondás után a rendszer azonnal felajánlja ugyanarra az ügytípusra az új foglalást (UC-11, 4. lépés).</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Túl késői lemondás:</strong> ha kevesebb mint 2 óra van az időpontig, a rendszer nem engedi a lemondást, és megmutatja az ügyintézés elérhetőségét.</li>
+                            <li><strong>E2 – Az adminisztrátor törölte az időpontot:</strong> a foglalás „törölve” állapotban, az adminisztrátor indoklásával jelenik meg (K-42).</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <h3 id="uc-13" class="h-sub2">3.6.4 UC-13 – Hibabejelentés beküldése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Hibabejelentés beküldése</td></tr>
+                        <tr><th>Rövid leírás</th><td>A hallgató bejelent egy hibát vagy problémát az egyetemen (például nem működő világítás), hogy az illetékesek megoldják.</td></tr>
+                        <tr><th>Aktorok</th><td>A-02 Hallgató (és általánosítással A-03 Oktató).</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul><li>A felhasználó be van jelentkezve.</li></ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>A bejelentés „Új” állapotban rögzítve van, és egy felelős egységhez van rendelve.</li>
+                            <li>A bejelentés egyedi azonosítót kapott (például HB-2026-0042), amelyet a hallgató lát.</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A hallgató a „Hibabejelentés” menüpontban az „Új bejelentés” gombra kattint.</li>
+                            <li>A rendszer megjeleníti az űrlapot.</li>
+                            <li>A hallgató kiválasztja a kategóriát (világítás, fűtés és szellőzés, takarítás, informatika, akadálymentesség, egyéb).</li>
+                            <li>A hallgató megadja a helyszínt: épületet választ a listából, és megadja a termet vagy a pontosabb helyet.</li>
+                            <li>A hallgató leírja a hibát (legalább 10 karakter).</li>
+                            <li>A hallgató szükség esetén képet csatol (K-34).</li>
+                            <li>A hallgató a „Beküldés” gombra kattint.</li>
+                            <li>A rendszer ellenőrzi a kötelező mezőket és a kép méretét, formátumát.</li>
+                            <li>A rendszer rögzíti a bejelentést, a kategória és a helyszín alapján hozzárendeli a felelős egységhez, és megmutatja az azonosítót.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Indítás a térképről:</strong> a hallgató egy hely adatlapjáról indítja a bejelentést (UC-03, A4); a helyszín előre ki van töltve.</li>
+                            <li><strong>A2 – Helyszín a térképen:</strong> a 4. lépésben a hallgató a térképen jelöli ki a pontos helyet.</li>
+                            <li><strong>A3 – Kép nélkül:</strong> a 6. lépés kimarad.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Hiányzó adat:</strong> a rendszer kiemeli a hiányzó kötelező mezőt, és nem küldi be a bejelentést.</li>
+                            <li><strong>E2 – Hibás kép:</strong> ha a kép 5 MB-nál nagyobb vagy nem JPEG/PNG, a rendszer csak a képet utasítja el, a többi adat megmarad.</li>
+                            <li><strong>E3 – Mentési hiba:</strong> az adatok az űrlapon maradnak, és a rendszer újrapróbálást kínál.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <h3 id="uc-14" class="h-sub2">3.6.5 UC-14 – Hibabejelentés állapotának követése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Hibabejelentés állapotának követése</td></tr>
+                        <tr><th>Rövid leírás</th><td>A hallgató megnézi, hol tart a beküldött bejelentése, és mit írt hozzá a felelős.</td></tr>
+                        <tr><th>Aktorok</th><td>A-02 Hallgató (és általánosítással A-03 Oktató).</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul><li>A felhasználó be van jelentkezve.</li></ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul><li>A hallgató látja a bejelentése állapotát és előzményeit; a rendszer adatai nem változnak.</li></ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A hallgató megnyitja a „Bejelentéseim” oldalt.</li>
+                            <li>A rendszer listázza a hallgató bejelentéseit azonosítóval, kategóriával, dátummal és állapottal (K-36).</li>
+                            <li>A hallgató kiválaszt egy bejelentést.</li>
+                            <li>A rendszer megmutatja a bejelentés adatait, az állapotváltozások időrendjét és a felelős megjegyzéseit.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Érkezés értesítésből:</strong> az e-mailben kapott hivatkozásra kattintva (bejelentkezés után) a rendszer közvetlenül a 4. lépést mutatja.</li>
+                            <li><strong>A2 – Szűrés állapot szerint:</strong> a hallgató csak a nyitott vagy csak a lezárt bejelentéseket listázza.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Más bejelentése:</strong> ha a hallgató hivatkozással más bejelentését próbálja megnyitni, a rendszer megtagadja a hozzáférést (K-38).</li>
+                            <li><strong>E2 – Nincs bejelentés:</strong> a rendszer üres listát és „Új bejelentés” gombot mutat.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <!-- 3.7 -->
+                <h2 id="srs-3-7" class="h-sub">3.7 Adminisztráció</h2>
+                <p>A csomag a tartalom, az ügyintézési időpontok, a hibabejelentések és a szerepkörök kezelését írja le. Aktorok: A-04 Adminisztrátor és az UC-17 esetén A-03 Oktató (definíciójuk: 3.1.1). Minden use case prekondíciója, hogy a felhasználó be van jelentkezve, és megfelelő szerepköre van.</p>
+
+                <h3 class="h-sub2">3.7.1 Követelmények</h3>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Azonosító</th><th>Követelmény</th><th>Prioritás</th></tr></thead>
+                        <tbody>
+                            <tr><td>K-39</td><td>Az adminisztrátor híreket, eseményeket, menza-étlapokat és térképi helyeket hozhat létre, módosíthat és archiválhat.</td><td>Kötelező</td></tr>
+                            <tr><td>K-40</td><td>A tartalom közzététel előtt előnézetben megtekinthető, és csak a közzététel után látható nyilvánosan.</td><td>Ajánlott</td></tr>
+                            <tr><td>K-41</td><td>Az adminisztrátor ügytípusokat és időpontsávokat hozhat létre és módosíthat, valamint egyes időpontokat zárolhat.</td><td>Kötelező</td></tr>
+                            <tr><td>K-42</td><td>Ha az adminisztrátor egy már lefoglalt időpontot töröl, a rendszer indoklással értesíti az érintett hallgatót.</td><td>Kötelező</td></tr>
+                            <tr><td>K-43</td><td>Az adminisztrátor minden bejelentést lát, az oktató a tanszékéhez rendelteket. Mindketten módosíthatják az állapotot, és megjegyzést fűzhetnek hozzá.</td><td>Kötelező</td></tr>
+                            <tr><td>K-44</td><td>Bejelentés elutasításakor az indoklás megadása kötelező.</td><td>Kötelező</td></tr>
+                            <tr><td>K-45</td><td>Az adminisztrátor szerepköröket rendelhet hozzá és vonhat vissza. A saját adminisztrátori szerepkörét nem vonhatja vissza, és az utolsó adminisztrátor szerepköre sem vonható vissza.</td><td>Kötelező</td></tr>
+                            <tr><td>K-46</td><td>A rendszer naplózza az adminisztrátori és oktatói módosításokat (ki, mit, mikor).</td><td>Kötelező</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="uc-15" class="h-sub2">3.7.2 UC-15 – Tartalom kezelése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Tartalom kezelése</td></tr>
+                        <tr><th>Rövid leírás</th><td>Az adminisztrátor híreket, eseményeket, menza-étlapokat és térképi helyeket hoz létre, módosít, tesz közzé vagy archivál.</td></tr>
+                        <tr><th>Aktorok</th><td>A-04 Adminisztrátor.</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul><li>A felhasználó be van jelentkezve, és adminisztrátor szerepköre van.</li></ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>A tartalom létrejött, módosult vagy archiválódott; a közzétett tartalom nyilvánosan látható.</li>
+                            <li>A művelet naplózva van (K-46).</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>Az adminisztrátor megnyitja az „Adminisztráció → Tartalom” oldalt.</li>
+                            <li>Kiválasztja a tartalomtípust (hír, esemény, menza-étlap, térképi hely).</li>
+                            <li>A rendszer listázza az adott típus elemeit állapottal (piszkozat, közzétett, archivált).</li>
+                            <li>Az adminisztrátor az „Új” gombra vagy egy meglévő elem „Szerkesztés” gombjára kattint.</li>
+                            <li>Kitölti vagy módosítja az űrlapot.</li>
+                            <li>Az „Előnézet” gombbal megnézi, hogyan jelenik meg a tartalom (K-40).</li>
+                            <li>A „Közzététel” gombra kattint.</li>
+                            <li>A rendszer ellenőrzi a kötelező mezőket, menti a tartalmat, és naplózza a műveletet.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Piszkozat:</strong> az adminisztrátor a 7. lépés helyett „Mentés piszkozatként” lehetőséget választ; a tartalom nem lesz nyilvános.</li>
+                            <li><strong>A2 – Archiválás:</strong> az adminisztrátor egy elemet archivál; az eltűnik a nyilvános felületről, de az adminisztrációs listában megmarad.</li>
+                            <li><strong>A3 – Heti étlap:</strong> menza-étlapnál a rendszer egy táblázatos űrlapon a hét összes napját egyszerre kéri be.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Hiányzó adat:</strong> a rendszer kiemeli a hiányzó mezőt, és nem ment.</li>
+                            <li><strong>E2 – Egyidejű szerkesztés:</strong> ha közben egy másik adminisztrátor ugyanezt az elemet mentette, a rendszer figyelmeztet, és felajánlja a frissebb változat betöltését.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <h3 id="uc-16" class="h-sub2">3.7.3 UC-16 – Ügyintézési időpontok kezelése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Ügyintézési időpontok kezelése</td></tr>
+                        <tr><th>Rövid leírás</th><td>Az adminisztrátor ügytípusokat és időpontsávokat ad meg, amelyekből a rendszer foglalható időpontokat készít.</td></tr>
+                        <tr><th>Aktorok</th><td>A-04 Adminisztrátor.</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul><li>A felhasználó be van jelentkezve, és adminisztrátor szerepköre van.</li></ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>Az új vagy módosított időpontok foglalhatók; a zárolt vagy törölt időpontok nem.</li>
+                            <li>Az érintett hallgatók értesítést kaptak, ha foglalt időpont törlődött (K-42).</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>Az adminisztrátor megnyitja az „Adminisztráció → Időpontok” oldalt.</li>
+                            <li>Kiválaszt egy ügytípust, vagy újat hoz létre (név, leírás, helyszín, egy időpont hossza, például 15 perc).</li>
+                            <li>Megad egy időpontsávot (nap, kezdés, befejezés).</li>
+                            <li>A rendszer előnézetben megmutatja a sávból készülő időpontokat.</li>
+                            <li>A rendszer ellenőrzi, hogy a sáv nem fedi-e át ugyanannak az ügytípusnak egy másik sávját.</li>
+                            <li>Az adminisztrátor menti a sávot; az időpontok foglalhatóvá válnak.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Ismétlődő sáv:</strong> a sáv hetente ismétlődhet egy megadott dátumig.</li>
+                            <li><strong>A2 – Zárolás:</strong> az adminisztrátor egyes szabad időpontokat zárol (például szabadság miatt).</li>
+                            <li><strong>A3 – Napi lista:</strong> az adminisztrátor egy nap foglalásait nyomtatható listában nézi meg.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Átfedés:</strong> a rendszer hibaüzenetet mutat, és nem menti a sávot.</li>
+                            <li><strong>E2 – Foglalt időpont törlése:</strong> a rendszer megerősítést és indoklást kér, majd értesíti az érintett hallgatót.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <h3 id="uc-17" class="h-sub2">3.7.4 UC-17 – Hibabejelentések kezelése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Hibabejelentések kezelése</td></tr>
+                        <tr><th>Rövid leírás</th><td>A felelős átnézi a beérkezett bejelentéseket, módosítja az állapotukat, és megjegyzést fűz hozzájuk.</td></tr>
+                        <tr><th>Aktorok</th><td>A-04 Adminisztrátor (minden bejelentés), A-03 Oktató (csak a tanszékéhez rendelt bejelentések).</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul>
+                            <li>A felhasználó be van jelentkezve, és adminisztrátor vagy oktató szerepköre van.</li>
+                            <li>Van legalább egy bejelentés, amelyhez hozzáférése van.</li>
+                        </ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>A bejelentés állapota és megjegyzései frissültek, az előzmények között megjelent a változás.</li>
+                            <li>A bejelentő értesítést kapott (K-37); a művelet naplózva van.</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A felhasználó megnyitja a „Bejelentések kezelése” oldalt.</li>
+                            <li>A rendszer listázza a hozzáférhető bejelentéseket, a legrégebbi „Új” állapotúval kezdve; a lista állapot, kategória és épület szerint szűrhető.</li>
+                            <li>A felhasználó kiválaszt egy bejelentést.</li>
+                            <li>Új állapotot választ (Folyamatban, Megoldva vagy Elutasítva), és megjegyzést ír.</li>
+                            <li>A „Mentés” gombra kattint.</li>
+                            <li>A rendszer rögzíti a változást, frissíti az előzményeket, és értesíti a bejelentőt.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Átirányítás:</strong> az adminisztrátor a bejelentést másik felelős egységhez rendeli (oktató ezt nem teheti meg).</li>
+                            <li><strong>A2 – Csak megjegyzés:</strong> a felhasználó állapotváltozás nélkül fűz megjegyzést a bejelentéshez.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Elutasítás indoklás nélkül:</strong> a rendszer nem ment, és kéri az indoklást (K-44).</li>
+                            <li><strong>E2 – Jogosulatlan hozzáférés:</strong> ha egy oktató más tanszék bejelentését próbálja megnyitni, a rendszer megtagadja a hozzáférést.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <h3 id="uc-18" class="h-sub2">3.7.5 UC-18 – Szerepkörök kezelése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Szerepkörök kezelése</td></tr>
+                        <tr><th>Rövid leírás</th><td>Az adminisztrátor szerepköröket rendel a felhasználókhoz, illetve visszavonja azokat.</td></tr>
+                        <tr><th>Aktorok</th><td>A-04 Adminisztrátor.</td></tr>
+                        <tr><th>Prekondíciók</th><td><ul>
+                            <li>A felhasználó be van jelentkezve, és adminisztrátor szerepköre van.</li>
+                            <li>A módosítandó felhasználó legalább egyszer már bejelentkezett a rendszerbe.</li>
+                        </ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>A felhasználó szerepkörei módosultak; a változás a felhasználó következő műveleténél érvényes.</li>
+                            <li>A művelet naplózva van.</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>Az adminisztrátor megnyitja az „Adminisztráció → Felhasználók” oldalt.</li>
+                            <li>Név vagy e-mail-cím alapján megkeresi a felhasználót.</li>
+                            <li>Kiválasztja a felhasználót.</li>
+                            <li>A rendszer megjeleníti a felhasználó jelenlegi szerepköreit.</li>
+                            <li>Az adminisztrátor szerepkört ad hozzá vagy von vissza; oktatói szerepkörnél a tanszék megadása kötelező.</li>
+                            <li>A „Mentés” gombra kattint.</li>
+                            <li>A rendszer ellenőrzi a K-45 szabályait, menti a változást, és naplózza.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Oktatói adatlap hozzárendelése:</strong> oktatói szerepkörnél az adminisztrátor a fiókhoz rendeli a meglévő oktatói adatlapot, vagy újat hoz létre.</li>
+                            <li><strong>A2 – Fiók letiltása:</strong> visszaélés esetén az adminisztrátor letilthatja a fiókot; a felhasználó ezután nem tud bejelentkezni (UC-01, E3).</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Saját adminisztrátori szerepkör visszavonása:</strong> a rendszer nem engedi.</li>
+                            <li><strong>E2 – Az utolsó adminisztrátor:</strong> a rendszer nem engedi az utolsó adminisztrátori szerepkör visszavonását.</li>
+                            <li><strong>E3 – A felhasználó nem található:</strong> a rendszer jelzi, hogy a felhasználónak előbb egyszer be kell jelentkeznie.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <h2 id="srs-3-8" class="h-sub">3.8 Bővítések (nem részei az első változatnak)</h2>
+                <p>A következő funkciók a H2 vízió szerint bővítések. Részletes követelményt ebben a változatban nem tartalmaznak, mert megvalósításuk külső feltételtől függ:</p>
+                <ul>
+                    <li><strong>Egyetemi fizetés (UniCredit-ötlet):</strong> bankpartner és pénzügyi szabályozás szükséges hozzá.</li>
+                    <li><strong>Lidl-akciók:</strong> a kereskedelmi partner engedélye szükséges az adatok megjelenítéséhez.</li>
+                    <li><strong>Natív mobilalkalmazás:</strong> az első változat reszponzív webes felülete után készülhet el.</li>
+                    <li><strong>Neptun-adatok (például órarend):</strong> az egyetem engedélyétől függ (K-07).</li>
+                    <li><strong>Angol nyelvű felület:</strong> a nemzetközi hallgatók miatt hasznos, idő függvényében.</li>
+                </ul>
+
+                <h1 id="srs-4" class="h-sec">4. Használhatóság</h1>
+                <p>Ez a fejezet a használhatósággal kapcsolatos nem funkcionális követelményeket tartalmazza.</p>
+
+                <h2 class="h-sub">4.1 Betanulási idő</h2>
+                <p>A nyilvános funkciókat (térkép, események, hírek, menza, menetrend, oktatókereső) egy kezdő felhasználónak betanulás nélkül, első alkalommal kell tudnia használni. A hallgatói funkciók (foglalás, hibabejelentés) első használata legfeljebb 5 percet vehet igénybe a kézikönyv nélkül. Egy adminisztrátornak legfeljebb 1 óra betanulás szükséges az összes adminisztrációs funkció használatához.</p>
+
+                <h2 class="h-sub">4.2 Feladatok végrehajtási ideje</h2>
+                <p>Az alábbi táblázat a leggyakoribb feladatok becsült idejét hasonlítja össze a jelenlegi módszerrel és a Vezérlőpulttal. A jelenlegi értékek a csapat becslései; a tesztelés során méréssel pontosítjuk őket.</p>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Feladat</th><th>Jelenleg (becslés)</th><th>A Vezérlőpulttal (cél)</th></tr></thead>
+                        <tbody>
+                            <tr><td>Egy terem megtalálása</td><td>5–10 perc (honlap, kérdezősködés)</td><td>legfeljebb 1 perc</td></tr>
+                            <tr><td>A menza mai étlapjának megnézése</td><td>2–3 perc (külön oldal megkeresése)</td><td>legfeljebb 30 másodperc</td></tr>
+                            <tr><td>A következő buszindulás megnézése</td><td>2–3 perc (külön alkalmazás)</td><td>legfeljebb 30 másodperc</td></tr>
+                            <tr><td>Egy oktató fogadóórájának megtalálása</td><td>3–5 perc (tanszéki honlapok)</td><td>legfeljebb 1 perc</td></tr>
+                            <tr><td>Ügyintézési időpont foglalása</td><td>telefon vagy e-mail, akár napok</td><td>legfeljebb 2 perc</td></tr>
+                            <tr><td>Hibabejelentés</td><td>e-mail, ha ismert a felelős címe</td><td>legfeljebb 2 perc</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="h-sub">4.3 A kezdő felhasználók segítése</h2>
+                <ul>
+                    <li>A menüpontok ikonnal és magyar nyelvű felirattal jelennek meg, rövidítések nélkül.</li>
+                    <li>Minden űrlapmezőnél rövid segítő szöveg áll, a hibaüzenetek megmondják, mit kell javítani.</li>
+                    <li>A kezdőlap kártyái a leggyakoribb funkciókat (menza, menetrend, események) egy kattintással elérhetővé teszik.</li>
+                    <li>Az üres listák (például „még nincs bejelentése”) megmondják, mi a következő lépés.</li>
+                </ul>
+
+                <h2 class="h-sub">4.4 A betanulást segítő anyagok</h2>
+                <p>A felhasználói kézikönyv (III. rész) online érhető el, szerepkörönként tagolva. Az adminisztrátoroknak a csapat a félév végén egy rövid bemutatót tart. Külön díjazású tréning nincs.</p>
+
+                <h2 class="h-sub">4.5 Hasonlóság más alkalmazásokkal</h2>
+                <p>A felület elrendezése (fejléc, bal oldali menü, tartalomterület) a projekt dokumentációs oldalát és az egyetemi rendszerekben megszokott elrendezést követi. A térkép kezelése (nagyítás, húzás) a széles körben használt térképalkalmazásokéval egyezik, a naptárnézet a megszokott havi és heti nézetet használja.</p>
+
+                <h2 class="h-sub">4.6 Reszponzivitás és akadálymentesség</h2>
+                <ul>
+                    <li>A felület 360 px szélességtől használható; mobilon a menü egy gombbal nyitható.</li>
+                    <li>Minden funkció billentyűzettel is elérhető, a fókusz látható.</li>
+                    <li>A szöveg és a háttér kontrasztja megfelel a WCAG 2.1 AA szintnek; a színjelölések (például a parkolásnál) mellett szöveges jelzés is van.</li>
+                    <li>A képekhez és ikonokhoz szöveges leírás tartozik.</li>
+                </ul>
+
+                <h2 class="h-sub">4.7 Nyelv</h2>
+                <p>Az első változat felülete magyar nyelvű. A dátumok és időpontok magyar formátumban (például 2026. 10. 20., 14:30) jelennek meg.</p>
+
+                <h1 id="srs-5" class="h-sec">5. Megbízhatóság</h1>
+
+                <h2 class="h-sub">5.1 Rendelkezésre állás</h2>
+                <p>A rendszernek a szorgalmi és a vizsgaidőszakban havonta legalább 99%-ban elérhetőnek kell lennie (ez havi legfeljebb kb. 7 óra kiesés). A tervezett karbantartás hétköznap 22 és 6 óra között történik, és a felületen legalább egy nappal előre jelezzük.</p>
+
+                <h2 class="h-sub">5.2 Hibák között eltelt átlagos idő (MTBF)</h2>
+                <p>Olyan hiba, amely miatt a rendszer egésze használhatatlanná válik, átlagosan legfeljebb 30 naponta fordulhat elő.</p>
+
+                <h2 class="h-sub">5.3 Javítási idő (MTTR)</h2>
+                <ul>
+                    <li>Súlyos hiba (a rendszer vagy egy kötelező funkció nem működik): javítás legfeljebb 1 munkanapon belül.</li>
+                    <li>Egyéb hiba: javítás legfeljebb 5 munkanapon belül, vagy a következő tervezett frissítésben.</li>
+                </ul>
+
+                <h2 class="h-sub">5.4 Az adatok pontossága és frissessége</h2>
+                <ul>
+                    <li>A parkolóadat legfeljebb 1 perces késéssel jelenik meg; 10 percnél régebbi adatnál „nem friss” jelzés látszik (K-13).</li>
+                    <li>A menetrendet a rendszer naponta egyszer frissíti az adatforrásból.</li>
+                    <li>Az adminisztrátor által feltöltött tartalom (hírek, események, étlap) a közzététel után azonnal látható.</li>
+                    <li>Az időpontok a magyarországi helyi időben jelennek meg, a nyári és téli időszámítás figyelembevételével.</li>
+                </ul>
+
+                <h2 class="h-sub">5.5 Adatmentés</h2>
+                <p>Az adatbázisról naponta automatikus mentés készül, amelyet a rendszer 14 napig megőriz. A feltöltött képek mentése hetente történik. A mentésből való visszaállítást félévente legalább egyszer kipróbáljuk.</p>
+
+                <h2 class="h-sub">5.6 Hibatűrés</h2>
+                <p>Egy külső szolgáltatás (azonosító szolgáltatás, menetrend, parkolóérzékelők, térkép, e-mail) kiesése nem állíthatja le a többi funkciót. A kiesés idejére a rendszer az érintett funkcióban jelzi a hibát, és ha lehet, az utoljára ismert adatot mutatja.</p>
+
+                <h1 id="srs-6" class="h-sec">6. Teljesítmény</h1>
+
+                <h2 class="h-sub">6.1 Válaszidők</h2>
+                <p>Az alábbi értékeknek a kérések legalább 95%-ánál teljesülniük kell, 500 egyidejű felhasználó mellett.</p>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Művelet</th><th>Elvárt válaszidő</th></tr></thead>
+                        <tbody>
+                            <tr><td>A kezdőlap első betöltése mobilinterneten (4G)</td><td>legfeljebb 3 másodperc</td></tr>
+                            <tr><td>Oldalváltás a felületen belül</td><td>legfeljebb 1 másodperc</td></tr>
+                            <tr><td>Keresési javaslatok (térkép, oktatók)</td><td>legfeljebb 0,5 másodperc</td></tr>
+                            <tr><td>Események szűrése</td><td>legfeljebb 1 másodperc</td></tr>
+                            <tr><td>Foglalás mentése</td><td>legfeljebb 2 másodperc</td></tr>
+                            <tr><td>Hibabejelentés beküldése kép nélkül / képpel</td><td>legfeljebb 2 / 5 másodperc</td></tr>
+                            <tr><td>Bejelentkezés (az egyetemi oldalon töltött idő nélkül)</td><td>legfeljebb 2 másodperc</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="h-sub">6.2 Áteresztőképesség</h2>
+                <p>Az alkalmazásszervernek másodpercenként legalább 100 kérést kell kiszolgálnia a 6.1 pont válaszidőin belül. Ez az 500 egyidejű felhasználóból indul ki, akik átlagosan 5 másodpercenként küldenek egy kérést.</p>
+
+                <h2 class="h-sub">6.3 Kapacitás</h2>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Adat</th><th>Becsült mennyiség</th></tr></thead>
+                        <tbody>
+                            <tr><td>Egyidejű felhasználók</td><td>kb. 500</td></tr>
+                            <tr><td>Felhasználói rekordok</td><td>az egyetem hallgatói és munkatársai, legfeljebb néhány tízezer</td></tr>
+                            <tr><td>Események</td><td>kb. 2 000 évente</td></tr>
+                            <tr><td>Hírek</td><td>kb. 500 évente</td></tr>
+                            <tr><td>Foglalások</td><td>kb. 20 000 évente</td></tr>
+                            <tr><td>Hibabejelentések</td><td>legfeljebb 10 000 évente</td></tr>
+                            <tr><td>Feltöltött képek</td><td>a szerver legfeljebb 1600 px szélességre kicsinyíti őket; becsült tárigény évi 5–10 GB</td></tr>
+                            <tr><td>Adatbázis mérete (képek nélkül)</td><td>1 GB alatt</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="h-sub">6.4 Korlátozott működés</h2>
+                <p>Ha az egyidejű felhasználók száma meghaladja az 500-at (például a félév első napjaiban), a válaszidők legfeljebb a kétszeresükre nőhetnek, de a rendszer nem állhat le. Túlterheléskor a nyilvános funkciók élveznek elsőbbséget.</p>
+
+                <h2 class="h-sub">6.5 Erőforrásigény</h2>
+                <ul>
+                    <li><strong>Szerver:</strong> legalább 2 virtuális processzormag, 4 GB memória és 40 GB SSD-tárhely, valamint a képekhez évi 10 GB többlet. Ez megfelel a H2 költségbecslésében szereplő bérelt virtuális szervernek.</li>
+                    <li><strong>Kliens:</strong> a Chrome, Firefox, Safari vagy Edge böngésző két legutóbbi főverziója, bekapcsolt JavaScripttel.</li>
+                    <li><strong>Sávszélesség:</strong> a kezdőlap első betöltése legfeljebb 1,5 MB adatforgalommal járhat.</li>
+                </ul>
+
+                <h1 id="srs-7" class="h-sec">7. Támogatottság</h1>
+
+                <h2 class="h-sub">7.1 Kódolási szabványok</h2>
+                <ul>
+                    <li>A JavaScript-kód az ESLint ajánlott szabályait követi, a formázást a Prettier végzi egységesen.</li>
+                    <li>A HTML-kód szemantikus elemeket használ (például header, nav, main), ami az akadálymentességet is segíti.</li>
+                    <li>Az SQL-utasításokban a kulcsszavak nagybetűsek; a lekérdezések paraméterezettek, szövegösszefűzéssel nem készülnek.</li>
+                </ul>
+
+                <h2 class="h-sub">7.2 Elnevezési konvenciók</h2>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Elem</th><th>Konvenció</th><th>Példa</th></tr></thead>
+                        <tbody>
+                            <tr><td>Fájlok</td><td>kisbetű, kötőjellel</td><td>event-list.js</td></tr>
+                            <tr><td>Változók, függvények</td><td>camelCase, angol</td><td>getFreeSlots()</td></tr>
+                            <tr><td>Osztályok</td><td>PascalCase, angol</td><td>AppointmentService</td></tr>
+                            <tr><td>Adatbázistáblák és -oszlopok</td><td>snake_case, angol, többes szám a tábláknál</td><td>fault_reports.created_at</td></tr>
+                            <tr><td>API-útvonalak</td><td>angol főnév, többes szám</td><td>/api/events</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>A kódban az azonosítók angolok, a megjegyzések és a felület szövegei magyarok.</p>
+
+                <h2 class="h-sub">7.3 Karbantartói funkciók</h2>
+                <ul>
+                    <li>Állapotellenőrző végpont, amely megmutatja, hogy az adatbázis és a külső szolgáltatások elérhetők-e.</li>
+                    <li>Az adminisztrátori napló megtekintése az adminisztrációs felületen (K-46).</li>
+                    <li>A menetrend kézi újratöltése az adatforrásból.</li>
+                </ul>
+
+                <h2 class="h-sub">7.4 Naplók</h2>
+                <p>A rendszer három naplót vezet: hozzáférési naplót (kérések és válaszidők), hibanaplót és a módosítások naplóját. A naplók a felhasználó belső azonosítóján túl személyes adatot nem tartalmaznak. A hozzáférési és a hibanaplót a rendszer 90 napig őrzi meg.</p>
+
+                <h2 class="h-sub">7.5 Verziókezelés és frissítés</h2>
+                <p>A forráskód Git-tárolóban, a GitHubon van. A fő ág védett; minden változtatás külön ágon készül, és csak egy másik csapattag átnézése után kerül a fő ágba. A kiadások verziószáma a szemantikus verziózást követi (például 1.2.0).</p>
+
+                <h2 class="h-sub">7.6 Beállítások</h2>
+                <p>A környezetfüggő beállítások (adatbázis elérése, külső szolgáltatások kulcsai) környezeti változókban vannak. Titkos kulcs nem kerülhet a Git-tárolóba.</p>
+
+                <h1 id="srs-8" class="h-sec">8. Tervezési korlátozások</h1>
+
+                <h2 class="h-sub">8.1 Architektúra</h2>
+                <p>A rendszer három rétegből áll:</p>
+                <ol>
+                    <li><strong>Kliens:</strong> böngészőben futó felület HTML, Tailwind CSS és JavaScript használatával.</li>
+                    <li><strong>Alkalmazásszerver:</strong> Node.js futtatókörnyezet az Express keretrendszerrel, amely REST API-t kínál JSON formátumban.</li>
+                    <li><strong>Adatbázis:</strong> MySQL.</li>
+                </ol>
+                <p>A kliens csak az API-n keresztül ér el adatot, az adatbázishoz közvetlenül nem kapcsolódik. A külső szolgáltatásokkal kizárólag az alkalmazásszerver tart kapcsolatot (kivéve a térkép háttérképét, amelyet a böngésző közvetlenül tölt le).</p>
+
+                <h2 class="h-sub">8.2 Programozási nyelvek</h2>
+                <p>A kliens és a szerver nyelve a JavaScript, a felület leírása HTML és CSS, az adatbázis-műveleteké SQL. A H1-ben felmerült C++ csak a parkolóérzékelők eszközoldali programjához használható; az nem része a webes rendszernek, és a rendszerrel csak a 11.3 pontban leírt interfészen keresztül kapcsolódik.</p>
+
+                <h2 class="h-sub">8.3 Fejlesztőeszközök</h2>
+                <ul>
+                    <li>Visual Studio Code szerkesztő, ESLint és Prettier bővítménnyel.</li>
+                    <li>Git és GitHub a verziókezeléshez és a feladatok követéséhez.</li>
+                    <li>Node.js (aktuális LTS-változat) és az npm csomagkezelő.</li>
+                    <li>MySQL szerver és MySQL Workbench az adatbázis kezeléséhez.</li>
+                    <li>A böngészők fejlesztői eszközei és PowerShell vagy más parancssor.</li>
+                    <li>Az Android Studio és az Xcode csak a későbbi mobilalkalmazáshoz (3.8) szükséges.</li>
+                </ul>
+
+                <h2 class="h-sub">8.4 Újrafelhasználható elemek</h2>
+                <p>A rendszer csak a 10. fejezetben felsorolt kész komponenseket használhatja. Új külső komponens csak a csapat közös döntése és a licenc ellenőrzése után vehető fel.</p>
+
+                <h2 class="h-sub">8.5 Fejlesztési módszertan</h2>
+                <p>A dokumentáció a RUP szerinti dokumentumokat követi (vízió, követelmény-specifikáció, tervezés). A megvalósítás iteratív: a csapat kéthetes ciklusokban, funkciónként halad (H1, 7. fejezet), a 3. fejezet prioritásai szerint.</p>
+
+                <h2 class="h-sub">8.6 Üzemeltetési környezet</h2>
+                <p>Az alkalmazás Linux operációs rendszerű szerveren fut. A HTTPS-kapcsolatot egy webszerver (például Nginx) kezeli, amely a kéréseket a Node.js alkalmazásnak továbbítja; a Node.js folyamat újraindítását folyamatkezelő (például pm2) biztosítja.</p>
+
+                <h1 id="srs-9" class="h-sec">9. On-line dokumentáció és súgórendszer</h1>
+
+                <h2 class="h-sub">9.1 Beépített súgó</h2>
+                <p>A felületen egy „Súgó” menüpont érhető el, amely a felhasználói kézikönyv (III. rész) szerepkör szerinti fejezeteire mutat.</p>
+
+                <h2 class="h-sub">9.2 Gyakori kérdések</h2>
+                <p>A súgóban gyakori kérdések és válaszok is szerepelnek (például „Miért nem tudok lemondani egy foglalást?”). Ezek kiindulópontja a kézikönyv 9. fejezete.</p>
+
+                <h2 class="h-sub">9.3 Mezőszintű segítség</h2>
+                <p>Az űrlapok mezőinél rövid magyarázó szöveg áll, a hibaüzenetek pedig konkrétan megmondják, mi a hiba és hogyan javítható.</p>
+
+                <h2 class="h-sub">9.4 Fejlesztői dokumentáció</h2>
+                <p>A REST API leírása OpenAPI formátumban készül, a tároló README fájlja a telepítést és a helyi futtatást írja le. Ezek a H4 tervezési dokumentumokkal együtt készülnek el.</p>
+
+                <h1 id="srs-10" class="h-sec">10. Felhasznált kész komponensek</h1>
+                <p>A rendszer csak szabad felhasználású komponenseket használ, ezért vásárlási költség nincs. A licencfeltételeket ettől függetlenül be kell tartani.</p>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Komponens</th><th>Felhasználás</th><th>Licenc</th><th>Kötelezettség</th></tr></thead>
+                        <tbody>
+                            <tr><td>Node.js</td><td>Szerveroldali futtatókörnyezet</td><td>MIT</td><td>A licencszöveg megőrzése</td></tr>
+                            <tr><td>Express</td><td>Webes keretrendszer a REST API-hoz</td><td>MIT</td><td>A licencszöveg megőrzése</td></tr>
+                            <tr><td>mysql2</td><td>Kapcsolat a MySQL adatbázissal</td><td>MIT</td><td>A licencszöveg megőrzése</td></tr>
+                            <tr><td>MySQL Community Server</td><td>Adatbázis-kezelő</td><td>GPLv2</td><td>Saját szerveren futtatva nincs további kötelezettség; módosított változat terjesztése esetén a GPL feltételei érvényesek</td></tr>
+                            <tr><td>MSAL Node</td><td>Bejelentkezés a Microsoft-fiókkal</td><td>MIT</td><td>A licencszöveg megőrzése</td></tr>
+                            <tr><td>dotenv</td><td>Környezeti változók betöltése</td><td>BSD-2-Clause</td><td>A licencszöveg megőrzése</td></tr>
+                            <tr><td>Tailwind CSS</td><td>A felület stílusa</td><td>MIT</td><td>A licencszöveg megőrzése</td></tr>
+                            <tr><td>Font Awesome Free</td><td>Ikonok</td><td>Ikonok: CC BY 4.0; kód: MIT</td><td>A forrás megjelölése</td></tr>
+                            <tr><td>Leaflet</td><td>Interaktív térkép a böngészőben</td><td>BSD-2-Clause</td><td>A licencszöveg megőrzése</td></tr>
+                            <tr><td>OpenStreetMap</td><td>Térképadatok és háttérkép</td><td>ODbL (adatok)</td><td>A térképen kötelező az „© OpenStreetMap közreműködők” forrásmegjelölés; a nyilvános csempeszerver használati szabályai korlátozzák a nagy forgalmat, ezért éles üzemben saját vagy szolgáltatói csempeforrás szükséges lehet</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="note">A pontos licencfeltételeket a csomagok beépítésekor a forrásuknál ellenőrizni kell, mert azok változhatnak.</p>
+
+                <h1 id="srs-11" class="h-sec">11. Interfészek</h1>
+
+                <h2 class="h-sub">11.1 Felhasználói interfészek</h2>
+                <p>A felület az egyetemi arculatot és a projekt dokumentációs oldalának elrendezését követi: sötétkék fejléc az egyetem nevével, alatta piros–fehér–zöld csík, bal oldalon menü, középen világos tartalomterület. Mobilon a menü a fejléc gombjával nyitható. A tervezett képernyők:</p>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Képernyő</th><th>Fő tartalom</th><th>Szerepkör</th></tr></thead>
+                        <tbody>
+                            <tr><td>Kezdőlap</td><td>Kártyák: mai menü, következő indulások, közelgő események, legfrissebb hírek</td><td>Mindenki</td></tr>
+                            <tr><td>Térkép</td><td>Campustérkép, kereső, kategóriaszűrő, hely adatlapja</td><td>Mindenki</td></tr>
+                            <tr><td>Parkolás</td><td>Zónák térképen és listában, szabad helyek, frissítés ideje</td><td>Mindenki</td></tr>
+                            <tr><td>Események</td><td>Lista- és naptárnézet, szűrők, esemény részletei</td><td>Mindenki</td></tr>
+                            <tr><td>Hírek</td><td>Hírfolyam, témakörszűrő</td><td>Mindenki</td></tr>
+                            <tr><td>Menza</td><td>Napi és heti étlap, nyitvatartás</td><td>Mindenki</td></tr>
+                            <tr><td>Menetrend</td><td>Megálló- és irányválasztó, következő indulások</td><td>Mindenki</td></tr>
+                            <tr><td>Oktatók</td><td>Kereső, szűrők, oktatói adatlap</td><td>Mindenki</td></tr>
+                            <tr><td>Ügyintézés</td><td>Új foglalás, Foglalásaim</td><td>Hallgató, oktató</td></tr>
+                            <tr><td>Hibabejelentés</td><td>Új bejelentés, Bejelentéseim</td><td>Hallgató, oktató</td></tr>
+                            <tr><td>Oktatói adatlapom</td><td>Iroda és fogadóóra szerkesztése</td><td>Oktató</td></tr>
+                            <tr><td>Bejelentések kezelése</td><td>Bejelentések listája, állapotmódosítás</td><td>Oktató, adminisztrátor</td></tr>
+                            <tr><td>Adminisztráció</td><td>Tartalom, Időpontok, Felhasználók, Napló</td><td>Adminisztrátor</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="h-sub">11.2 Hardware interfészek</h2>
+                <p>A rendszer egyetlen speciális hardverkapcsolata a parkolóérzékelő-rendszer (A-07). Az érzékelők (a H1 szerint például ESP32 alapú eszközök) nem közvetlenül a rendszerhez csatlakoznak, hanem interneten keresztül küldik az adatokat a 11.3 pontban leírt módon. A felhasználói oldalon nincs szükség különleges eszközre: számítógép, telefon vagy táblagép böngészővel elegendő.</p>
+
+                <h2 class="h-sub">11.3 Software interfészek</h2>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Külső rendszer</th><th>Irány</th><th>Átadott adat</th><th>Mód</th><th>Gyakoriság</th></tr></thead>
+                        <tbody>
+                            <tr><td>Egyetemi azonosító szolgáltatás (Microsoft Entra ID)</td><td>Kétirányú</td><td>Azonosító, név, egyetemi e-mail-cím</td><td>OpenID Connect szerinti bejelentkezés</td><td>Minden bejelentkezéskor</td></tr>
+                            <tr><td>Menetrend-adatforrás (MVK)</td><td>Befelé</td><td>Megállók, járatok, indulási idők</td><td>GTFS-állomány letöltése, ha nyilvános; ennek hiányában az adminisztrátor tölti fel (F-02)</td><td>Naponta</td></tr>
+                            <tr><td>Parkolóérzékelő-rendszer</td><td>Befelé</td><td>Zónaazonosító, foglalt helyek száma, időbélyeg</td><td>HTTPS-kérés a rendszer API-jára, eszközönkénti titkos kulccsal hitelesítve</td><td>Percenként vagy változáskor</td></tr>
+                            <tr><td>OpenStreetMap</td><td>Befelé (a böngészőbe)</td><td>Térképcsempék</td><td>HTTPS</td><td>A térkép megjelenítésekor</td></tr>
+                            <tr><td>E-mail-szolgáltatás</td><td>Kifelé</td><td>Visszaigazolás, emlékeztető, állapotváltozás</td><td>SMTP</td><td>Esemény hatására</td></tr>
+                            <tr><td>Egyetemi honlap</td><td>Kifelé (hivatkozás)</td><td>A hír teljes szövegére mutató hivatkozás</td><td>Hivatkozás</td><td>A hír megnyitásakor</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>Az alkalmazásszerver REST API-jának előzetes felosztása a következő. A pontos végpontokat és adatszerkezeteket a H4 tervezési dokumentum határozza meg.</p>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Végpontcsoport</th><th>Tartalom</th><th>Kapcsolódó use case-ek</th></tr></thead>
+                        <tbody>
+                            <tr><td>/api/auth</td><td>Bejelentkezés, kijelentkezés, saját adatok</td><td>UC-01, UC-02</td></tr>
+                            <tr><td>/api/places</td><td>Térképi helyek és keresés</td><td>UC-03</td></tr>
+                            <tr><td>/api/parking</td><td>Zónák és foglaltság (az érzékelők is ide küldenek)</td><td>UC-04</td></tr>
+                            <tr><td>/api/events</td><td>Események szűréssel</td><td>UC-05</td></tr>
+                            <tr><td>/api/news</td><td>Hírek</td><td>UC-06</td></tr>
+                            <tr><td>/api/canteen</td><td>Étlap és nyitvatartás</td><td>UC-07</td></tr>
+                            <tr><td>/api/transit</td><td>Megállók és indulások</td><td>UC-08</td></tr>
+                            <tr><td>/api/staff</td><td>Oktatói adatlapok</td><td>UC-09, UC-10</td></tr>
+                            <tr><td>/api/appointments</td><td>Ügytípusok, időpontok, foglalások</td><td>UC-11, UC-12, UC-16</td></tr>
+                            <tr><td>/api/reports</td><td>Hibabejelentések</td><td>UC-13, UC-14, UC-17</td></tr>
+                            <tr><td>/api/admin</td><td>Tartalomkezelés, felhasználók, napló</td><td>UC-15, UC-18</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="h-sub">11.4 Kommunikációs interfészek</h2>
+                <ul>
+                    <li>A böngésző és a szerver közötti minden kapcsolat titkosított (HTTPS, legalább TLS 1.2); a titkosítatlan kéréseket a szerver átirányítja.</li>
+                    <li>Az adatcsere formátuma JSON, UTF-8 kódolással.</li>
+                    <li>A felhasználók értesítése e-mailben történik. Telefonos értesítés (push) az első változatban nincs, a mobilalkalmazással együtt kerülhet be.</li>
+                </ul>
+
+                <h1 id="srs-12" class="h-sec">12. Alkalmazott szabványok</h1>
+
+                <h2 class="h-sub">12.1 Kötelezően alkalmazandó szabványok és előírások</h2>
+                <ul>
+                    <li><strong>GDPR</strong> – az Európai Unió általános adatvédelmi rendelete (EU 2016/679): a személyes adatok kezelése.</li>
+                    <li><strong>Infotv.</strong> – az információs önrendelkezési jogról és az információszabadságról szóló 2011. évi CXII. törvény.</li>
+                    <li><strong>A közszférabeli szervezetek honlapjainak és mobilalkalmazásainak akadálymentesítéséről szóló 2018. évi LXXV. törvény</strong>, amely egyetemi üzemeltetés esetén vonatkozhat a rendszerre.</li>
+                    <li>Az egyetem adatkezelési szabályzata és arculati előírásai, ha a rendszert az egyetem hivatalosan üzemelteti.</li>
+                </ul>
+
+                <h2 class="h-sub">12.2 Választás alapján alkalmazott szabványok</h2>
+                <ul>
+                    <li><strong>WCAG 2.1, AA szint</strong> – webes akadálymentesség.</li>
+                    <li><strong>HTML</strong> (WHATWG élő szabvány) és <strong>ECMAScript</strong> – a felület és a programkód nyelve.</li>
+                    <li><strong>JSON</strong> (RFC 8259) – adatcsere.</li>
+                    <li><strong>OAuth 2.0</strong> (RFC 6749) és <strong>OpenID Connect</strong> – bejelentkezés.</li>
+                    <li><strong>ISO 8601</strong> – dátumok és időpontok átadása az API-ban.</li>
+                    <li><strong>UTF-8</strong> – karakterkódolás.</li>
+                    <li><strong>Szemantikus verziózás</strong> – a kiadások számozása.</li>
+                    <li><strong>UML 2</strong> – a modellek (use case, később osztály- és szekvenciadiagramok) jelölése.</li>
+                </ul>
+
+                <h1 id="srs-13" class="h-sec">13. Mellékletek</h1>
+
+                <h2 class="h-sub">13.1 Ábrajegyzék</h2>
+                <ul>
+                    <li>1. ábra – A Vezérlőpult teljes use case diagramja (3.1)</li>
+                </ul>
+
+                <h2 class="h-sub">13.2 Hivatkozások</h2>
+                <ul>
+                    <li><a href="h1.html">H1 – Projektterv</a> és <a href="h2.html">H2 – Vízió dokumentum</a> (a csapat dokumentumai)</li>
+                    <li><a href="https://users.iit.uni-miskolc.hu/~mileff/szt/srs.html">SRS dokumentumminta</a> (tantárgyi segédanyag)</li>
+                    <li><a href="https://users.iit.uni-miskolc.hu/~mileff/szt/H3.html">A H3 részhatáridőre teljesítendő feladatok</a> (tantárgyi segédanyag)</li>
+                    <li>A Miskolci Egyetem hivatalos honlapja (www.uni-miskolc.hu)</li>
+                </ul>
+
+                <h2 class="h-sub">13.3 Nyitott kérdések</h2>
+                <p>Az alábbi kérdésekben a döntés még nem született meg. A H4 tervezés előtt tisztázni kell őket, és a választ ennek a dokumentumnak a következő verziójában rögzítjük.</p>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Kérdés</th><th>Kitől függ</th><th>Érintett követelmények</th></tr></thead>
+                        <tbody>
+                            <tr><td>Engedélyezi-e az egyetem a Microsoft-fiókos bejelentkezést, illetve a Neptun-integrációt?</td><td>Egyetemi informatika</td><td>K-02, K-07, UC-01</td></tr>
+                            <tr><td>Milyen formában érhető el az MVK menetrendadata?</td><td>MVK, csapat</td><td>K-23, K-24, UC-08</td></tr>
+                            <tr><td>Hány parkolózónában lesz érzékelő a bemutatóig?</td><td>Csapat (eszközbeszerzés)</td><td>K-12, K-13, UC-04</td></tr>
+                            <tr><td>Küldhet-e a rendszer egyetemi címről e-mailt?</td><td>Egyetemi informatika</td><td>K-31, K-37, K-42</td></tr>
+                            <tr><td>Mi lesz a termék végleges neve?</td><td>Csapat</td><td>–</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ============================================================ -->
+                <!-- II. SZÓTÁR -->
+                <!-- ============================================================ -->
+
+                <h1 id="resz-2" class="h-part">II. Szótár</h1>
+                <p>Ez a szótár a H2 vízió dokumentum szótárának önálló, bővített változata. A specifikáció írása során felmerült fogalmakkal egészítettük ki, és a fejlesztés során folyamatosan bővítjük. A magyarázatokban csak a szótárban szereplő vagy köznapi kifejezéseket használunk. A fogalmak ábécérendben szerepelnek.</p>
+                <p class="text-gray-700">Utolsó módosítás: 2026. 10. 20. · Fogalmak száma: 71</p>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th class="w-1/4">Fogalom</th><th>Magyarázat</th></tr></thead>
+                        <tbody>
+                            <tr><td>Adatforrás</td><td>Olyan külső rendszer vagy állomány, ahonnan a Vezérlőpult adatot vesz át (például a menetrend vagy a parkolóérzékelők adatai).</td></tr>
+                            <tr><td>Adminisztrátor</td><td>Az egyetem által kijelölt munkatárs, aki a rendszer tartalmát, az ügyintézési időpontokat, a hibabejelentéseket és a szerepköröket kezeli.</td></tr>
+                            <tr><td>Ajánlott (prioritás)</td><td>Olyan követelmény, amely jelentősen javítja a használatot; ha az idő engedi, elkészül.</td></tr>
+                            <tr><td>Aktor</td><td>A rendszeren kívüli szereplő – személy vagy másik rendszer –, amely kapcsolatba lép a rendszerrel. A use case diagramon pálcikaember jelöli.</td></tr>
+                            <tr><td>Alternatív eset</td><td>A use case olyan lefutása, amely eltér a szokásos működéstől, de előre látható és kezelni kell (például a felhasználó keresés helyett a térképen kattint).</td></tr>
+                            <tr><td>Általánosítás</td><td>Két aktor közötti kapcsolat, amely azt fejezi ki, hogy az egyik a másik minden funkcióját eléri, és emellett továbbiakat is. A diagramon üres hegyű nyíl jelöli.</td></tr>
+                            <tr><td>Archiválás</td><td>A tartalom eltávolítása a nyilvános felületről törlés nélkül; az adminisztrátor később is megtalálja.</td></tr>
+                            <tr><td>Áteresztőképesség</td><td>Az egy másodperc alatt kiszolgált kérések száma.</td></tr>
+                            <tr><td>Backend</td><td>A rendszernek a szerveren futó része, amely az adatokat kezeli, és kiszolgálja a felületet.</td></tr>
+                            <tr><td>Bejelentés (hibabejelentés)</td><td>Egy felhasználó által rögzített jelzés egy egyetemi hibáról vagy problémáról, kategóriával, helyszínnel és leírással.</td></tr>
+                            <tr><td>Bővítés</td><td>Olyan funkció, amely a félévi célok után, külső partnerséggel vagy több idővel készülhet el.</td></tr>
+                            <tr><td>Csomag (use case csomag)</td><td>Összetartozó use case-ek csoportja. Az SRS 3. fejezete csomagonként tárgyalja őket.</td></tr>
+                            <tr><td>Egyetemi azonosító szolgáltatás</td><td>Az egyetemi Microsoft-fiókokat kezelő szolgáltatás, amely a bejelentkezést ellenőrzi (lásd: Microsoft Entra ID).</td></tr>
+                            <tr><td>Esemény</td><td>Egyetemi program időponttal, helyszínnel és leírással (például előadás, nyílt nap, sportesemény).</td></tr>
+                            <tr><td>Érintett</td><td>Olyan személy vagy szervezet, akit a termék érint, de nem feltétlenül használja.</td></tr>
+                            <tr><td>Felhasználó</td><td>Aki a terméket ténylegesen használja.</td></tr>
+                            <tr><td>Felhasználói kézikönyv</td><td>A rendszer használatát lépésenként bemutató dokumentum a felhasználók számára.</td></tr>
+                            <tr><td>Fogadóóra</td><td>Az oktató által meghirdetett idősáv, amikor a hallgatók személyesen felkereshetik.</td></tr>
+                            <tr><td>Foglalás</td><td>Egy hallgató által lefoglalt ügyintézési időpont.</td></tr>
+                            <tr><td>Frontend</td><td>A rendszernek a böngészőben megjelenő része, amelyet a felhasználó lát és használ.</td></tr>
+                            <tr><td>GDPR</td><td>Az Európai Unió általános adatvédelmi rendelete.</td></tr>
+                            <tr><td>GTFS</td><td>A tömegközlekedési menetrendek közzétételére használt, nemzetközileg elterjedt adatformátum.</td></tr>
+                            <tr><td>Hallgató</td><td>Az egyetem bejelentkezett hallgatója; a Látogató funkcióin túl időpontot foglalhat és hibát jelenthet be.</td></tr>
+                            <tr><td>Időpontsáv</td><td>Az adminisztrátor által megadott időszak (például hétfő 9–12 óra), amelyből a rendszer foglalható időpontokat készít.</td></tr>
+                            <tr><td>Infotv.</td><td>Az információs önrendelkezési jogról és az információszabadságról szóló 2011. évi CXII. törvény.</td></tr>
+                            <tr><td>JSON</td><td>Szöveges adatformátum, amellyel a felület és a szerver adatot cserél.</td></tr>
+                            <tr><td>Kar</td><td>Az egyetem nagyobb szervezeti egysége, amely tanszékekből áll.</td></tr>
+                            <tr><td>Kivételes eset</td><td>A use case váratlan, hibás lefutása (például egy külső szolgáltatás nem érhető el).</td></tr>
+                            <tr><td>Kötelező (prioritás)</td><td>Olyan követelmény, amelynek a félév végi bemutatóra el kell készülnie.</td></tr>
+                            <tr><td>Látogató</td><td>Bárki, aki bejelentkezés nélkül használja a rendszert; csak a nyilvános funkciókat éri el.</td></tr>
+                            <tr><td>Leaflet</td><td>Nyílt forráskódú programkönyvtár interaktív térképek megjelenítéséhez a böngészőben.</td></tr>
+                            <tr><td>Megbízhatóság</td><td>A rendszer azon tulajdonsága, hogy mennyire működik folyamatosan és hibamentesen.</td></tr>
+                            <tr><td>Menza</td><td>Az egyetemi étkezde.</td></tr>
+                            <tr><td>Mérföldkő</td><td>A félév meghatározott hete, amikor a csapat egy részfeladatot bemutat.</td></tr>
+                            <tr><td>Microsoft Entra ID</td><td>A Microsoft azonosítási szolgáltatása, amely az egyetemi Microsoft-fiókokkal való bejelentkezést kezeli.</td></tr>
+                            <tr><td>MTBF</td><td>Két hiba között eltelt átlagos idő.</td></tr>
+                            <tr><td>MTTR</td><td>A hiba bekövetkezésétől a javításig eltelt átlagos idő.</td></tr>
+                            <tr><td>Munkamenet</td><td>A bejelentkezéstől a kijelentkezésig vagy a lejáratig tartó időszak, amely alatt a rendszer felismeri a felhasználót.</td></tr>
+                            <tr><td>Munkanapló</td><td>A csapattagok projektre fordított munkáját dátum, tevékenység és időtartam szerint rögzítő nyilvántartás.</td></tr>
+                            <tr><td>MVK</td><td>Miskolc helyi tömegközlekedési szolgáltatója, amely autóbusz- és villamosjáratokat üzemeltet.</td></tr>
+                            <tr><td>MySQL</td><td>Elterjedt adatbázis-kezelő rendszer, amelyben a Vezérlőpult adatai tárolódnak.</td></tr>
+                            <tr><td>Neptun</td><td>Az egyetem tanulmányi nyilvántartó rendszere.</td></tr>
+                            <tr><td>Node.js</td><td>Szerveroldali futtatókörnyezet, amelyen a Vezérlőpult backendje JavaScript nyelven fut.</td></tr>
+                            <tr><td>Nyilvános funkció</td><td>Bejelentkezés nélkül is elérhető funkció.</td></tr>
+                            <tr><td>Oktató</td><td>Bejelentkezett felhasználó oktató szerepkörrel, aki egy tanszékhez tartozik; szerkesztheti a saját adatlapját, és kezelheti a tanszékéhez rendelt bejelentéseket.</td></tr>
+                            <tr><td>Opcionális (prioritás)</td><td>Olyan követelmény, amely csak külső feltétel teljesülése vagy elegendő idő esetén készül el.</td></tr>
+                            <tr><td>OpenID Connect</td><td>Szabványos bejelentkezési eljárás, amellyel egy alkalmazás egy külső azonosító szolgáltatásra bízza a felhasználó azonosítását.</td></tr>
+                            <tr><td>OpenStreetMap</td><td>Szabadon felhasználható, közösségi térképadatbázis.</td></tr>
+                            <tr><td>Parkolóérzékelő</td><td>Eszköz, amely jelzi, hogy egy parkolóhely foglalt-e.</td></tr>
+                            <tr><td>Parkolózóna</td><td>A parkoló egy elkülönített része, amelynek szabad helyeit a rendszer együtt jeleníti meg.</td></tr>
+                            <tr><td>Posztkondíció</td><td>Az az állapot, amely a use case befejeződése után fennáll.</td></tr>
+                            <tr><td>Prekondíció</td><td>Azok a feltételek, amelyeknek a use case megkezdése előtt teljesülniük kell.</td></tr>
+                            <tr><td>Rendelkezésre állás</td><td>Az idő százalékos aránya, amikor a rendszer használható.</td></tr>
+                            <tr><td>REST API</td><td>A szerver által kínált, webcímeken elérhető programozói felület, amelyen keresztül a frontend adatot kér és küld.</td></tr>
+                            <tr><td>Reszponzív</td><td>Olyan felület, amely a képernyő méretéhez igazodik, így telefonon és számítógépen is jól használható.</td></tr>
+                            <tr><td>SRS</td><td>Szoftverkövetelmény-specifikáció: a rendszer funkcionális és nem funkcionális követelményeit leíró dokumentum (H3).</td></tr>
+                            <tr><td>Statikus oldal</td><td>Olyan weboldal, amelynek tartalma nem függ a látogatótól, és adatbázis nélkül működik.</td></tr>
+                            <tr><td>Szerepkör</td><td>A felhasználó jogosultsági köre: hallgató, oktató vagy adminisztrátor.</td></tr>
+                            <tr><td>Szokásos működés</td><td>A use case leggyakoribb, hibamentes lefutása.</td></tr>
+                            <tr><td>Szótár</td><td>A projekt fogalmait magyarázó, folyamatosan bővülő dokumentum (ez a rész).</td></tr>
+                            <tr><td>Tanszék</td><td>A kar oktatási és kutatási egysége, amelyhez az oktatók tartoznak.</td></tr>
+                            <tr><td>Terhelésteszt</td><td>Olyan vizsgálat, amely megmutatja, hogyan működik a rendszer sok egyidejű felhasználó mellett.</td></tr>
+                            <tr><td>UML</td><td>Szabványos jelölésrendszer szoftverrendszerek modellezésére.</td></tr>
+                            <tr><td>Use case (használati eset)</td><td>A rendszer egy olyan szolgáltatása, amely egy aktor számára értékelhető eredményt ad.</td></tr>
+                            <tr><td>Use case diagram</td><td>UML-ábra, amely az aktorokat, a use case-eket és a kapcsolataikat mutatja.</td></tr>
+                            <tr><td>Ügytípus</td><td>Az ügyintézés fajtája (például igazolás kérése), amelyre időpont foglalható.</td></tr>
+                            <tr><td>Válaszidő</td><td>A felhasználó művelete és a rendszer válaszának megjelenése között eltelt idő.</td></tr>
+                            <tr><td>Vezérlőpult</td><td>A projekt munkaneve: egységes webes felület a Miskolci Egyetem információihoz és szolgáltatásaihoz.</td></tr>
+                            <tr><td>Vízió dokumentum</td><td>A projekt célját és környezetét leíró dokumentum, a RUP módszertan első lépése (H2).</td></tr>
+                            <tr><td>VPS</td><td>Virtuális szerver, amelyet havi díjért lehet bérelni.</td></tr>
+                            <tr><td>WCAG</td><td>A webes akadálymentességi irányelvek nemzetközi szabványa.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ============================================================ -->
+                <!-- III. FELHASZNÁLÓI KÉZIKÖNYV -->
+                <!-- ============================================================ -->
+
+                <h1 id="resz-3" class="h-part">III. Felhasználói kézikönyv (1. verzió)</h1>
+                <p class="note">Ez a kézikönyv első verziója, amely a követelmény-specifikáció (I. rész) alapján készült, még a megvalósítás előtt. A menüpontok nevei és a lépések a tervezett működést írják le. A képernyőképek és a végleges feliratok a megvalósítás után, a 2. verzióban kerülnek be.</p>
+
+                <h1 class="h-sec">1. Bevezetés</h1>
+                <p>A Vezérlőpult a Miskolci Egyetem egységes információs felülete. Segítségével egy helyen megtalálhatja a campus épületeit és termeit, a szabad parkolóhelyeket, az egyetemi eseményeket és híreket, a menza étlapját, a következő buszindulásokat és az oktatók elérhetőségét. Bejelentkezés után ügyintézési időpontot foglalhat, és hibát jelenthet be.</p>
+                <p>A kézikönyv szerepkörök szerint tagolódik: az 5. fejezet mindenkinek szól, a 6. a hallgatóknak, a 7. az oktatóknak, a 8. az adminisztrátoroknak. Az oktatók a hallgatói funkciókat is használhatják.</p>
+
+                <h1 class="h-sec">2. Rendszerkövetelmények</h1>
+                <ul>
+                    <li>Számítógép, telefon vagy táblagép internetkapcsolattal.</li>
+                    <li>A Chrome, Firefox, Safari vagy Edge böngésző friss változata, bekapcsolt JavaScripttel.</li>
+                    <li>A bejelentkezést igénylő funkciókhoz egyetemi Microsoft-fiók.</li>
+                </ul>
+                <p>Telepítésre nincs szükség: a Vezérlőpult a böngészőben, a címének megnyitásával használható.</p>
+
+                <h1 class="h-sec">3. A felület felépítése</h1>
+                <ul>
+                    <li><strong>Fejléc:</strong> felül, az egyetem nevével. Jobb oldalán a „Bejelentkezés” gomb, bejelentkezés után pedig az Ön neve látható; erre kattintva érheti el a saját oldalait és a kijelentkezést.</li>
+                    <li><strong>Menü:</strong> bal oldalon, a funkciók listájával. Telefonon a fejléc bal oldalán lévő menügombbal nyitható és zárható.</li>
+                    <li><strong>Tartalomterület:</strong> középen, itt jelenik meg a kiválasztott funkció.</li>
+                    <li><strong>Kezdőlap:</strong> kártyákon mutatja a mai menüt, a következő indulásokat, a közelgő eseményeket és a legfrissebb híreket. Bármelyik kártyára kattintva a megfelelő funkcióra lép.</li>
+                </ul>
+
+                <h1 class="h-sec">4. Bejelentkezés és kijelentkezés</h1>
+                <h2 class="h-sub">4.1 Bejelentkezés</h2>
+                <ol>
+                    <li>Kattintson a fejlécben a „Bejelentkezés” gombra.</li>
+                    <li>A megnyíló egyetemi oldalon adja meg az egyetemi Microsoft-fiókja adatait, és ha kéri, hagyja jóvá a belépést a telefonján.</li>
+                    <li>A sikeres belépés után a rendszer visszaviszi arra az oldalra, ahonnan elindult. A fejlécben megjelenik a neve.</li>
+                </ol>
+                <p>A Vezérlőpult a jelszavát nem látja és nem tárolja. Első belépéskor hallgatói jogosultságot kap; ha oktató vagy adminisztrátor, a további jogosultságot az adminisztrátor adja meg.</p>
+                <h2 class="h-sub">4.2 Kijelentkezés</h2>
+                <ol>
+                    <li>Kattintson a fejlécben a nevére.</li>
+                    <li>Válassza a „Kijelentkezés” menüpontot.</li>
+                </ol>
+                <p>Ha 30 percig nem végez műveletet, a rendszer biztonsági okból automatikusan kijelentkezteti. Közös használatú gépen mindig jelentkezzen ki.</p>
+
+                <h1 class="h-sec">5. Funkciók mindenkinek (bejelentkezés nélkül)</h1>
+                <h2 class="h-sub">5.1 Hely keresése a térképen</h2>
+                <ol>
+                    <li>Válassza a menüben a „Térkép” pontot.</li>
+                    <li>Írja be a keresőmezőbe az épület, a terem vagy a szolgáltatás nevét (például „könyvtár” vagy „A/1”). Ékezet és nagybetű nélkül is kereshet.</li>
+                    <li>Válassza ki a megjelenő javaslatok közül a megfelelőt. A térkép a helyre közelít, és megjelenik az adatlapja.</li>
+                </ol>
+                <p>Tipp: a térkép feletti kategóriagombokkal (például menza, parkoló) csak az adott fajta helyeket jelenítheti meg. Ha a térkép nem töltődik be, a helyek listában is kereshetők.</p>
+
+                <h2 class="h-sub">5.2 Szabad parkolóhelyek</h2>
+                <ol>
+                    <li>Válassza a menüben a „Parkolás” pontot.</li>
+                    <li>A parkolózónák a térképen és a listában színjelöléssel jelennek meg: zöld – van hely, sárga – kevés hely, piros – tele.</li>
+                    <li>Egy zónára kattintva látja a kapacitását és az adat frissítésének idejét.</li>
+                </ol>
+                <p>Ha a „nem friss” vagy „nincs adat” jelzés látszik, az érzékelő nem küldött friss adatot; ilyenkor a megjelenített szám nem megbízható.</p>
+
+                <h2 class="h-sub">5.3 Események</h2>
+                <ol>
+                    <li>Válassza a menüben az „Események” pontot. Megjelennek a következő 30 nap eseményei.</li>
+                    <li>A szűrőkkel szűkítheti a listát dátum, típus, kar és helyszín szerint.</li>
+                    <li>Egy eseményre kattintva látja a részleteit. A helyszínre kattintva a térképen is megnézheti.</li>
+                </ol>
+                <p>A naptár ikonnal havi vagy heti naptárnézetre válthat. A korábbi eseményeket a „Korábbi események is” szűrővel jelenítheti meg.</p>
+
+                <h2 class="h-sub">5.4 Hírek</h2>
+                <ol>
+                    <li>Válassza a menüben a „Hírek” pontot.</li>
+                    <li>Szükség esetén válasszon témakört.</li>
+                    <li>Kattintson egy hírre az összefoglaló elolvasásához. A teljes cikk a „Tovább a teljes cikkhez” hivatkozással nyílik meg az egyetem honlapján.</li>
+                </ol>
+
+                <h2 class="h-sub">5.5 Menza</h2>
+                <ol>
+                    <li>Válassza a menüben a „Menza” pontot. Megjelenik a mai étlap az árakkal és a nyitvatartással.</li>
+                    <li>A „Heti nézet” gombbal a hét többi napját is megnézheti.</li>
+                    <li>Egy ételre kattintva láthatja az allergéneket és a vegetáriánus jelölést, ha ezeket megadták.</li>
+                </ol>
+
+                <h2 class="h-sub">5.6 Menetrend</h2>
+                <ol>
+                    <li>Válassza a menüben a „Menetrend” pontot. A rendszer az egyetemhez legközelebbi megálló indulásait mutatja.</li>
+                    <li>Járatonként a következő három indulást látja, „ennyi perc múlva” formában is.</li>
+                    <li>Más megállót vagy irányt a lenyíló listákból választhat.</li>
+                </ol>
+                <p>A rendszer a menetrend szerinti időket mutatja; a járművek esetleges késését nem jelzi.</p>
+
+                <h2 class="h-sub">5.7 Oktató keresése</h2>
+                <ol>
+                    <li>Válassza a menüben az „Oktatók” pontot.</li>
+                    <li>Írja be az oktató nevének egy részét, vagy válasszon kart és tanszéket.</li>
+                    <li>Kattintson az oktató nevére az adatlapja megnyitásához. Az irodára kattintva a térképen, az e-mail-címre kattintva a levelezőprogramjában folytathatja.</li>
+                </ol>
+
+                <h1 class="h-sec">6. Hallgatói funkciók (bejelentkezés után)</h1>
+                <h2 class="h-sub">6.1 Ügyintézési időpont foglalása</h2>
+                <ol>
+                    <li>Válassza a menüben az „Ügyintézés” pontot, majd kattintson az „Új foglalás” gombra.</li>
+                    <li>Válassza ki az ügy típusát.</li>
+                    <li>A naptárban válasszon egy szabad időpontot a következő 14 napból.</li>
+                    <li>Ellenőrizze az összegzést, majd kattintson a „Foglalás megerősítése” gombra.</li>
+                </ol>
+                <p>A foglalásról visszaigazolást kap az egyetemi e-mail-címére, az időpont előtti napon pedig emlékeztetőt. Egy ügytípusra egyszerre csak egy aktív foglalása lehet.</p>
+
+                <h2 class="h-sub">6.2 Foglalás lemondása</h2>
+                <ol>
+                    <li>Nyissa meg a „Foglalásaim” oldalt.</li>
+                    <li>Válassza ki az aktív foglalást, és kattintson a „Lemondás” gombra.</li>
+                    <li>Erősítse meg a lemondást.</li>
+                </ol>
+                <p>A foglalást legkésőbb 2 órával az időpont előtt mondhatja le. Ennél később az ügyintézést közvetlenül kell értesítenie; az elérhetőséget a rendszer megmutatja.</p>
+
+                <h2 class="h-sub">6.3 Hibabejelentés</h2>
+                <ol>
+                    <li>Válassza a menüben a „Hibabejelentés” pontot, majd kattintson az „Új bejelentés” gombra.</li>
+                    <li>Válassza ki a hiba kategóriáját.</li>
+                    <li>Adja meg a helyszínt: válassza ki az épületet, és írja be a termet vagy a pontosabb helyet. A helyet a térképen is kijelölheti.</li>
+                    <li>Írja le röviden a hibát.</li>
+                    <li>Ha szeretné, csatoljon egy képet (JPEG vagy PNG, legfeljebb 5 MB).</li>
+                    <li>Kattintson a „Beküldés” gombra. A bejelentés azonosítót kap (például HB-2026-0042).</li>
+                </ol>
+                <p>Tipp: a térképen egy hely adatlapjáról a „Hiba bejelentése itt” gombbal is indíthat bejelentést; ilyenkor a helyszín már ki van töltve.</p>
+
+                <h2 class="h-sub">6.4 Bejelentések követése</h2>
+                <ol>
+                    <li>Nyissa meg a „Bejelentéseim” oldalt.</li>
+                    <li>A listában látja a bejelentései állapotát: Új, Folyamatban, Megoldva vagy Elutasítva.</li>
+                    <li>Egy bejelentésre kattintva látja az állapotváltozások időrendjét és a felelős megjegyzéseit.</li>
+                </ol>
+                <p>Állapotváltozáskor e-mailben értesítést kap. A bejelentéseit más hallgatók nem látják.</p>
+
+                <h1 class="h-sec">7. Oktatói funkciók</h1>
+                <h2 class="h-sub">7.1 Oktatói adatlap szerkesztése</h2>
+                <ol>
+                    <li>Kattintson a fejlécben a nevére, és válassza az „Oktatói adatlapom” pontot.</li>
+                    <li>Módosítsa az irodáját vagy a fogadóóráit. Több fogadóóra-sávot is megadhat.</li>
+                    <li>Ha egy fogadóóra elmarad, írjon rövid megjegyzést; ez az adatlap tetején kiemelve jelenik meg.</li>
+                    <li>Kattintson a „Mentés” gombra. A változás azonnal látható.</li>
+                </ol>
+                <p>A nevét és az e-mail-címét az egyetemi fiókja határozza meg, ezek itt nem módosíthatók. Ha nincs adatlap a fiókjához rendelve, forduljon az adminisztrátorhoz.</p>
+
+                <h2 class="h-sub">7.2 Tanszéki bejelentések kezelése</h2>
+                <ol>
+                    <li>Nyissa meg a „Bejelentések kezelése” oldalt. A tanszékéhez rendelt bejelentéseket látja.</li>
+                    <li>Válasszon ki egy bejelentést.</li>
+                    <li>Állítsa be az új állapotot, és írjon megjegyzést. Elutasításkor az indoklás kötelező.</li>
+                    <li>Kattintson a „Mentés” gombra. A bejelentő értesítést kap.</li>
+                </ol>
+
+                <h1 class="h-sec">8. Adminisztrátori funkciók</h1>
+                <h2 class="h-sub">8.1 Tartalom kezelése</h2>
+                <ol>
+                    <li>Nyissa meg az „Adminisztráció → Tartalom” oldalt, és válassza ki a tartalom típusát (hír, esemény, menza-étlap, térképi hely).</li>
+                    <li>Kattintson az „Új” gombra, vagy egy meglévő elemnél a „Szerkesztés” gombra.</li>
+                    <li>Töltse ki az űrlapot, és az „Előnézet” gombbal ellenőrizze a megjelenést.</li>
+                    <li>Kattintson a „Közzététel” gombra, vagy mentse piszkozatként.</li>
+                </ol>
+                <p>Az elavult tartalmat törlés helyett archiválja: így eltűnik a nyilvános felületről, de később is megtalálható. A heti étlapot egyetlen táblázatos űrlapon töltheti fel.</p>
+
+                <h2 class="h-sub">8.2 Ügyintézési időpontok</h2>
+                <ol>
+                    <li>Nyissa meg az „Adminisztráció → Időpontok” oldalt.</li>
+                    <li>Válasszon ügytípust, vagy hozzon létre újat (név, leírás, helyszín, egy időpont hossza).</li>
+                    <li>Adjon meg időpontsávot (nap, kezdés, befejezés); szükség esetén állítsa be heti ismétlődésre.</li>
+                    <li>Ellenőrizze az előnézetet, és mentse a sávot.</li>
+                </ol>
+                <p>Egyes időpontokat zárolhat (például szabadság miatt). Ha már lefoglalt időpontot töröl, a rendszer indoklást kér, és értesíti a hallgatót.</p>
+
+                <h2 class="h-sub">8.3 Bejelentések</h2>
+                <p>Az adminisztrátor az összes bejelentést látja, és a 7.2 pontban leírt módon kezeli őket. Ezen felül a bejelentést másik felelős egységhez is irányíthatja.</p>
+
+                <h2 class="h-sub">8.4 Szerepkörök</h2>
+                <ol>
+                    <li>Nyissa meg az „Adminisztráció → Felhasználók” oldalt, és keresse meg a felhasználót név vagy e-mail-cím alapján.</li>
+                    <li>Adjon hozzá vagy vonjon vissza szerepkört. Oktatói szerepkörnél adja meg a tanszéket, és rendelje hozzá az oktatói adatlapot.</li>
+                    <li>Kattintson a „Mentés” gombra.</li>
+                </ol>
+                <p>A felhasználó csak akkor található meg, ha legalább egyszer már bejelentkezett. A saját adminisztrátori szerepkörét nem vonhatja vissza. Minden módosítás megjelenik az „Adminisztráció → Napló” oldalon.</p>
+
+                <h1 class="h-sec">9. Gyakori kérdések és hibaelhárítás</h1>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Probléma</th><th>Teendő</th></tr></thead>
+                        <tbody>
+                            <tr><td>Nem tudok bejelentkezni.</td><td>Ellenőrizze, hogy az egyetemi Microsoft-fiókjával próbálkozik-e. Ha a „bejelentkezés nem elérhető” üzenetet látja, próbálja később; a nyilvános funkciók addig is használhatók.</td></tr>
+                            <tr><td>Nem találok egy termet a térképen.</td><td>Próbálja az épület nevével vagy a terem számának egy részével. Ha így sem találja, jelezze hibabejelentésben „egyéb” kategóriával.</td></tr>
+                            <tr><td>A parkolásnál „nincs adat” látszik.</td><td>Az adott zóna érzékelője nem küldött adatot. A kapacitás ettől függetlenül látható.</td></tr>
+                            <tr><td>Nem tudom lemondani a foglalásomat.</td><td>Az időpont előtti 2 órán belül a lemondás nem lehetséges. Értesítse közvetlenül az ügyintézést a megjelenített elérhetőségen.</td></tr>
+                            <tr><td>Nem tudok új időpontot foglalni.</td><td>Ugyanarra az ügytípusra egyszerre csak egy aktív foglalása lehet. Nézze meg a „Foglalásaim” oldalt.</td></tr>
+                            <tr><td>A kép nem töltődik fel a bejelentéshez.</td><td>Csak JPEG vagy PNG kép tölthető fel, legfeljebb 5 MB méretben. A bejelentés kép nélkül is beküldhető.</td></tr>
+                            <tr><td>Oktató vagyok, de nem látom az oktatói menüt.</td><td>Az oktatói szerepkört az adminisztrátor adja meg. Kérje meg, hogy rendelje hozzá a fiókjához.</td></tr>
+                            <tr><td>Váratlanul kijelentkeztetett a rendszer.</td><td>30 perc tétlenség után a rendszer biztonsági okból kijelentkeztet. Jelentkezzen be újra.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h1 class="h-sec">10. Segítség és kapcsolat</h1>
+                <p>Ha a kézikönyvben nem talál választ a kérdésére, használja a „Súgó” menüpontot, vagy forduljon a rendszer adminisztrátoraihoz. A fejlesztőcsapat elérhetőségei a projekt <a href="index.html">főoldalán</a> találhatók.</p>
+
+                <!-- ============================================================ -->
+                <!-- IV. MUNKANAPLÓ -->
+                <!-- ============================================================ -->
+
+                <h1 id="resz-4" class="h-part">IV. Munkanapló</h1>
+                <p>A munkanapló a csapattagok projektre fordított munkáját rögzíti. Minden tag a saját tevékenységét a munka elvégzése után írja be, dátummal, a kapcsolódó beadandóval és az eltöltött idővel. A szürke „…” jelölésű cellákat a csapattagoknak kell kitölteniük.</p>
+
+                <h2 class="h-sub">Összesítés csapattagonként</h2>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Csapattag</th><th>Szerep</th><th>H1 (óra)</th><th>H2 (óra)</th><th>H3 (óra)</th><th>Összesen (óra)</th></tr></thead>
+                        <tbody>
+                            <tr><td>Dávid Gergő</td><td>Csoportvezető, backend</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td></tr>
+                            <tr><td>Maklári Máté</td><td>Backend</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td></tr>
+                            <tr><td>Győri Kristóf</td><td>Projektötletek, dokumentáció</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td></tr>
+                            <tr><td>Balázs Csenge Málna</td><td>Megjelenés, frontend</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td></tr>
+                            <tr><td>Nagy Virág</td><td>Megjelenés, frontend</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td></tr>
+                            <tr><td><strong>Csapat összesen</strong></td><td></td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="h-sub">Részletes napló</h2>
+                <p>Az első sorok a projekt eddigi ismert mérföldköveit tartalmazzák; a résztvevőket és az időtartamot a csapatnak kell kiegészítenie.</p>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Dátum</th><th>Csapattag</th><th>Tevékenység</th><th>Beadandó</th><th>Idő (óra)</th></tr></thead>
+                        <tbody>
+                            <tr><td class="fill">…</td><td class="fill">…</td><td>Ötletgyűjtés, a feladat és a szerepek egyeztetése</td><td>H1</td><td class="fill">…</td></tr>
+                            <tr><td>2026. 09. 25.</td><td class="fill">…</td><td>A projektterv elkészítése és beadása</td><td>H1</td><td class="fill">…</td></tr>
+                            <tr><td>2026. 10. 13.</td><td class="fill">…</td><td>A vízió dokumentum első vázlata</td><td>H2</td><td class="fill">…</td></tr>
+                            <tr><td>2026. 10. 18.</td><td class="fill">…</td><td>A H2 weboldal elkészítése</td><td>H2</td><td class="fill">…</td></tr>
+                            <tr><td>2026. 10. 20.</td><td class="fill">…</td><td>Az SRS, a szótár, a felhasználói kézikönyv és a munkanapló első változata</td><td>H3</td><td class="fill">…</td></tr>
+                            <tr><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td></tr>
+                            <tr><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td></tr>
+                            <tr><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td></tr>
+                            <tr><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td></tr>
+                            <tr><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

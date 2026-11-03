@@ -1,0 +1,602 @@
+H3 – USE CASE DIAGRAMOK
+Vezérlőpult (ME-nthetetlenek, 19. feladat)
+Forrás: H3 – Szoftverkövetelmény-specifikáció (SRS), 3. fejezet
+
+======================================================================
+MIRŐL SZÓL EZ A FÁJL?
+======================================================================
+
+A tantárgyi H3 leírás szerint az SRS 3. fejezetében legalább egy use case
+diagramnak szerepelnie kell, amely a teljes rendszert modellezi, és a
+diagramon szereplő minden aktort és use case-t dokumentálni kell. Több
+use case diagram is lehet.
+
+Ez a fájl hét use case diagramot tartalmaz:
+
+  1. ábra – A teljes rendszer use case diagramja (ez szerepel a H3 oldalon)
+  2. ábra – Hitelesítés és szerepkörök (SRS 3.2)
+  3. ábra – Eligazodás (SRS 3.3)
+  4. ábra – Események és hírek (SRS 3.4)
+  5. ábra – Mindennapi szolgáltatások (SRS 3.5)
+  6. ábra – Ügyintézés és visszajelzés (SRS 3.6)
+  7. ábra – Adminisztráció (SRS 3.7)
+
+A 2–7. ábra az 1. ábra egy-egy részlete (use case csomagja). Ezek
+áttekinthetőbbek, mert egyszerre csak egy funkciócsoportot mutatnak.
+
+Minden ábránál szerepel:
+  - CÉL: mit mutat az ábra, és miért készült;
+  - AKTOROK: kik vagy mik lépnek kapcsolatba a rendszerrel;
+  - USE CASE-EK: a funkciók, mindegyiknél a feladata, célja;
+  - KAPCSOLATOK: mi mivel áll kapcsolatban;
+  - PLANTUML KÓD: ebből az ábra automatikusan megrajzolható.
+
+HOGYAN LEHET A KÓDBÓL ÁBRÁT KÉSZÍTENI?
+  - Online: a https://www.plantuml.com/plantuml oldalon a kódot
+    (@startuml-tól @enduml-ig) be kell másolni a szövegdobozba.
+  - draw.io (diagrams.net): Arrange → Insert → Advanced → PlantUML,
+    majd a kód bemásolása.
+  - Visual Studio Code: a „PlantUML” bővítménnyel előnézet készíthető.
+
+----------------------------------------------------------------------
+JELÖLÉSEK A DIAGRAMOKON
+----------------------------------------------------------------------
+  Pálcikaember       = aktor (személy vagy külső rendszer)
+  Ellipszis          = use case (a rendszer egy szolgáltatása)
+  Keret (téglalap)   = a rendszer határa: ami benne van, azt a
+                       Vezérlőpult valósítja meg
+  Egyszerű vonal     = asszociáció: az aktor kezdeményezi a use case-t,
+                       vagy (külső rendszer esetén) adatot ad hozzá
+  Üres hegyű nyíl    = általánosítás: a nyíl kezdőpontján álló aktor a
+                       végpontján álló aktor minden funkcióját eléri
+  «külső rendszer»   = nem személy, hanem egy másik informatikai rendszer
+
+
+======================================================================
+AZ AKTOROK (minden ábrára érvényes)
+======================================================================
+
+A-01 Látogató
+  Bárki, aki bejelentkezés nélkül használja a rendszert (leendő és új
+  hallgatók, vendégek, be nem jelentkezett egyetemi polgárok).
+  Feladata/célja: gyorsan eligazodni és tájékozódni az egyetemen.
+
+A-02 Hallgató
+  Bejelentkezett felhasználó hallgató szerepkörrel. A Látogató minden
+  funkcióját eléri (általánosítás).
+  Feladata/célja: ügyintézési időpontot foglalni és hibát bejelenteni.
+
+A-03 Oktató
+  Bejelentkezett felhasználó oktató szerepkörrel, egy tanszékhez
+  tartozik. A Hallgató minden funkcióját eléri (általánosítás).
+  Feladata/célja: a saját adatlapját naprakészen tartani, és kezelni a
+  tanszékéhez rendelt hibabejelentéseket.
+
+A-04 Adminisztrátor
+  Az egyetem által kijelölt munkatárs.
+  Feladata/célja: a tartalom, az ügyintézési időpontok, a
+  hibabejelentések és a szerepkörök kezelése.
+
+A-05 Egyetemi azonosító szolgáltatás («külső rendszer»)
+  Az egyetemi Microsoft-fiókokat kezelő szolgáltatás (Microsoft Entra ID).
+  Feladata/célja: ellenőrzi a bejelentkezést, és visszaadja a
+  felhasználó azonosítóját, nevét és egyetemi e-mail-címét.
+
+A-06 Menetrend-adatforrás (MVK) («külső rendszer»)
+  A miskolci helyi tömegközlekedés menetrendi adatai.
+  Feladata/célja: megállók, járatok és indulási idők szolgáltatása.
+
+A-07 Parkolóérzékelő-rendszer («külső rendszer»)
+  A parkolókban elhelyezett érzékelők és adattovábbító eszközeik.
+  Feladata/célja: zónánként elküldi a foglalt helyek számát.
+
+
+######################################################################
+1. ÁBRA – A TELJES RENDSZER USE CASE DIAGRAMJA
+######################################################################
+
+CÉL
+  Egyetlen ábrán mutatja meg a Vezérlőpult teljes funkcionalitását: az
+  összes aktort, mind a 18 use case-t és a köztük lévő kapcsolatokat.
+  Ez a tantárgy által kötelezően előírt, a teljes rendszert modellező
+  use case diagram. Áttekintést ad arról, hogy ki mit tud csinálni a
+  rendszerben, és mely külső rendszerekre támaszkodik.
+
+AKTOROK
+  A-01 Látogató, A-02 Hallgató, A-03 Oktató, A-04 Adminisztrátor,
+  A-05 Egyetemi azonosító szolgáltatás, A-06 Menetrend-adatforrás (MVK),
+  A-07 Parkolóérzékelő-rendszer
+
+USE CASE-EK ÉS CÉLJUK
+  UC-01 Bejelentkezés
+        Cél: a felhasználó egyetemi fiókkal belép, és a szerepkörének
+        megfelelő funkciókat kapja meg.
+  UC-02 Kijelentkezés
+        Cél: a munkamenet biztonságos lezárása.
+  UC-03 Hely keresése a campustérképen
+        Cél: épület, terem vagy szolgáltatás megtalálása a térképen.
+  UC-04 Szabad parkolóhelyek megtekintése
+        Cél: megtudni, melyik parkolózónában van szabad hely.
+  UC-05 Események böngészése és szűrése
+        Cél: a közelgő egyetemi események megtalálása szűrőkkel.
+  UC-06 Hírek olvasása
+        Cél: tájékozódás a friss egyetemi hírekről.
+  UC-07 Menza-információk megtekintése
+        Cél: a napi és heti étlap, az árak és a nyitvatartás megnézése.
+  UC-08 MVK-menetrend megtekintése
+        Cél: a közeli megállók következő indulásainak megnézése.
+  UC-09 Oktató keresése
+        Cél: egy oktató elérhetőségének, irodájának és fogadóórájának
+        megtalálása.
+  UC-10 Saját oktatói adatok szerkesztése
+        Cél: az oktató naprakészen tartja az irodáját és a fogadóóráját.
+  UC-11 Ügyintézési időpont foglalása
+        Cél: időpontot foglalni ügyintézésre sorban állás nélkül.
+  UC-12 Saját foglalások kezelése
+        Cél: a foglalások áttekintése és szükség esetén lemondása.
+  UC-13 Hibabejelentés beküldése
+        Cél: egy egyetemi hiba (pl. nem működő világítás) jelzése az
+        illetékeseknek.
+  UC-14 Hibabejelentés állapotának követése
+        Cél: nyomon követni, hol tart a beküldött bejelentés.
+  UC-15 Tartalom kezelése
+        Cél: hírek, események, menza-étlapok és térképi helyek
+        feltöltése, módosítása, közzététele, archiválása.
+  UC-16 Ügyintézési időpontok kezelése
+        Cél: ügytípusok és időpontsávok megadása, amelyekre a hallgatók
+        foglalhatnak.
+  UC-17 Hibabejelentések kezelése
+        Cél: a beérkezett bejelentések állapotának módosítása és
+        megválaszolása.
+  UC-18 Szerepkörök kezelése
+        Cél: oktatói és adminisztrátori jogosultság kiosztása és
+        visszavonása.
+
+KAPCSOLATOK
+  Általánosítás:
+    Hallgató → Látogató   (a Hallgató minden nyilvános funkciót elér)
+    Oktató   → Hallgató   (az Oktató minden hallgatói funkciót elér)
+  Asszociációk:
+    Látogató        — UC-03, UC-04, UC-05, UC-06, UC-07, UC-08, UC-09
+    Hallgató        — UC-01, UC-02, UC-11, UC-12, UC-13, UC-14
+    Oktató          — UC-10, UC-17
+    Adminisztrátor  — UC-01, UC-02, UC-15, UC-16, UC-17, UC-18
+    Egyetemi azonosító szolgáltatás — UC-01
+    Menetrend-adatforrás (MVK)      — UC-08
+    Parkolóérzékelő-rendszer        — UC-04
+
+PLANTUML KÓD
+@startuml
+left to right direction
+skinparam actorStyle stick
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor #E8F1FB
+  BorderColor #374151
+}
+
+actor "Látogató" as Latogato
+actor "Hallgató" as Hallgato
+actor "Oktató" as Oktato
+actor "Adminisztrátor" as Admin
+actor "Egyetemi azonosító\nszolgáltatás" as Azonosito <<külső rendszer>>
+actor "Menetrend-adatforrás\n(MVK)" as MVK <<külső rendszer>>
+actor "Parkolóérzékelő-\nrendszer" as Parkolo <<külső rendszer>>
+
+Hallgato -|> Latogato
+Oktato -|> Hallgato
+
+rectangle "Vezérlőpult" {
+  usecase "UC-03 Hely keresése a campustérképen" as UC03
+  usecase "UC-04 Szabad parkolóhelyek megtekintése" as UC04
+  usecase "UC-05 Események böngészése és szűrése" as UC05
+  usecase "UC-06 Hírek olvasása" as UC06
+  usecase "UC-07 Menza-információk megtekintése" as UC07
+  usecase "UC-08 MVK-menetrend megtekintése" as UC08
+  usecase "UC-09 Oktató keresése" as UC09
+  usecase "UC-01 Bejelentkezés" as UC01 #FDF3E1
+  usecase "UC-02 Kijelentkezés" as UC02 #FDF3E1
+  usecase "UC-11 Ügyintézési időpont foglalása" as UC11 #E9F7EC
+  usecase "UC-12 Saját foglalások kezelése" as UC12 #E9F7EC
+  usecase "UC-13 Hibabejelentés beküldése" as UC13 #E9F7EC
+  usecase "UC-14 Hibabejelentés állapotának követése" as UC14 #E9F7EC
+  usecase "UC-10 Saját oktatói adatok szerkesztése" as UC10 #F1ECFB
+  usecase "UC-17 Hibabejelentések kezelése" as UC17 #F1ECFB
+  usecase "UC-15 Tartalom kezelése" as UC15 #FBEAEA
+  usecase "UC-16 Ügyintézési időpontok kezelése" as UC16 #FBEAEA
+  usecase "UC-18 Szerepkörök kezelése" as UC18 #FBEAEA
+}
+
+Latogato -- UC03
+Latogato -- UC04
+Latogato -- UC05
+Latogato -- UC06
+Latogato -- UC07
+Latogato -- UC08
+Latogato -- UC09
+
+Hallgato -- UC01
+Hallgato -- UC02
+Hallgato -- UC11
+Hallgato -- UC12
+Hallgato -- UC13
+Hallgato -- UC14
+
+Oktato -- UC10
+Oktato -- UC17
+
+Admin -- UC01
+Admin -- UC02
+Admin -- UC15
+Admin -- UC16
+Admin -- UC17
+Admin -- UC18
+
+UC01 -- Azonosito
+UC08 -- MVK
+UC04 -- Parkolo
+@enduml
+
+
+######################################################################
+2. ÁBRA – HITELESÍTÉS ÉS SZEREPKÖRÖK (SRS 3.2)
+######################################################################
+
+CÉL
+  Megmutatja, hogyan lépnek be és ki a felhasználók, és hogy a
+  bejelentkezést egy külső rendszer, az egyetemi azonosító szolgáltatás
+  ellenőrzi. Ebből látszik, hogy a rendszer nem kezel jelszót, és hogy
+  a bejelentkezés minden szerepkörű felhasználóra ugyanúgy működik.
+
+AKTOROK
+  A-02 Hallgató, A-03 Oktató (a Hallgatótól örökölve), A-04 Adminisztrátor,
+  A-05 Egyetemi azonosító szolgáltatás
+
+USE CASE-EK ÉS CÉLJUK
+  UC-01 Bejelentkezés
+        Cél: belépés egyetemi Microsoft-fiókkal; a rendszer a felhasználó
+        szerepkörének megfelelő funkciókat jeleníti meg.
+  UC-02 Kijelentkezés
+        Cél: a munkamenet lezárása; 30 perc tétlenség után automatikusan
+        is megtörténik.
+
+KAPCSOLATOK
+  Általánosítás: Oktató → Hallgató
+  Asszociációk:
+    Hallgató, Adminisztrátor — UC-01, UC-02
+    Egyetemi azonosító szolgáltatás — UC-01
+
+PLANTUML KÓD
+@startuml
+left to right direction
+skinparam actorStyle stick
+skinparam usecase {
+  BackgroundColor #FDF3E1
+  BorderColor #374151
+}
+
+actor "Hallgató" as Hallgato
+actor "Oktató" as Oktato
+actor "Adminisztrátor" as Admin
+actor "Egyetemi azonosító\nszolgáltatás" as Azonosito <<külső rendszer>>
+
+Oktato -|> Hallgato
+
+rectangle "Vezérlőpult – Hitelesítés és szerepkörök" {
+  usecase "UC-01 Bejelentkezés" as UC01
+  usecase "UC-02 Kijelentkezés" as UC02
+}
+
+Hallgato -- UC01
+Hallgato -- UC02
+Admin -- UC01
+Admin -- UC02
+UC01 -- Azonosito
+@enduml
+
+
+######################################################################
+3. ÁBRA – ELIGAZODÁS (SRS 3.3)
+######################################################################
+
+CÉL
+  Megmutatja a campuson való tájékozódást segítő funkciókat: a térképes
+  keresést és a parkolók foglaltságának megjelenítését. Látszik rajta,
+  hogy ezek bejelentkezés nélkül is elérhetők, és hogy a parkolási adatot
+  egy külső érzékelőrendszer szolgáltatja.
+
+AKTOROK
+  A-01 Látogató (és általánosítással minden bejelentkezett felhasználó),
+  A-07 Parkolóérzékelő-rendszer
+
+USE CASE-EK ÉS CÉLJUK
+  UC-03 Hely keresése a campustérképen
+        Cél: épület, terem vagy szolgáltatás megkeresése; a térkép
+        ráközelít a helyre, és megmutatja az adatlapját.
+  UC-04 Szabad parkolóhelyek megtekintése
+        Cél: zónánként látni a szabad helyek számát (zöld/sárga/piros
+        jelöléssel) és az adat frissítésének idejét.
+
+KAPCSOLATOK
+  Asszociációk:
+    Látogató — UC-03, UC-04
+    Parkolóérzékelő-rendszer — UC-04
+
+PLANTUML KÓD
+@startuml
+left to right direction
+skinparam actorStyle stick
+skinparam usecase {
+  BackgroundColor #E8F1FB
+  BorderColor #374151
+}
+
+actor "Látogató" as Latogato
+actor "Parkolóérzékelő-\nrendszer" as Parkolo <<külső rendszer>>
+
+rectangle "Vezérlőpult – Eligazodás" {
+  usecase "UC-03 Hely keresése a campustérképen" as UC03
+  usecase "UC-04 Szabad parkolóhelyek megtekintése" as UC04
+}
+
+Latogato -- UC03
+Latogato -- UC04
+UC04 -- Parkolo
+@enduml
+
+
+######################################################################
+4. ÁBRA – ESEMÉNYEK ÉS HÍREK (SRS 3.4)
+######################################################################
+
+CÉL
+  Megmutatja az egyetemi élettel kapcsolatos tájékozódás funkcióit: az
+  eseménynaptárt és a hírfolyamot. Látszik rajta, hogy ezeket bárki
+  használhatja bejelentkezés nélkül; a tartalmat az Adminisztrátor tölti
+  fel (ezt a 7. ábra, UC-15 mutatja).
+
+AKTOROK
+  A-01 Látogató (és általánosítással minden bejelentkezett felhasználó)
+
+USE CASE-EK ÉS CÉLJUK
+  UC-05 Események böngészése és szűrése
+        Cél: a közelgő események listában vagy naptárban való
+        megtekintése, szűrés dátum, típus, kar és helyszín szerint.
+  UC-06 Hírek olvasása
+        Cél: a legfrissebb egyetemi hírek összefoglalójának elolvasása,
+        a teljes cikk megnyitása a hivatalos honlapon.
+
+KAPCSOLATOK
+  Asszociációk:
+    Látogató — UC-05, UC-06
+
+PLANTUML KÓD
+@startuml
+left to right direction
+skinparam actorStyle stick
+skinparam usecase {
+  BackgroundColor #E8F1FB
+  BorderColor #374151
+}
+
+actor "Látogató" as Latogato
+
+rectangle "Vezérlőpult – Események és hírek" {
+  usecase "UC-05 Események böngészése és szűrése" as UC05
+  usecase "UC-06 Hírek olvasása" as UC06
+}
+
+Latogato -- UC05
+Latogato -- UC06
+@enduml
+
+
+######################################################################
+5. ÁBRA – MINDENNAPI SZOLGÁLTATÁSOK (SRS 3.5)
+######################################################################
+
+CÉL
+  Megmutatja a mindennapi egyetemi élethez szükséges információkat: a
+  menzát, a menetrendet és az oktatói adatbázist. Látszik rajta, hogy a
+  menetrend egy külső adatforrásból érkezik, és hogy az oktatói
+  adatlapokat maguk az oktatók tartják naprakészen.
+
+AKTOROK
+  A-01 Látogató (és általánosítással minden bejelentkezett felhasználó),
+  A-03 Oktató, A-06 Menetrend-adatforrás (MVK)
+
+USE CASE-EK ÉS CÉLJUK
+  UC-07 Menza-információk megtekintése
+        Cél: a napi és heti étlap, az árak, az allergének és a
+        nyitvatartás megnézése.
+  UC-08 MVK-menetrend megtekintése
+        Cél: a közeli megállókból induló járatok következő három
+        indulásának megnézése.
+  UC-09 Oktató keresése
+        Cél: egy oktató nevének, tanszékének, irodájának, e-mail-címének
+        és fogadóórájának megtalálása.
+  UC-10 Saját oktatói adatok szerkesztése
+        Cél: az oktató módosítja az irodáját és a fogadóóráját, a
+        változás azonnal látható a többiek számára.
+
+KAPCSOLATOK
+  Asszociációk:
+    Látogató — UC-07, UC-08, UC-09
+    Oktató — UC-10
+    Menetrend-adatforrás (MVK) — UC-08
+
+PLANTUML KÓD
+@startuml
+left to right direction
+skinparam actorStyle stick
+skinparam usecase {
+  BackgroundColor #E8F1FB
+  BorderColor #374151
+}
+
+actor "Látogató" as Latogato
+actor "Oktató" as Oktato
+actor "Menetrend-adatforrás\n(MVK)" as MVK <<külső rendszer>>
+
+rectangle "Vezérlőpult – Mindennapi szolgáltatások" {
+  usecase "UC-07 Menza-információk megtekintése" as UC07
+  usecase "UC-08 MVK-menetrend megtekintése" as UC08
+  usecase "UC-09 Oktató keresése" as UC09
+  usecase "UC-10 Saját oktatói adatok szerkesztése" as UC10 #F1ECFB
+}
+
+Latogato -- UC07
+Latogato -- UC08
+Latogato -- UC09
+Oktato -- UC10
+UC08 -- MVK
+@enduml
+
+
+######################################################################
+6. ÁBRA – ÜGYINTÉZÉS ÉS VISSZAJELZÉS (SRS 3.6)
+######################################################################
+
+CÉL
+  Megmutatja a bejelentkezett felhasználók interaktív funkcióit: az
+  ügyintézési időpontfoglalást és a hibabejelentést. Látszik rajta, hogy
+  ezeket csak bejelentkezett hallgatók (és az általánosítás miatt az
+  oktatók) használhatják, a Látogató nem.
+
+AKTOROK
+  A-02 Hallgató, A-03 Oktató (a Hallgatótól örökölve)
+
+USE CASE-EK ÉS CÉLJUK
+  UC-11 Ügyintézési időpont foglalása
+        Cél: ügytípus és szabad időpont kiválasztása a következő 14
+        napból, visszaigazolással.
+  UC-12 Saját foglalások kezelése
+        Cél: a foglalások áttekintése, lemondás legkésőbb 2 órával az
+        időpont előtt.
+  UC-13 Hibabejelentés beküldése
+        Cél: hiba bejelentése kategóriával, helyszínnel, leírással és
+        opcionálisan képpel.
+  UC-14 Hibabejelentés állapotának követése
+        Cél: a saját bejelentések állapotának (Új, Folyamatban, Megoldva,
+        Elutasítva) és a felelős megjegyzéseinek megtekintése.
+
+KAPCSOLATOK
+  Általánosítás: Oktató → Hallgató
+  Asszociációk:
+    Hallgató — UC-11, UC-12, UC-13, UC-14
+
+PLANTUML KÓD
+@startuml
+left to right direction
+skinparam actorStyle stick
+skinparam usecase {
+  BackgroundColor #E9F7EC
+  BorderColor #374151
+}
+
+actor "Hallgató" as Hallgato
+actor "Oktató" as Oktato
+
+Oktato -|> Hallgato
+
+rectangle "Vezérlőpult – Ügyintézés és visszajelzés" {
+  usecase "UC-11 Ügyintézési időpont foglalása" as UC11
+  usecase "UC-12 Saját foglalások kezelése" as UC12
+  usecase "UC-13 Hibabejelentés beküldése" as UC13
+  usecase "UC-14 Hibabejelentés állapotának követése" as UC14
+}
+
+Hallgato -- UC11
+Hallgato -- UC12
+Hallgato -- UC13
+Hallgato -- UC14
+@enduml
+
+
+######################################################################
+7. ÁBRA – ADMINISZTRÁCIÓ (SRS 3.7)
+######################################################################
+
+CÉL
+  Megmutatja a rendszer karbantartásához szükséges funkciókat. Látszik
+  rajta, hogy a tartalom, az időpontok és a szerepkörök kezelése csak az
+  Adminisztrátor feladata, a hibabejelentések kezelésében viszont az
+  Oktató is részt vesz (a saját tanszékéhez rendelt bejelentéseknél).
+
+AKTOROK
+  A-04 Adminisztrátor, A-03 Oktató
+
+USE CASE-EK ÉS CÉLJUK
+  UC-15 Tartalom kezelése
+        Cél: hírek, események, menza-étlapok és térképi helyek
+        létrehozása, módosítása, közzététele és archiválása.
+  UC-16 Ügyintézési időpontok kezelése
+        Cél: ügytípusok és időpontsávok megadása, időpontok zárolása.
+  UC-17 Hibabejelentések kezelése
+        Cél: a bejelentések állapotának módosítása és megjegyzés
+        hozzáfűzése; az Adminisztrátor mindet, az Oktató a tanszékéhez
+        rendelteket kezeli.
+  UC-18 Szerepkörök kezelése
+        Cél: oktatói és adminisztrátori szerepkör hozzárendelése és
+        visszavonása, fiók letiltása.
+
+KAPCSOLATOK
+  Asszociációk:
+    Adminisztrátor — UC-15, UC-16, UC-17, UC-18
+    Oktató — UC-17
+
+PLANTUML KÓD
+@startuml
+left to right direction
+skinparam actorStyle stick
+skinparam usecase {
+  BackgroundColor #FBEAEA
+  BorderColor #374151
+}
+
+actor "Adminisztrátor" as Admin
+actor "Oktató" as Oktato
+
+rectangle "Vezérlőpult – Adminisztráció" {
+  usecase "UC-15 Tartalom kezelése" as UC15
+  usecase "UC-16 Ügyintézési időpontok kezelése" as UC16
+  usecase "UC-17 Hibabejelentések kezelése" as UC17 #F1ECFB
+  usecase "UC-18 Szerepkörök kezelése" as UC18
+}
+
+Admin -- UC15
+Admin -- UC16
+Admin -- UC17
+Admin -- UC18
+Oktato -- UC17
+@enduml
+
+
+======================================================================
+ÖSSZEFOGLALÓ TÁBLÁZAT
+======================================================================
+
+Use case | Név                                      | Ábra    | Aktorok
+---------+------------------------------------------+---------+---------------------------
+UC-01    | Bejelentkezés                            | 1, 2    | Hallgató, Oktató, Admin, A-05
+UC-02    | Kijelentkezés                            | 1, 2    | Hallgató, Oktató, Admin
+UC-03    | Hely keresése a campustérképen           | 1, 3    | Látogató
+UC-04    | Szabad parkolóhelyek megtekintése        | 1, 3    | Látogató, A-07
+UC-05    | Események böngészése és szűrése          | 1, 4    | Látogató
+UC-06    | Hírek olvasása                           | 1, 4    | Látogató
+UC-07    | Menza-információk megtekintése           | 1, 5    | Látogató
+UC-08    | MVK-menetrend megtekintése               | 1, 5    | Látogató, A-06
+UC-09    | Oktató keresése                          | 1, 5    | Látogató
+UC-10    | Saját oktatói adatok szerkesztése        | 1, 5    | Oktató
+UC-11    | Ügyintézési időpont foglalása            | 1, 6    | Hallgató (Oktató)
+UC-12    | Saját foglalások kezelése                | 1, 6    | Hallgató (Oktató)
+UC-13    | Hibabejelentés beküldése                 | 1, 6    | Hallgató (Oktató)
+UC-14    | Hibabejelentés állapotának követése      | 1, 6    | Hallgató (Oktató)
+UC-15    | Tartalom kezelése                        | 1, 7    | Admin
+UC-16    | Ügyintézési időpontok kezelése           | 1, 7    | Admin
+UC-17    | Hibabejelentések kezelése                | 1, 7    | Admin, Oktató
+UC-18    | Szerepkörök kezelése                     | 1, 7    | Admin
+
+A use case-ek részletes leírása (prekondíciók, posztkondíciók, szokásos
+működés, alternatív és kivételes esetek) a H3 oldal SRS 3.2–3.7 pontjában
+található.
