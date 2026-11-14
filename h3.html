@@ -7,7 +7,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/style.css">
     <style>
         html { scroll-behavior: smooth; }
     </style>
@@ -486,7 +486,7 @@
                 <p>A csomag a bejelentkezést, a kijelentkezést és a szerepkörök alapján történő jogosultságkezelést írja le. Aktorok: A-02 Hallgató, A-03 Oktató, A-04 Adminisztrátor, A-05 Egyetemi azonosító szolgáltatás (definíciójuk: 3.1.1). A csomagra a teljes diagram (1. ábra) sárga része vonatkozik.</p>
                 <p>A 2. ábra a csomag use case diagramja. Látszik rajta, hogy a bejelentkezést nem a Vezérlőpult ellenőrzi, hanem egy külső rendszer, az egyetemi azonosító szolgáltatás, ezért a rendszer jelszót nem kér be és nem tárol. A bejelentkezés minden szerepkörű felhasználóra ugyanúgy működik.</p>
                 <figure class="fig">
-                    <img src="uml/2.png.png" alt="Use case diagram: Hitelesítés és szerepkörök (UC-01, UC-02)" loading="lazy">
+                    <img src="H3/uml/2.png" alt="Use case diagram: Hitelesítés és szerepkörök (UC-01, UC-02)" loading="lazy">
                 </figure>
                 <p class="fig-cap"><strong>2. ábra.</strong> Hitelesítés és szerepkörök – use case diagram.</p>
 
@@ -573,7 +573,7 @@
                 <p>A csomag a campustérképet és a parkolók foglaltságának megjelenítését írja le. Aktorok: A-01 Látogató és az általánosítás miatt minden bejelentkezett felhasználó, valamint A-07 Parkolóérzékelő-rendszer (definíciójuk: 3.1.1).</p>
                 <p>A 3. ábra a csomag use case diagramja: a campuson való tájékozódást segítő funkciókat mutatja be. Ezek bejelentkezés nélkül is elérhetők. A parkolási adatot egy külső érzékelőrendszer szolgáltatja.</p>
                 <figure class="fig">
-                    <img src="uml/3.png.png" alt="Use case diagram: Eligazodás (UC-03, UC-04)" loading="lazy">
+                    <img src="H3/uml/3.png" alt="Use case diagram: Eligazodás (UC-03, UC-04)" loading="lazy">
                 </figure>
                 <p class="fig-cap"><strong>3. ábra.</strong> Eligazodás – use case diagram.</p>
 
@@ -660,7 +660,7 @@
                 <p>A csomag az eseménynaptárt és a hírfolyamot írja le. Aktor: A-01 Látogató és általánosítással minden bejelentkezett felhasználó (definíció: 3.1.1). Az események és hírek feltöltését az UC-15 (3.7) írja le.</p>
                 <p>A 4. ábra a csomag use case diagramja: az egyetemi élettel kapcsolatos tájékozódás funkcióit mutatja be. Ezeket bárki használhatja bejelentkezés nélkül. A tartalmat az Adminisztrátor tölti fel (7. ábra, UC-15).</p>
                 <figure class="fig">
-                    <img src="uml/4.png.png" alt="Use case diagram: Események és hírek (UC-05, UC-06)" loading="lazy">
+                    <img src="H3/uml/4.png" alt="Use case diagram: Események és hírek (UC-05, UC-06)" loading="lazy">
                 </figure>
                 <p class="fig-cap"><strong>4. ábra.</strong> Események és hírek – use case diagram.</p>
 
@@ -742,7 +742,7 @@
                 <p>A csomag a menza-információkat, az MVK-menetrendet és az oktatói adatbázist írja le. Aktorok: A-01 Látogató, A-03 Oktató, A-06 Menetrend-adatforrás (definíciójuk: 3.1.1).</p>
                 <p>Az 5. ábra a csomag use case diagramja: a mindennapi egyetemi élethez szükséges információkat mutatja be, vagyis a menzát, a menetrendet és az oktatói adatbázist. A menetrend egy külső adatforrásból érkezik, az oktatói adatlapokat pedig maguk az oktatók tartják naprakészen.</p>
                 <figure class="fig">
-                    <img src="uml/5.png" alt="Use case diagram: Mindennapi szolgáltatások (UC-07 – UC-10)" loading="lazy">
+                    <img src="H3/uml/5.png" alt="Use case diagram: Mindennapi szolgáltatások (UC-07 – UC-10)" loading="lazy">
                 </figure>
                 <p class="fig-cap"><strong>5. ábra.</strong> Mindennapi szolgáltatások – use case diagram.</p>
 
@@ -885,7 +885,7 @@
                 <p>A csomag az ügyintézési időpontfoglalást és a hibabejelentést írja le. Aktor: A-02 Hallgató, és általánosítással A-03 Oktató (definíciójuk: 3.1.1). Az időpontok és a bejelentések adminisztrátori kezelését a 3.7 csomag írja le.</p>
                 <p>A 6. ábra a csomag use case diagramja: a bejelentkezett felhasználók interaktív funkcióit mutatja be, az ügyintézési időpontfoglalást és a hibabejelentést. Ezeket csak a bejelentkezett hallgatók, és az általánosítás miatt az oktatók használhatják, a Látogató nem.</p>
                 <figure class="fig">
-                    <img src="uml/6.png" alt="Use case diagram: Ügyintézés és visszajelzés (UC-11 – UC-14)" loading="lazy">
+                    <img src="H3/uml/6.png" alt="Use case diagram: Ügyintézés és visszajelzés (UC-11 – UC-14)" loading="lazy">
                 </figure>
                 <p class="fig-cap"><strong>6. ábra.</strong> Ügyintézés és visszajelzés – use case diagram.</p>
 
@@ -1041,7 +1041,7 @@
                 <p>A csomag a tartalom, az ügyintézési időpontok, a hibabejelentések és a szerepkörök kezelését írja le. Aktorok: A-04 Adminisztrátor és az UC-17 esetén A-03 Oktató (definíciójuk: 3.1.1). Minden use case prekondíciója, hogy a felhasználó be van jelentkezve, és megfelelő szerepköre van.</p>
                 <p>A 7. ábra a csomag use case diagramja: a rendszer karbantartásához szükséges funkciókat mutatja be. A tartalom, az időpontok és a szerepkörök kezelése csak az Adminisztrátor feladata. A hibabejelentések kezelésében az Oktató is részt vesz, a saját tanszékéhez rendelt bejelentéseknél.</p>
                 <figure class="fig">
-                    <img src="uml/7.png.png" alt="Use case diagram: Adminisztráció (UC-15 – UC-18)" loading="lazy">
+                    <img src="H3/uml/7.png" alt="Use case diagram: Adminisztráció (UC-15 – UC-18)" loading="lazy">
                 </figure>
                 <p class="fig-cap"><strong>7. ábra.</strong> Adminisztráció – use case diagram.</p>
 
@@ -1539,7 +1539,7 @@
                     <li>6. ábra – Ügyintézés és visszajelzés (3.6)</li>
                     <li>7. ábra – Adminisztráció (3.7)</li>
                 </ul>
-                <p>Az ábrák nyomtatható változata: <a href="H3-uml.pdf">H3 – Use case ábrák (PDF)</a>. Az ábrák PlantUML-forráskódja és részletes leírása: <a href="H3_use_case_diagramok.txt">H3_use_case_diagramok.txt</a>.</p>
+                <p>Az ábrák nyomtatható változata: <a href="H3/H3-uml.pdf">H3 – Use case ábrák (PDF)</a>. Az ábrák PlantUML-forráskódja és részletes leírása: <a href="H3/H3_use_case_diagramok.txt">H3_use_case_diagramok.txt</a>.</p>
 
                 <h2 class="h-sub">13.2 Hivatkozások</h2>
                 <ul>
@@ -1897,6 +1897,6 @@
         </main>
     </div>
 
-    <script src="script.js"></script>
+    <script src="assets/script.js"></script>
 </body>
 </html>
