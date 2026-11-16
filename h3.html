@@ -96,7 +96,7 @@
             <div class="doc bg-white p-6 md:p-12 w-full max-w-4xl mx-auto shadow-sm border border-gray-300 font-serif text-black leading-relaxed">
 
                 <h1 class="text-2xl md:text-3xl font-bold mb-2 mt-0 text-gray-900">H3 – A specifikációs fázis dokumentumai</h1>
-                <p class="text-gray-700">Csoport: ME-nthetetlenek · Feladat sorszáma: 19 · Dátum: 2026. 11. 03. · Verzió: 0.3</p>
+                <p class="text-gray-700">Csoport: ME-nthetetlenek · Feladat sorszáma: 19 · Dátum: 2026. 11. 16. · Verzió: 0.4</p>
 
                 <p>Ez az oldal a H3 határidőre leadandó dokumentumokat tartalmazza. A tantárgyi követelmény szerint ezek a következők: a szoftverkövetelmény-specifikáció (SRS), az önálló szótár, a felhasználói kézikönyv első verziója és a munkanapló. A négy dokumentum egymásra épül: a szótár az SRS fogalmait magyarázza, a felhasználói kézikönyv az SRS-ben leírt funkciók használatát mutatja be.</p>
 
@@ -108,6 +108,7 @@
                             <tr><td>2026. 11. 03.</td><td>0.1</td><td>SRS 1–3. fejezet: bevezetés, áttekintés és a rendszer funkciói (use case modell, 18 use case)</td><td>ME-nthetetlenek</td></tr>
                             <tr><td>2026. 11. 03.</td><td>0.2</td><td>SRS 4–13. fejezet: használhatóság, megbízhatóság, teljesítmény, támogatottság, tervezési korlátozások, súgó, kész komponensek, interfészek, szabványok, mellékletek</td><td>ME-nthetetlenek</td></tr>
                             <tr><td>2026. 11. 03.</td><td>0.3</td><td>Szótár (71 fogalom), felhasználói kézikönyv (1. verzió) és munkanapló</td><td>ME-nthetetlenek</td></tr>
+                            <tr><td>2026. 11. 16.</td><td>0.4</td><td>A use case modell kiegészítése a gyakorlatvezetői visszajelzés alapján: «include» és «extend» kapcsolatok, hat új use case (UC-19 – UC-24), új aktor (A-08 E-mail-szolgáltatás); a 7 use case diagram újrarajzolva; 3 új szótári fogalom</td><td>ME-nthetetlenek</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -265,169 +266,12 @@
                 <p>Ez a fejezet a rendszer funkcionális követelményeit tartalmazza. Minden csomagnál először természetes nyelven, azonosítóval és prioritással felsoroljuk a követelményeket, majd a csomag use case-eit a minta szerinti szerkezetben írjuk le: név, rövid leírás, aktorok, prekondíciók, posztkondíciók, szokásos működés, alternatív esetek és kivételes esetek.</p>
 
                 <h2 id="srs-3-1" class="h-sub">3.1 A teljes rendszer use case modellje</h2>
-                <p>Az 1. ábra a teljes rendszer use case diagramja. A diagramon minden aktor és minden use case szerepel; a színek a csomagokat jelölik.</p>
-
-                <div class="overflow-x-auto mb-2 border border-gray-300 bg-white">
-                    <svg viewBox="0 0 920 1010" class="w-full h-auto min-w-[640px]" role="img" aria-label="A Vezérlőpult teljes use case diagramja" font-family="ui-sans-serif, system-ui, sans-serif">
-                        <defs>
-                            <marker id="gen" viewBox="0 0 14 14" refX="13" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">
-                                <path d="M1,1 L13,7 L1,13 z" fill="#ffffff" stroke="#374151" stroke-width="1.3"/>
-                            </marker>
-                        </defs>
-
-                        <!-- rendszerhatár -->
-                        <text x="470" y="28" text-anchor="middle" font-size="15" font-weight="700" fill="#111827">Vezérlőpult</text>
-                        <rect x="255" y="40" width="430" height="955" rx="6" fill="none" stroke="#374151" stroke-width="1.5"/>
-
-                        <!-- asszociációk: Látogató -->
-                        <g stroke="#4b5563" stroke-width="1.2">
-                            <line x1="125" y1="218" x2="280" y2="78"/>
-                            <line x1="125" y1="218" x2="280" y2="130"/>
-                            <line x1="125" y1="218" x2="280" y2="182"/>
-                            <line x1="125" y1="218" x2="280" y2="234"/>
-                            <line x1="125" y1="218" x2="280" y2="286"/>
-                            <line x1="125" y1="218" x2="280" y2="338"/>
-                            <line x1="125" y1="218" x2="280" y2="390"/>
-                            <!-- Hallgató -->
-                            <line x1="125" y1="563" x2="280" y2="442"/>
-                            <line x1="125" y1="563" x2="280" y2="494"/>
-                            <line x1="125" y1="563" x2="280" y2="546"/>
-                            <line x1="125" y1="563" x2="280" y2="598"/>
-                            <line x1="125" y1="563" x2="280" y2="650"/>
-                            <line x1="125" y1="563" x2="280" y2="702"/>
-                            <!-- Oktató -->
-                            <line x1="125" y1="768" x2="280" y2="754"/>
-                            <line x1="125" y1="768" x2="280" y2="806"/>
-                            <!-- Adminisztrátor -->
-                            <line x1="125" y1="903" x2="280" y2="442"/>
-                            <line x1="125" y1="903" x2="280" y2="494"/>
-                            <line x1="125" y1="903" x2="280" y2="806"/>
-                            <line x1="125" y1="903" x2="280" y2="858"/>
-                            <line x1="125" y1="903" x2="280" y2="910"/>
-                            <line x1="125" y1="903" x2="280" y2="962"/>
-                            <!-- külső rendszerek -->
-                            <line x1="795" y1="138" x2="660" y2="130"/>
-                            <line x1="795" y1="333" x2="660" y2="338"/>
-                            <line x1="795" y1="518" x2="660" y2="442"/>
-                        </g>
-
-                        <!-- általánosítások -->
-                        <line x1="105" y1="532" x2="105" y2="286" stroke="#374151" stroke-width="1.3" marker-end="url(#gen)"/>
-                        <line x1="105" y1="737" x2="105" y2="629" stroke="#374151" stroke-width="1.3" marker-end="url(#gen)"/>
-
-                        <!-- use case-ek -->
-                        <g stroke="#374151" stroke-width="1.2" font-size="13" fill="#111827">
-                            <ellipse cx="470" cy="78"  rx="190" ry="21" fill="#e8f1fb"/>
-                            <ellipse cx="470" cy="130" rx="190" ry="21" fill="#e8f1fb"/>
-                            <ellipse cx="470" cy="182" rx="190" ry="21" fill="#e8f1fb"/>
-                            <ellipse cx="470" cy="234" rx="190" ry="21" fill="#e8f1fb"/>
-                            <ellipse cx="470" cy="286" rx="190" ry="21" fill="#e8f1fb"/>
-                            <ellipse cx="470" cy="338" rx="190" ry="21" fill="#e8f1fb"/>
-                            <ellipse cx="470" cy="390" rx="190" ry="21" fill="#e8f1fb"/>
-                            <ellipse cx="470" cy="442" rx="190" ry="21" fill="#fdf3e1"/>
-                            <ellipse cx="470" cy="494" rx="190" ry="21" fill="#fdf3e1"/>
-                            <ellipse cx="470" cy="546" rx="190" ry="21" fill="#e9f7ec"/>
-                            <ellipse cx="470" cy="598" rx="190" ry="21" fill="#e9f7ec"/>
-                            <ellipse cx="470" cy="650" rx="190" ry="21" fill="#e9f7ec"/>
-                            <ellipse cx="470" cy="702" rx="190" ry="21" fill="#e9f7ec"/>
-                            <ellipse cx="470" cy="754" rx="190" ry="21" fill="#f1ecfb"/>
-                            <ellipse cx="470" cy="806" rx="190" ry="21" fill="#f1ecfb"/>
-                            <ellipse cx="470" cy="858" rx="190" ry="21" fill="#fbeaea"/>
-                            <ellipse cx="470" cy="910" rx="190" ry="21" fill="#fbeaea"/>
-                            <ellipse cx="470" cy="962" rx="190" ry="21" fill="#fbeaea"/>
-                        </g>
-                        <g font-size="13" fill="#111827" text-anchor="middle">
-                            <text x="470" y="83"><tspan font-weight="700">UC-03</tspan> Hely keresése a campustérképen</text>
-                            <text x="470" y="135"><tspan font-weight="700">UC-04</tspan> Szabad parkolóhelyek megtekintése</text>
-                            <text x="470" y="187"><tspan font-weight="700">UC-05</tspan> Események böngészése és szűrése</text>
-                            <text x="470" y="239"><tspan font-weight="700">UC-06</tspan> Hírek olvasása</text>
-                            <text x="470" y="291"><tspan font-weight="700">UC-07</tspan> Menza-információk megtekintése</text>
-                            <text x="470" y="343"><tspan font-weight="700">UC-08</tspan> MVK-menetrend megtekintése</text>
-                            <text x="470" y="395"><tspan font-weight="700">UC-09</tspan> Oktató keresése</text>
-                            <text x="470" y="447"><tspan font-weight="700">UC-01</tspan> Bejelentkezés</text>
-                            <text x="470" y="499"><tspan font-weight="700">UC-02</tspan> Kijelentkezés</text>
-                            <text x="470" y="551"><tspan font-weight="700">UC-11</tspan> Ügyintézési időpont foglalása</text>
-                            <text x="470" y="603"><tspan font-weight="700">UC-12</tspan> Saját foglalások kezelése</text>
-                            <text x="470" y="655"><tspan font-weight="700">UC-13</tspan> Hibabejelentés beküldése</text>
-                            <text x="470" y="707"><tspan font-weight="700">UC-14</tspan> Hibabejelentés állapotának követése</text>
-                            <text x="470" y="759"><tspan font-weight="700">UC-10</tspan> Saját oktatói adatok szerkesztése</text>
-                            <text x="470" y="811"><tspan font-weight="700">UC-17</tspan> Hibabejelentések kezelése</text>
-                            <text x="470" y="863"><tspan font-weight="700">UC-15</tspan> Tartalom kezelése</text>
-                            <text x="470" y="915"><tspan font-weight="700">UC-16</tspan> Ügyintézési időpontok kezelése</text>
-                            <text x="470" y="967"><tspan font-weight="700">UC-18</tspan> Szerepkörök kezelése</text>
-                        </g>
-
-                        <!-- aktorok (bal oldal) -->
-                        <g stroke="#111827" stroke-width="1.6" fill="none">
-                            <!-- Látogató y=230 -->
-                            <circle cx="105" cy="198" r="11" fill="#ffffff"/>
-                            <line x1="105" y1="209" x2="105" y2="236"/>
-                            <line x1="87" y1="218" x2="123" y2="218"/>
-                            <line x1="105" y1="236" x2="90" y2="258"/>
-                            <line x1="105" y1="236" x2="120" y2="258"/>
-                            <!-- Hallgató y=575 -->
-                            <circle cx="105" cy="543" r="11" fill="#ffffff"/>
-                            <line x1="105" y1="554" x2="105" y2="581"/>
-                            <line x1="87" y1="563" x2="123" y2="563"/>
-                            <line x1="105" y1="581" x2="90" y2="603"/>
-                            <line x1="105" y1="581" x2="120" y2="603"/>
-                            <!-- Oktató y=780 -->
-                            <circle cx="105" cy="748" r="11" fill="#ffffff"/>
-                            <line x1="105" y1="759" x2="105" y2="786"/>
-                            <line x1="87" y1="768" x2="123" y2="768"/>
-                            <line x1="105" y1="786" x2="90" y2="808"/>
-                            <line x1="105" y1="786" x2="120" y2="808"/>
-                            <!-- Adminisztrátor y=915 -->
-                            <circle cx="105" cy="883" r="11" fill="#ffffff"/>
-                            <line x1="105" y1="894" x2="105" y2="921"/>
-                            <line x1="87" y1="903" x2="123" y2="903"/>
-                            <line x1="105" y1="921" x2="90" y2="943"/>
-                            <line x1="105" y1="921" x2="120" y2="943"/>
-                        </g>
-                        <g font-size="14" font-weight="700" fill="#111827" text-anchor="middle">
-                            <text x="105" y="278">Látogató</text>
-                            <text x="105" y="623">Hallgató</text>
-                            <text x="105" y="828">Oktató</text>
-                            <text x="105" y="963">Adminisztrátor</text>
-                        </g>
-
-                        <!-- aktorok (jobb oldal, külső rendszerek) -->
-                        <g stroke="#111827" stroke-width="1.6" fill="none">
-                            <circle cx="815" cy="118" r="11" fill="#ffffff"/>
-                            <line x1="815" y1="129" x2="815" y2="156"/>
-                            <line x1="797" y1="138" x2="833" y2="138"/>
-                            <line x1="815" y1="156" x2="800" y2="178"/>
-                            <line x1="815" y1="156" x2="830" y2="178"/>
-
-                            <circle cx="815" cy="313" r="11" fill="#ffffff"/>
-                            <line x1="815" y1="324" x2="815" y2="351"/>
-                            <line x1="797" y1="333" x2="833" y2="333"/>
-                            <line x1="815" y1="351" x2="800" y2="373"/>
-                            <line x1="815" y1="351" x2="830" y2="373"/>
-
-                            <circle cx="815" cy="498" r="11" fill="#ffffff"/>
-                            <line x1="815" y1="509" x2="815" y2="536"/>
-                            <line x1="797" y1="518" x2="833" y2="518"/>
-                            <line x1="815" y1="536" x2="800" y2="558"/>
-                            <line x1="815" y1="536" x2="830" y2="558"/>
-                        </g>
-                        <g fill="#111827" text-anchor="middle">
-                            <text x="815" y="196" font-size="11" fill="#4b5563">«külső rendszer»</text>
-                            <text x="815" y="212" font-size="13" font-weight="700">Parkolóérzékelő-</text>
-                            <text x="815" y="228" font-size="13" font-weight="700">rendszer</text>
-
-                            <text x="815" y="391" font-size="11" fill="#4b5563">«külső rendszer»</text>
-                            <text x="815" y="407" font-size="13" font-weight="700">Menetrend-adatforrás</text>
-                            <text x="815" y="423" font-size="13" font-weight="700">(MVK)</text>
-
-                            <text x="815" y="576" font-size="11" fill="#4b5563">«külső rendszer»</text>
-                            <text x="815" y="592" font-size="13" font-weight="700">Egyetemi azonosító</text>
-                            <text x="815" y="608" font-size="13" font-weight="700">szolgáltatás</text>
-                        </g>
-                    </svg>
-                </div>
-                <p class="text-sm text-gray-700 mb-2"><strong>1. ábra.</strong> A Vezérlőpult teljes use case diagramja.</p>
-                <p class="text-sm text-gray-700">Színek: <span class="px-1" style="background:#e8f1fb">kék</span> – nyilvános funkciók (3.3–3.5); <span class="px-1" style="background:#fdf3e1">sárga</span> – hitelesítés (3.2); <span class="px-1" style="background:#e9f7ec">zöld</span> – ügyintézés és visszajelzés (3.6); <span class="px-1" style="background:#f1ecfb">lila</span> – oktatói funkciók (3.5, 3.7); <span class="px-1" style="background:#fbeaea">piros</span> – adminisztráció (3.7). Az üres hegyű nyíl általánosítást jelöl: a Hallgató a Látogató, az Oktató a Hallgató minden funkcióját eléri.</p>
+                <p>Az 1. ábra a teljes rendszer use case diagramja. A diagramon minden aktor, minden use case és a use case-ek közötti «include» és «extend» kapcsolatok szerepelnek; a kiterjesztési pontok az alap use case ellipszisében, vonal alatt láthatók. A színek a csomagokat jelölik.</p>
+                <figure class="fig">
+                    <a href="H3/uml/1.png" target="_blank" rel="noopener"><img src="H3/uml/1.png" alt="A Vezérlőpult teljes use case diagramja «include» és «extend» kapcsolatokkal" loading="lazy"></a>
+                </figure>
+                <p class="text-sm text-gray-700 mb-2"><strong>1. ábra.</strong> A Vezérlőpult teljes use case diagramja. <a href="H3/uml/1.png" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+                <p class="text-sm text-gray-700">Színek: <span class="px-1" style="background:#e8f1fb">kék</span> – nyilvános funkciók (3.3–3.5); <span class="px-1" style="background:#fdf3e1">sárga</span> – hitelesítés (3.2); <span class="px-1" style="background:#e9f7ec">zöld</span> – ügyintézés és visszajelzés (3.6); <span class="px-1" style="background:#f1ecfb">lila</span> – oktatói funkciók (3.5, 3.7); <span class="px-1" style="background:#fbeaea">piros</span> – adminisztráció (3.7). Az üres hegyű nyíl általánosítást jelöl: a Hallgató a Látogató, az Oktató a Hallgató minden funkcióját eléri. A szaggatott nyilak «include», illetve «extend» kapcsolatot jelölnek (lásd 3.1.3).</p>
                 <p>A 2–7. ábra az 1. ábra egy-egy csomagját mutatja külön, áttekinthetőbb formában; ezek a 3.2–3.7. alfejezet elején szerepelnek.</p>
 
                 <h3 id="srs-3-1-1" class="h-sub2">3.1.1 Aktorok</h3>
@@ -442,6 +286,7 @@
                             <tr><td>A-05</td><td>Egyetemi azonosító szolgáltatás</td><td>Külső rendszer: az egyetemi Microsoft-fiókokat kezelő azonosítási szolgáltatás (Microsoft Entra ID). Ellenőrzi a felhasználó belépési adatait, és visszaadja a rendszernek a felhasználó azonosítóját, nevét és egyetemi e-mail-címét.</td></tr>
                             <tr><td>A-06</td><td>Menetrend-adatforrás (MVK)</td><td>Külső rendszer: a miskolci helyi tömegközlekedés menetrendi adatai (megállók, járatok, indulási idők), amelyeket a rendszer rendszeresen betölt.</td></tr>
                             <tr><td>A-07</td><td>Parkolóérzékelő-rendszer</td><td>Külső rendszer: a parkolókban elhelyezett érzékelők és az adataikat továbbító eszközök. Zónánként küldi a foglalt helyek számát a rendszernek.</td></tr>
+                            <tr><td>A-08</td><td>E-mail-szolgáltatás</td><td>Külső rendszer: az az e-mail-küldő szolgáltatás, amelyen keresztül a rendszer a visszaigazolásokat és az értesítéseket a felhasználók egyetemi e-mail-címére továbbítja (2.1, 11.3). Az UC-20-hoz kapcsolódik.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -469,22 +314,61 @@
                             <tr><td>UC-16</td><td><a href="#uc-16">Ügyintézési időpontok kezelése</a></td><td>3.7</td><td>A-04</td><td>Kötelező</td></tr>
                             <tr><td>UC-17</td><td><a href="#uc-17">Hibabejelentések kezelése</a></td><td>3.7</td><td>A-03, A-04</td><td>Kötelező</td></tr>
                             <tr><td>UC-18</td><td><a href="#uc-18">Szerepkörök kezelése</a></td><td>3.7</td><td>A-04</td><td>Kötelező</td></tr>
+                            <tr><td>UC-19</td><td><a href="#uc-19">Hely megjelenítése a térképen</a></td><td>3.3</td><td>– (az UC-03 része; az UC-04, UC-05, UC-08, UC-09 bővítése)</td><td>Kötelező</td></tr>
+                            <tr><td>UC-20</td><td><a href="#uc-20">Értesítés küldése</a></td><td>3.6</td><td>A-08 (az UC-11, UC-17 része; az UC-16 bővítése)</td><td>Kötelező</td></tr>
+                            <tr><td>UC-21</td><td><a href="#uc-21">Bejelentés részleteinek megtekintése</a></td><td>3.6</td><td>– (az UC-14, UC-17 része)</td><td>Kötelező</td></tr>
+                            <tr><td>UC-22</td><td><a href="#uc-22">Kép csatolása</a></td><td>3.6</td><td>A-02 (az UC-13 bővítése)</td><td>Ajánlott</td></tr>
+                            <tr><td>UC-23</td><td><a href="#uc-23">Bejelentés átirányítása</a></td><td>3.7</td><td>A-04 (az UC-17 bővítése)</td><td>Ajánlott</td></tr>
+                            <tr><td>UC-24</td><td><a href="#uc-24">Oktatói adatlap hozzárendelése</a></td><td>3.7</td><td>A-04 (az UC-18 bővítése)</td><td>Kötelező</td></tr>
                         </tbody>
                     </table>
                 </div>
 
                 <h3 id="srs-3-1-3" class="h-sub2">3.1.3 A diagram kapcsolatai</h3>
                 <ul>
-                    <li><strong>Általánosítás:</strong> a Hallgató (A-02) a Látogató (A-01) specializációja, ezért minden nyilvános use case-t elér. Az Oktató (A-03) a Hallgató specializációja, ezért a hallgatói use case-eket (UC-01, UC-02, UC-11–UC-14) is eléri.</li>
-                    <li><strong>Asszociációk:</strong> a diagramon minden vonal azt jelenti, hogy az aktor kezdeményezi a use case-t, vagy (külső rendszer esetén) adatot szolgáltat hozzá. Az Egyetemi azonosító szolgáltatás az UC-01-hez, a Menetrend-adatforrás az UC-08-hoz, a Parkolóérzékelő-rendszer az UC-04-hez kapcsolódik.</li>
-                    <li><strong>A bejelentkezés mint előfeltétel:</strong> a bejelentkezést igénylő use case-ek (UC-02 és UC-10–UC-18) prekondíciójaként szerepel, hogy a felhasználó be van jelentkezve. Ezt nem «include» kapcsolattal jelöljük, mert a bejelentkezés egyszer történik meg egy munkamenetben, nem minden use case részeként.</li>
-                    <li><strong>Navigáció a use case-ek között:</strong> több use case-ből át lehet lépni a térképre (például egy esemény helyszínére kattintva). Ez a felület navigációja, nem «extend» kapcsolat, ezért a diagram nem jelöli; a leírásokban alternatív esetként szerepel.</li>
+                    <li><strong>Általánosítás:</strong> a Hallgató (A-02) a Látogató (A-01) specializációja, ezért minden nyilvános use case-t elér. Az Oktató (A-03) a Hallgató specializációja, ezért a hallgatói use case-eket (UC-01, UC-02, UC-11 – UC-14 és az UC-22) is eléri.</li>
+                    <li><strong>Asszociációk:</strong> a diagramon minden folytonos vonal azt jelenti, hogy az aktor kezdeményezi a use case-t, vagy (külső rendszer esetén) adatot szolgáltat hozzá, illetve fogad tőle. Az Egyetemi azonosító szolgáltatás az UC-01-hez, a Menetrend-adatforrás az UC-08-hoz, a Parkolóérzékelő-rendszer az UC-04-hez, az E-mail-szolgáltatás az UC-20-hoz kapcsolódik.</li>
+                    <li><strong>«include» (befoglalás):</strong> az alap use case működésének mindig része a befoglalt use case. A szaggatott nyíl az alap use case-től a befoglalt felé mutat.</li>
+                    <li><strong>«extend» (kiterjesztés):</strong> a kiterjesztő use case csak egy feltétel teljesülésekor, az alap use case egy megnevezett kiterjesztési pontján épül be annak működésébe. A szaggatott nyíl a kiterjesztő use case-től az alap felé mutat; a kiterjesztési pontok az alap use case ellipszisében, vonal alatt szerepelnek.</li>
                 </ul>
+                <p><strong>A bejelentkezés.</strong> A bejelentkezést igénylő use case-ek «include» kapcsolattal használják a Bejelentkezést (UC-01): <a href="#uc-02">UC-02 Kijelentkezés</a>, <a href="#uc-10">UC-10 Saját oktatói adatok szerkesztése</a>, <a href="#uc-11">UC-11 Ügyintézési időpont foglalása</a>, <a href="#uc-12">UC-12 Saját foglalások kezelése</a>, <a href="#uc-13">UC-13 Hibabejelentés beküldése</a>, <a href="#uc-14">UC-14 Hibabejelentés állapotának követése</a>, <a href="#uc-15">UC-15 Tartalom kezelése</a>, <a href="#uc-16">UC-16 Ügyintézési időpontok kezelése</a>, <a href="#uc-17">UC-17 Hibabejelentések kezelése</a>, <a href="#uc-18">UC-18 Szerepkörök kezelése</a>. Ezeket csak bejelentkezett felhasználó végezheti; ha még nincs érvényes munkamenete, a use case a bejelentkezéssel kezdődik (UC-01 A1), ha már van, a bejelentkezés lépései kimaradnak. Így például kijelentkezni is csak a bejelentkezés után lehet.</p>
+                <p><strong>További «include» kapcsolatok:</strong></p>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Alap use case</th><th>Befoglalt use case</th><th>Miért mindig része</th></tr></thead>
+                        <tbody>
+                            <tr><td><a href="#uc-03">UC-03 Hely keresése a campustérképen</a></td><td><a href="#uc-19">UC-19 Hely megjelenítése a térképen</a></td><td>A keresés eredménye mindig a hely megjelenítése a térképen.</td></tr>
+                            <tr><td><a href="#uc-11">UC-11 Ügyintézési időpont foglalása</a></td><td><a href="#uc-20">UC-20 Értesítés küldése</a></td><td>Minden foglalás után visszaigazoló e-mail megy (K-31).</td></tr>
+                            <tr><td><a href="#uc-17">UC-17 Hibabejelentések kezelése</a></td><td><a href="#uc-20">UC-20 Értesítés küldése</a></td><td>Minden állapotváltozásról értesítés megy a bejelentőnek (K-37).</td></tr>
+                            <tr><td><a href="#uc-14">UC-14 Hibabejelentés állapotának követése</a></td><td><a href="#uc-21">UC-21 Bejelentés részleteinek megtekintése</a></td><td>A bejelentő a kiválasztott bejelentés adatlapját és előzményeit látja.</td></tr>
+                            <tr><td><a href="#uc-17">UC-17 Hibabejelentések kezelése</a></td><td><a href="#uc-21">UC-21 Bejelentés részleteinek megtekintése</a></td><td>A felelős ugyanazt az adatlapot látja, mielőtt módosít.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p><strong>«extend» kapcsolatok:</strong></p>
+                <div class="tbl">
+                    <table>
+                        <thead><tr><th>Kiterjesztő use case</th><th>Alap use case</th><th>Kiterjesztési pont</th><th>Feltétel</th></tr></thead>
+                        <tbody>
+                            <tr><td><a href="#uc-19">UC-19 Hely megjelenítése a térképen</a></td><td><a href="#uc-04">UC-04 Szabad parkolóhelyek megtekintése</a></td><td>„zóna kiválasztása”</td><td>a felhasználó a zónát a térképen is meg akarja nézni</td></tr>
+                            <tr><td><a href="#uc-19">UC-19 Hely megjelenítése a térképen</a></td><td><a href="#uc-05">UC-05 Események böngészése és szűrése</a></td><td>„helyszín kiválasztása”</td><td>a felhasználó az esemény helyszínére kattint</td></tr>
+                            <tr><td><a href="#uc-19">UC-19 Hely megjelenítése a térképen</a></td><td><a href="#uc-08">UC-08 MVK-menetrend megtekintése</a></td><td>„megálló kiválasztása”</td><td>a felhasználó a megálló nevére kattint</td></tr>
+                            <tr><td><a href="#uc-19">UC-19 Hely megjelenítése a térképen</a></td><td><a href="#uc-09">UC-09 Oktató keresése</a></td><td>„iroda kiválasztása”</td><td>a felhasználó az oktató irodájára kattint</td></tr>
+                            <tr><td><a href="#uc-13">UC-13 Hibabejelentés beküldése</a></td><td><a href="#uc-03">UC-03 Hely keresése a campustérképen</a></td><td>„hely adatlapja”</td><td>a felhasználó a „Hiba bejelentése itt” gombra kattint</td></tr>
+                            <tr><td><a href="#uc-11">UC-11 Ügyintézési időpont foglalása</a></td><td><a href="#uc-12">UC-12 Saját foglalások kezelése</a></td><td>„lemondás után”</td><td>a hallgató a lemondás után új időpontot kér</td></tr>
+                            <tr><td><a href="#uc-22">UC-22 Kép csatolása</a></td><td><a href="#uc-13">UC-13 Hibabejelentés beküldése</a></td><td>„kép csatolása”</td><td>a bejelentő képet csatol</td></tr>
+                            <tr><td><a href="#uc-20">UC-20 Értesítés küldése</a></td><td><a href="#uc-16">UC-16 Ügyintézési időpontok kezelése</a></td><td>„foglalt időpont törlése”</td><td>az adminisztrátor már lefoglalt időpontot töröl</td></tr>
+                            <tr><td><a href="#uc-23">UC-23 Bejelentés átirányítása</a></td><td><a href="#uc-17">UC-17 Hibabejelentések kezelése</a></td><td>„felelős egység módosítása”</td><td>a felhasználó adminisztrátor, és a bejelentés más egységhez tartozik</td></tr>
+                            <tr><td><a href="#uc-24">UC-24 Oktatói adatlap hozzárendelése</a></td><td><a href="#uc-18">UC-18 Szerepkörök kezelése</a></td><td>„oktatói szerepkör hozzáadása”</td><td>az adminisztrátor oktatói szerepkört ad</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>Az UC-20 Értesítés küldése két szerepben is megjelenik: az UC-11 és az UC-17 mindig értesítést küld («include»), az UC-16-ban viszont csak akkor fut le, ha az adminisztrátor már lefoglalt időpontot töröl («extend»).</p>
 
                 <!-- 3.2 -->
                 <h2 id="srs-3-2" class="h-sub">3.2 Hitelesítés és szerepkörök</h2>
                 <p>A csomag a bejelentkezést, a kijelentkezést és a szerepkörök alapján történő jogosultságkezelést írja le. Aktorok: A-02 Hallgató, A-03 Oktató, A-04 Adminisztrátor, A-05 Egyetemi azonosító szolgáltatás (definíciójuk: 3.1.1). A csomagra a teljes diagram (1. ábra) sárga része vonatkozik.</p>
-                <p>A 2. ábra a csomag use case diagramja. Látszik rajta, hogy a bejelentkezést nem a Vezérlőpult ellenőrzi, hanem egy külső rendszer, az egyetemi azonosító szolgáltatás, ezért a rendszer jelszót nem kér be és nem tárol. A bejelentkezés minden szerepkörű felhasználóra ugyanúgy működik.</p>
+                <p>A 2. ábra a csomag use case diagramja. Látszik rajta, hogy a bejelentkezést nem a Vezérlőpult ellenőrzi, hanem egy külső rendszer, az egyetemi azonosító szolgáltatás, ezért a rendszer jelszót nem kér be és nem tárol. A bejelentkezés minden szerepkörű felhasználóra ugyanúgy működik. A Kijelentkezés «include» kapcsolattal használja a Bejelentkezést: kijelentkezni csak bejelentkezés után lehet. A többi bejelentkezést igénylő use case ugyanígy kapcsolódik az UC-01-hez; ezek a saját csomagjuk ábráján és az 1. ábrán látszanak.</p>
                 <figure class="fig">
                     <img src="H3/uml/2.png" alt="Use case diagram: Hitelesítés és szerepkörök (UC-01, UC-02)" loading="lazy">
                 </figure>
@@ -512,6 +396,9 @@
                         <tr><th>Név</th><td>Bejelentkezés</td></tr>
                         <tr><th>Rövid leírás</th><td>A felhasználó az egyetemi Microsoft-fiókjával belép a rendszerbe, és a szerepkörének megfelelő funkciókat kapja meg.</td></tr>
                         <tr><th>Aktorok</th><td>Elsődleges: A-02 Hallgató, A-03 Oktató (a Hallgatótól örökölve), A-04 Adminisztrátor. Másodlagos: A-05 Egyetemi azonosító szolgáltatás.</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«include» kapcsolattal használja: <a href="#uc-02">UC-02 Kijelentkezés</a>, <a href="#uc-10">UC-10 Saját oktatói adatok szerkesztése</a>, <a href="#uc-11">UC-11 Ügyintézési időpont foglalása</a>, <a href="#uc-12">UC-12 Saját foglalások kezelése</a>, <a href="#uc-13">UC-13 Hibabejelentés beküldése</a>, <a href="#uc-14">UC-14 Hibabejelentés állapotának követése</a>, <a href="#uc-15">UC-15 Tartalom kezelése</a>, <a href="#uc-16">UC-16 Ügyintézési időpontok kezelése</a>, <a href="#uc-17">UC-17 Hibabejelentések kezelése</a>, <a href="#uc-18">UC-18 Szerepkörök kezelése</a></li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul>
                             <li>A felhasználó nincs bejelentkezve.</li>
                             <li>A felhasználónak érvényes egyetemi Microsoft-fiókja van.</li>
@@ -530,7 +417,7 @@
                             <li>A rendszer elindítja a munkamenetet, és visszaviszi a felhasználót arra az oldalra, ahonnan a bejelentkezést kezdte.</li>
                         </ol></td></tr>
                         <tr><th>Alternatív esetek</th><td><ul>
-                            <li><strong>A1 – Védett funkcióból indul:</strong> a felhasználó bejelentkezés nélkül nyit meg egy belépést igénylő funkciót (például a hibabejelentést). A rendszer a 2. lépéssel folytatja, majd a 6. lépésben a kért funkcióhoz viszi vissza.</li>
+                            <li><strong>A1 – Védett funkcióból indul:</strong> a felhasználó bejelentkezés nélkül nyit meg egy belépést igénylő funkciót (például a hibabejelentést), amely «include» kapcsolattal használja ezt a use case-t. A rendszer a 2. lépéssel folytatja, majd a 6. lépésben a kért funkcióhoz viszi vissza.</li>
                             <li><strong>A2 – Megszakított belépés:</strong> a felhasználó az egyetemi oldalon a „Mégse” lehetőséget választja. A rendszer a kezdőlapra lép vissza, nyilvános módban.</li>
                             <li><strong>A3 – Első belépés:</strong> az 5. lépésben a rendszer nem talál rekordot, ezért létrehozza azt hallgató szerepkörrel, majd a 6. lépéssel folytatja.</li>
                         </ul></td></tr>
@@ -548,6 +435,9 @@
                         <tr><th>Név</th><td>Kijelentkezés</td></tr>
                         <tr><th>Rövid leírás</th><td>A bejelentkezett felhasználó lezárja a munkamenetét.</td></tr>
                         <tr><th>Aktorok</th><td>A-02 Hallgató, A-03 Oktató, A-04 Adminisztrátor.</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«include»: <a href="#uc-01">UC-01 Bejelentkezés</a> – csak bejelentkezett felhasználó végezheti; ha még nincs munkamenet, a use case a bejelentkezéssel kezdődik</li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul><li>A felhasználónak aktív munkamenete van.</li></ul></td></tr>
                         <tr><th>Posztkondíciók</th><td><ul>
                             <li>A munkamenet megszűnt; a felület nyilvános módban jelenik meg.</li>
@@ -571,7 +461,7 @@
                 <!-- 3.3 -->
                 <h2 id="srs-3-3" class="h-sub">3.3 Eligazodás</h2>
                 <p>A csomag a campustérképet és a parkolók foglaltságának megjelenítését írja le. Aktorok: A-01 Látogató és az általánosítás miatt minden bejelentkezett felhasználó, valamint A-07 Parkolóérzékelő-rendszer (definíciójuk: 3.1.1).</p>
-                <p>A 3. ábra a csomag use case diagramja: a campuson való tájékozódást segítő funkciókat mutatja be. Ezek bejelentkezés nélkül is elérhetők. A parkolási adatot egy külső érzékelőrendszer szolgáltatja.</p>
+                <p>A 3. ábra a csomag use case diagramja: a campuson való tájékozódást segítő funkciókat mutatja be. Ezek bejelentkezés nélkül is elérhetők. A parkolási adatot egy külső érzékelőrendszer szolgáltatja. A csomaghoz tartozik az UC-19 Hely megjelenítése a térképen is: a keresésnek mindig része («include»), az események, a menetrend, az oktatók és a parkolás oldaláról pedig feltételesen kapcsolódik («extend»). A hely adatlapjáról hibabejelentés indítható (UC-13 «extend» UC-03).</p>
                 <figure class="fig">
                     <img src="H3/uml/3.png" alt="Use case diagram: Eligazodás (UC-03, UC-04)" loading="lazy">
                 </figure>
@@ -598,6 +488,10 @@
                         <tr><th>Név</th><td>Hely keresése a campustérképen</td></tr>
                         <tr><th>Rövid leírás</th><td>A felhasználó megkeres egy épületet, termet vagy szolgáltatást, és megnézi a helyét és az adatait a térképen.</td></tr>
                         <tr><th>Aktorok</th><td>A-01 Látogató (és általánosítással minden bejelentkezett felhasználó).</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«include»: <a href="#uc-19">UC-19 Hely megjelenítése a térképen</a></li>
+                            <li>Kiterjesztési pont: „hely adatlapja” – itt kapcsolódik a <a href="#uc-13">UC-13 Hibabejelentés beküldése</a> («extend»), ha a felhasználó a „Hiba bejelentése itt” gombra kattint</li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul><li>A helyek adatai (név, kategória, koordináta) fel vannak töltve a rendszerbe.</li></ul></td></tr>
                         <tr><th>Posztkondíciók</th><td><ul>
                             <li>A keresett hely ki van emelve, a térkép ráközelít, és megjelenik a hely adatlapja.</li>
@@ -609,13 +503,13 @@
                             <li>A felhasználó beír egy keresőkifejezést a keresőmezőbe.</li>
                             <li>A rendszer gépelés közben legfeljebb 8 javaslatot mutat.</li>
                             <li>A felhasználó kiválaszt egy javaslatot.</li>
-                            <li>A rendszer kiemeli a helyet, ráközelít, és megjeleníti az adatlapját (K-11).</li>
+                            <li>A rendszer megjeleníti a helyet a térképen: kiemeli, ráközelít, és megmutatja az adatlapját (UC-19 «include», K-11). <em>Kiterjesztési pont: hely adatlapja.</em></li>
                         </ol></td></tr>
                         <tr><th>Alternatív esetek</th><td><ul>
                             <li><strong>A1 – Kattintás a térképen:</strong> a felhasználó keresés helyett közvetlenül egy épületre kattint; a rendszer a 6. lépéssel folytatja.</li>
                             <li><strong>A2 – Kategóriaszűrő:</strong> a felhasználó kategóriát választ (például menza, parkoló, könyvtár); a rendszer csak az adott kategória helyeit jelöli.</li>
-                            <li><strong>A3 – Érkezés más funkcióból:</strong> a felhasználó egy esemény helyszínére vagy egy oktató irodájára kattint; a rendszer a térképet megnyitva a 6. lépéssel indul.</li>
-                            <li><strong>A4 – Hibabejelentés innen:</strong> a hely adatlapján a „Hiba bejelentése itt” gombra kattintva a felhasználó az UC-13-ra lép át, előre kitöltött helyszínnel.</li>
+                            <li><strong>A3 – Érkezés más funkcióból:</strong> egy esemény helyszínére, egy megállóra, egy parkolózónára vagy egy oktató irodájára kattintva a térkép keresés nélkül nyílik meg; ezt az UC-19 írja le (UC-19 «extend» UC-04, UC-05, UC-08, UC-09).</li>
+                            <li><strong>A4 – Hibabejelentés innen:</strong> a hely adatlapján a „Hiba bejelentése itt” gombra kattintva elindul az UC-13 előre kitöltött helyszínnel (UC-13 «extend», kiterjesztési pont: „hely adatlapja”).</li>
                         </ul></td></tr>
                         <tr><th>Kivételes esetek</th><td><ul>
                             <li><strong>E1 – Nincs találat:</strong> a rendszer „Nincs ilyen nevű hely” üzenetet mutat, és hasonló nevű helyeket ajánl.</li>
@@ -630,6 +524,9 @@
                         <tr><th>Név</th><td>Szabad parkolóhelyek megtekintése</td></tr>
                         <tr><th>Rövid leírás</th><td>A felhasználó megnézi, hogy az egyetem parkolózónáiban hány szabad hely van.</td></tr>
                         <tr><th>Aktorok</th><td>Elsődleges: A-01 Látogató. Másodlagos: A-07 Parkolóérzékelő-rendszer.</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>Kiterjesztési pont: „zóna kiválasztása” – itt kapcsolódik a <a href="#uc-19">UC-19 Hely megjelenítése a térképen</a> («extend»), ha a felhasználó a zónát a térképen is meg akarja nézni</li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul>
                             <li>A parkolózónák (név, hely, kapacitás) fel vannak véve a rendszerbe.</li>
                             <li>A parkolóérzékelő-rendszer adatot küld (ha nem, lásd E1).</li>
@@ -646,7 +543,7 @@
                         </ol></td></tr>
                         <tr><th>Alternatív esetek</th><td><ul>
                             <li><strong>A1 – Automatikus frissítés:</strong> amíg az oldal nyitva van, a rendszer percenként frissíti az adatokat.</li>
-                            <li><strong>A2 – Átlépés a térképre:</strong> a felhasználó a zóna adatlapjáról a teljes campustérképre léphet (UC-03), ahol a zóna ki van emelve.</li>
+                            <li><strong>A2 – Átlépés a térképre:</strong> a felhasználó a zóna adatlapjáról a campustérképre léphet, ahol a zóna ki van emelve (UC-19 «extend», kiterjesztési pont: „zóna kiválasztása”).</li>
                         </ul></td></tr>
                         <tr><th>Kivételes esetek</th><td><ul>
                             <li><strong>E1 – Nincs érzékelőadat:</strong> a zónánál „nincs adat” jelzés jelenik meg, a kapacitás látható marad (K-13).</li>
@@ -655,10 +552,46 @@
                     </tbody></table>
                 </div>
 
+
+                <h3 id="uc-19" class="h-sub2">3.3.4 UC-19 – Hely megjelenítése a térképen</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Hely megjelenítése a térképen</td></tr>
+                        <tr><th>Rövid leírás</th><td>A rendszer kiemel egy helyet a campustérképen, ráközelít, és megjeleníti az adatlapját. Önállóan nem indítható: más use case-ek része vagy bővítése.</td></tr>
+                        <tr><th>Aktorok</th><td>Nincs közvetlen aktora; az őt használó use case aktora (A-01 Látogató és általánosítással minden bejelentkezett felhasználó).</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«include» kapcsolattal használja: <a href="#uc-03">UC-03 Hely keresése a campustérképen</a></li>
+                            <li>«extend»: <a href="#uc-04">UC-04 Szabad parkolóhelyek megtekintése</a>, a „zóna kiválasztása” kiterjesztési ponton; feltétel: a felhasználó a zónát a térképen is meg akarja nézni</li>
+                            <li>«extend»: <a href="#uc-05">UC-05 Események böngészése és szűrése</a>, a „helyszín kiválasztása” kiterjesztési ponton; feltétel: a felhasználó az esemény helyszínére kattint</li>
+                            <li>«extend»: <a href="#uc-08">UC-08 MVK-menetrend megtekintése</a>, a „megálló kiválasztása” kiterjesztési ponton; feltétel: a felhasználó a megálló nevére kattint</li>
+                            <li>«extend»: <a href="#uc-09">UC-09 Oktató keresése</a>, a „iroda kiválasztása” kiterjesztési ponton; feltétel: a felhasználó az oktató irodájára kattint</li>
+                        </ul></td></tr>
+                        <tr><th>Prekondíciók</th><td><ul>
+                            <li>A megjelenítendő hely (név, koordináta) szerepel a rendszerben.</li>
+                        </ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>A hely ki van emelve a térképen, és látszik az adatlapja.</li>
+                            <li>A rendszer adatai nem változnak.</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A rendszer megnyitja a „Térkép” nézetet, ha még nincs megnyitva.</li>
+                            <li>A rendszer kiemeli a helyet, és ráközelít.</li>
+                            <li>A rendszer megjeleníti a hely adatlapját: név, rövid leírás és, ha van, nyitvatartás (K-11).</li>
+                            <li>Épületnél a rendszer az épület termeit is felsorolja.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Nincs térképi pont:</strong> ha a helynek csak szöveges megnevezése van (például egy iroda), a rendszer az adatlapot kiemelés nélkül mutatja.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – A térkép háttere nem töltődik be:</strong> a rendszer az adatlapot térkép nélkül jeleníti meg, és jelzi a hibát (UC-03 E2).</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
                 <!-- 3.4 -->
                 <h2 id="srs-3-4" class="h-sub">3.4 Események és hírek</h2>
                 <p>A csomag az eseménynaptárt és a hírfolyamot írja le. Aktor: A-01 Látogató és általánosítással minden bejelentkezett felhasználó (definíció: 3.1.1). Az események és hírek feltöltését az UC-15 (3.7) írja le.</p>
-                <p>A 4. ábra a csomag use case diagramja: az egyetemi élettel kapcsolatos tájékozódás funkcióit mutatja be. Ezeket bárki használhatja bejelentkezés nélkül. A tartalmat az Adminisztrátor tölti fel (7. ábra, UC-15).</p>
+                <p>A 4. ábra a csomag use case diagramja: az egyetemi élettel kapcsolatos tájékozódás funkcióit mutatja be. Ezeket bárki használhatja bejelentkezés nélkül. A tartalmat az Adminisztrátor tölti fel (7. ábra, UC-15). Az esemény helyszíne a térképen is megnézhető: ezt az UC-19 írja le, amely az UC-05 „helyszín kiválasztása” kiterjesztési pontján kapcsolódik («extend»).</p>
                 <figure class="fig">
                     <img src="H3/uml/4.png" alt="Use case diagram: Események és hírek (UC-05, UC-06)" loading="lazy">
                 </figure>
@@ -685,6 +618,9 @@
                         <tr><th>Név</th><td>Események böngészése és szűrése</td></tr>
                         <tr><th>Rövid leírás</th><td>A felhasználó megnézi a közelgő egyetemi eseményeket, szűrőkkel leszűkíti őket, és megnyitja egy esemény részleteit.</td></tr>
                         <tr><th>Aktorok</th><td>A-01 Látogató (és általánosítással minden bejelentkezett felhasználó).</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>Kiterjesztési pont: „helyszín kiválasztása” – itt kapcsolódik a <a href="#uc-19">UC-19 Hely megjelenítése a térképen</a> («extend»), ha a felhasználó az esemény helyszínére kattint</li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul><li>Nincs különleges előfeltétel; a funkció bejelentkezés nélkül is elérhető.</li></ul></td></tr>
                         <tr><th>Posztkondíciók</th><td><ul>
                             <li>A felhasználó a szűrőknek megfelelő eseményeket látja.</li>
@@ -701,7 +637,7 @@
                         <tr><th>Alternatív esetek</th><td><ul>
                             <li><strong>A1 – Naptárnézet:</strong> a felhasználó havi vagy heti naptárnézetre vált; a szűrők ott is érvényesek.</li>
                             <li><strong>A2 – Múltbeli események:</strong> a felhasználó bekapcsolja a „Korábbi események is” szűrőt (K-17).</li>
-                            <li><strong>A3 – Helyszín a térképen:</strong> a részletes nézetben a helyszínre kattintva a rendszer az UC-03-ra lép át.</li>
+                            <li><strong>A3 – Helyszín a térképen:</strong> a részletes nézetben a helyszínre kattintva a rendszer a térképen mutatja meg a helyet (UC-19 «extend», kiterjesztési pont: „helyszín kiválasztása”).</li>
                         </ul></td></tr>
                         <tr><th>Kivételes esetek</th><td><ul>
                             <li><strong>E1 – Nincs megfelelő esemény:</strong> a rendszer „Nincs a szűrőknek megfelelő esemény” üzenetet és „Szűrők törlése” gombot mutat.</li>
@@ -740,7 +676,7 @@
                 <!-- 3.5 -->
                 <h2 id="srs-3-5" class="h-sub">3.5 Mindennapi szolgáltatások</h2>
                 <p>A csomag a menza-információkat, az MVK-menetrendet és az oktatói adatbázist írja le. Aktorok: A-01 Látogató, A-03 Oktató, A-06 Menetrend-adatforrás (definíciójuk: 3.1.1).</p>
-                <p>Az 5. ábra a csomag use case diagramja: a mindennapi egyetemi élethez szükséges információkat mutatja be, vagyis a menzát, a menetrendet és az oktatói adatbázist. A menetrend egy külső adatforrásból érkezik, az oktatói adatlapokat pedig maguk az oktatók tartják naprakészen.</p>
+                <p>Az 5. ábra a csomag use case diagramja: a mindennapi egyetemi élethez szükséges információkat mutatja be, vagyis a menzát, a menetrendet és az oktatói adatbázist. A menetrend egy külső adatforrásból érkezik, az oktatói adatlapokat pedig maguk az oktatók tartják naprakészen. A megálló és az oktató irodája a térképen is megnézhető (UC-19 «extend» UC-08, UC-09); az adatlap szerkesztése (UC-10) csak bejelentkezés után lehetséges («include» UC-01).</p>
                 <figure class="fig">
                     <img src="H3/uml/5.png" alt="Use case diagram: Mindennapi szolgáltatások (UC-07 – UC-10)" loading="lazy">
                 </figure>
@@ -796,6 +732,9 @@
                         <tr><th>Név</th><td>MVK-menetrend megtekintése</td></tr>
                         <tr><th>Rövid leírás</th><td>A felhasználó megnézi, hogy az egyetemhez közeli megállókból mikor indulnak a következő autóbusz- és villamosjáratok.</td></tr>
                         <tr><th>Aktorok</th><td>Elsődleges: A-01 Látogató. Másodlagos: A-06 Menetrend-adatforrás (MVK).</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>Kiterjesztési pont: „megálló kiválasztása” – itt kapcsolódik a <a href="#uc-19">UC-19 Hely megjelenítése a térképen</a> («extend»), ha a felhasználó a megálló nevére kattint</li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul><li>A rendszerben van betöltött, érvényes menetrend (F-02).</li></ul></td></tr>
                         <tr><th>Posztkondíciók</th><td><ul><li>A felhasználó látja a kiválasztott megálló következő indulásait; a rendszer adatai nem változnak.</li></ul></td></tr>
                         <tr><th>Szokásos működés</th><td><ol>
@@ -807,7 +746,7 @@
                         </ol></td></tr>
                         <tr><th>Alternatív esetek</th><td><ul>
                             <li><strong>A1 – Másik megálló:</strong> a felhasználó listából másik megállót választ; a rendszer a 3. lépéssel folytatja.</li>
-                            <li><strong>A2 – Megálló a térképen:</strong> a megálló nevére kattintva a rendszer az UC-03-ra lép át.</li>
+                            <li><strong>A2 – Megálló a térképen:</strong> a megálló nevére kattintva a rendszer a térképen mutatja meg a megállót (UC-19 «extend», kiterjesztési pont: „megálló kiválasztása”).</li>
                         </ul></td></tr>
                         <tr><th>Kivételes esetek</th><td><ul>
                             <li><strong>E1 – Az adatforrás nem érhető el:</strong> a rendszer az utoljára betöltött menetrendet mutatja, és jelzi, hogy az adat nem friss.</li>
@@ -823,6 +762,9 @@
                         <tr><th>Név</th><td>Oktató keresése</td></tr>
                         <tr><th>Rövid leírás</th><td>A felhasználó megkeres egy oktatót, és megnézi az elérhetőségét, az irodáját és a fogadóóráját.</td></tr>
                         <tr><th>Aktorok</th><td>A-01 Látogató (és általánosítással minden bejelentkezett felhasználó).</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>Kiterjesztési pont: „iroda kiválasztása” – itt kapcsolódik a <a href="#uc-19">UC-19 Hely megjelenítése a térképen</a> («extend»), ha a felhasználó az oktató irodájára kattint</li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul><li>Az oktatói adatlapok fel vannak töltve a rendszerbe.</li></ul></td></tr>
                         <tr><th>Posztkondíciók</th><td><ul><li>A felhasználó látja a kiválasztott oktató adatlapját; a rendszer adatai nem változnak.</li></ul></td></tr>
                         <tr><th>Szokásos működés</th><td><ol>
@@ -835,7 +777,7 @@
                         </ol></td></tr>
                         <tr><th>Alternatív esetek</th><td><ul>
                             <li><strong>A1 – Böngészés tanszék szerint:</strong> a felhasználó név helyett tanszéket választ; a rendszer a tanszék összes oktatóját listázza.</li>
-                            <li><strong>A2 – Iroda a térképen:</strong> az iroda nevére kattintva a rendszer az UC-03-ra lép át.</li>
+                            <li><strong>A2 – Iroda a térképen:</strong> az iroda nevére kattintva a rendszer a térképen mutatja meg az irodát (UC-19 «extend», kiterjesztési pont: „iroda kiválasztása”).</li>
                             <li><strong>A3 – E-mail:</strong> az e-mail-címre kattintva megnyílik a felhasználó levelezőprogramja.</li>
                         </ul></td></tr>
                         <tr><th>Kivételes esetek</th><td><ul>
@@ -851,9 +793,12 @@
                         <tr><th>Név</th><td>Saját oktatói adatok szerkesztése</td></tr>
                         <tr><th>Rövid leírás</th><td>Az oktató módosítja az adatlapján az irodáját és a fogadóóráját.</td></tr>
                         <tr><th>Aktorok</th><td>A-03 Oktató.</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«include»: <a href="#uc-01">UC-01 Bejelentkezés</a> – csak bejelentkezett felhasználó végezheti; ha még nincs munkamenet, a use case a bejelentkezéssel kezdődik</li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul>
                             <li>A felhasználó be van jelentkezve, és oktató szerepköre van.</li>
-                            <li>A fiókjához oktatói adatlap van rendelve (UC-18, A1).</li>
+                            <li>A fiókjához oktatói adatlap van rendelve (UC-24).</li>
                         </ul></td></tr>
                         <tr><th>Posztkondíciók</th><td><ul>
                             <li>A módosított adatok mentésre kerültek, és azonnal láthatók (K-28).</li>
@@ -882,8 +827,8 @@
 
                 <!-- 3.6 -->
                 <h2 id="srs-3-6" class="h-sub">3.6 Ügyintézés és visszajelzés</h2>
-                <p>A csomag az ügyintézési időpontfoglalást és a hibabejelentést írja le. Aktor: A-02 Hallgató, és általánosítással A-03 Oktató (definíciójuk: 3.1.1). Az időpontok és a bejelentések adminisztrátori kezelését a 3.7 csomag írja le.</p>
-                <p>A 6. ábra a csomag use case diagramja: a bejelentkezett felhasználók interaktív funkcióit mutatja be, az ügyintézési időpontfoglalást és a hibabejelentést. Ezeket csak a bejelentkezett hallgatók, és az általánosítás miatt az oktatók használhatják, a Látogató nem.</p>
+                <p>A csomag az ügyintézési időpontfoglalást és a hibabejelentést írja le. Aktor: A-02 Hallgató, és általánosítással A-03 Oktató, valamint az értesítéseknél A-08 E-mail-szolgáltatás (definíciójuk: 3.1.1). Az időpontok és a bejelentések adminisztrátori kezelését a 3.7 csomag írja le.</p>
+                <p>A 6. ábra a csomag use case diagramja: a bejelentkezett felhasználók interaktív funkcióit mutatja be, az ügyintézési időpontfoglalást és a hibabejelentést. Ezeket csak a bejelentkezett hallgatók, és az általánosítás miatt az oktatók használhatják, a Látogató nem; mindegyik «include» kapcsolattal használja a Bejelentkezést. A csomaghoz három kisebb use case is tartozik: az UC-20 Értesítés küldése (az UC-11 és az UC-17 része, az UC-16 bővítése), az UC-21 Bejelentés részleteinek megtekintése (az UC-14 és az UC-17 része) és az UC-22 Kép csatolása (az UC-13 bővítése). Lemondás után új foglalás indítható (UC-11 «extend» UC-12).</p>
                 <figure class="fig">
                     <img src="H3/uml/6.png" alt="Use case diagram: Ügyintézés és visszajelzés (UC-11 – UC-14)" loading="lazy">
                 </figure>
@@ -914,6 +859,11 @@
                         <tr><th>Név</th><td>Ügyintézési időpont foglalása</td></tr>
                         <tr><th>Rövid leírás</th><td>A hallgató kiválaszt egy ügytípust és egy szabad időpontot, és lefoglalja azt.</td></tr>
                         <tr><th>Aktorok</th><td>A-02 Hallgató (és általánosítással A-03 Oktató).</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«include»: <a href="#uc-01">UC-01 Bejelentkezés</a> – csak bejelentkezett felhasználó végezheti; ha még nincs munkamenet, a use case a bejelentkezéssel kezdődik</li>
+                            <li>«include»: <a href="#uc-20">UC-20 Értesítés küldése</a></li>
+                            <li>«extend»: <a href="#uc-12">UC-12 Saját foglalások kezelése</a>, a „lemondás után” kiterjesztési ponton; feltétel: a hallgató a lemondás után új időpontot kér</li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul>
                             <li>A felhasználó be van jelentkezve.</li>
                             <li>Van legalább egy ügytípus, amelyhez az adminisztrátor időpontsávot rögzített (UC-16).</li>
@@ -931,7 +881,7 @@
                             <li>A rendszer összegzést mutat (ügytípus, dátum, időpont, helyszín).</li>
                             <li>A hallgató a „Foglalás megerősítése” gombra kattint.</li>
                             <li>A rendszer ellenőrzi, hogy az időpont még szabad-e, és hogy a hallgatónak nincs-e aktív foglalása erre az ügytípusra (K-30).</li>
-                            <li>A rendszer rögzíti a foglalást, visszaigazoló képernyőt mutat, és e-mailt küld.</li>
+                            <li>A rendszer rögzíti a foglalást, visszaigazoló képernyőt mutat, és e-mailben is visszaigazolja (UC-20 «include»).</li>
                         </ol></td></tr>
                         <tr><th>Alternatív esetek</th><td><ul>
                             <li><strong>A1 – Nincs szabad időpont 14 napon belül:</strong> a rendszer jelzi ezt, és megmutatja a legközelebbi szabad időpontot.</li>
@@ -940,7 +890,7 @@
                         <tr><th>Kivételes esetek</th><td><ul>
                             <li><strong>E1 – Az időpontot közben más lefoglalta:</strong> a rendszer üzenetben jelzi ezt, és a 4. lépéshez tér vissza frissített naptárral.</li>
                             <li><strong>E2 – Már van aktív foglalás:</strong> a rendszer jelzi, hogy erre az ügytípusra már van foglalása, és hivatkozást ad a meglévő foglalásra (UC-12).</li>
-                            <li><strong>E3 – Sikertelen e-mail-küldés:</strong> a foglalás érvényes marad; a visszaigazolás a „Foglalásaim” oldalon látható.</li>
+                            <li><strong>E3 – Sikertelen e-mail-küldés:</strong> a foglalás érvényes marad; a visszaigazolás a „Foglalásaim” oldalon látható (UC-20 E1).</li>
                         </ul></td></tr>
                     </tbody></table>
                 </div>
@@ -951,6 +901,10 @@
                         <tr><th>Név</th><td>Saját foglalások kezelése</td></tr>
                         <tr><th>Rövid leírás</th><td>A hallgató megnézi a foglalásait, és szükség esetén lemond egy aktív foglalást.</td></tr>
                         <tr><th>Aktorok</th><td>A-02 Hallgató (és általánosítással A-03 Oktató).</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«include»: <a href="#uc-01">UC-01 Bejelentkezés</a> – csak bejelentkezett felhasználó végezheti; ha még nincs munkamenet, a use case a bejelentkezéssel kezdődik</li>
+                            <li>Kiterjesztési pont: „lemondás után” – itt kapcsolódik a <a href="#uc-11">UC-11 Ügyintézési időpont foglalása</a> («extend»), ha a hallgató a lemondás után új időpontot kér</li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul><li>A felhasználó be van jelentkezve.</li></ul></td></tr>
                         <tr><th>Posztkondíciók</th><td><ul>
                             <li>Lemondás esetén a foglalás „lemondva” állapotú, az időpont újra szabad (K-32).</li>
@@ -963,11 +917,11 @@
                             <li>A hallgató a „Lemondás” gombra kattint.</li>
                             <li>A rendszer megerősítést kér.</li>
                             <li>A hallgató megerősíti a lemondást.</li>
-                            <li>A rendszer lemondja a foglalást, felszabadítja az időpontot, és visszajelzést ad.</li>
+                            <li>A rendszer lemondja a foglalást, felszabadítja az időpontot, és visszajelzést ad. <em>Kiterjesztési pont: lemondás után.</em></li>
                         </ol></td></tr>
                         <tr><th>Alternatív esetek</th><td><ul>
                             <li><strong>A1 – Csak megtekintés:</strong> a hallgató a 2. lépés után nem választ műveletet.</li>
-                            <li><strong>A2 – Időpont módosítása:</strong> a lemondás után a rendszer azonnal felajánlja ugyanarra az ügytípusra az új foglalást (UC-11, 4. lépés).</li>
+                            <li><strong>A2 – Időpont módosítása:</strong> a lemondás után a rendszer felajánlja ugyanarra az ügytípusra az új foglalást; ha a hallgató elfogadja, az UC-11 a 4. lépésétől fut (UC-11 «extend», kiterjesztési pont: „lemondás után”).</li>
                         </ul></td></tr>
                         <tr><th>Kivételes esetek</th><td><ul>
                             <li><strong>E1 – Túl késői lemondás:</strong> ha kevesebb mint 2 óra van az időpontig, a rendszer nem engedi a lemondást, és megmutatja az ügyintézés elérhetőségét.</li>
@@ -982,6 +936,11 @@
                         <tr><th>Név</th><td>Hibabejelentés beküldése</td></tr>
                         <tr><th>Rövid leírás</th><td>A hallgató bejelent egy hibát vagy problémát az egyetemen (például nem működő világítás), hogy az illetékesek megoldják.</td></tr>
                         <tr><th>Aktorok</th><td>A-02 Hallgató (és általánosítással A-03 Oktató).</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«include»: <a href="#uc-01">UC-01 Bejelentkezés</a> – csak bejelentkezett felhasználó végezheti; ha még nincs munkamenet, a use case a bejelentkezéssel kezdődik</li>
+                            <li>«extend»: <a href="#uc-03">UC-03 Hely keresése a campustérképen</a>, a „hely adatlapja” kiterjesztési ponton; feltétel: a felhasználó a „Hiba bejelentése itt” gombra kattint</li>
+                            <li>Kiterjesztési pont: „kép csatolása” – itt kapcsolódik a <a href="#uc-22">UC-22 Kép csatolása</a> («extend»), ha a bejelentő képet csatol</li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul><li>A felhasználó be van jelentkezve.</li></ul></td></tr>
                         <tr><th>Posztkondíciók</th><td><ul>
                             <li>A bejelentés „Új” állapotban rögzítve van, és egy felelős egységhez van rendelve.</li>
@@ -993,19 +952,19 @@
                             <li>A hallgató kiválasztja a kategóriát (világítás, fűtés és szellőzés, takarítás, informatika, akadálymentesség, egyéb).</li>
                             <li>A hallgató megadja a helyszínt: épületet választ a listából, és megadja a termet vagy a pontosabb helyet.</li>
                             <li>A hallgató leírja a hibát (legalább 10 karakter).</li>
-                            <li>A hallgató szükség esetén képet csatol (K-34).</li>
+                            <li><em>Kiterjesztési pont: kép csatolása.</em> Ha a hallgató képet szeretne csatolni, az UC-22 fut le («extend», K-34).</li>
                             <li>A hallgató a „Beküldés” gombra kattint.</li>
-                            <li>A rendszer ellenőrzi a kötelező mezőket és a kép méretét, formátumát.</li>
+                            <li>A rendszer ellenőrzi a kötelező mezőket.</li>
                             <li>A rendszer rögzíti a bejelentést, a kategória és a helyszín alapján hozzárendeli a felelős egységhez, és megmutatja az azonosítót.</li>
                         </ol></td></tr>
                         <tr><th>Alternatív esetek</th><td><ul>
                             <li><strong>A1 – Indítás a térképről:</strong> a hallgató egy hely adatlapjáról indítja a bejelentést (UC-03, A4); a helyszín előre ki van töltve.</li>
                             <li><strong>A2 – Helyszín a térképen:</strong> a 4. lépésben a hallgató a térképen jelöli ki a pontos helyet.</li>
-                            <li><strong>A3 – Kép nélkül:</strong> a 6. lépés kimarad.</li>
+                            <li><strong>A3 – Kép nélkül:</strong> a hallgató nem csatol képet; az UC-22 nem fut le.</li>
                         </ul></td></tr>
                         <tr><th>Kivételes esetek</th><td><ul>
                             <li><strong>E1 – Hiányzó adat:</strong> a rendszer kiemeli a hiányzó kötelező mezőt, és nem küldi be a bejelentést.</li>
-                            <li><strong>E2 – Hibás kép:</strong> ha a kép 5 MB-nál nagyobb vagy nem JPEG/PNG, a rendszer csak a képet utasítja el, a többi adat megmarad.</li>
+                            <li><strong>E2 – Hibás kép:</strong> a hibás képet az UC-22 utasítja el (UC-22 E1); a bejelentés többi adata megmarad.</li>
                             <li><strong>E3 – Mentési hiba:</strong> az adatok az űrlapon maradnak, és a rendszer újrapróbálást kínál.</li>
                         </ul></td></tr>
                     </tbody></table>
@@ -1017,13 +976,17 @@
                         <tr><th>Név</th><td>Hibabejelentés állapotának követése</td></tr>
                         <tr><th>Rövid leírás</th><td>A hallgató megnézi, hol tart a beküldött bejelentése, és mit írt hozzá a felelős.</td></tr>
                         <tr><th>Aktorok</th><td>A-02 Hallgató (és általánosítással A-03 Oktató).</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«include»: <a href="#uc-01">UC-01 Bejelentkezés</a> – csak bejelentkezett felhasználó végezheti; ha még nincs munkamenet, a use case a bejelentkezéssel kezdődik</li>
+                            <li>«include»: <a href="#uc-21">UC-21 Bejelentés részleteinek megtekintése</a></li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul><li>A felhasználó be van jelentkezve.</li></ul></td></tr>
                         <tr><th>Posztkondíciók</th><td><ul><li>A hallgató látja a bejelentése állapotát és előzményeit; a rendszer adatai nem változnak.</li></ul></td></tr>
                         <tr><th>Szokásos működés</th><td><ol>
                             <li>A hallgató megnyitja a „Bejelentéseim” oldalt.</li>
                             <li>A rendszer listázza a hallgató bejelentéseit azonosítóval, kategóriával, dátummal és állapottal (K-36).</li>
                             <li>A hallgató kiválaszt egy bejelentést.</li>
-                            <li>A rendszer megmutatja a bejelentés adatait, az állapotváltozások időrendjét és a felelős megjegyzéseit.</li>
+                            <li>A rendszer megmutatja a bejelentés adatait, az állapotváltozások időrendjét és a felelős megjegyzéseit (UC-21 «include»).</li>
                         </ol></td></tr>
                         <tr><th>Alternatív esetek</th><td><ul>
                             <li><strong>A1 – Érkezés értesítésből:</strong> az e-mailben kapott hivatkozásra kattintva (bejelentkezés után) a rendszer közvetlenül a 4. lépést mutatja.</li>
@@ -1036,10 +999,105 @@
                     </tbody></table>
                 </div>
 
+
+                <h3 id="uc-20" class="h-sub2">3.6.6 UC-20 – Értesítés küldése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Értesítés küldése</td></tr>
+                        <tr><th>Rövid leírás</th><td>A rendszer e-mailt küld a felhasználó egyetemi címére egy foglalás visszaigazolásáról, emlékeztetőről, egy foglalt időpont törléséről vagy egy bejelentés állapotváltozásáról.</td></tr>
+                        <tr><th>Aktorok</th><td>Másodlagos: A-08 E-mail-szolgáltatás. Elsődleges aktora nincs; az őt használó use case indítja.</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«include» kapcsolattal használja: <a href="#uc-11">UC-11 Ügyintézési időpont foglalása</a>, <a href="#uc-17">UC-17 Hibabejelentések kezelése</a></li>
+                            <li>«extend»: <a href="#uc-16">UC-16 Ügyintézési időpontok kezelése</a>, a „foglalt időpont törlése” kiterjesztési ponton; feltétel: az adminisztrátor már lefoglalt időpontot töröl</li>
+                        </ul></td></tr>
+                        <tr><th>Prekondíciók</th><td><ul>
+                            <li>Ismert a címzett egyetemi e-mail-címe.</li>
+                            <li>A rendszer küldhet e-mailt (F-05).</li>
+                        </ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>Az e-mail elment, vagy a sikertelen küldés rögzítve van, és a rendszer később újrapróbálja.</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A kiváltó use case átadja az értesítés fajtáját és adatait (foglalás, időpont, bejelentés).</li>
+                            <li>A rendszer a fajtának megfelelő sablonból összeállítja az üzenetet.</li>
+                            <li>A rendszer átadja az üzenetet az e-mail-szolgáltatásnak.</li>
+                            <li>A rendszer rögzíti a küldés idejét.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Emlékeztető:</strong> foglalás visszaigazolásakor a rendszer az időpont előtti napra emlékeztetőt is ütemez (K-31).</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Az e-mail-szolgáltatás nem érhető el:</strong> a rendszer később újrapróbálja a küldést; a kiváltó művelet (foglalás, állapotváltozás) ettől érvényes marad.</li>
+                            <li><strong>E2 – Nem küldhető e-mail (F-05):</strong> az értesítés csak a felületen jelenik meg.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <h3 id="uc-21" class="h-sub2">3.6.7 UC-21 – Bejelentés részleteinek megtekintése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Bejelentés részleteinek megtekintése</td></tr>
+                        <tr><th>Rövid leírás</th><td>A rendszer megjeleníti egy hibabejelentés adatait, az állapotváltozások időrendjét és a felelős megjegyzéseit. A bejelentő (UC-14) és a felelős (UC-17) ugyanezt az adatlapot látja.</td></tr>
+                        <tr><th>Aktorok</th><td>Az őt használó use case aktora: A-02 Hallgató, A-03 Oktató vagy A-04 Adminisztrátor.</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«include» kapcsolattal használja: <a href="#uc-14">UC-14 Hibabejelentés állapotának követése</a>, <a href="#uc-17">UC-17 Hibabejelentések kezelése</a></li>
+                        </ul></td></tr>
+                        <tr><th>Prekondíciók</th><td><ul>
+                            <li>A felhasználó jogosult a bejelentés megtekintésére (K-38, K-43).</li>
+                        </ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>A felhasználó látja a bejelentés adatait és előzményeit; a rendszer adatai nem változnak.</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A felhasználó kiválaszt egy bejelentést a listából.</li>
+                            <li>A rendszer ellenőrzi, hogy a felhasználó megnézheti-e.</li>
+                            <li>A rendszer megjeleníti az azonosítót, a kategóriát, a helyszínt, a leírást és a csatolt képet.</li>
+                            <li>A rendszer időrendben megjeleníti az előzményeket: állapot, megjegyzés, módosító, időpont.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Kép nagyítása:</strong> a csatolt képre kattintva a rendszer teljes méretben mutatja.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Nincs jogosultság:</strong> a rendszer megtagadja a hozzáférést (UC-14 E1, UC-17 E2).</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <h3 id="uc-22" class="h-sub2">3.6.8 UC-22 – Kép csatolása</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Kép csatolása</td></tr>
+                        <tr><th>Rövid leírás</th><td>A bejelentő egy fényképet csatol a hibabejelentéséhez.</td></tr>
+                        <tr><th>Aktorok</th><td>A-02 Hallgató (és általánosítással A-03 Oktató).</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«extend»: <a href="#uc-13">UC-13 Hibabejelentés beküldése</a>, a „kép csatolása” kiterjesztési ponton; feltétel: a bejelentő képet csatol</li>
+                        </ul></td></tr>
+                        <tr><th>Prekondíciók</th><td><ul>
+                            <li>A hibabejelentés űrlapja meg van nyitva (UC-13).</li>
+                        </ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>A kép a bejelentéshez van csatolva; tároláskor a rendszer legfeljebb 1600 px szélesre kicsinyíti (SRS 6.3).</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A bejelentő a „Kép csatolása” gombra kattint.</li>
+                            <li>Kiválaszt egy képfájlt, vagy telefonon fényképet készít.</li>
+                            <li>A rendszer ellenőrzi a formátumot és a méretet: JPEG vagy PNG, legfeljebb 5 MB (K-34).</li>
+                            <li>A rendszer előnézetet mutat a képről.</li>
+                            <li>A bejelentés beküldésével a kép is mentésre kerül (UC-13).</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Kép cseréje vagy eltávolítása:</strong> beküldés előtt a bejelentő másik képet választhat, vagy törölheti a csatolást.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Hibás kép:</strong> ha a kép 5 MB-nál nagyobb, vagy nem JPEG/PNG, a rendszer csak a képet utasítja el; a bejelentés többi adata megmarad.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
                 <!-- 3.7 -->
                 <h2 id="srs-3-7" class="h-sub">3.7 Adminisztráció</h2>
                 <p>A csomag a tartalom, az ügyintézési időpontok, a hibabejelentések és a szerepkörök kezelését írja le. Aktorok: A-04 Adminisztrátor és az UC-17 esetén A-03 Oktató (definíciójuk: 3.1.1). Minden use case prekondíciója, hogy a felhasználó be van jelentkezve, és megfelelő szerepköre van.</p>
-                <p>A 7. ábra a csomag use case diagramja: a rendszer karbantartásához szükséges funkciókat mutatja be. A tartalom, az időpontok és a szerepkörök kezelése csak az Adminisztrátor feladata. A hibabejelentések kezelésében az Oktató is részt vesz, a saját tanszékéhez rendelt bejelentéseknél.</p>
+                <p>A 7. ábra a csomag use case diagramja: a rendszer karbantartásához szükséges funkciókat mutatja be. A tartalom, az időpontok és a szerepkörök kezelése csak az Adminisztrátor feladata. A hibabejelentések kezelésében az Oktató is részt vesz, a saját tanszékéhez rendelt bejelentéseknél. Mindegyik use case bejelentkezést igényel («include» UC-01). Feltételhez kötött bővítések: az UC-23 Bejelentés átirányítása (UC-17), az UC-24 Oktatói adatlap hozzárendelése (UC-18) és foglalt időpont törlésekor az értesítés (UC-20 «extend» UC-16).</p>
                 <figure class="fig">
                     <img src="H3/uml/7.png" alt="Use case diagram: Adminisztráció (UC-15 – UC-18)" loading="lazy">
                 </figure>
@@ -1068,6 +1126,9 @@
                         <tr><th>Név</th><td>Tartalom kezelése</td></tr>
                         <tr><th>Rövid leírás</th><td>Az adminisztrátor híreket, eseményeket, menza-étlapokat és térképi helyeket hoz létre, módosít, tesz közzé vagy archivál.</td></tr>
                         <tr><th>Aktorok</th><td>A-04 Adminisztrátor.</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«include»: <a href="#uc-01">UC-01 Bejelentkezés</a> – csak bejelentkezett felhasználó végezheti; ha még nincs munkamenet, a use case a bejelentkezéssel kezdődik</li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul><li>A felhasználó be van jelentkezve, és adminisztrátor szerepköre van.</li></ul></td></tr>
                         <tr><th>Posztkondíciók</th><td><ul>
                             <li>A tartalom létrejött, módosult vagy archiválódott; a közzétett tartalom nyilvánosan látható.</li>
@@ -1101,6 +1162,10 @@
                         <tr><th>Név</th><td>Ügyintézési időpontok kezelése</td></tr>
                         <tr><th>Rövid leírás</th><td>Az adminisztrátor ügytípusokat és időpontsávokat ad meg, amelyekből a rendszer foglalható időpontokat készít.</td></tr>
                         <tr><th>Aktorok</th><td>A-04 Adminisztrátor.</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«include»: <a href="#uc-01">UC-01 Bejelentkezés</a> – csak bejelentkezett felhasználó végezheti; ha még nincs munkamenet, a use case a bejelentkezéssel kezdődik</li>
+                            <li>Kiterjesztési pont: „foglalt időpont törlése” – itt kapcsolódik a <a href="#uc-20">UC-20 Értesítés küldése</a> («extend»), ha az adminisztrátor már lefoglalt időpontot töröl</li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul><li>A felhasználó be van jelentkezve, és adminisztrátor szerepköre van.</li></ul></td></tr>
                         <tr><th>Posztkondíciók</th><td><ul>
                             <li>Az új vagy módosított időpontok foglalhatók; a zárolt vagy törölt időpontok nem.</li>
@@ -1121,7 +1186,7 @@
                         </ul></td></tr>
                         <tr><th>Kivételes esetek</th><td><ul>
                             <li><strong>E1 – Átfedés:</strong> a rendszer hibaüzenetet mutat, és nem menti a sávot.</li>
-                            <li><strong>E2 – Foglalt időpont törlése:</strong> a rendszer megerősítést és indoklást kér, majd értesíti az érintett hallgatót.</li>
+                            <li><strong>E2 – Foglalt időpont törlése:</strong> a rendszer megerősítést és indoklást kér, majd értesíti az érintett hallgatót (UC-20 «extend», kiterjesztési pont: „foglalt időpont törlése”).</li>
                         </ul></td></tr>
                     </tbody></table>
                 </div>
@@ -1132,6 +1197,12 @@
                         <tr><th>Név</th><td>Hibabejelentések kezelése</td></tr>
                         <tr><th>Rövid leírás</th><td>A felelős átnézi a beérkezett bejelentéseket, módosítja az állapotukat, és megjegyzést fűz hozzájuk.</td></tr>
                         <tr><th>Aktorok</th><td>A-04 Adminisztrátor (minden bejelentés), A-03 Oktató (csak a tanszékéhez rendelt bejelentések).</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«include»: <a href="#uc-01">UC-01 Bejelentkezés</a> – csak bejelentkezett felhasználó végezheti; ha még nincs munkamenet, a use case a bejelentkezéssel kezdődik</li>
+                            <li>«include»: <a href="#uc-20">UC-20 Értesítés küldése</a></li>
+                            <li>«include»: <a href="#uc-21">UC-21 Bejelentés részleteinek megtekintése</a></li>
+                            <li>Kiterjesztési pont: „felelős egység módosítása” – itt kapcsolódik a <a href="#uc-23">UC-23 Bejelentés átirányítása</a> («extend»), ha a felhasználó adminisztrátor, és a bejelentés más egységhez tartozik</li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul>
                             <li>A felhasználó be van jelentkezve, és adminisztrátor vagy oktató szerepköre van.</li>
                             <li>Van legalább egy bejelentés, amelyhez hozzáférése van.</li>
@@ -1143,13 +1214,13 @@
                         <tr><th>Szokásos működés</th><td><ol>
                             <li>A felhasználó megnyitja a „Bejelentések kezelése” oldalt.</li>
                             <li>A rendszer listázza a hozzáférhető bejelentéseket, a legrégebbi „Új” állapotúval kezdve; a lista állapot, kategória és épület szerint szűrhető.</li>
-                            <li>A felhasználó kiválaszt egy bejelentést.</li>
+                            <li>A felhasználó kiválaszt egy bejelentést; a rendszer megmutatja az adatait és az előzményeit (UC-21 «include»).</li>
                             <li>Új állapotot választ (Folyamatban, Megoldva vagy Elutasítva), és megjegyzést ír.</li>
                             <li>A „Mentés” gombra kattint.</li>
-                            <li>A rendszer rögzíti a változást, frissíti az előzményeket, és értesíti a bejelentőt.</li>
+                            <li>A rendszer rögzíti a változást, frissíti az előzményeket, és értesíti a bejelentőt (UC-20 «include»). <em>Kiterjesztési pont: felelős egység módosítása.</em></li>
                         </ol></td></tr>
                         <tr><th>Alternatív esetek</th><td><ul>
-                            <li><strong>A1 – Átirányítás:</strong> az adminisztrátor a bejelentést másik felelős egységhez rendeli (oktató ezt nem teheti meg).</li>
+                            <li><strong>A1 – Átirányítás:</strong> az adminisztrátor a bejelentést másik felelős egységhez rendeli; ezt az UC-23 írja le («extend», kiterjesztési pont: „felelős egység módosítása”). Oktató ezt nem teheti meg.</li>
                             <li><strong>A2 – Csak megjegyzés:</strong> a felhasználó állapotváltozás nélkül fűz megjegyzést a bejelentéshez.</li>
                         </ul></td></tr>
                         <tr><th>Kivételes esetek</th><td><ul>
@@ -1165,6 +1236,10 @@
                         <tr><th>Név</th><td>Szerepkörök kezelése</td></tr>
                         <tr><th>Rövid leírás</th><td>Az adminisztrátor szerepköröket rendel a felhasználókhoz, illetve visszavonja azokat.</td></tr>
                         <tr><th>Aktorok</th><td>A-04 Adminisztrátor.</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«include»: <a href="#uc-01">UC-01 Bejelentkezés</a> – csak bejelentkezett felhasználó végezheti; ha még nincs munkamenet, a use case a bejelentkezéssel kezdődik</li>
+                            <li>Kiterjesztési pont: „oktatói szerepkör hozzáadása” – itt kapcsolódik a <a href="#uc-24">UC-24 Oktatói adatlap hozzárendelése</a> («extend»), ha az adminisztrátor oktatói szerepkört ad</li>
+                        </ul></td></tr>
                         <tr><th>Prekondíciók</th><td><ul>
                             <li>A felhasználó be van jelentkezve, és adminisztrátor szerepköre van.</li>
                             <li>A módosítandó felhasználó legalább egyszer már bejelentkezett a rendszerbe.</li>
@@ -1183,13 +1258,76 @@
                             <li>A rendszer ellenőrzi a K-45 szabályait, menti a változást, és naplózza.</li>
                         </ol></td></tr>
                         <tr><th>Alternatív esetek</th><td><ul>
-                            <li><strong>A1 – Oktatói adatlap hozzárendelése:</strong> oktatói szerepkörnél az adminisztrátor a fiókhoz rendeli a meglévő oktatói adatlapot, vagy újat hoz létre.</li>
+                            <li><strong>A1 – Oktatói adatlap hozzárendelése:</strong> oktatói szerepkör adásakor az adminisztrátor a fiókhoz rendeli az oktatói adatlapot; ezt az UC-24 írja le («extend», kiterjesztési pont: „oktatói szerepkör hozzáadása”).</li>
                             <li><strong>A2 – Fiók letiltása:</strong> visszaélés esetén az adminisztrátor letilthatja a fiókot; a felhasználó ezután nem tud bejelentkezni (UC-01, E3).</li>
                         </ul></td></tr>
                         <tr><th>Kivételes esetek</th><td><ul>
                             <li><strong>E1 – Saját adminisztrátori szerepkör visszavonása:</strong> a rendszer nem engedi.</li>
                             <li><strong>E2 – Az utolsó adminisztrátor:</strong> a rendszer nem engedi az utolsó adminisztrátori szerepkör visszavonását.</li>
                             <li><strong>E3 – A felhasználó nem található:</strong> a rendszer jelzi, hogy a felhasználónak előbb egyszer be kell jelentkeznie.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+
+                <h3 id="uc-23" class="h-sub2">3.7.6 UC-23 – Bejelentés átirányítása</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Bejelentés átirányítása</td></tr>
+                        <tr><th>Rövid leírás</th><td>Az adminisztrátor a bejelentést másik felelős egységhez rendeli, ha nem a megfelelő egységhez került.</td></tr>
+                        <tr><th>Aktorok</th><td>A-04 Adminisztrátor.</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«extend»: <a href="#uc-17">UC-17 Hibabejelentések kezelése</a>, a „felelős egység módosítása” kiterjesztési ponton; feltétel: a felhasználó adminisztrátor, és a bejelentés más egységhez tartozik</li>
+                        </ul></td></tr>
+                        <tr><th>Prekondíciók</th><td><ul>
+                            <li>A bejelentés meg van nyitva az UC-17-ben.</li>
+                            <li>A felhasználónak adminisztrátori szerepköre van.</li>
+                        </ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>A bejelentés az új felelős egységhez tartozik, és az ő listájában jelenik meg.</li>
+                            <li>A változás megjelenik az előzmények között, és naplózva van (K-46).</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>Az adminisztrátor az „Átirányítás” gombra kattint.</li>
+                            <li>A rendszer listázza a felelős egységeket.</li>
+                            <li>Az adminisztrátor kiválasztja az új egységet, és megadja az átirányítás okát.</li>
+                            <li>A rendszer menti a változást, előzménybejegyzést készít, és naplózza a műveletet.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Mégse:</strong> az adminisztrátor a 3. lépésben eláll az átirányítástól; a bejelentés nem változik.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Oktató próbálja:</strong> oktatónál az „Átirányítás” gomb nem jelenik meg; közvetlen kérést a rendszer elutasít.</li>
+                        </ul></td></tr>
+                    </tbody></table>
+                </div>
+
+                <h3 id="uc-24" class="h-sub2">3.7.7 UC-24 – Oktatói adatlap hozzárendelése</h3>
+                <div class="tbl">
+                    <table class="uc"><tbody>
+                        <tr><th>Név</th><td>Oktatói adatlap hozzárendelése</td></tr>
+                        <tr><th>Rövid leírás</th><td>Oktatói szerepkör adásakor az adminisztrátor a felhasználó fiókjához rendel egy meglévő oktatói adatlapot, vagy újat hoz létre.</td></tr>
+                        <tr><th>Aktorok</th><td>A-04 Adminisztrátor.</td></tr>
+                        <tr><th>Kapcsolatok</th><td><ul>
+                            <li>«extend»: <a href="#uc-18">UC-18 Szerepkörök kezelése</a>, a „oktatói szerepkör hozzáadása” kiterjesztési ponton; feltétel: az adminisztrátor oktatói szerepkört ad</li>
+                        </ul></td></tr>
+                        <tr><th>Prekondíciók</th><td><ul>
+                            <li>Az adminisztrátor az UC-18-ban oktatói szerepkört ad a felhasználónak, és kiválasztotta a tanszéket.</li>
+                        </ul></td></tr>
+                        <tr><th>Posztkondíciók</th><td><ul>
+                            <li>A fiókhoz oktatói adatlap tartozik; az oktató használhatja az UC-10-et.</li>
+                            <li>A művelet naplózva van (K-46).</li>
+                        </ul></td></tr>
+                        <tr><th>Szokásos működés</th><td><ol>
+                            <li>A rendszer felajánlja a kiválasztott tanszék fiókhoz még nem rendelt oktatói adatlapjait; a felhasználó nevével egyezőt előre kiválasztja.</li>
+                            <li>Az adminisztrátor jóváhagyja vagy módosítja a választást.</li>
+                            <li>A rendszer a fiókhoz rendeli az adatlapot, és naplózza a műveletet.</li>
+                        </ol></td></tr>
+                        <tr><th>Alternatív esetek</th><td><ul>
+                            <li><strong>A1 – Új adatlap:</strong> ha nincs megfelelő adatlap, az adminisztrátor újat hoz létre a fiók nevével, e-mail-címével és a tanszékkel.</li>
+                        </ul></td></tr>
+                        <tr><th>Kivételes esetek</th><td><ul>
+                            <li><strong>E1 – Az adatlap már másik fiókhoz tartozik:</strong> a rendszer nem engedi a hozzárendelést.</li>
                         </ul></td></tr>
                     </tbody></table>
                 </div>
@@ -1570,7 +1708,7 @@
 
                 <h1 id="resz-2" class="h-part">II. Szótár</h1>
                 <p>Ez a szótár a H2 vízió dokumentum szótárának önálló, bővített változata. A specifikáció írása során felmerült fogalmakkal egészítettük ki, és a fejlesztés során folyamatosan bővítjük. A magyarázatokban csak a szótárban szereplő vagy köznapi kifejezéseket használunk. A fogalmak ábécérendben szerepelnek.</p>
-                <p class="text-gray-700">Utolsó módosítás: 2026. 10. 20. · Fogalmak száma: 71</p>
+                <p class="text-gray-700">Utolsó módosítás: 2026. 11. 16. · Fogalmak száma: 74</p>
                 <div class="tbl">
                     <table>
                         <thead><tr><th class="w-1/4">Fogalom</th><th>Magyarázat</th></tr></thead>
@@ -1590,6 +1728,7 @@
                             <tr><td>Egyetemi azonosító szolgáltatás</td><td>Az egyetemi Microsoft-fiókokat kezelő szolgáltatás, amely a bejelentkezést ellenőrzi (lásd: Microsoft Entra ID).</td></tr>
                             <tr><td>Esemény</td><td>Egyetemi program időponttal, helyszínnel és leírással (például előadás, nyílt nap, sportesemény).</td></tr>
                             <tr><td>Érintett</td><td>Olyan személy vagy szervezet, akit a termék érint, de nem feltétlenül használja.</td></tr>
+                            <tr><td>Extend kapcsolat («extend»)</td><td>Két use case közötti kapcsolat: a kiterjesztő use case csak egy feltétel teljesülésekor, az alap use case egy kiterjesztési pontján épül be annak működésébe (például a kép csatolása a hibabejelentésbe). A diagramon szaggatott nyíl jelöli, amely a kiterjesztő use case-től az alap use case felé mutat.</td></tr>
                             <tr><td>Felhasználó</td><td>Aki a terméket ténylegesen használja.</td></tr>
                             <tr><td>Felhasználói kézikönyv</td><td>A rendszer használatát lépésenként bemutató dokumentum a felhasználók számára.</td></tr>
                             <tr><td>Fogadóóra</td><td>Az oktató által meghirdetett idősáv, amikor a hallgatók személyesen felkereshetik.</td></tr>
@@ -1599,9 +1738,11 @@
                             <tr><td>GTFS</td><td>A tömegközlekedési menetrendek közzétételére használt, nemzetközileg elterjedt adatformátum.</td></tr>
                             <tr><td>Hallgató</td><td>Az egyetem bejelentkezett hallgatója; a Látogató funkcióin túl időpontot foglalhat és hibát jelenthet be.</td></tr>
                             <tr><td>Időpontsáv</td><td>Az adminisztrátor által megadott időszak (például hétfő 9–12 óra), amelyből a rendszer foglalható időpontokat készít.</td></tr>
+                            <tr><td>Include kapcsolat («include»)</td><td>Két use case közötti kapcsolat: az alap use case működésének mindig része a befoglalt use case (például a bejelentkezést igénylő funkcióknak a bejelentkezés). Közös részek kiemelésére szolgál. A diagramon szaggatott nyíl jelöli, amely az alap use case-től a befoglalt felé mutat.</td></tr>
                             <tr><td>Infotv.</td><td>Az információs önrendelkezési jogról és az információszabadságról szóló 2011. évi CXII. törvény.</td></tr>
                             <tr><td>JSON</td><td>Szöveges adatformátum, amellyel a felület és a szerver adatot cserél.</td></tr>
                             <tr><td>Kar</td><td>Az egyetem nagyobb szervezeti egysége, amely tanszékekből áll.</td></tr>
+                            <tr><td>Kiterjesztési pont</td><td>Az alap use case működésének az a pontja, ahol egy «extend» kapcsolattal kapcsolódó use case beépülhet. A diagramon az ellipszisben, vonal alatt szerepel.</td></tr>
                             <tr><td>Kivételes eset</td><td>A use case váratlan, hibás lefutása (például egy külső szolgáltatás nem érhető el).</td></tr>
                             <tr><td>Kötelező (prioritás)</td><td>Olyan követelmény, amelynek a félév végi bemutatóra el kell készülnie.</td></tr>
                             <tr><td>Látogató</td><td>Bárki, aki bejelentkezés nélkül használja a rendszert; csak a nyilvános funkciókat éri el.</td></tr>
