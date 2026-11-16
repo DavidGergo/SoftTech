@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendszertervezés 1.0 – ME-nthetetlenek</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/style.css">
+    <style>
+        html { scroll-behavior: smooth; }
+    </style>
+    <style type="text/tailwindcss">
+        .doc .h-part { @apply text-3xl md:text-4xl font-bold mt-16 mb-6 pb-3 text-gray-900 border-b-2 border-gray-800 uppercase tracking-wide; }
+        .doc .h-sec  { @apply text-2xl md:text-3xl font-bold mt-12 mb-4 text-gray-900 pt-4; }
+        .doc .h-sub  { @apply text-xl font-bold mt-8 mb-3 text-gray-900; }
+        .doc .h-sub2 { @apply text-lg font-bold mt-6 mb-2 text-gray-900; }
+        .doc .h-sub3 { @apply text-base font-bold mt-5 mb-2 text-gray-800 italic; }
+        .doc p { @apply mb-4; }
+        .doc ul { @apply list-disc pl-6 mb-4; }
+        .doc ol { @apply list-decimal pl-6 mb-4; }
+        .doc li { @apply mb-1; }
+        .doc td > ul, .doc td > ol { @apply mb-0; }
+        .doc .tbl { @apply overflow-x-auto mb-6; }
+        .doc table { @apply w-full border-collapse border border-gray-400 text-sm md:text-base; }
+        .doc th, .doc td { @apply border border-gray-400 p-2 md:p-3 align-top text-left; }
+        .doc th { @apply bg-gray-100; }
+        .doc .tbl-sm table { @apply text-xs md:text-sm; }
+        .doc .tbl-sm th, .doc .tbl-sm td { @apply p-1.5 md:p-2; }
+        .doc a { @apply text-[#174777] underline underline-offset-2 hover:text-blue-800; }
+        .doc code { @apply font-mono text-[0.85em] bg-gray-100 px-1 rounded; }
+        .doc pre { @apply font-mono text-xs md:text-sm bg-gray-50 border border-gray-300 p-4 mb-6 overflow-x-auto leading-snug; }
+        .doc .toc { @apply bg-gray-50 border border-gray-300 p-5 mb-10; }
+        .doc .toc ul { @apply list-none pl-0 mb-0; }
+        .doc .toc ul ul { @apply pl-6 mt-1 mb-1; }
+        .doc .note { @apply border-l-4 border-[#10365c] pl-4 bg-blue-50 py-3 pr-3 mb-6; }
+        .doc .fig { @apply border border-gray-300 bg-white p-3 mb-2 overflow-x-auto; }
+        .doc .fig img { @apply block mx-auto h-auto max-w-full; }
+        .doc .fig-cap { @apply text-sm text-gray-700 mb-8; }
+        .doc .cls-name { @apply font-bold; }
+        .doc .badge { @apply inline-block text-xs font-sans font-semibold bg-green-100 text-green-800 px-1.5 py-0.5 rounded align-middle; }
+        .doc .cover { @apply mb-10; }
+        .doc .cover-title { @apply text-2xl sm:text-3xl md:text-4xl font-bold my-8 tracking-wide uppercase break-words; }
+        .doc .cards a { @apply no-underline; }
+    </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden font-sans bg-gray-100">
+
+    <header class="bg-topbar text-white h-[60px] flex items-center justify-between w-full z-40 px-4 md:px-0 relative">
+        <div class="flex items-center h-full">
+            <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white mr-4 transition" aria-label="Menü">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <div class="md:w-64 h-full flex flex-col justify-center md:px-4 shrink-0">
+                <a href="../index.html" class="leading-none select-none block text-white hover:text-gray-200">
+                    <span class="block font-semibold text-[17px] tracking-wide">MISKOLCI</span>
+                    <span class="block font-semibold text-[17px] tracking-wide mt-[2px]">EGYETEM</span>
+                    <span class="block text-[8px] tracking-widest text-gray-400 mt-1">UNIVERSITY OF MISKOLC</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex-1 flex items-center justify-end px-4"></div>
+    </header>
+
+    <div class="h-[2px] w-full flex shrink-0 z-20">
+        <div class="w-1/3 bg-red-600"></div>
+        <div class="w-1/3 bg-white"></div>
+        <div class="w-1/3 bg-green-600"></div>
+    </div>
+
+    <div class="flex flex-1 overflow-hidden relative">
+
+        <aside id="sidebar" class="hidden md:block w-full md:w-64 bg-sidebar shrink-0 relative shadow-[inset_-2px_0_5px_rgba(0,0,0,0.1)] transition-all duration-300 overflow-y-auto z-30">
+            <nav class="flex flex-col py-4 text-gray-200 text-sm font-medium">
+                <a href="../index.html" class="menu-item">
+                    <i class="fas fa-home w-5 text-center"></i>
+                    <span>Főoldal</span>
+                </a>
+                <div class="border-b border-[rgba(255,255,255,0.1)] mx-4 my-2"></div>
+                <a href="../h1.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H1 beadandó</span>
+                </a>
+                <a href="../h2.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H2 beadandó</span>
+                </a>
+                <a href="../h3.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H3 beadandó</span>
+                </a>
+                <a href="../h4.html" class="menu-item border-l-4 border-blue-400 bg-[#16487a] text-white">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H4 beadandó</span>
+                </a>
+                <a href="../h5.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H5 beadandó</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 bg-[#f0f2f5] relative w-full p-4 md:p-6 overflow-y-auto">
+            <div class="doc bg-white p-6 md:p-12 w-full max-w-5xl mx-auto shadow-sm border border-gray-300 font-serif text-black leading-relaxed">
+<div class="cover">
+    <p class="text-sm text-gray-600 mb-6">Címlap</p>
+    <div class="space-y-2 text-lg">
+        <p class="mb-1">Csoport neve: <strong>ME-nthetetlenek</strong></p>
+        <p class="mb-1">Feladat sorszáma: <strong>19</strong></p>
+        <p class="mb-1">Feladat címe: Az uni-app jelenlegi funkcióinak gyakorlatiasabb átdolgozása</p>
+    </div>
+    <h1 class="cover-title">Rendszertervezés</h1>
+    <p class="mb-1">Gyakorlatvezető:</p>
+    <p class="text-xl uppercase mb-6">Tompa Tamás</p>
+    <p class="mb-2">Csoporttagok:</p>
+    <div class="tbl"><table>
+        <thead><tr><th>Név</th><th>Tankör</th><th>E-mail-cím</th></tr></thead>
+        <tbody>
+<tr><td>Csoportvezető: Dávid Gergő</td><td>G2-BP1</td><td>gergo.david@student.uni-miskolc.hu</td></tr>
+<tr><td>Győri Kristóf</td><td>G2-BP1</td><td>kristof.gyori@student.uni-miskolc.hu</td></tr>
+<tr><td>Maklári Máté</td><td>GE-BGI</td><td>mate.mate.165@gmail.com</td></tr>
+<tr><td>Balázs Csenge Málna</td><td>GE-BGI</td><td>csenge.balazs.malna@student.uni-miskolc.hu</td></tr>
+<tr><td>Nagy Virág</td><td>GE-BGI</td><td>virag.nagy@student.uni-miskolc.hu</td></tr>
+        </tbody>
+    </table></div>
+    <p>Beadás dátuma: <strong>2026. 11. 16.</strong></p>
+</div>
+<h2 id="tortenet" class="h-sub">Történet</h2>
+<div class="tbl"><table>
+    <thead><tr><th>Dátum</th><th>Verzió</th><th>Leírás</th><th>Szerző</th></tr></thead>
+    <tbody>
+<tr><td>2026. 11. 16.</td><td>1.0</td><td>Első változat: felhasználói felület, adatbázis-kezelő, szemantikai és relációs adatmodell, adatelérési osztályok, a funkcionális modell kiegészítése, architektúra, REST API.</td><td>ME-nthetetlenek</td></tr>
+    </tbody>
+</table></div>
+<div class="toc"><p class="font-bold mb-2">Tartalomjegyzék</p>
+<ul>
+<li><a href="#s1">1. Bevezetés</a></li>
+<li><a href="#s2">2. Felhasználói felület</a></li>
+<ul>
+<li><a href="#s2-1">2.1 Elrendezés és arculat</a></li>
+<li><a href="#s2-2">2.2 Képernyők és navigáció</a></li>
+<li><a href="#s2-3">2.3 Képernyőtervek</a></li>
+<li><a href="#s2-4">2.4 Űrlapok ellenőrzése és hibaüzenetek</a></li>
+<li><a href="#s2-5">2.5 Visszajelzések és állapotok</a></li>
+</ul>
+<li><a href="#s3">3. Adatmodellek</a></li>
+<ul>
+<li><a href="#s3-1">3.1 Az adatbázis-kezelő kiválasztása</a></li>
+<li><a href="#s3-2">3.2 Szemantikai adatmodell</a></li>
+<li><a href="#s3-3">3.3 Relációs adatmodell</a></li>
+<li><a href="#s3-4">3.4 Az adatbázis-kezelővel kapcsolatot tartó osztályok</a></li>
+</ul>
+<li><a href="#s4">4. A funkcionális modell kiegészítése</a></li>
+<ul>
+<li><a href="#s4-1">4.1 Egyidejű foglalás</a></li>
+<li><a href="#s4-2">4.2 Egyidejű tartalomszerkesztés</a></li>
+<li><a href="#s4-3">4.3 Értesítések küldése</a></li>
+<li><a href="#s4-4">4.4 Jogosultság-ellenőrzés és hibakezelés</a></li>
+<li><a href="#s4-5">4.5 Külső szolgáltatások kiesése</a></li>
+</ul>
+<li><a href="#s5">5. Architektúra és telepítés</a></li>
+<ul>
+<li><a href="#s5-1">5.1 Komponensek</a></li>
+<li><a href="#s5-2">5.2 Telepítés</a></li>
+<li><a href="#s5-3">5.3 További kész komponensek (javaslat)</a></li>
+</ul>
+<li><a href="#s6">6. A REST API végpontjai</a></li>
+<li><a href="#s7">7. A forráskód szerkezete</a></li>
+<li><a href="#s8">8. Mellékletek</a></li>
+<ul>
+<li><a href="#s8-1">8.1 Ábrajegyzék</a></li>
+<li><a href="#s8-2">8.2 Az ábrák forrása</a></li>
+</ul>
+</ul>
+</div><h2 id="s1" class="h-sec">1. Bevezetés</h2>
+<p>Ez a dokumentum a Vezérlőpult rendszertervét tartalmazza: a felhasználói felület tervét, az adatbázis-kezelő kiválasztását, a szemantikai és a relációs adatmodellt, az adatbázissal kapcsolatot tartó osztályok tervét, a funkcionális modell kivételes és alternatív folyamatainak kiegészítését, valamint a megvalósításhoz szükséges további döntéseket (architektúra, telepítés, REST API, forráskód-szerkezet).</p>
+<p>A dokumentum az <a href="../h3.html">SRS</a> követelményeire és az <a href="ME-nthetetlenek_ANAL11.html">analízis modell 1.1-es verziójára</a> épül. Az osztályok nevei az analízis modell neveivel egyeznek; az adatbázistáblák és -oszlopok az SRS 7.2 elnevezési konvenciója szerint angol, kisbetűs, aláhúzásjellel tagolt nevek, a táblák többes számban (például <code>FaultReport</code> → <code>fault_reports</code>).</p>
+<p><strong>Felépítés.</strong> A 2. fejezet a felhasználói felületet, a 3. az adatmodelleket, a 4. a funkcionális modell kiegészítését írja le. Az 5–7. fejezet a részletes tervezés további eredményeit tartalmazza (architektúra és telepítés, REST API, forráskód-szerkezet), a 8. a mellékleteket.</p>
+<h2 id="s2" class="h-sec">2. Felhasználói felület</h2>
+<h3 id="s2-1" class="h-sub">2.1 Elrendezés és arculat</h3>
+<p>A felület az SRS 11.1 pontja szerint a projekt dokumentációs oldalának elrendezését követi, így a csapat által már elkészített stíluselemek (<code>style.css</code>, Tailwind CSS) újrahasznosíthatók:</p>
+<ul>
+<li><strong>Fejléc</strong> (60 px magas, sötétkék, <code>#0b1a29</code>): bal oldalon az egyetem neve (a kezdőlapra mutat), jobb oldalon a „Bejelentkezés” gomb, bejelentkezés után a felhasználó neve lenyíló menüvel (saját oldalak, kijelentkezés).</li>
+<li><strong>Nemzeti színű csík</strong> a fejléc alatt (piros–fehér–zöld, 2 px).</li>
+<li><strong>Bal oldali menü</strong> (256 px széles, <code>#10365c</code>): ikon és felirat minden menüpontnál (SRS 4.3); az aktív menüpontot világoskék bal oldali sáv és világosabb háttér jelzi. A menüpontok listája a szerepkörtől függ (lásd 2.2).</li>
+<li><strong>Tartalomterület</strong> világosszürke háttéren (<code>#f0f2f5</code>), fehér kártyákkal.</li>
+<li><strong>Reszponzív viselkedés:</strong> 768 px alatt a menü rejtett, a fejléc bal oldali gombjával nyitható; a kártyák és a táblázatok egy oszlopba rendeződnek, a széles táblázatok vízszintesen görgethetők. A felület 360 px szélességtől használható (SRS 4.6).</li>
+<li><strong>Akadálymentesség:</strong> szemantikus HTML-elemek (header, nav, main), látható fókusz, minden ikonhoz szöveges címke, a színjelölések mellett szöveg is (például „Kevés hely”). A kontraszt a WCAG 2.1 AA szintnek megfelel (SRS 4.6).</li>
+</ul>
+<h3 id="s2-2" class="h-sub">2.2 Képernyők és navigáció</h3>
+<p>A képernyők listáját az SRS 11.1 táblázata adja. Az alábbi ábra a köztük lévő átmeneteket mutatja szerepkörönként.</p>
+<p>A képernyők és a köztük lévő átmenetek szerepkörönként. A bal oldali menüből minden nyilvános képernyő egy kattintással elérhető; a bejelentkezést igénylő képernyők csak a megfelelő szerepkörrel jelennek meg a menüben. A szaggatott nyilak a képernyők közötti hivatkozásokat jelölik (például az esemény helyszínéről a térképre).</p>
+<figure class="fig" id="abra-1"><a href="uml/r01_navigacio.svg" target="_blank" rel="noopener"><img src="uml/r01_navigacio.svg" alt="A felhasználói felület navigációs térképe" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>1. ábra.</strong> A felhasználói felület navigációs térképe. <a href="uml/r01_navigacio.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<div class="tbl"><table>
+<thead><tr><th>Menüpont</th><th>Látja</th><th>Use case-ek</th></tr></thead>
+<tbody>
+<tr><td>Kezdőlap, Térkép, Parkolás, Események, Hírek, Menza, Menetrend, Oktatók, Súgó</td><td>mindenki</td><td>UC-03 – UC-09, UC-19</td></tr>
+<tr><td>Ügyintézés (Új foglalás, Foglalásaim), Hibabejelentés (Új bejelentés, Bejelentéseim)</td><td>hallgató, oktató</td><td>UC-11 – UC-14, UC-21, UC-22</td></tr>
+<tr><td>Oktatói adatlapom (a fejléc névmenüjében)</td><td>oktató</td><td>UC-10</td></tr>
+<tr><td>Bejelentések kezelése</td><td>oktató, adminisztrátor</td><td>UC-17, UC-21, UC-23</td></tr>
+<tr><td>Adminisztráció (Tartalom, Időpontok, Felhasználók, Napló)</td><td>adminisztrátor</td><td>UC-15, UC-16, UC-18, UC-24</td></tr>
+</tbody>
+</table></div>
+<p>Az UC-01 Bejelentkezés és az UC-02 Kijelentkezés a fejlécből érhető el. Az UC-20 Értesítés küldése nem kapcsolódik képernyőhöz: az e-mailt a rendszer küldi (lásd 4.3). Az UC-19 – UC-24 az SRS 0.4-es változatának «include», illetve «extend» kapcsolattal bevezetett use case-ei; önálló menüpontjuk nincs, a táblázatban annál a képernyőnél szerepelnek, amelyről elérhetők.</p>
+<p>A felület egyoldalas alkalmazásként (single-page application) működik: a menüpontok a cím <code>#</code> utáni részét változtatják (például <code>#/esemenyek</code>), így a böngésző „Vissza” gombja és a könyvjelzők is működnek, az oldal pedig nem töltődik újra. Védett képernyőnél, ha nincs munkamenet, a felület a bejelentkezést indítja, és utána a kért képernyőre tér vissza (UC-01 A1).</p>
+<h3 id="s2-3" class="h-sub">2.3 Képernyőtervek</h3>
+<p>A legfontosabb képernyők drótvázai. A drótváz az elemek elrendezését és feliratait mutatja, a végleges színeket és ikonokat a 2.1 pont adja meg. A többi képernyő ugyanezekből az elemekből épül fel (lista szűrőkkel, adatlap, űrlap).</p>
+<p>A kezdőlap drótváza. A fejléc, a bal oldali menü és a tartalomterület elrendezése minden képernyőn azonos (SRS 11.1). A kártyák a leggyakoribb funkciókat mutatják; mobilon egymás alá kerülnek, a menü pedig a fejléc gombjával nyílik.</p>
+<figure class="fig" id="abra-2"><a href="uml/r02_wf_kezdolap.svg" target="_blank" rel="noopener"><img src="uml/r02_wf_kezdolap.svg" alt="Képernyőterv: Kezdőlap (asztali nézet)" loading="lazy" style="width:469px"></a></figure>
+<p class="fig-cap"><strong>2. ábra.</strong> Képernyőterv: Kezdőlap (asztali nézet). <a href="uml/r02_wf_kezdolap.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<p>Az időpontfoglalás három lépése egy képernyőn: ügytípus, időpont, összegzés. A naptárban csak a szabad időpontok kattinthatók; a foglalás gomb csak az összegzés után aktív.</p>
+<figure class="fig" id="abra-3"><a href="uml/r03_wf_foglalas.svg" target="_blank" rel="noopener"><img src="uml/r03_wf_foglalas.svg" alt="Képernyőterv: Új foglalás (UC-11)" loading="lazy" style="width:634px"></a></figure>
+<p class="fig-cap"><strong>3. ábra.</strong> Képernyőterv: Új foglalás (UC-11). <a href="uml/r03_wf_foglalas.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<p>A hibabejelentés űrlapja. A kötelező mezőket csillag jelöli; a hibaüzenet a hibás mező alatt jelenik meg, és megmondja, mit kell javítani (SRS 9.3). A helyszín a térképen is kijelölhető.</p>
+<figure class="fig" id="abra-4"><a href="uml/r04_wf_bejelentes.svg" target="_blank" rel="noopener"><img src="uml/r04_wf_bejelentes.svg" alt="Képernyőterv: Új hibabejelentés (UC-13)" loading="lazy" style="width:505px"></a></figure>
+<p class="fig-cap"><strong>4. ábra.</strong> Képernyőterv: Új hibabejelentés (UC-13). <a href="uml/r04_wf_bejelentes.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<p>A felelősök listanézete szűrőkkel és a kiválasztott bejelentés részletei. Elutasításnál a megjegyzés mező kötelező (K-44).</p>
+<figure class="fig" id="abra-5"><a href="uml/r05_wf_kezeles.svg" target="_blank" rel="noopener"><img src="uml/r05_wf_kezeles.svg" alt="Képernyőterv: Bejelentések kezelése (UC-17)" loading="lazy" style="width:429px"></a></figure>
+<p class="fig-cap"><strong>5. ábra.</strong> Képernyőterv: Bejelentések kezelése (UC-17). <a href="uml/r05_wf_kezeles.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h3 id="s2-4" class="h-sub">2.4 Űrlapok ellenőrzése és hibaüzenetek</h3>
+<p>Minden űrlapot a felület és a szerver is ellenőriz: a felület azonnali visszajelzést ad, a szerver pedig a végső döntést hozza, mert a felületi ellenőrzés megkerülhető. A hibaüzenet a mező alatt jelenik meg, és megmondja, mit kell javítani (SRS 9.3). A legfontosabb szabályok:</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Űrlap</th><th>Mező</th><th>Szabály</th><th>Hibaüzenet</th></tr></thead>
+<tbody>
+<tr><td>Új foglalás</td><td>Időpont</td><td>kötelező; szabad</td><td>„Válasszon egy szabad időpontot.”</td></tr>
+<tr><td>Új bejelentés</td><td>Kategória, épület</td><td>kötelező</td><td>„Válassza ki a hiba kategóriáját.” / „Adja meg az épületet.”</td></tr>
+<tr><td></td><td>Leírás</td><td>10–2000 karakter</td><td>„Legalább 10 karakterben írja le a hibát.”</td></tr>
+<tr><td></td><td>Kép</td><td>JPEG vagy PNG, legfeljebb 5 MB</td><td>„Csak JPEG vagy PNG kép tölthető fel, legfeljebb 5 MB méretben.”</td></tr>
+<tr><td>Oktatói adatlap</td><td>Fogadóóra</td><td>kezdés &lt; befejezés; ugyanazon a napon nincs átfedés</td><td>„A kezdés legyen korábbi a befejezésnél.” / „Ez az idősáv átfed egy másikkal.”</td></tr>
+<tr><td>Tartalom</td><td>Cím</td><td>kötelező, legfeljebb 200 karakter</td><td>„Adja meg a címet.”</td></tr>
+<tr><td></td><td>Esemény időpontja</td><td>kezdés &lt; befejezés</td><td>„Az esemény vége nem lehet korábbi a kezdeténél.”</td></tr>
+<tr><td></td><td>Hír hivatkozása</td><td>érvényes https:// cím</td><td>„Adjon meg érvényes webcímet (https://…).”</td></tr>
+<tr><td>Időpontsáv</td><td>Sáv</td><td>nincs átfedés ugyanazon ügytípusnál</td><td>„A sáv átfed egy meglévő sávval: (nap, idő).”</td></tr>
+<tr><td>Szerepkörök</td><td>Tanszék</td><td>oktatói szerepkörnél kötelező</td><td>„Oktatói szerepkörhöz válasszon tanszéket.”</td></tr>
+<tr><td>Bejelentés kezelése</td><td>Megjegyzés</td><td>elutasításnál kötelező</td><td>„Elutasításkor adja meg az indoklást.”</td></tr>
+</tbody>
+</table></div>
+<h3 id="s2-5" class="h-sub">2.5 Visszajelzések és állapotok</h3>
+<ul>
+<li><strong>Betöltés:</strong> a lista helyén szürke helykitöltő sorok; 1 másodpercnél hosszabb művelet gombján „Folyamatban…” felirat, a gomb ilyenkor nem kattintható (így nem jön létre kétszer ugyanaz a foglalás vagy bejelentés).</li>
+<li><strong>Üres lista:</strong> megmondja a következő lépést, például „Még nincs bejelentése. <em>Új bejelentés</em>” (SRS 4.3).</li>
+<li><strong>Hiba:</strong> rövid magyar nyelvű üzenet és „Újra” gomb; a kitöltött űrlap adatai megmaradnak (UC-10 E2, UC-13 E3).</li>
+<li><strong>Siker:</strong> zöld sáv a tartalomterület tetején 5 másodpercig, például „A foglalás rögzítve.”</li>
+<li><strong>Megerősítés:</strong> párbeszédablak a visszafordíthatatlan műveletek előtt (foglalás lemondása, foglalt időpont törlése, szerepkör visszavonása, kijelentkezés mentetlen adattal).</li>
+<li><strong>Adatfrissesség:</strong> „nem friss” és „nincs adat” jelzés a parkolásnál és a menetrendnél, a legutóbbi frissítés idejével (K-13, UC-08 E1).</li>
+</ul>
+<h2 id="s3" class="h-sec">3. Adatmodellek</h2>
+<h3 id="s3-1" class="h-sub">3.1 Az adatbázis-kezelő kiválasztása</h3>
+<p>Az adatbázis-kezelő a <strong>MySQL 8.0 Community Server</strong> (SRS 8.1). A döntés indokai: a csapat az Adatbázis-kezelés tárgyból ismeri; ingyenes (GPLv2, saját szerveren futtatva nincs további kötelezettség); a tervezett adatmennyiség (1 GB alatt, SRS 6.3) és terhelés (100 kérés másodpercenként, SRS 6.2) jóval a képességein belül van; és támogatja a rendszerhez szükséges tranzakciókat, idegen kulcsokat és egyedi indexeket.</p>
+<div class="tbl"><table>
+<thead><tr><th>Szempont</th><th>Döntés</th></tr></thead>
+<tbody>
+<tr><td>Tárolómotor</td><td>InnoDB minden táblánál (tranzakciók, sorszintű zárolás, idegen kulcsok).</td></tr>
+<tr><td>Karakterkészlet</td><td><code>utf8mb4</code>, rendezés <code>utf8mb4_hungarian_ci</code>, így a nevek a magyar ábécé szerint rendeződnek.</td></tr>
+<tr><td>Időpontok</td><td>Az adatbázisban UTC-ben, <code>DATETIME</code> típusban; a felület magyarországi helyi időben jeleníti meg őket (SRS 5.4).</td></tr>
+<tr><td>Kapcsolat az alkalmazással</td><td>A <code>mysql2</code> csomag (SRS 10) ígéret alapú felülete, kapcsolatkészlettel (legfeljebb 10 egyidejű kapcsolat). Minden lekérdezés előkészített, paraméterezett utasítás (<code>execute</code>); SQL szövegösszefűzéssel nem készül (SRS 7.1).</td></tr>
+<tr><td>Adatbázis-felhasználók</td><td><code>vp_app</code>: az alkalmazás, csak SELECT, INSERT, UPDATE, DELETE joggal (a naplótáblára csak INSERT és SELECT); <code>vp_migrate</code>: a sémamódosításokhoz; <code>vp_backup</code>: csak olvasás a mentéshez. A jelszavak környezeti változókban vannak (SRS 7.6).</td></tr>
+<tr><td>Sémaváltozások</td><td>Számozott SQL-migrációs fájlok a Git-tárolóban (<code>db/migrations</code>); a lefutottakat a <code>schema_migrations</code> tábla tartja nyilván.</td></tr>
+<tr><td>Mentés</td><td>Naponta <code>mysqldump</code>, 14 napig megőrizve; a feltöltött képek hetente (SRS 5.5).</td></tr>
+</tbody>
+</table></div>
+<p>A feltöltött képek nem az adatbázisban, hanem a szerver lemezén vannak (az <code>attachments</code> tábla csak a helyüket tárolja), mert így az adatbázis kicsi marad, és a mentése gyors.</p>
+<h3 id="s3-2" class="h-sub">3.2 Szemantikai adatmodell</h3>
+<p>A szemantikai adatmodell az analízis modell osztályaiból készült: az adatot tároló osztályokból egyedek, a kapcsolataikból kapcsolatok lettek. A felsorolás típusok (például a szerepkör vagy az állapotok) egyszerű tulajdonságok. A modellt három ábrára bontottuk; az ábrák között közös egyedek (FELHASZNALO, HELY, TANSZEK) kötik össze a részeket. Az ábrákon csak a fontosabb tulajdonságok szerepelnek; a teljes oszloplistát a relációs modell adja meg.</p>
+<p>Modellezési döntések:</p>
+<ul>
+<li><strong>Gyenge egyedek:</strong> a FOGADOORA és az ELOZMENY csak a tulajdonosával (oktatói adatlap, illetve bejelentés) együtt azonosítható, ezért gyenge egyed (dupla keret), azonosító kapcsolattal (dupla rombusz).</li>
+<li><strong>Kapcsolatból egyed:</strong> a szerepkör-hozzárendelésnek és a foglalásnak saját tulajdonságai vannak, és más adatok hivatkoznak rájuk (értesítések), ezért önálló egyedek, nem csak kapcsolatok.</li>
+<li><strong>Többértékű tulajdonság:</strong> a menza zárva tartási napjai és az étel allergénjei (dupla ellipszis).</li>
+<li><strong>Összetett tulajdonság:</strong> a hely koordinátája (szélesség, hosszúság).</li>
+<li><strong>Származtatott tulajdonság:</strong> a parkolózóna szabad helyeinek száma (szaggatott ellipszis); nem tároljuk.</li>
+<li><strong>Háromágú kapcsolat:</strong> a hozzárendelési szabály egy kategória és egy épület párosához egy felelős egységet rendel.</li>
+<li><strong>Általánosítás:</strong> a Content bázisosztálynak nincs külön egyede; a négy tartalomfajta önálló egyed (lásd 3.3.2).</li>
+</ul>
+<p>Az egyedek, a kapcsolatok és a fontosabb tulajdonságok Chen-féle jelöléssel. A kulcstulajdonság aláhúzva, a kapcsolatok számossága a vonalakon látható (1, N). A szerepkör-hozzárendelés önálló egyed, mert saját tulajdonságai vannak, és oktatói szerepkörnél egy tanszékhez is kapcsolódik. A foglalás szintén önálló egyed, mert az értesítések hivatkoznak rá.</p>
+<figure class="fig" id="abra-6"><a href="uml/r06_er_szemelyek.svg" target="_blank" rel="noopener"><img src="uml/r06_er_szemelyek.svg" alt="Szemantikai adatmodell (ER) – felhasználók, szervezet és ügyintézés" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>6. ábra.</strong> Szemantikai adatmodell (ER) – felhasználók, szervezet és ügyintézés. <a href="uml/r06_er_szemelyek.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<p>A tartalmak és a külső forrásból érkező adatok egyedei. A zarva_tartas és az allergen többértékű tulajdonság (dupla ellipszis), a szabad_helyek származtatott tulajdonság (szaggatott ellipszis): nem tároljuk, a kapacitásból és a legutóbbi mérésből számoljuk.</p>
+<figure class="fig" id="abra-7"><a href="uml/r07_er_tartalom.svg" target="_blank" rel="noopener"><img src="uml/r07_er_tartalom.svg" alt="Szemantikai adatmodell (ER) – tartalom és külső adatok" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>7. ábra.</strong> Szemantikai adatmodell (ER) – tartalom és külső adatok. <a href="uml/r07_er_tartalom.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<p>A hibabejelentés egyedei. A HOZZARENDELESI_SZABALY háromágú kapcsolat: egy kategória és egy épület párosához egy felelős egységet rendel. Az ELOZMENY gyenge egyed, csak a bejelentéssel együtt létezik.</p>
+<figure class="fig" id="abra-8"><a href="uml/r08_er_bejelentes.svg" target="_blank" rel="noopener"><img src="uml/r08_er_bejelentes.svg" alt="Szemantikai adatmodell (ER) – hibabejelentés" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>8. ábra.</strong> Szemantikai adatmodell (ER) – hibabejelentés. <a href="uml/r08_er_bejelentes.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h3 id="s3-3" class="h-sub">3.3 Relációs adatmodell</h3>
+<h4 id="s3-3-1" class="h-sub2">3.3.1 Az átalakítás szabályai</h4>
+<p>A szemantikai modellt a következő szabályokkal alakítottuk relációs modellé:</p>
+<ul>
+<li>Minden (erős) egyedből tábla lesz; az elsődleges kulcs mesterséges, automatikusan növekvő egész szám (<code>id</code>). A természetes azonosítók (például a bejelentés <code>code</code> mezője vagy az Entra-azonosító) egyedi indexet kapnak.</li>
+<li>Az 1:N kapcsolat az N oldali táblában idegen kulcs lesz (például <code>events.place_id</code>). Ha a kapcsolat nem kötelező, az idegen kulcs NULL értéket is felvehet.</li>
+<li>Az 1:1 kapcsolat idegen kulcs egyedi indexszel (például <code>staff_profiles.user_id</code>, <code>attachments.report_id</code>).</li>
+<li>A gyenge egyed táblája a tulajdonos kulcsát idegen kulcsként tartalmazza, törléskor vele együtt törlődik (<code>ON DELETE CASCADE</code>). Az egyszerűbb hivatkozás kedvéért mesterséges <code>id</code> kulcsot is kapott.</li>
+<li>A többértékű tulajdonságból külön tábla lesz a tulajdonos kulcsával és az értékkel, összetett elsődleges kulccsal (<code>canteen_closed_dates</code>, <code>dish_allergens</code>).</li>
+<li>Az összetett tulajdonság részei külön oszlopok (<code>latitude</code>, <code>longitude</code>); a származtatott tulajdonság nem kerül táblába.</li>
+<li>A háromágú kapcsolatból három idegen kulcsot tartalmazó tábla lesz (<code>assignment_rules</code>).</li>
+<li>A rögzített értékkészletű tulajdonságok (szerepkör, állapotok) <code>ENUM</code> típusúak; a bővíthető listák (bejelentési kategóriák, felelős egységek) saját táblát kaptak, hogy az adminisztrátor kódmódosítás nélkül bővíthesse őket.</li>
+</ul>
+<h4 id="s3-3-2" class="h-sub2">3.3.2 Az általánosítás leképezése</h4>
+<p>A Content bázisosztály és a négy leszármazottja (NewsItem, Event, Place, DailyMenu) leképezésére három lehetőség van: egyetlen tábla az egész hierarchiának, külön tábla a bázisosztálynak és a leszármazottaknak, vagy csak a konkrét osztályoknak egy-egy tábla. Az utóbbit választottuk: a négy tartalomfajtát a rendszer sosem kérdezi le együtt, így nincs szükség összekapcsolásra, és nem keletkezik sok üres oszlop. A közös oszlopok (<code>status</code>, <code>created_by</code>, <code>created_at</code>, <code>updated_at</code>, <code>published_at</code>, <code>version</code>) mind a négy táblában megvannak; egységes kezelésüket a közös <code>ContentRepository</code> osztály végzi (3.4).</p>
+<h4 id="s3-3-3" class="h-sub2">3.3.3 A táblák áttekintése</h4>
+<p>A táblák az elsődleges kulccsal (PK), az idegen kulcsokkal (FK) és az egyedi (UQ) oszlopokkal. A csillag a kötelező (NOT NULL) oszlopot jelöli. A vonalak végén a „szarvasláb” a több oldalt jelzi.</p>
+<figure class="fig" id="abra-9"><a href="uml/r09_relacios_szemelyek.svg" target="_blank" rel="noopener"><img src="uml/r09_relacios_szemelyek.svg" alt="Relációs adatmodell – felhasználók, szervezet és ügyintézés" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>9. ábra.</strong> Relációs adatmodell – felhasználók, szervezet és ügyintézés. <a href="uml/r09_relacios_szemelyek.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<p>A tartalom és a külső adatok táblái. A négy tartalomtábla (places, news_items, events, daily_menus) mindegyike tartalmazza a Content bázisosztály oszlopait (status, created_by, created_at, updated_at, published_at, version); ezeket az áttekinthetőség kedvéért az ábra is mutatja.</p>
+<figure class="fig" id="abra-10"><a href="uml/r10_relacios_tartalom.svg" target="_blank" rel="noopener"><img src="uml/r10_relacios_tartalom.svg" alt="Relációs adatmodell – tartalom és külső adatok" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>10. ábra.</strong> Relációs adatmodell – tartalom és külső adatok. <a href="uml/r10_relacios_tartalom.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<p>A hibabejelentés táblái. A report_code_counters tábla az éven belüli sorszámot adja ki az azonosítóhoz.</p>
+<figure class="fig" id="abra-11"><a href="uml/r11_relacios_bejelentes.svg" target="_blank" rel="noopener"><img src="uml/r11_relacios_bejelentes.svg" alt="Relációs adatmodell – hibabejelentés" loading="lazy" style="width:586px"></a></figure>
+<p class="fig-cap"><strong>11. ábra.</strong> Relációs adatmodell – hibabejelentés. <a href="uml/r11_relacios_bejelentes.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h4 id="s3-3-4" class="h-sub2">3.3.4 A táblák leírása</h4>
+<p>Az alábbi táblák minden oszlopot tartalmaznak. Jelölések: PK – elsődleges kulcs, FK – idegen kulcs (a nyíl után a hivatkozott tábla), UNIQUE – egyedi, GENERATED – az adatbázis által számolt oszlop. Minden DATETIME érték UTC-ben értendő.</p>
+<h5 class="h-sub3">Felhasználók, szervezet és ügyintézés</h5>
+<p class="mb-2"><code class="text-base font-bold">users</code> – az analízis modell <strong>User</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td>Belső azonosító.</td></tr>
+<tr><td><code>external_id</code></td><td><code>VARCHAR(64)</code></td><td>NOT NULL, UNIQUE</td><td>Entra ID objektumazonosító.</td></tr>
+<tr><td><code>name</code></td><td><code>VARCHAR(150)</code></td><td>NOT NULL</td><td>Név.</td></tr>
+<tr><td><code>email</code></td><td><code>VARCHAR(254)</code></td><td>NOT NULL, UNIQUE</td><td>Egyetemi e-mail-cím.</td></tr>
+<tr><td><code>disabled</code></td><td><code>TINYINT(1)</code></td><td>NOT NULL DEFAULT 0</td><td>Letiltott fiók.</td></tr>
+<tr><td><code>disabled_reason</code></td><td><code>VARCHAR(500)</code></td><td>NULL</td><td>A letiltás oka.</td></tr>
+<tr><td><code>first_login_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td>Első belépés.</td></tr>
+<tr><td><code>last_login_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td>Utolsó belépés.</td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">role_assignments</code> – az analízis modell <strong>RoleAssignment</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>user_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → users</td><td>A felhasználó.</td></tr>
+<tr><td><code>role</code></td><td><code>ENUM('STUDENT','LECTURER','ADMIN')</code></td><td>NOT NULL</td><td>Szerepkör.</td></tr>
+<tr><td><code>department_id</code></td><td><code>INT UNSIGNED</code></td><td>NULL, FK → departments</td><td>Oktatónál kötelező (alkalmazásszintű ellenőrzés).</td></tr>
+<tr><td><code>granted_by</code></td><td><code>INT UNSIGNED</code></td><td>NULL, FK → users</td><td>Az adományozó adminisztrátor.</td></tr>
+<tr><td><code>granted_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">UNIQUE (user_id, role): egy szerepkör egyszer.</p>
+<p class="mb-2"><code class="text-base font-bold">sessions</code> – az analízis modell <strong>Session</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>CHAR(64)</code></td><td>PK</td><td>A munkamenet-azonosító SHA-256 kivonata; maga az azonosító csak a sütiben van.</td></tr>
+<tr><td><code>user_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → users</td><td></td></tr>
+<tr><td><code>created_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>last_activity_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td>A 30 perces lejárat ebből számolódik.</td></tr>
+<tr><td><code>return_url</code></td><td><code>VARCHAR(500)</code></td><td>NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">INDEX (last_activity_at): a lejárt munkamenetek óránkénti törléséhez.</p>
+<p class="mb-2"><code class="text-base font-bold">audit_log_entries</code> – az analízis modell <strong>AuditLogEntry</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>BIGINT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>actor_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → users</td><td></td></tr>
+<tr><td><code>action</code></td><td><code>VARCHAR(50)</code></td><td>NOT NULL</td><td>Művelet kódja.</td></tr>
+<tr><td><code>entity_type</code></td><td><code>VARCHAR(50)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>entity_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>details</code></td><td><code>TEXT</code></td><td>NULL</td><td>Régi és új érték JSON-ban.</td></tr>
+<tr><td><code>created_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">INDEX (entity_type, entity_id), INDEX (created_at). Az alkalmazás adatbázis-felhasználója erre a táblára csak INSERT és SELECT jogot kap.</p>
+<p class="mb-2"><code class="text-base font-bold">notifications</code> – az analízis modell <strong>Notification</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>recipient_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → users</td><td></td></tr>
+<tr><td><code>type</code></td><td><code>ENUM('BOOKING_CONFIRMED','BOOKING_REMINDER','BOOKING_DELETED','REPORT_STATUS_CHANGED')</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>subject</code></td><td><code>VARCHAR(200)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>body</code></td><td><code>TEXT</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>booking_id</code></td><td><code>INT UNSIGNED</code></td><td>NULL, FK → bookings</td><td>A kiváltó foglalás.</td></tr>
+<tr><td><code>fault_report_id</code></td><td><code>INT UNSIGNED</code></td><td>NULL, FK → fault_reports</td><td>A kiváltó bejelentés.</td></tr>
+<tr><td><code>scheduled_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>sent_at</code></td><td><code>DATETIME</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>attempts</code></td><td><code>TINYINT UNSIGNED</code></td><td>NOT NULL DEFAULT 0</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">INDEX (sent_at, scheduled_at): az esedékes értesítések lekérdezéséhez.</p>
+<p class="mb-2"><code class="text-base font-bold">faculties</code> – az analízis modell <strong>Faculty</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>name</code></td><td><code>VARCHAR(150)</code></td><td>NOT NULL, UNIQUE</td><td></td></tr>
+<tr><td><code>short_name</code></td><td><code>VARCHAR(20)</code></td><td>NOT NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">departments</code> – az analízis modell <strong>Department</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>faculty_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → faculties</td><td></td></tr>
+<tr><td><code>name</code></td><td><code>VARCHAR(150)</code></td><td>NOT NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">staff_profiles</code> – az analízis modell <strong>StaffProfile</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>name</code></td><td><code>VARCHAR(150)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>email</code></td><td><code>VARCHAR(254)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>department_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → departments</td><td></td></tr>
+<tr><td><code>office_place_id</code></td><td><code>INT UNSIGNED</code></td><td>NULL, FK → places</td><td></td></tr>
+<tr><td><code>office_text</code></td><td><code>VARCHAR(100)</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>note</code></td><td><code>VARCHAR(300)</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>user_id</code></td><td><code>INT UNSIGNED</code></td><td>NULL, UNIQUE, FK → users</td><td>Egy fiókhoz legfeljebb egy adatlap.</td></tr>
+<tr><td><code>search_key</code></td><td><code>VARCHAR(150)</code></td><td>NOT NULL</td><td>A név normalizált alakja a kereséshez.</td></tr>
+<tr><td><code>updated_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">INDEX (search_key), INDEX (department_id).</p>
+<p class="mb-2"><code class="text-base font-bold">office_hours</code> – az analízis modell <strong>OfficeHour</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>staff_profile_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → staff_profiles ON DELETE CASCADE</td><td></td></tr>
+<tr><td><code>day_of_week</code></td><td><code>TINYINT UNSIGNED</code></td><td>NOT NULL, CHECK 1–7</td><td></td></tr>
+<tr><td><code>start_time</code></td><td><code>TIME</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>end_time</code></td><td><code>TIME</code></td><td>NOT NULL, CHECK end_time &gt; start_time</td><td></td></tr>
+<tr><td><code>note</code></td><td><code>VARCHAR(200)</code></td><td>NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">case_types</code> – az analízis modell <strong>CaseType</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>name</code></td><td><code>VARCHAR(100)</code></td><td>NOT NULL, UNIQUE</td><td></td></tr>
+<tr><td><code>description</code></td><td><code>VARCHAR(500)</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>location</code></td><td><code>VARCHAR(200)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>slot_minutes</code></td><td><code>SMALLINT UNSIGNED</code></td><td>NOT NULL, CHECK &gt; 0</td><td></td></tr>
+<tr><td><code>active</code></td><td><code>TINYINT(1)</code></td><td>NOT NULL DEFAULT 1</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">slot_ranges</code> – az analízis modell <strong>SlotRange</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>case_type_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → case_types</td><td></td></tr>
+<tr><td><code>start_date</code></td><td><code>DATE</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>start_time</code></td><td><code>TIME</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>end_time</code></td><td><code>TIME</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>repeat_until</code></td><td><code>DATE</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>created_by</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → users</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">slots</code> – az analízis modell <strong>Slot</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>range_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → slot_ranges</td><td></td></tr>
+<tr><td><code>case_type_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → case_types</td><td>Ismétlés a gyors szabadidőpont-lekérdezéshez.</td></tr>
+<tr><td><code>starts_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>ends_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>status</code></td><td><code>ENUM('FREE','BOOKED','LOCKED','DELETED')</code></td><td>NOT NULL DEFAULT 'FREE'</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">UNIQUE (range_id, starts_at); INDEX (case_type_id, status, starts_at).</p>
+<p class="mb-2"><code class="text-base font-bold">bookings</code> – az analízis modell <strong>Booking</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>student_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → users</td><td></td></tr>
+<tr><td><code>slot_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → slots</td><td></td></tr>
+<tr><td><code>case_type_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → case_types</td><td>A K-30 egyediségi feltételhez.</td></tr>
+<tr><td><code>status</code></td><td><code>ENUM('ACTIVE','CANCELLED','DELETED','COMPLETED')</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>created_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>cancelled_at</code></td><td><code>DATETIME</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>delete_reason</code></td><td><code>VARCHAR(500)</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>active_slot</code></td><td><code>INT UNSIGNED</code></td><td>GENERATED: IF(status='ACTIVE', slot_id, NULL), UNIQUE</td><td>Egy időpontnak legfeljebb egy aktív foglalása lehet.</td></tr>
+<tr><td><code>active_case</code></td><td><code>VARCHAR(30)</code></td><td>GENERATED: IF(status='ACTIVE', CONCAT(student_id,'-',case_type_id), NULL), UNIQUE</td><td>Ügytípusonként legfeljebb egy aktív foglalás (K-30).</td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">A két generált oszlop egyedi indexe az adatbázis szintjén is kizárja a dupla foglalást; a NULL érték nem számít ütközésnek.</p>
+<h5 class="h-sub3">Tartalom és külső adatok</h5>
+<p class="mb-2"><code class="text-base font-bold">places</code> – az analízis modell <strong>Place</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>name</code></td><td><code>VARCHAR(150)</code></td><td>NOT NULL</td><td>Content.title</td></tr>
+<tr><td><code>category</code></td><td><code>ENUM('BUILDING','ROOM','CANTEEN','LIBRARY','PARKING','STOP','ENTRANCE','SERVICE')</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>description</code></td><td><code>VARCHAR(1000)</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>latitude</code></td><td><code>DECIMAL(9,6)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>longitude</code></td><td><code>DECIMAL(9,6)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>opening_hours_text</code></td><td><code>VARCHAR(200)</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>parent_id</code></td><td><code>INT UNSIGNED</code></td><td>NULL, FK → places</td><td>Teremnél az épület.</td></tr>
+<tr><td><code>search_key</code></td><td><code>VARCHAR(150)</code></td><td>NOT NULL</td><td>Normalizált név.</td></tr>
+<tr><td><code>status</code></td><td><code>ENUM('DRAFT','PUBLISHED','ARCHIVED')</code></td><td>NOT NULL</td><td>Tartalomállapot (Content.status).</td></tr>
+<tr><td><code>created_by</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → users</td><td>Létrehozó adminisztrátor.</td></tr>
+<tr><td><code>created_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td>Létrehozás ideje (UTC).</td></tr>
+<tr><td><code>updated_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td>Utolsó módosítás ideje (UTC).</td></tr>
+<tr><td><code>published_at</code></td><td><code>DATETIME</code></td><td>NULL</td><td>Közzététel ideje.</td></tr>
+<tr><td><code>version</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL DEFAULT 1</td><td>Változatszám az egyidejű szerkesztés felismeréséhez.</td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">INDEX (search_key), INDEX (category, status).</p>
+<p class="mb-2"><code class="text-base font-bold">news_items</code> – az analízis modell <strong>NewsItem</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>title</code></td><td><code>VARCHAR(200)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>summary</code></td><td><code>TEXT</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>source_url</code></td><td><code>VARCHAR(500)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>topic</code></td><td><code>VARCHAR(50)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>news_date</code></td><td><code>DATE</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>status</code></td><td><code>ENUM('DRAFT','PUBLISHED','ARCHIVED')</code></td><td>NOT NULL</td><td>Tartalomállapot (Content.status).</td></tr>
+<tr><td><code>created_by</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → users</td><td>Létrehozó adminisztrátor.</td></tr>
+<tr><td><code>created_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td>Létrehozás ideje (UTC).</td></tr>
+<tr><td><code>updated_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td>Utolsó módosítás ideje (UTC).</td></tr>
+<tr><td><code>published_at</code></td><td><code>DATETIME</code></td><td>NULL</td><td>Közzététel ideje.</td></tr>
+<tr><td><code>version</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL DEFAULT 1</td><td>Változatszám az egyidejű szerkesztés felismeréséhez.</td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">INDEX (status, news_date).</p>
+<p class="mb-2"><code class="text-base font-bold">events</code> – az analízis modell <strong>Event</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>title</code></td><td><code>VARCHAR(200)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>description</code></td><td><code>TEXT</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>starts_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>ends_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>event_type</code></td><td><code>VARCHAR(50)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>faculty_id</code></td><td><code>INT UNSIGNED</code></td><td>NULL, FK → faculties</td><td></td></tr>
+<tr><td><code>place_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → places</td><td></td></tr>
+<tr><td><code>organizer</code></td><td><code>VARCHAR(150)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>status</code></td><td><code>ENUM('DRAFT','PUBLISHED','ARCHIVED')</code></td><td>NOT NULL</td><td>Tartalomállapot (Content.status).</td></tr>
+<tr><td><code>created_by</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → users</td><td>Létrehozó adminisztrátor.</td></tr>
+<tr><td><code>created_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td>Létrehozás ideje (UTC).</td></tr>
+<tr><td><code>updated_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td>Utolsó módosítás ideje (UTC).</td></tr>
+<tr><td><code>published_at</code></td><td><code>DATETIME</code></td><td>NULL</td><td>Közzététel ideje.</td></tr>
+<tr><td><code>version</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL DEFAULT 1</td><td>Változatszám az egyidejű szerkesztés felismeréséhez.</td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">INDEX (status, starts_at).</p>
+<p class="mb-2"><code class="text-base font-bold">canteens</code> – az analízis modell <strong>Canteen</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>name</code></td><td><code>VARCHAR(100)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>place_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → places</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">canteen_opening_hours</code> – az analízis modell <strong>OpeningHours</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>canteen_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → canteens ON DELETE CASCADE</td><td></td></tr>
+<tr><td><code>day_of_week</code></td><td><code>TINYINT UNSIGNED</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>opens_at</code></td><td><code>TIME</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>closes_at</code></td><td><code>TIME</code></td><td>NOT NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">canteen_closed_dates</code> – az analízis modell <strong>Canteen.closedDates</strong> eleméből</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>canteen_id</code></td><td><code>INT UNSIGNED</code></td><td>PK, FK → canteens ON DELETE CASCADE</td><td></td></tr>
+<tr><td><code>closed_date</code></td><td><code>DATE</code></td><td>PK</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">A többértékű closedDates attribútum külön táblában.</p>
+<p class="mb-2"><code class="text-base font-bold">daily_menus</code> – az analízis modell <strong>DailyMenu</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>canteen_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → canteens</td><td></td></tr>
+<tr><td><code>menu_date</code></td><td><code>DATE</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>title</code></td><td><code>VARCHAR(100)</code></td><td>NOT NULL</td><td>Automatikus, például „2026. 11. 16. – Menza”.</td></tr>
+<tr><td><code>status</code></td><td><code>ENUM('DRAFT','PUBLISHED','ARCHIVED')</code></td><td>NOT NULL</td><td>Tartalomállapot (Content.status).</td></tr>
+<tr><td><code>created_by</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → users</td><td>Létrehozó adminisztrátor.</td></tr>
+<tr><td><code>created_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td>Létrehozás ideje (UTC).</td></tr>
+<tr><td><code>updated_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td>Utolsó módosítás ideje (UTC).</td></tr>
+<tr><td><code>published_at</code></td><td><code>DATETIME</code></td><td>NULL</td><td>Közzététel ideje.</td></tr>
+<tr><td><code>version</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL DEFAULT 1</td><td>Változatszám az egyidejű szerkesztés felismeréséhez.</td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">UNIQUE (canteen_id, menu_date).</p>
+<p class="mb-2"><code class="text-base font-bold">dishes</code> – az analízis modell <strong>Dish</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>daily_menu_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → daily_menus ON DELETE CASCADE</td><td></td></tr>
+<tr><td><code>name</code></td><td><code>VARCHAR(150)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>course</code></td><td><code>ENUM('SOUP','MAIN','SIDE','DESSERT')</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>price</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL</td><td>Forint.</td></tr>
+<tr><td><code>vegetarian</code></td><td><code>TINYINT(1)</code></td><td>NOT NULL DEFAULT 0</td><td></td></tr>
+<tr><td><code>sort_order</code></td><td><code>TINYINT UNSIGNED</code></td><td>NOT NULL</td><td>Megjelenítési sorrend.</td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">dish_allergens</code> – az analízis modell <strong>Dish.allergens</strong> eleméből</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>dish_id</code></td><td><code>INT UNSIGNED</code></td><td>PK, FK → dishes ON DELETE CASCADE</td><td></td></tr>
+<tr><td><code>allergen_code</code></td><td><code>TINYINT UNSIGNED</code></td><td>PK, CHECK 1–14</td><td>Az uniós allergénlista sorszáma.</td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">A többértékű allergens attribútum külön táblában.</p>
+<p class="mb-2"><code class="text-base font-bold">parking_zones</code> – az analízis modell <strong>ParkingZone</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>name</code></td><td><code>VARCHAR(100)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>place_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → places</td><td></td></tr>
+<tr><td><code>capacity</code></td><td><code>SMALLINT UNSIGNED</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>latest_reading_id</code></td><td><code>BIGINT UNSIGNED</code></td><td>NULL, FK → parking_readings</td><td>A legutóbbi érvényes mérés (gyors lekérdezéshez).</td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">sensor_devices</code> – az analízis modell <strong>SensorDevice</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>name</code></td><td><code>VARCHAR(100)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>zone_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → parking_zones</td><td></td></tr>
+<tr><td><code>key_hash</code></td><td><code>CHAR(64)</code></td><td>NOT NULL, UNIQUE</td><td>A titkos kulcs SHA-256 kivonata.</td></tr>
+<tr><td><code>active</code></td><td><code>TINYINT(1)</code></td><td>NOT NULL DEFAULT 1</td><td></td></tr>
+<tr><td><code>last_seen_at</code></td><td><code>DATETIME</code></td><td>NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">parking_readings</code> – az analízis modell <strong>ParkingReading</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>BIGINT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>zone_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → parking_zones</td><td></td></tr>
+<tr><td><code>device_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → sensor_devices</td><td></td></tr>
+<tr><td><code>occupied</code></td><td><code>SMALLINT UNSIGNED</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>measured_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>received_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">INDEX (zone_id, measured_at). A 30 napnál régebbi méréseket éjszakai feladat törli.</p>
+<p class="mb-2"><code class="text-base font-bold">timetable_imports</code> – az analízis modell <strong>TimetableImport</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>source</code></td><td><code>ENUM('GTFS','MANUAL')</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>started_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>finished_at</code></td><td><code>DATETIME</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>status</code></td><td><code>ENUM('RUNNING','SUCCESS','FAILED')</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>valid_from</code></td><td><code>DATE</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>valid_to</code></td><td><code>DATE</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>message</code></td><td><code>VARCHAR(1000)</code></td><td>NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">stops</code> – az analízis modell <strong>Stop</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>source_id</code></td><td><code>VARCHAR(50)</code></td><td>NOT NULL, UNIQUE</td><td></td></tr>
+<tr><td><code>name</code></td><td><code>VARCHAR(100)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>place_id</code></td><td><code>INT UNSIGNED</code></td><td>NULL, FK → places</td><td></td></tr>
+<tr><td><code>is_default</code></td><td><code>TINYINT(1)</code></td><td>NOT NULL DEFAULT 0</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">routes</code> – az analízis modell <strong>Route</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>source_id</code></td><td><code>VARCHAR(50)</code></td><td>NOT NULL, UNIQUE</td><td></td></tr>
+<tr><td><code>short_name</code></td><td><code>VARCHAR(10)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>vehicle_type</code></td><td><code>ENUM('BUS','TRAM')</code></td><td>NOT NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">service_calendars</code> – az analízis modell <strong>Departure.serviceDays</strong> eleméből</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>import_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → timetable_imports ON DELETE CASCADE</td><td></td></tr>
+<tr><td><code>source_id</code></td><td><code>VARCHAR(50)</code></td><td>NOT NULL</td><td>A GTFS service_id.</td></tr>
+<tr><td><code>monday … sunday</code></td><td><code>TINYINT(1)</code></td><td>NOT NULL</td><td>Hét oszlop: közlekedik-e az adott napon.</td></tr>
+<tr><td><code>start_date</code></td><td><code>DATE</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>end_date</code></td><td><code>DATE</code></td><td>NOT NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">A Departure.serviceDays attribútum a GTFS naptárszerkezetét követve két táblára bomlik.</p>
+<p class="mb-2"><code class="text-base font-bold">service_exceptions</code> – az analízis modell <strong>Departure.serviceDays</strong> eleméből</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>calendar_id</code></td><td><code>INT UNSIGNED</code></td><td>PK, FK → service_calendars ON DELETE CASCADE</td><td></td></tr>
+<tr><td><code>exception_date</code></td><td><code>DATE</code></td><td>PK</td><td></td></tr>
+<tr><td><code>runs</code></td><td><code>TINYINT(1)</code></td><td>NOT NULL</td><td>1: aznap rendkívül közlekedik, 0: aznap nem közlekedik.</td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">departures</code> – az analízis modell <strong>Departure</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>BIGINT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>import_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → timetable_imports ON DELETE CASCADE</td><td></td></tr>
+<tr><td><code>stop_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → stops</td><td></td></tr>
+<tr><td><code>route_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → routes</td><td></td></tr>
+<tr><td><code>calendar_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → service_calendars</td><td></td></tr>
+<tr><td><code>headsign</code></td><td><code>VARCHAR(100)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>departure_time</code></td><td><code>TIME</code></td><td>NOT NULL</td><td>Éjfél utáni indulás 24:00 feletti értékkel (GTFS).</td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">INDEX (import_id, stop_id, departure_time).</p>
+<h5 class="h-sub3">Hibabejelentés</h5>
+<p class="mb-2"><code class="text-base font-bold">responsible_units</code> – az analízis modell <strong>ResponsibleUnit</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>name</code></td><td><code>VARCHAR(150)</code></td><td>NOT NULL, UNIQUE</td><td></td></tr>
+<tr><td><code>email</code></td><td><code>VARCHAR(254)</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>department_id</code></td><td><code>INT UNSIGNED</code></td><td>NULL, FK → departments</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">report_categories</code> – az analízis modell <strong>ReportCategory</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>name</code></td><td><code>VARCHAR(50)</code></td><td>NOT NULL, UNIQUE</td><td></td></tr>
+<tr><td><code>default_unit_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → responsible_units</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">assignment_rules</code> – az analízis modell <strong>AssignmentRule</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>category_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → report_categories</td><td></td></tr>
+<tr><td><code>building_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → places</td><td></td></tr>
+<tr><td><code>unit_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → responsible_units</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">UNIQUE (category_id, building_id): egy kategóriára egy épületben egy szabály.</p>
+<p class="mb-2"><code class="text-base font-bold">fault_reports</code> – az analízis modell <strong>FaultReport</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>code</code></td><td><code>VARCHAR(20)</code></td><td>NOT NULL, UNIQUE</td><td>HB-2026-0042</td></tr>
+<tr><td><code>reporter_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → users</td><td></td></tr>
+<tr><td><code>category_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → report_categories</td><td></td></tr>
+<tr><td><code>building_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → places</td><td></td></tr>
+<tr><td><code>location_detail</code></td><td><code>VARCHAR(200)</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>latitude</code></td><td><code>DECIMAL(9,6)</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>longitude</code></td><td><code>DECIMAL(9,6)</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>description</code></td><td><code>TEXT</code></td><td>NOT NULL</td><td>Legalább 10 karakter (alkalmazásszintű ellenőrzés).</td></tr>
+<tr><td><code>status</code></td><td><code>ENUM('NEW','IN_PROGRESS','RESOLVED','REJECTED')</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>unit_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → responsible_units</td><td></td></tr>
+<tr><td><code>created_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>updated_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">INDEX (reporter_id, created_at), INDEX (unit_id, status, created_at).</p>
+<p class="mb-2"><code class="text-base font-bold">status_changes</code> – az analízis modell <strong>StatusChange</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>report_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → fault_reports</td><td></td></tr>
+<tr><td><code>from_status</code></td><td><code>ENUM('NEW','IN_PROGRESS','RESOLVED','REJECTED')</code></td><td>NULL</td><td></td></tr>
+<tr><td><code>to_status</code></td><td><code>ENUM('NEW','IN_PROGRESS','RESOLVED','REJECTED')</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>comment</code></td><td><code>TEXT</code></td><td>NULL</td><td>Elutasításnál kötelező (alkalmazásszintű ellenőrzés, K-44).</td></tr>
+<tr><td><code>changed_by</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, FK → users</td><td></td></tr>
+<tr><td><code>changed_at</code></td><td><code>DATETIME</code></td><td>NOT NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">attachments</code> – az analízis modell <strong>Attachment</strong> osztályából</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>id</code></td><td><code>INT UNSIGNED</code></td><td>PK, AUTO_INCREMENT</td><td></td></tr>
+<tr><td><code>report_id</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL, UNIQUE, FK → fault_reports</td><td>Bejelentésenként legfeljebb egy kép.</td></tr>
+<tr><td><code>file_name</code></td><td><code>VARCHAR(200)</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>mime_type</code></td><td><code>ENUM('image/jpeg','image/png')</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>size_bytes</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>storage_path</code></td><td><code>VARCHAR(300)</code></td><td>NOT NULL</td><td>A képek a lemezen vannak, az adatbázisban csak a helyük.</td></tr>
+<tr><td><code>width</code></td><td><code>SMALLINT UNSIGNED</code></td><td>NOT NULL</td><td></td></tr>
+<tr><td><code>height</code></td><td><code>SMALLINT UNSIGNED</code></td><td>NOT NULL</td><td></td></tr>
+</tbody>
+</table></div>
+<p class="mb-2"><code class="text-base font-bold">report_code_counters</code> – az analízis modell <strong>FaultReport.nextCode()</strong> eleméből</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Oszlop</th><th>Típus</th><th>Megszorítás</th><th>Leírás</th></tr></thead>
+<tbody>
+<tr><td><code>year</code></td><td><code>SMALLINT UNSIGNED</code></td><td>PK</td><td></td></tr>
+<tr><td><code>last_number</code></td><td><code>INT UNSIGNED</code></td><td>NOT NULL</td><td>Az adott évben kiadott utolsó sorszám.</td></tr>
+</tbody>
+</table></div>
+<p class="text-sm -mt-4 mb-6">A sorszám kiadása SELECT … FOR UPDATE zárolással, a bejelentés mentésével egy tranzakcióban történik, így két egyidejű bejelentés sem kaphatja ugyanazt az azonosítót.</p>
+<h4 id="s3-3-5" class="h-sub2">3.3.5 Normalizálás és tudatos ismétlések</h4>
+<p>A táblák harmadik normálformában vannak: minden nem kulcs oszlop csak a kulcstól függ, és tranzitív függés nincs. Három helyen tudatosan ismétlünk adatot a teljesítmény vagy az adatbázisszintű ellenőrzés miatt; ezeket az adatokat mindig ugyanabban a tranzakcióban írja a megfelelő repository, ezért nem kerülhetnek ellentmondásba:</p>
+<ul>
+<li><code>slots.case_type_id</code> – a sávból is kiolvasható, de így a szabad időpontok lekérdezése (UC-11) egyetlen indexen fut.</li>
+<li><code>bookings.case_type_id</code> – az időpontból is kiolvasható, de a K-30 egyedi indexe (<code>active_case</code>) csak egy táblán belüli oszlopokra épülhet.</li>
+<li><code>parking_zones.latest_reading_id</code> – a mérések közül is megkereshető, de így a parkolóoldal (UC-04) a mérések tábláját nem olvassa végig (SRS 6.1).</li>
+</ul>
+<h4 id="s3-3-6" class="h-sub2">3.3.6 Az alkalmazásban ellenőrzött szabályok</h4>
+<p>Néhány szabályt az adatbázis nem tud kifejezni, ezért a szolgáltatásréteg ellenőrzi őket, minden esetben a mentéssel azonos tranzakcióban:</p>
+<ul>
+<li>oktatói szerepkörnél a tanszék kötelező (UC-18);</li>
+<li>a saját és az utolsó adminisztrátori szerepkör nem vonható vissza (K-45) – az adminisztrátorok számlálása <code>SELECT … FOR UPDATE</code> zárolással történik, így két egyidejű visszavonás sem hagyhatja adminisztrátor nélkül a rendszert;</li>
+<li>elutasításnál a megjegyzés kötelező (K-44);</li>
+<li>az időpontsávok nem fedhetik át egymást ugyanazon ügytípusnál (UC-16 E1);</li>
+<li>a lemondás legkésőbb 2 órával az időpont előtt lehetséges (K-32).</li>
+</ul>
+<h3 id="s3-4" class="h-sub">3.4 Az adatbázis-kezelővel kapcsolatot tartó osztályok</h3>
+<p>Az adatelérést egy külön réteg végzi; a többi programrész SQL-t nem tartalmaz. Ennek előnye, hogy az SQL-utasítások egy helyen vannak, és a szolgáltatások tesztelésekor a repositoryk helyettesíthetők.</p>
+<p>Az adatelérési réteg osztályai. A Database az egyetlen osztály, amely közvetlenül a mysql2 kapcsolatkészletet használja; a Repository osztályok paraméterezett SQL-utasításokkal dolgoznak (SRS 7.1), és táblasorokból az analízis modell objektumait állítják elő. A szolgáltatásosztályok (Service) csak repositorykon keresztül érik el az adatokat.</p>
+<figure class="fig" id="abra-12"><a href="uml/r12_adatelero_osztalyok.svg" target="_blank" rel="noopener"><img src="uml/r12_adatelero_osztalyok.svg" alt="Az adatbázissal kapcsolatot tartó osztályok" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>12. ábra.</strong> Az adatbázissal kapcsolatot tartó osztályok. <a href="uml/r12_adatelero_osztalyok.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Osztály</th><th>Feladata</th></tr></thead>
+<tbody>
+<tr><td><code>Database</code></td><td>A kapcsolatkészlet egyetlen példánya. A <code>query()</code> egy paraméterezett utasítást futtat; a <code>transaction(work)</code> kapcsolatot vesz ki a készletből, tranzakciót indít, lefuttatja a kapott függvényt, és hiba esetén visszagörget, különben véglegesít. A <code>healthCheck()</code> az állapotellenőrző végpontot szolgálja ki.</td></tr>
+<tr><td><code>Transaction</code></td><td>Egy folyamatban lévő tranzakció; a repositoryk műveletei opcionálisan megkapják, így több repository írása is egy tranzakcióba fogható.</td></tr>
+<tr><td><code>Repository&lt;T&gt;</code></td><td>Absztrakt ős: azonosító szerinti betöltés, beszúrás, módosítás, és a táblasorok átalakítása az analízis modell objektumaivá (<code>mapRow</code>), például a <code>snake_case</code> oszlopnevekből <code>camelCase</code> attribútumok, az UTC-időből dátumobjektum.</td></tr>
+<tr><td><code>ContentRepository&lt;T&gt;</code></td><td>A négy tartalomtábla közös kezelése. A <code>save()</code> az egyidejű szerkesztést a változatszámmal ismeri fel: <code>UPDATE … SET …, version = version + 1 WHERE id = ? AND version = ?</code>; ha egyetlen sor sem módosult, közben más mentett (UC-15 E2).</td></tr>
+<tr><td><code>AppointmentRepository</code></td><td>A foglalás és a lemondás tranzakciói (lásd 4.1), a sáv és időpontjai egy tranzakcióban történő mentése.</td></tr>
+<tr><td><code>FaultReportRepository</code></td><td>A bejelentés, az első előzménybejegyzés és a kép adatainak mentése egy tranzakcióban; az azonosító sorszámát a <code>report_code_counters</code> táblából zárolással veszi.</td></tr>
+<tr><td><code>TimetableRepository</code></td><td>Az új menetrend betöltése az új <code>timetable_imports</code> sor alá, majd a régi betöltés törlése egy tranzakcióban; a lekérdezések mindig az utolsó sikeres betöltésre szűrnek.</td></tr>
+<tr><td><code>NotificationRepository</code></td><td>Az értesítési sor kezelése a háttérküldőnek (lásd 4.3).</td></tr>
+<tr><td>többi repository</td><td>Az adott tábla(csoport) lekérdezései; nevük az analízis modell osztályára utal.</td></tr>
+</tbody>
+</table></div>
+<h2 id="s4" class="h-sec">4. A funkcionális modell kiegészítése</h2>
+<p>Az analízis modell a szokásos működést írta le. Ez a fejezet azokat a kivételes és alternatív folyamatokat dolgozza ki, amelyek megoldása a megvalósítás eszközeitől (adatbázis, háttérfeladatok, köztes rétegek) függ.</p>
+<h3 id="s4-1" class="h-sub">4.1 Egyidejű foglalás</h3>
+<p>Mi történik, ha két hallgató ugyanabban a pillanatban foglalja ugyanazt az időpontot (UC-11 E1). A foglalás egy tranzakcióban fut: az időpont sorát zárolja, újraellenőrzi az állapotát, és csak ezután írja. Ha a zárolás ellenére ütközés lenne, a bookings tábla egyedi indexe (active_slot, active_case) utasítja el a második írást.</p>
+<figure class="fig" id="abra-13"><a href="uml/r13_act_egyideju_foglalas.svg" target="_blank" rel="noopener"><img src="uml/r13_act_egyideju_foglalas.svg" alt="Egyidejű foglalás kezelése – aktivitásdiagram" loading="lazy" style="width:921px"></a></figure>
+<p class="fig-cap"><strong>13. ábra.</strong> Egyidejű foglalás kezelése – aktivitásdiagram. <a href="uml/r13_act_egyideju_foglalas.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<p>A lemondás hasonlóan, egy tranzakcióban fut: a foglalás állapota Lemondva lesz, az időpont állapota Szabad. Mivel az <code>active_slot</code> generált oszlop lemondáskor NULL lesz, az időpont azonnal újra foglalható (K-32).</p>
+<h3 id="s4-2" class="h-sub">4.2 Egyidejű tartalomszerkesztés</h3>
+<p>Ha két adminisztrátor ugyanazt az elemet szerkeszti, a második mentés a változatszám-ellenőrzés miatt nem írja felül az elsőt (3.4, <code>ContentRepository.save</code>). A szerver ilyenkor <code>409 Conflict</code> választ ad, a felület pedig figyelmeztet, és felajánlja a frissebb változat betöltését; a felhasználó a saját módosításait a vágólapra másolhatja, mielőtt betölti (UC-15 E2).</p>
+<h3 id="s4-3" class="h-sub">4.3 Értesítések küldése</h3>
+<p>Az e-mailek küldése nem a felhasználói kérés része: a kérés csak sorba állítja az értesítést, a küldést egy percenként futó háttérfeladat végzi. Így az e-mail-szolgáltatás kiesése nem lassítja és nem rontja el a foglalást vagy a bejelentést (SRS 5.6, UC-11 E3).</p>
+<figure class="fig" id="abra-14"><a href="uml/r14_act_ertesites.svg" target="_blank" rel="noopener"><img src="uml/r14_act_ertesites.svg" alt="Értesítések küldése újrapróbálással – aktivitásdiagram" loading="lazy" style="width:865px"></a></figure>
+<p class="fig-cap"><strong>14. ábra.</strong> Értesítések küldése újrapróbálással – aktivitásdiagram. <a href="uml/r14_act_ertesites.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<p>Az emlékeztető (K-31) ugyanezen a soron keresztül megy ki: foglaláskor <code>scheduled_at</code> értéke az időpont előtti nap 18:00 lesz. Lemondáskor vagy törléskor a még el nem küldött emlékeztető törlődik.</p>
+<h3 id="s4-4" class="h-sub">4.4 Jogosultság-ellenőrzés és hibakezelés</h3>
+<p>Egy védett kérés feldolgozása rétegenként, a bejelentés állapotának módosításán bemutatva. A hitelesítést és a jogosultság-ellenőrzést közös köztes réteg (middleware) végzi, így ezt nem kell minden végpontnál külön megírni. Hiba esetén egységes JSON-hibaválasz megy vissza.</p>
+<figure class="fig" id="abra-15"><a href="uml/r15_seq_keres.svg" target="_blank" rel="noopener"><img src="uml/r15_seq_keres.svg" alt="Egy API-kérés útja a rendszeren belül – szekvenciadiagram" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>15. ábra.</strong> Egy API-kérés útja a rendszeren belül – szekvenciadiagram. <a href="uml/r15_seq_keres.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Helyzet</th><th>HTTP-válasz</th><th>A felület viselkedése</th></tr></thead>
+<tbody>
+<tr><td>Hiányzó vagy lejárt munkamenet</td><td>401 Unauthorized</td><td>Bejelentkezést kínál, utána visszatér (UC-01 A1, UC-02 A1).</td></tr>
+<tr><td>Nincs jogosultság (például más bejelentése)</td><td>403 Forbidden</td><td>„Ehhez nincs hozzáférése.” (K-38, UC-17 E2)</td></tr>
+<tr><td>Nem létező elem</td><td>404 Not Found</td><td>„A keresett elem nem található.”</td></tr>
+<tr><td>Érvénytelen adat</td><td>400 Bad Request, mezőnkénti hibalista</td><td>A hibás mezők kiemelése (2.4).</td></tr>
+<tr><td>Ütközés (időpont foglalt, közben más mentett)</td><td>409 Conflict</td><td>Az esetnek megfelelő üzenet és frissítés (UC-11 E1, UC-15 E2).</td></tr>
+<tr><td>Szerverhiba</td><td>500 Internal Server Error</td><td>„Hiba történt, próbálja újra.” és „Újra” gomb; a részletek csak a hibanaplóba kerülnek.</td></tr>
+</tbody>
+</table></div>
+<p>Minden hibaválasz azonos szerkezetű JSON: <code>{"error": {"code": "SLOT_TAKEN", "message": "…", "fields": {…}}}</code>. A hibakódokat a felület fordítja magyar üzenetre, így a szöveg egy helyen módosítható.</p>
+<h3 id="s4-5" class="h-sub">4.5 Külső szolgáltatások kiesése</h3>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Kiesik</th><th>A rendszer viselkedése</th></tr></thead>
+<tbody>
+<tr><td>Egyetemi azonosító szolgáltatás</td><td>A bejelentkezés „jelenleg nem elérhető” üzenettel elutasul; a meglévő munkamenetek és a nyilvános funkciók működnek (UC-01 E1).</td></tr>
+<tr><td>MVK-adatforrás</td><td>Az utolsó sikeres betöltés marad érvényben, egy nap után „nem friss” jelzéssel (UC-08 E1).</td></tr>
+<tr><td>Parkolóérzékelők</td><td>A zóna 10 perc után „nem friss” állapotba kerül (K-13).</td></tr>
+<tr><td>E-mail-szolgáltatás</td><td>Az értesítések a sorban várnak, és újrapróbálással mennek ki (4.3).</td></tr>
+<tr><td>OpenStreetMap-csempeszerver</td><td>A térkép helyett a helyek kereshető listája jelenik meg (UC-03 E2).</td></tr>
+</tbody>
+</table></div>
+<p>Minden külső hívásnak időkorlátja van (5 másodperc), így egy lassú szolgáltatás nem tartja fel a kéréseket (SRS 5.6).</p>
+<h2 id="s5" class="h-sec">5. Architektúra és telepítés</h2>
+<h3 id="s5-1" class="h-sub">5.1 Komponensek</h3>
+<p>Az alkalmazásszerver belső felépítése. Minden funkcionális alrendszer mindhárom rétegben megjelenik: a router fogadja a kérést, a szolgáltatás (service) végzi az üzleti logikát az analízis modell osztályaival, a repository pedig az adatbázissal tart kapcsolatot. A háttérfeladatok (menetrend-betöltés, értesítések, takarítás) ugyanezeket a szolgáltatásokat használják.</p>
+<figure class="fig" id="abra-16"><a href="uml/r16_komponens.svg" target="_blank" rel="noopener"><img src="uml/r16_komponens.svg" alt="A rendszer komponensei – komponensdiagram" loading="lazy" style="width:874px"></a></figure>
+<p class="fig-cap"><strong>16. ábra.</strong> A rendszer komponensei – komponensdiagram. <a href="uml/r16_komponens.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<p>A háttérfeladatok: a menetrend betöltése naponta 3:30-kor; az értesítések küldése percenként; a lezajlott foglalások Lezajlott állapotba tétele óránként; a lejárt munkamenetek és a 30 napnál régebbi parkolómérések törlése éjszaka.</p>
+<h3 id="s5-2" class="h-sub">5.2 Telepítés</h3>
+<p>A rendszer futtatási környezete (SRS 8.6): egy bérelt Linux virtuális szerveren fut az Nginx webszerver, a pm2 által felügyelt Node.js-alkalmazás és a MySQL-adatbázis. Kívülről csak a 443-as (HTTPS) port érhető el; a MySQL csak a helyi gépről fogad kapcsolatot.</p>
+<figure class="fig" id="abra-17"><a href="uml/r17_telepites.svg" target="_blank" rel="noopener"><img src="uml/r17_telepites.svg" alt="Telepítési diagram" loading="lazy" style="width:831px"></a></figure>
+<p class="fig-cap"><strong>17. ábra.</strong> Telepítési diagram. <a href="uml/r17_telepites.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h3 id="s5-3" class="h-sub">5.3 További kész komponensek (javaslat)</h3>
+<p>A tervezés során kiderült, hogy az SRS 10. fejezetében felsorolt komponenseken kívül az alábbiakra is szükség lehet. Az SRS 8.4 szerint új komponens csak a csapat közös döntése és a licenc ellenőrzése után vehető fel, ezért ezek javaslatok; ha a csapat valamelyiket elveti, a feladatot saját kód látja el.</p>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Komponens</th><th>Feladat</th><th>Licenc</th></tr></thead>
+<tbody>
+<tr><td>multer</td><td>A képfeltöltés (multipart/form-data) fogadása a hibabejelentésnél.</td><td>MIT</td></tr>
+<tr><td>sharp</td><td>A feltöltött képek kicsinyítése legfeljebb 1600 px szélesre (SRS 6.3).</td><td>Apache-2.0</td></tr>
+<tr><td>nodemailer</td><td>E-mail küldése SMTP-n keresztül.</td><td>MIT-0</td></tr>
+<tr><td>node-cron</td><td>A háttérfeladatok időzítése.</td><td>ISC</td></tr>
+<tr><td>adm-zip és csv-parse</td><td>A GTFS-állomány (ZIP-be csomagolt CSV-fájlok) beolvasása.</td><td>MIT</td></tr>
+</tbody>
+</table></div>
+<h2 id="s6" class="h-sec">6. A REST API végpontjai</h2>
+<p>Az SRS 11.3 végpontcsoportjainak pontos felosztása. Minden végpont JSON-t fogad és ad vissza (kivéve a képfeltöltést), az időpontok ISO 8601 formátumúak. A „bejelentkezett” jogosultság érvényes munkamenetet jelent; a módosító kéréseket a szerver a munkamenethez kötött CSRF-tokennel is ellenőrzi. A teljes leírás OpenAPI formátumban a forráskód mellé kerül (SRS 9.4).</p>
+<h5 class="h-sub3">Hitelesítés</h5>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Módszer</th><th>Útvonal</th><th>Jogosultság</th><th>Leírás</th><th>Kapcsolódik</th></tr></thead>
+<tbody>
+<tr><td><code>GET</code></td><td><code>/api/auth/login</code></td><td>mindenki</td><td>Átirányítás az egyetemi bejelentkezési oldalra (OpenID Connect).</td><td>UC-01</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/auth/callback</code></td><td>mindenki</td><td>A bejelentkezés eredményének fogadása, felhasználó betöltése vagy létrehozása, munkamenet indítása.</td><td>UC-01</td></tr>
+<tr><td><code>POST</code></td><td><code>/api/auth/logout</code></td><td>bejelentkezett</td><td>Kijelentkezés, a munkamenet megszüntetése.</td><td>UC-02</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/auth/me</code></td><td>bejelentkezett</td><td>A saját név, e-mail-cím és szerepkörök (a felület menüjéhez).</td><td>UC-01</td></tr>
+</tbody>
+</table></div>
+<h5 class="h-sub3">Térkép és parkolás</h5>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Módszer</th><th>Útvonal</th><th>Jogosultság</th><th>Leírás</th><th>Kapcsolódik</th></tr></thead>
+<tbody>
+<tr><td><code>GET</code></td><td><code>/api/places?q=&amp;category=&amp;limit=</code></td><td>mindenki</td><td>Helykeresés, legfeljebb 8 javaslat.</td><td>UC-03</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/places/{id}</code></td><td>mindenki</td><td>Egy hely adatlapja (épületnél a termekkel).</td><td>UC-03</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/parking/zones</code></td><td>mindenki</td><td>Zónák szabad helyekkel, színjelöléssel, frissességgel.</td><td>UC-04</td></tr>
+<tr><td><code>POST</code></td><td><code>/api/parking/readings</code></td><td>érzékelőeszköz (kulcs)</td><td>Mérés beküldése; az eszköz az <code>X-Device-Key</code> fejlécben küldi a kulcsát.</td><td>UC-04</td></tr>
+</tbody>
+</table></div>
+<h5 class="h-sub3">Események, hírek, menza, menetrend</h5>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Módszer</th><th>Útvonal</th><th>Jogosultság</th><th>Leírás</th><th>Kapcsolódik</th></tr></thead>
+<tbody>
+<tr><td><code>GET</code></td><td><code>/api/events?from=&amp;to=&amp;type=&amp;faculty=&amp;place=&amp;past=</code></td><td>mindenki</td><td>Közzétett események szűréssel.</td><td>UC-05</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/events/{id}</code></td><td>mindenki</td><td>Egy esemény részletei.</td><td>UC-05</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/news?topic=&amp;offset=</code></td><td>mindenki</td><td>Hírek a legfrissebbel kezdve, oldalanként 10.</td><td>UC-06</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/canteen/today</code></td><td>mindenki</td><td>A mai étlap, a nyitvatartás és a következő nyitás.</td><td>UC-07</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/canteen/week?start=</code></td><td>mindenki</td><td>A hét étlapjai.</td><td>UC-07</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/transit/stops</code></td><td>mindenki</td><td>Megállók és irányok.</td><td>UC-08</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/transit/stops/{id}/departures?headsign=</code></td><td>mindenki</td><td>Járatonként a következő három indulás.</td><td>UC-08</td></tr>
+</tbody>
+</table></div>
+<h5 class="h-sub3">Oktatók</h5>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Módszer</th><th>Útvonal</th><th>Jogosultság</th><th>Leírás</th><th>Kapcsolódik</th></tr></thead>
+<tbody>
+<tr><td><code>GET</code></td><td><code>/api/staff?q=&amp;faculty=&amp;department=</code></td><td>mindenki</td><td>Oktatók keresése.</td><td>UC-09</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/staff/{id}</code></td><td>mindenki</td><td>Oktatói adatlap.</td><td>UC-09</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/staff/me</code></td><td>oktató</td><td>A saját adatlap szerkesztésre.</td><td>UC-10</td></tr>
+<tr><td><code>PUT</code></td><td><code>/api/staff/me</code></td><td>oktató</td><td>Iroda, fogadóórák és megjegyzés mentése.</td><td>UC-10</td></tr>
+</tbody>
+</table></div>
+<h5 class="h-sub3">Ügyintézés</h5>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Módszer</th><th>Útvonal</th><th>Jogosultság</th><th>Leírás</th><th>Kapcsolódik</th></tr></thead>
+<tbody>
+<tr><td><code>GET</code></td><td><code>/api/appointments/case-types</code></td><td>hallgató, oktató</td><td>Aktív ügytípusok.</td><td>UC-11</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/appointments/case-types/{id}/slots?from=&amp;to=</code></td><td>hallgató, oktató</td><td>Szabad időpontok.</td><td>UC-11</td></tr>
+<tr><td><code>POST</code></td><td><code>/api/appointments/bookings</code></td><td>hallgató, oktató</td><td>Foglalás létrehozása (<code>{"slotId": …}</code>).</td><td>UC-11</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/appointments/bookings/mine</code></td><td>hallgató, oktató</td><td>Saját aktív és korábbi foglalások.</td><td>UC-12</td></tr>
+<tr><td><code>POST</code></td><td><code>/api/appointments/bookings/{id}/cancel</code></td><td>hallgató, oktató</td><td>Foglalás lemondása.</td><td>UC-12</td></tr>
+</tbody>
+</table></div>
+<h5 class="h-sub3">Hibabejelentés</h5>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Módszer</th><th>Útvonal</th><th>Jogosultság</th><th>Leírás</th><th>Kapcsolódik</th></tr></thead>
+<tbody>
+<tr><td><code>POST</code></td><td><code>/api/reports</code></td><td>hallgató, oktató</td><td>Bejelentés beküldése (multipart/form-data, opcionális képpel).</td><td>UC-13</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/reports/mine?status=</code></td><td>hallgató, oktató</td><td>Saját bejelentések.</td><td>UC-14</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/reports/{id}</code></td><td>bejelentő vagy felelős</td><td>Bejelentés részletei előzményekkel.</td><td>UC-14, UC-17</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/reports/manage?status=&amp;category=&amp;building=</code></td><td>oktató, adminisztrátor</td><td>Kezelhető bejelentések listája.</td><td>UC-17</td></tr>
+<tr><td><code>PATCH</code></td><td><code>/api/reports/{id}/status</code></td><td>oktató, adminisztrátor</td><td>Állapotmódosítás megjegyzéssel.</td><td>UC-17</td></tr>
+<tr><td><code>POST</code></td><td><code>/api/reports/{id}/comments</code></td><td>oktató, adminisztrátor</td><td>Megjegyzés állapotváltozás nélkül.</td><td>UC-17 A2</td></tr>
+<tr><td><code>PATCH</code></td><td><code>/api/reports/{id}/unit</code></td><td>adminisztrátor</td><td>Átirányítás másik felelős egységhez.</td><td>UC-23</td></tr>
+</tbody>
+</table></div>
+<h5 class="h-sub3">Adminisztráció</h5>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Módszer</th><th>Útvonal</th><th>Jogosultság</th><th>Leírás</th><th>Kapcsolódik</th></tr></thead>
+<tbody>
+<tr><td><code>GET, POST</code></td><td><code>/api/admin/content/{type}</code></td><td>adminisztrátor</td><td>Tartalmak listája és létrehozása (type: news, events, places, menus).</td><td>UC-15</td></tr>
+<tr><td><code>PUT</code></td><td><code>/api/admin/content/{type}/{id}</code></td><td>adminisztrátor</td><td>Mentés; a kérés tartalmazza a változatszámot.</td><td>UC-15</td></tr>
+<tr><td><code>POST</code></td><td><code>/api/admin/content/{type}/{id}/publish | archive</code></td><td>adminisztrátor</td><td>Közzététel, archiválás.</td><td>UC-15</td></tr>
+<tr><td><code>PUT</code></td><td><code>/api/admin/menus/week/{start}</code></td><td>adminisztrátor</td><td>A heti étlap mentése egy kérésben.</td><td>UC-15 A3</td></tr>
+<tr><td><code>GET, POST</code></td><td><code>/api/admin/case-types</code></td><td>adminisztrátor</td><td>Ügytípusok.</td><td>UC-16</td></tr>
+<tr><td><code>POST</code></td><td><code>/api/admin/slot-ranges?preview=true|false</code></td><td>adminisztrátor</td><td>Időpontsáv előnézete vagy mentése.</td><td>UC-16</td></tr>
+<tr><td><code>POST</code></td><td><code>/api/admin/slots/{id}/lock | unlock</code></td><td>adminisztrátor</td><td>Időpont zárolása, feloldása.</td><td>UC-16 A2</td></tr>
+<tr><td><code>DELETE</code></td><td><code>/api/admin/slots/{id}</code></td><td>adminisztrátor</td><td>Időpont törlése (foglaltnál kötelező indoklással).</td><td>UC-16 E2</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/admin/slots/day/{date}</code></td><td>adminisztrátor</td><td>Egy nap foglalásai nyomtatható listához.</td><td>UC-16 A3</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/admin/users?q=</code></td><td>adminisztrátor</td><td>Felhasználók keresése.</td><td>UC-18</td></tr>
+<tr><td><code>PUT</code></td><td><code>/api/admin/users/{id}/roles</code></td><td>adminisztrátor</td><td>Szerepkörök mentése.</td><td>UC-18</td></tr>
+<tr><td><code>POST</code></td><td><code>/api/admin/users/{id}/disable</code></td><td>adminisztrátor</td><td>Fiók letiltása.</td><td>UC-18 A2</td></tr>
+<tr><td><code>GET</code></td><td><code>/api/admin/audit-log?actor=&amp;type=&amp;from=&amp;to=</code></td><td>adminisztrátor</td><td>A módosítások naplója.</td><td>K-46</td></tr>
+<tr><td><code>POST</code></td><td><code>/api/admin/timetable/import</code></td><td>adminisztrátor</td><td>A menetrend kézi újratöltése vagy feltöltése.</td><td>SRS 7.3, F-02</td></tr>
+</tbody>
+</table></div>
+<h5 class="h-sub3">Üzemeltetés</h5>
+<div class="tbl tbl-sm"><table>
+<thead><tr><th>Módszer</th><th>Útvonal</th><th>Jogosultság</th><th>Leírás</th><th>Kapcsolódik</th></tr></thead>
+<tbody>
+<tr><td><code>GET</code></td><td><code>/api/health</code></td><td>belső (csak a szerverről)</td><td>Állapotellenőrzés: adatbázis és külső szolgáltatások.</td><td>SRS 7.3</td></tr>
+</tbody>
+</table></div>
+<h2 id="s7" class="h-sec">7. A forráskód szerkezete</h2>
+<p>A forráskód a GitHubon, egy Git-tárolóban lesz (SRS 7.5). A mappaszerkezet a 3.4 és az 5.1 pont rétegeit követi; a fájlnevek kisbetűsek, kötőjellel tagoltak (SRS 7.2).</p>
+<pre>vezerlopult/
+├── server/
+│   ├── app.js                  Express-alkalmazás, köztes rétegek, routerek bekötése
+│   ├── config.js               beállítások környezeti változókból (dotenv)
+│   ├── routes/                 auth.js, places.js, parking.js, events.js, news.js, canteen.js,
+│   │                           transit.js, staff.js, appointments.js, reports.js, admin.js
+│   ├── middleware/             session.js, require-role.js, error-handler.js, access-log.js
+│   ├── services/               auth-service.js, content-service.js, parking-service.js,
+│   │                           transit-service.js, staff-service.js, appointment-service.js,
+│   │                           report-service.js, notification-service.js, audit-service.js
+│   ├── domain/                 az analízis modell osztályai (user.js, slot.js, booking.js,
+│   │                           fault-report.js, parking-zone.js, …)
+│   ├── repositories/           database.js, repository.js, user-repository.js, …
+│   ├── jobs/                   scheduler.js, timetable-import.js, notification-sender.js,
+│   │                           booking-completer.js, cleanup.js
+│   └── integrations/           entra-client.js, gtfs-reader.js, mailer.js, image-resizer.js
+├── public/                     a felület: index.html, css/, js/ (oldalanként egy modul)
+├── db/
+│   ├── migrations/             001-init.sql, 002-seed-reference-data.sql, …
+│   └── migrate.js              a még le nem futott migrációk alkalmazása
+├── test/                       egység- és API-tesztek
+├── .env.example                a szükséges környezeti változók listája (érték nélkül)
+├── openapi.yaml                a REST API leírása (SRS 9.4)
+└── README.md                   telepítés és helyi futtatás</pre>
+<p>A <code>domain</code> mappa osztályai az analízis modell osztályai az ott megadott attribútumokkal és operációkkal. Ezek nem tartalmaznak SQL-t és HTTP-kezelést, ezért önállóan tesztelhetők; az üzleti szabályok (például a <code>Booking.canCancel</code> vagy a <code>FaultReport.changeStatus</code>) itt vannak.</p>
+<h2 id="s8" class="h-sec">8. Mellékletek</h2>
+<h3 id="s8-1" class="h-sub">8.1 Ábrajegyzék</h3>
+<ul>
+<li><a href="#abra-1">1. ábra</a> – A felhasználói felület navigációs térképe</li>
+<li><a href="#abra-2">2. ábra</a> – Képernyőterv: Kezdőlap (asztali nézet)</li>
+<li><a href="#abra-3">3. ábra</a> – Képernyőterv: Új foglalás (UC-11)</li>
+<li><a href="#abra-4">4. ábra</a> – Képernyőterv: Új hibabejelentés (UC-13)</li>
+<li><a href="#abra-5">5. ábra</a> – Képernyőterv: Bejelentések kezelése (UC-17)</li>
+<li><a href="#abra-6">6. ábra</a> – Szemantikai adatmodell (ER) – felhasználók, szervezet és ügyintézés</li>
+<li><a href="#abra-7">7. ábra</a> – Szemantikai adatmodell (ER) – tartalom és külső adatok</li>
+<li><a href="#abra-8">8. ábra</a> – Szemantikai adatmodell (ER) – hibabejelentés</li>
+<li><a href="#abra-9">9. ábra</a> – Relációs adatmodell – felhasználók, szervezet és ügyintézés</li>
+<li><a href="#abra-10">10. ábra</a> – Relációs adatmodell – tartalom és külső adatok</li>
+<li><a href="#abra-11">11. ábra</a> – Relációs adatmodell – hibabejelentés</li>
+<li><a href="#abra-12">12. ábra</a> – Az adatbázissal kapcsolatot tartó osztályok</li>
+<li><a href="#abra-13">13. ábra</a> – Egyidejű foglalás kezelése – aktivitásdiagram</li>
+<li><a href="#abra-14">14. ábra</a> – Értesítések küldése újrapróbálással – aktivitásdiagram</li>
+<li><a href="#abra-15">15. ábra</a> – Egy API-kérés útja a rendszeren belül – szekvenciadiagram</li>
+<li><a href="#abra-16">16. ábra</a> – A rendszer komponensei – komponensdiagram</li>
+<li><a href="#abra-17">17. ábra</a> – Telepítési diagram</li>
+</ul>
+<h3 id="s8-2" class="h-sub">8.2 Az ábrák forrása</h3>
+<p>Az ábrák PlantUML-forráskódja a <code>H4/uml</code> mappában található. Az ábrák magyarázattal együtt egy fájlban is elérhetők: <a href="H4_abrak.pdf">H4_abrak.pdf</a> és <a href="H4_abrak.html">H4_abrak.html</a>.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="../assets/script.js"></script>
+</body>
+</html>

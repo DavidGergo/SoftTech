@@ -1,0 +1,20 @@
+@startsalt
+{+
+  <b>Bejelentések kezelése
+  ==
+  { Állapot: | ^Új^ | Kategória: | ^Mind^ | Épület: | ^Mind^ | [Szűrés] }
+  {#
+    <b>Azonosító | <b>Beküldve | <b>Kategória | <b>Hely | <b>Állapot
+    HB-2026-0040 | nov. 10. | Fűtés | A/4, 210. | Új
+    HB-2026-0042 | nov. 12. | Világítás | A/1, 12-es előadó | Új
+    HB-2026-0031 | nov. 03. | Informatika | B/1, gépterem | Folyamatban
+  }
+  --
+  <b>HB-2026-0042 – Világítás, A/1 épület, 12-es előadó
+  A terem hátsó két lámpája nem világít.
+  { Új állapot | ^Folyamatban^ }
+  { Megjegyzés | "A gondnokság holnap cseréli az izzókat.   " }
+  { Előzmények: | nov. 12. 9:41 – Új (bejelentő) }
+  { [Mégse] | [<b>Mentés] }
+}
+@endsalt

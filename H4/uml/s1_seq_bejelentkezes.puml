@@ -1,0 +1,71 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam classAttributeIconSize 0
+skinparam ArrowColor #10365C
+skinparam ClassBorderColor #10365C
+skinparam ClassBackgroundColor #F5F8FC
+skinparam ClassHeaderBackgroundColor #E3ECF7
+skinparam PackageBorderColor #10365C
+skinparam PackageBackgroundColor #FBFCFE
+skinparam NoteBackgroundColor #FFF8E1
+skinparam NoteBorderColor #C9A227
+skinparam ActorBorderColor #10365C
+skinparam ParticipantBorderColor #10365C
+skinparam ParticipantBackgroundColor #F5F8FC
+skinparam SequenceLifeLineBorderColor #7A8CA5
+skinparam SequenceGroupBorderColor #7A8CA5
+skinparam SequenceGroupHeaderFontStyle bold
+skinparam BoundaryBorderColor #10365C
+skinparam BoundaryBackgroundColor #F5F8FC
+skinparam EntityBorderColor #10365C
+skinparam EntityBackgroundColor #F5F8FC
+skinparam StateBorderColor #10365C
+skinparam StateBackgroundColor #F5F8FC
+skinparam ActivityBorderColor #10365C
+skinparam ActivityBackgroundColor #F5F8FC
+skinparam ActivityDiamondBorderColor #10365C
+skinparam ActivityDiamondBackgroundColor #FFFFFF
+skinparam ComponentBorderColor #10365C
+skinparam ComponentBackgroundColor #F5F8FC
+skinparam NodeBorderColor #10365C
+skinparam NodeBackgroundColor #FBFCFE
+skinparam DatabaseBorderColor #10365C
+skinparam DatabaseBackgroundColor #F5F8FC
+skinparam RectangleBorderColor #10365C
+skinparam stereotypeCBackgroundColor #E3ECF7
+skinparam stereotypeABackgroundColor #E3ECF7
+skinparam stereotypeEBackgroundColor #FFF3D6
+skinparam class {
+  BackgroundColor<<külső>> #EEEEEE
+  BorderColor<<külső>> #9AA5B1
+  FontColor<<külső>> #4B5563
+}
+title UC-01 Bejelentkezés – szokásos működés
+hide footbox
+autonumber
+actor "Hallgató" as H
+boundary "Felület" as F
+participant "Egyetemi azonosító\nszolgáltatás" as IdP <<külső rendszer>>
+participant "User" as UC <<osztály>>
+participant ":User" as U
+H -> F : „Bejelentkezés” gomb
+F -> IdP : átirányítás (OpenID Connect kérés)
+H -> IdP : fiókadatok, kétlépcsős azonosítás
+IdP --> F : visszairányítás azonosítási kóddal
+F -> IdP : a kód beváltása
+IdP --> F : azonosító, név, e-mail
+F -> UC : findByExternalId(azonosító)
+alt első belépés (A3)
+  UC --> F : nincs találat
+  F -> UC : register(azonosító, név, e-mail)
+  UC -> U : létrehozás hallgató szerepkörrel (K-04)
+else visszatérő felhasználó
+  UC --> F : felhasználó
+end
+F -> U : recordLogin()
+create participant ":Session" as S
+F -> S : start(felhasználó, kiinduló oldal)
+F --> H : vissza a kiinduló oldalra, a fejlécben a név
+@enduml

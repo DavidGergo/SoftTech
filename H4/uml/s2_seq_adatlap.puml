@@ -1,0 +1,70 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam classAttributeIconSize 0
+skinparam ArrowColor #10365C
+skinparam ClassBorderColor #10365C
+skinparam ClassBackgroundColor #F5F8FC
+skinparam ClassHeaderBackgroundColor #E3ECF7
+skinparam PackageBorderColor #10365C
+skinparam PackageBackgroundColor #FBFCFE
+skinparam NoteBackgroundColor #FFF8E1
+skinparam NoteBorderColor #C9A227
+skinparam ActorBorderColor #10365C
+skinparam ParticipantBorderColor #10365C
+skinparam ParticipantBackgroundColor #F5F8FC
+skinparam SequenceLifeLineBorderColor #7A8CA5
+skinparam SequenceGroupBorderColor #7A8CA5
+skinparam SequenceGroupHeaderFontStyle bold
+skinparam BoundaryBorderColor #10365C
+skinparam BoundaryBackgroundColor #F5F8FC
+skinparam EntityBorderColor #10365C
+skinparam EntityBackgroundColor #F5F8FC
+skinparam StateBorderColor #10365C
+skinparam StateBackgroundColor #F5F8FC
+skinparam ActivityBorderColor #10365C
+skinparam ActivityBackgroundColor #F5F8FC
+skinparam ActivityDiamondBorderColor #10365C
+skinparam ActivityDiamondBackgroundColor #FFFFFF
+skinparam ComponentBorderColor #10365C
+skinparam ComponentBackgroundColor #F5F8FC
+skinparam NodeBorderColor #10365C
+skinparam NodeBackgroundColor #FBFCFE
+skinparam DatabaseBorderColor #10365C
+skinparam DatabaseBackgroundColor #F5F8FC
+skinparam RectangleBorderColor #10365C
+skinparam stereotypeCBackgroundColor #E3ECF7
+skinparam stereotypeABackgroundColor #E3ECF7
+skinparam stereotypeEBackgroundColor #FFF3D6
+skinparam class {
+  BackgroundColor<<külső>> #EEEEEE
+  BorderColor<<külső>> #9AA5B1
+  FontColor<<külső>> #4B5563
+}
+title UC-10 Saját oktatói adatok szerkesztése
+hide footbox
+autonumber
+actor "Oktató" as O
+boundary "Felület" as F
+participant ":User" as U
+participant ":StaffProfile" as P
+participant "AuditLogEntry" as L <<osztály>>
+O -> F : „Oktatói adatlapom”
+F -> U : getStaffProfile()
+U --> F : adatlap
+F --> O : adatlap; az iroda és a fogadóóra szerkeszthető
+O -> F : iroda, fogadóórák, megjegyzés módosítása; „Mentés”
+F -> P : updateOffice(hely, szöveg)
+F -> P : setOfficeHours(idősávok)
+F -> P : setNote(szöveg)
+F -> P : validate()
+alt az adatok érvényesek
+  P --> F : igaz
+  F -> L : record(oktató, STAFF_PROFILE_UPDATE, adatlap)
+  F --> O : sikeres mentés
+else érvénytelen adat (E1)
+  P --> F : hamis, hibás mezők
+  F --> O : a hibás mező kiemelése, nincs mentés
+end
+@enduml

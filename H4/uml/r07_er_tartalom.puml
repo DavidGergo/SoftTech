@@ -1,0 +1,116 @@
+@startchen
+entity HELY {
+  id <<key>>
+  nev
+  kategoria
+  Koordinata {
+    szelesseg
+    hosszusag
+  }
+}
+entity ESEMENY {
+  id <<key>>
+  cim
+  kezdes
+  vege
+  tipus
+}
+entity HIR {
+  id <<key>>
+  cim
+  osszefoglalo
+  forras_url
+  datum
+}
+entity MENZA {
+  id <<key>>
+  nev
+  zarva_tartas <<multi>>
+}
+entity NAPI_ETLAP {
+  id <<key>>
+  datum
+}
+entity ETEL {
+  id <<key>>
+  nev
+  ar
+  allergen <<multi>>
+}
+entity PARKOLOZONA {
+  id <<key>>
+  nev
+  kapacitas
+  szabad_helyek <<derived>>
+}
+entity MERES {
+  id <<key>>
+  foglalt
+  meres_ideje
+}
+entity ERZEKELO {
+  id <<key>>
+  kulcs_kivonat
+}
+entity MEGALLO {
+  id <<key>>
+  nev
+}
+entity JARAT {
+  id <<key>>
+  szam
+}
+entity INDULAS {
+  id <<key>>
+  indulasi_ido
+  irany
+}
+relationship TERME {
+}
+relationship HELYSZINE {
+}
+relationship ITT_TALALHATO {
+}
+relationship KINAL {
+}
+relationship TARTALMAZ {
+}
+relationship ZONA_HELYE {
+}
+relationship FIGYELI {
+}
+relationship MERESEI {
+}
+relationship KULDTE {
+}
+relationship MEGALLO_HELYE {
+}
+relationship INDUL {
+}
+relationship JARATA {
+}
+HELY -1- TERME
+TERME -N- HELY
+HELY -1- HELYSZINE
+HELYSZINE -N- ESEMENY
+HELY -1- ITT_TALALHATO
+ITT_TALALHATO -N- MENZA
+MENZA -1- KINAL
+KINAL -N- NAPI_ETLAP
+NAPI_ETLAP -1- TARTALMAZ
+TARTALMAZ -N- ETEL
+HELY -1- ZONA_HELYE
+ZONA_HELYE -N- PARKOLOZONA
+PARKOLOZONA -1- MERESEI
+MERESEI -N- MERES
+PARKOLOZONA -1- FIGYELI
+FIGYELI -N- ERZEKELO
+ERZEKELO -1- KULDTE
+KULDTE -N- MERES
+HELY -1- MEGALLO_HELYE
+MEGALLO_HELYE -N- MEGALLO
+MEGALLO -1- INDUL
+INDUL -N- INDULAS
+JARAT -1- JARATA
+JARATA -N- INDULAS
+@endchen

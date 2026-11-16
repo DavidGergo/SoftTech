@@ -1,0 +1,167 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam classAttributeIconSize 0
+skinparam ArrowColor #10365C
+skinparam ClassBorderColor #10365C
+skinparam ClassBackgroundColor #F5F8FC
+skinparam ClassHeaderBackgroundColor #E3ECF7
+skinparam PackageBorderColor #10365C
+skinparam PackageBackgroundColor #FBFCFE
+skinparam NoteBackgroundColor #FFF8E1
+skinparam NoteBorderColor #C9A227
+skinparam ActorBorderColor #10365C
+skinparam ParticipantBorderColor #10365C
+skinparam ParticipantBackgroundColor #F5F8FC
+skinparam SequenceLifeLineBorderColor #7A8CA5
+skinparam SequenceGroupBorderColor #7A8CA5
+skinparam SequenceGroupHeaderFontStyle bold
+skinparam BoundaryBorderColor #10365C
+skinparam BoundaryBackgroundColor #F5F8FC
+skinparam EntityBorderColor #10365C
+skinparam EntityBackgroundColor #F5F8FC
+skinparam StateBorderColor #10365C
+skinparam StateBackgroundColor #F5F8FC
+skinparam ActivityBorderColor #10365C
+skinparam ActivityBackgroundColor #F5F8FC
+skinparam ActivityDiamondBorderColor #10365C
+skinparam ActivityDiamondBackgroundColor #FFFFFF
+skinparam ComponentBorderColor #10365C
+skinparam ComponentBackgroundColor #F5F8FC
+skinparam NodeBorderColor #10365C
+skinparam NodeBackgroundColor #FBFCFE
+skinparam DatabaseBorderColor #10365C
+skinparam DatabaseBackgroundColor #F5F8FC
+skinparam RectangleBorderColor #10365C
+skinparam stereotypeCBackgroundColor #E3ECF7
+skinparam stereotypeABackgroundColor #E3ECF7
+skinparam stereotypeEBackgroundColor #FFF3D6
+skinparam class {
+  BackgroundColor<<külső>> #EEEEEE
+  BorderColor<<külső>> #9AA5B1
+  FontColor<<külső>> #4B5563
+}
+title Tartalomkezelés alrendszer – az analízis modell osztálydiagramja
+hide <<külső>> members
+package "Tartalomkezelés" <<Rectangle>> {
+abstract class Content {
+  id : Integer
+  title : String
+  status : ContentStatus
+  createdBy : User
+  createdAt : DateTime
+  updatedAt : DateTime
+  publishedAt : DateTime
+  version : Integer
+  --
+  {abstract} validate() : Boolean
+  saveDraft(by, expectedVersion)
+  publish(by, expectedVersion)
+  archive(by)
+  preview() : String
+  isPublic() : Boolean
+}
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+class NewsItem {
+  summary : String
+  sourceUrl : String
+  topic : String
+  newsDate : Date
+  --
+  validate() : Boolean
+  {static} latest(topic, offset, limit) : NewsItem[]
+}
+class Event {
+  description : String
+  startsAt : DateTime
+  endsAt : DateTime
+  eventType : String
+  faculty : Faculty
+  place : Place
+  organizer : String
+  --
+  validate() : Boolean
+  isPast(now) : Boolean
+  {static} search(from, to, eventType, faculty, place, includePast) : Event[]
+}
+class Place {
+  name : String
+  category : PlaceCategory
+  description : String
+  latitude : Decimal
+  longitude : Decimal
+  openingHoursText : String
+  parent : Place
+  searchKey : String
+  --
+  validate() : Boolean
+  {static} search(query, category, limit) : Place[]
+  {static} normalize(text) : String
+  getChildren() : Place[]
+}
+enum PlaceCategory {
+  BUILDING
+  ROOM
+  CANTEEN
+  LIBRARY
+  PARKING
+  STOP
+  ENTRANCE
+  SERVICE
+}
+class Canteen {
+  id : Integer
+  name : String
+  place : Place
+  closedDates : Date[]
+  --
+  isOpen(at) : Boolean
+  nextOpening(at) : DateTime
+  menuFor(date) : DailyMenu
+  menusForWeek(weekStart) : DailyMenu[]
+}
+class OpeningHours {
+  dayOfWeek : Integer
+  opensAt : Time
+  closesAt : Time
+  --
+  contains(at) : Boolean
+}
+class DailyMenu {
+  canteen : Canteen
+  date : Date
+  --
+  validate() : Boolean
+  addDish(name, price, allergens, vegetarian) : Dish
+  {static} saveWeek(canteen, weekStart, days, by) : DailyMenu[]
+}
+class Dish {
+  name : String
+  course : String
+  price : Integer
+  allergens : String[]
+  vegetarian : Boolean
+}
+}
+class User <<külső>>
+class Faculty <<külső>>
+Content <|-- NewsItem
+Content <|-- Event
+Content <|-- Place
+Content <|-- DailyMenu
+Content "0..*" --> "1" User : létrehozó
+Content "0..*" --> "1" ContentStatus
+Event "0..*" --> "1" Place : helyszín
+Event "0..*" --> "0..1" Faculty : kar
+Place "0..1" o-- "0..*" Place : termei
+Place "0..*" --> "1" PlaceCategory
+Canteen "0..*" --> "1" Place : helye
+Canteen "1" *-- "0..*" OpeningHours : nyitvatartás
+Canteen "1" -- "0..*" DailyMenu : étlapjai
+DailyMenu "1" *-- "1..*" Dish
+@enduml

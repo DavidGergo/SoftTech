@@ -1,0 +1,22 @@
+@startsalt
+{+
+  <b>Ügyintézés › Új foglalás
+  ==
+  { <b>1. Ügytípus | ^Igazolás kérése^ }
+  { . | Hallgatói jogviszony-igazolás kiadása. Helyszín: Tanulmányi Osztály, A/4 épület. Egy időpont: 15 perc. }
+  --
+  <b>2. Időpont (következő 14 nap)
+  {#
+    . | <b>H nov. 16. | <b>K nov. 17. | <b>Sze nov. 18. | <b>Cs nov. 19.
+    9:00 | [9:00] | foglalt | [9:00] | –
+    9:15 | foglalt | [9:15] | (X) 9:15 | –
+    9:30 | [9:30] | [9:30] | foglalt | –
+  }
+  --
+  <b>3. Összegzés
+  { Ügytípus: | Igazolás kérése }
+  { Időpont: | 2026. 11. 18. (szerda) 9:15–9:30 }
+  { Helyszín: | Tanulmányi Osztály, A/4 épület }
+  { [Vissza] | [<b>Foglalás megerősítése] }
+}
+@endsalt

@@ -1,0 +1,143 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam classAttributeIconSize 0
+skinparam ArrowColor #10365C
+skinparam ClassBorderColor #10365C
+skinparam ClassBackgroundColor #F5F8FC
+skinparam ClassHeaderBackgroundColor #E3ECF7
+skinparam PackageBorderColor #10365C
+skinparam PackageBackgroundColor #FBFCFE
+skinparam NoteBackgroundColor #FFF8E1
+skinparam NoteBorderColor #C9A227
+skinparam ActorBorderColor #10365C
+skinparam ParticipantBorderColor #10365C
+skinparam ParticipantBackgroundColor #F5F8FC
+skinparam SequenceLifeLineBorderColor #7A8CA5
+skinparam SequenceGroupBorderColor #7A8CA5
+skinparam SequenceGroupHeaderFontStyle bold
+skinparam BoundaryBorderColor #10365C
+skinparam BoundaryBackgroundColor #F5F8FC
+skinparam EntityBorderColor #10365C
+skinparam EntityBackgroundColor #F5F8FC
+skinparam StateBorderColor #10365C
+skinparam StateBackgroundColor #F5F8FC
+skinparam ActivityBorderColor #10365C
+skinparam ActivityBackgroundColor #F5F8FC
+skinparam ActivityDiamondBorderColor #10365C
+skinparam ActivityDiamondBackgroundColor #FFFFFF
+skinparam ComponentBorderColor #10365C
+skinparam ComponentBackgroundColor #F5F8FC
+skinparam NodeBorderColor #10365C
+skinparam NodeBackgroundColor #FBFCFE
+skinparam DatabaseBorderColor #10365C
+skinparam DatabaseBackgroundColor #F5F8FC
+skinparam RectangleBorderColor #10365C
+skinparam stereotypeCBackgroundColor #E3ECF7
+skinparam stereotypeABackgroundColor #E3ECF7
+skinparam stereotypeEBackgroundColor #FFF3D6
+skinparam class {
+  BackgroundColor<<külső>> #EEEEEE
+  BorderColor<<külső>> #9AA5B1
+  FontColor<<külső>> #4B5563
+}
+title A Vezérlőpult analízis modellje – áttekintő osztálydiagram (attribútumok és operációk nélkül)
+hide members
+hide enum members
+left to right direction
+package "Felhasználókezelés" #FDF3E1 {
+class User
+class RoleAssignment
+class Session
+class AuditLogEntry
+class Notification
+}
+package "Szervezet és oktatók" #F1ECFB {
+class Faculty
+class Department
+class StaffProfile
+class OfficeHour
+}
+package "Tartalomkezelés" #E8F1FB {
+abstract class Content
+class NewsItem
+class Event
+class Place
+class Canteen
+class OpeningHours
+class DailyMenu
+class Dish
+}
+package "Külső adatok" #E6F6F4 {
+class ParkingZone
+class ParkingReading
+class SensorDevice
+class Stop
+class Route
+class Departure
+class TimetableImport
+}
+package "Ügyintézés" #E9F7EC {
+class CaseType
+class SlotRange
+class Slot
+class Booking
+}
+package "Hibabejelentés" #FBEAEA {
+class FaultReport
+class ReportCategory
+class ResponsibleUnit
+class AssignmentRule
+class StatusChange
+class Attachment
+}
+User "1" *-- "0..*" RoleAssignment : szerepkörei
+RoleAssignment "0..*" --> "0..1" Department : tanszék
+User "1" -- "0..*" Session : munkamenetei
+AuditLogEntry "0..*" --> "1" User : végrehajtó
+Notification "0..*" --> "1" User : címzett
+Faculty "1" *-- "1..*" Department
+StaffProfile "0..*" --> "1" Department : dolgozik
+StaffProfile "1" *-- "0..*" OfficeHour : fogadóórái
+StaffProfile "0..*" --> "0..1" Place : iroda
+StaffProfile "0..1" -- "0..1" User : fiókja
+Content <|-- NewsItem
+Content <|-- Event
+Content <|-- Place
+Content <|-- DailyMenu
+Content "0..*" --> "1" User : létrehozó
+Event "0..*" --> "1" Place : helyszín
+Event "0..*" --> "0..1" Faculty : kar
+Place "0..1" o-- "0..*" Place : termei
+Canteen "0..*" --> "1" Place : helye
+Canteen "1" *-- "0..*" OpeningHours : nyitvatartás
+Canteen "1" -- "0..*" DailyMenu : étlapjai
+DailyMenu "1" *-- "1..*" Dish
+ParkingZone "0..*" --> "1" Place : helye
+ParkingZone "1" *-- "0..*" ParkingReading : mérései
+SensorDevice "0..*" --> "1" ParkingZone : figyeli
+SensorDevice "1" -- "0..*" ParkingReading : küldte
+Stop "0..*" --> "0..1" Place : térképi hely
+Stop "1" -- "0..*" Departure
+Route "1" -- "0..*" Departure
+TimetableImport "1" *-- "0..*" Departure : betöltötte
+CaseType "1" *-- "0..*" SlotRange : sávjai
+SlotRange "1" *-- "0..*" Slot : előállítja
+Booking "0..*" --> "1" Slot
+Booking "0..*" --> "1" User : hallgató
+Booking ..> Notification : kivált
+FaultReport "0..*" --> "1" User : bejelentő
+FaultReport "0..*" --> "1" ReportCategory
+FaultReport "0..*" --> "1" Place : épület
+FaultReport "0..*" --> "1" ResponsibleUnit : felelős
+FaultReport "1" *-- "0..1" Attachment : képe
+FaultReport "1" *-- "1..*" StatusChange : előzmények
+StatusChange "0..*" --> "1" User : módosító
+ReportCategory "0..*" --> "1" ResponsibleUnit : alapértelmezett
+ResponsibleUnit "0..*" --> "0..1" Department
+AssignmentRule "0..*" --> "1" ReportCategory
+AssignmentRule "0..*" --> "1" Place : épület
+AssignmentRule "0..*" --> "1" ResponsibleUnit
+FaultReport ..> Notification : kivált
+@enduml

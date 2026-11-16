@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H4 ábragyűjtemény – ME-nthetetlenek</title>
+<style>
+:root { --ink:#111827; --muted:#4b5563; --line:#d1d5db; --brand:#10365c; }
+* { box-sizing: border-box; }
+body { margin:0; background:#fff; color:var(--ink); font:16px/1.55 Georgia, "Times New Roman", serif; }
+main { max-width: 1000px; margin: 0 auto; padding: 32px 20px 64px; }
+h1 { font-size: 30px; margin: 0 0 6px; }
+h2 { font-size: 22px; margin: 40px 0 8px; padding-bottom: 6px; border-bottom: 2px solid var(--brand); break-after: avoid; }
+h3 { break-after: avoid; }
+h3 { font-size: 18px; margin: 28px 0 6px; }
+p { margin: 0 0 10px; }
+.meta { color: var(--muted); font-size: 14px; }
+.where { color: var(--muted); font-size: 14px; margin-bottom: 8px; }
+figure { margin: 0 0 8px; border: 1px solid var(--line); padding: 10px; text-align: center; overflow-x: auto; }
+figure img { max-width: 100%; height: auto; }
+.toc { columns: 2; column-gap: 32px; font-size: 14px; padding-left: 0; list-style: none; }
+.toc li { break-inside: avoid; margin-bottom: 2px; }
+a { color: #174777; }
+.item { break-inside: avoid; page-break-inside: avoid; }
+@media print {
+  main { max-width: none; padding: 0; }
+  h2 { break-before: page; }
+  h2.first { break-before: auto; }
+  figure img { max-height: 22cm; }
+  .toc a { text-decoration: none; color: inherit; }
+}
+@page { size: A4; margin: 15mm 14mm; }
+</style>
+</head>
+<body>
+<main>
+<h1>H4 – Ábragyűjtemény</h1>
+<p class="meta">Csoport: ME-nthetetlenek · Feladat sorszáma: 19 · 2026. 11. 14.</p>
+<p>Ez a fájl a H4 dokumentumainak összes ábráját tartalmazza magyarázattal együtt. Az ábrák számozása megegyezik a dokumentumokéval: az „ANAL” jelű ábrák az <a href="ME-nthetetlenek_ANAL11.html">Analízis modell 1.1</a>, az „RTERV” jelűek a <a href="ME-nthetetlenek_RTERV10.html">Rendszertervezés 1.0</a> ábrái. Minden ábra PlantUML-lel készült; a forráskód a <code>H4/uml</code> mappában, az ábra nevével megegyező <code>.puml</code> fájlban található.</p>
+<ul class="toc"><li><a href="#a01_kezdeti_osztalydiagram">ANAL 1. – A kezdeti (elemzési szintű) osztálydiagram</a></li><li><a href="#a02_alrendszerek">ANAL 2. – A rendszer funkcionális alrendszerei (csomagdiagram)</a></li><li><a href="#s1_seq_bejelentkezes">ANAL 3. – UC-01 Bejelentkezés – szekvenciadiagram</a></li><li><a href="#s1_act_szerepkor">ANAL 4. – UC-18 Szerepkörök kezelése – aktivitásdiagram</a></li><li><a href="#s1_class">ANAL 5. – A Felhasználókezelés alrendszer osztálydiagramja</a></li><li><a href="#s2_seq_adatlap">ANAL 6. – UC-10 Saját oktatói adatok szerkesztése – szekvenciadiagram</a></li><li><a href="#s2_class">ANAL 7. – A Szervezet és oktatók alrendszer osztálydiagramja</a></li><li><a href="#s3_seq_kozzetetel">ANAL 8. – UC-15 Tartalom kezelése – szekvenciadiagram (esemény közzététele)</a></li><li><a href="#s3_seq_esemenyek">ANAL 9. – UC-05 Események böngészése és szűrése – szekvenciadiagram</a></li><li><a href="#s3_state_tartalom">ANAL 10. – A Content (Tartalom) osztály állapotdiagramja</a></li><li><a href="#s3_act_helykereses">ANAL 11. – UC-03 Hely keresése – aktivitásdiagram</a></li><li><a href="#s3_class">ANAL 12. – A Tartalomkezelés alrendszer osztálydiagramja</a></li><li><a href="#s4_seq_parkolomeres">ANAL 13. – Parkolóadat fogadása – szekvenciadiagram</a></li><li><a href="#s4_seq_parkolas">ANAL 14. – UC-04 Szabad parkolóhelyek megtekintése – szekvenciadiagram</a></li><li><a href="#s4_state_zona">ANAL 15. – A ParkingZone (Parkolózóna) osztály állapotdiagramja (adatfrissesség)</a></li><li><a href="#s4_act_menetrend">ANAL 16. – A menetrend napi betöltése – aktivitásdiagram</a></li><li><a href="#s4_class">ANAL 17. – A Külső adatok alrendszer osztálydiagramja</a></li><li><a href="#s5_seq_foglalas">ANAL 18. – UC-11 Ügyintézési időpont foglalása – szekvenciadiagram</a></li><li><a href="#s5_seq_lemondas">ANAL 19. – UC-12 Saját foglalások kezelése – szekvenciadiagram (lemondás)</a></li><li><a href="#s5_state_idopont">ANAL 20. – A Slot (Időpont) osztály állapotdiagramja</a></li><li><a href="#s5_state_foglalas">ANAL 21. – A Booking (Foglalás) osztály állapotdiagramja</a></li><li><a href="#s5_act_idopontsav">ANAL 22. – UC-16 Időpontsáv rögzítése – aktivitásdiagram</a></li><li><a href="#s5_class">ANAL 23. – Az Ügyintézés alrendszer osztálydiagramja</a></li><li><a href="#s6_seq_bekuldes">ANAL 24. – UC-13 Hibabejelentés beküldése – szekvenciadiagram</a></li><li><a href="#s6_seq_kezeles">ANAL 25. – UC-17 Hibabejelentések kezelése – szekvenciadiagram</a></li><li><a href="#s6_state_bejelentes">ANAL 26. – A FaultReport (Hibabejelentés) osztály állapotdiagramja</a></li><li><a href="#s6_act_hozzarendeles">ANAL 27. – A bejelentés felelős egységhez rendelése – aktivitásdiagram</a></li><li><a href="#s6_class">ANAL 28. – A Hibabejelentés alrendszer osztálydiagramja</a></li><li><a href="#a99_teljes_osztalydiagram">ANAL 29. – Az analízis modell áttekintő osztálydiagramja</a></li><li><a href="#r01_navigacio">RTERV 1. – A felhasználói felület navigációs térképe</a></li><li><a href="#r02_wf_kezdolap">RTERV 2. – Képernyőterv: Kezdőlap (asztali nézet)</a></li><li><a href="#r03_wf_foglalas">RTERV 3. – Képernyőterv: Új foglalás (UC-11)</a></li><li><a href="#r04_wf_bejelentes">RTERV 4. – Képernyőterv: Új hibabejelentés (UC-13)</a></li><li><a href="#r05_wf_kezeles">RTERV 5. – Képernyőterv: Bejelentések kezelése (UC-17)</a></li><li><a href="#r06_er_szemelyek">RTERV 6. – Szemantikai adatmodell (ER) – felhasználók, szervezet és ügyintézés</a></li><li><a href="#r07_er_tartalom">RTERV 7. – Szemantikai adatmodell (ER) – tartalom és külső adatok</a></li><li><a href="#r08_er_bejelentes">RTERV 8. – Szemantikai adatmodell (ER) – hibabejelentés</a></li><li><a href="#r09_relacios_szemelyek">RTERV 9. – Relációs adatmodell – felhasználók, szervezet és ügyintézés</a></li><li><a href="#r10_relacios_tartalom">RTERV 10. – Relációs adatmodell – tartalom és külső adatok</a></li><li><a href="#r11_relacios_bejelentes">RTERV 11. – Relációs adatmodell – hibabejelentés</a></li><li><a href="#r12_adatelero_osztalyok">RTERV 12. – Az adatbázissal kapcsolatot tartó osztályok</a></li><li><a href="#r13_act_egyideju_foglalas">RTERV 13. – Egyidejű foglalás kezelése – aktivitásdiagram</a></li><li><a href="#r14_act_ertesites">RTERV 14. – Értesítések küldése újrapróbálással – aktivitásdiagram</a></li><li><a href="#r15_seq_keres">RTERV 15. – Egy API-kérés útja a rendszeren belül – szekvenciadiagram</a></li><li><a href="#r16_komponens">RTERV 16. – A rendszer komponensei – komponensdiagram</a></li><li><a href="#r17_telepites">RTERV 17. – Telepítési diagram</a></li></ul>
+<h2 class="first">I. Analízis modell</h2>
+<p class="meta">Dokumentum: <a href="ME-nthetetlenek_ANAL11.html">Analízis modell 1.1</a></p>
+<div class="item" id="a01_kezdeti_osztalydiagram">
+<h3>1. ábra – A kezdeti (elemzési szintű) osztálydiagram</h3>
+<p>Az SRS use case-leírásaiból és követelményeiből kigyűjtött problématér-osztályok és a köztük lévő asszociációk. Ebben a fázisban csak az osztályok neve és a kapcsolatok neve szerepel; a számosságokat, az attribútumokat és az operációkat az alrendszerek modelljei pontosítják. A színek azt az alrendszert jelölik, amelybe az osztály a felbontás után kerül.</p>
+<figure><img src="uml/a01_kezdeti_osztalydiagram.svg" alt="A kezdeti (elemzési szintű) osztálydiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/a01_kezdeti_osztalydiagram.puml</code></p>
+</div>
+<div class="item" id="a02_alrendszerek">
+<h3>2. ábra – A rendszer funkcionális alrendszerei (csomagdiagram)</h3>
+<p>A kezdeti osztálydiagram felbontása hat funkcionális alrendszerre. A szaggatott nyilak függőséget jelölnek: a nyíl kiindulópontján álló alrendszer használja a végpontján álló osztályait; a feliratok a köztük áramló információt nevezik meg. A Felhasználókezelés alrendszert minden más alrendszer használja (ki a felhasználó, milyen jogai vannak, kinek kell értesítést küldeni). A külső rendszerek a perem mentén, a hozzájuk kapcsolódó alrendszer mellett láthatók.</p>
+<figure><img src="uml/a02_alrendszerek.svg" alt="A rendszer funkcionális alrendszerei (csomagdiagram)"></figure>
+<p class="where">Forrás: <code>H4/uml/a02_alrendszerek.puml</code></p>
+</div>
+<div class="item" id="s1_seq_bejelentkezes">
+<h3>3. ábra – UC-01 Bejelentkezés – szekvenciadiagram</h3>
+<p>A bejelentkezés szokásos működése, az első belépés (A3) alternatívájával. A jelszót a felhasználó az egyetemi azonosító szolgáltatás oldalán adja meg, a Vezérlőpult csak a visszakapott azonosítót, nevet és e-mail-címet látja (K-02, K-05).</p>
+<figure><img src="uml/s1_seq_bejelentkezes.svg" alt="UC-01 Bejelentkezés – szekvenciadiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/s1_seq_bejelentkezes.puml</code></p>
+</div>
+<div class="item" id="s1_act_szerepkor">
+<h3>4. ábra – UC-18 Szerepkörök kezelése – aktivitásdiagram</h3>
+<p>A szerepkör módosításának ellenőrzési lépései. A K-45 két szabálya (a saját adminisztrátori szerepkör és az utolsó adminisztrátor szerepköre nem vonható vissza) a mentés előtt fut le; oktatói szerepkörnél a tanszék megadása kötelező, és ilyenkor az oktatói adatlap is a fiókhoz rendelhető.</p>
+<figure><img src="uml/s1_act_szerepkor.svg" alt="UC-18 Szerepkörök kezelése – aktivitásdiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/s1_act_szerepkor.puml</code></p>
+</div>
+<div class="item" id="s1_class">
+<h3>5. ábra – A Felhasználókezelés alrendszer osztálydiagramja</h3>
+<p>Az alrendszer osztályai attribútumokkal és operációkkal. A szürke osztályok más alrendszerhez tartoznak; leírásuk ott szerepel.</p>
+<figure><img src="uml/s1_class.svg" alt="A Felhasználókezelés alrendszer osztálydiagramja"></figure>
+<p class="where">Forrás: <code>H4/uml/s1_class.puml</code></p>
+</div>
+<div class="item" id="s2_seq_adatlap">
+<h3>6. ábra – UC-10 Saját oktatói adatok szerkesztése – szekvenciadiagram</h3>
+<p>Az oktató az adatlapján csak az irodát, a fogadóórákat és a megjegyzést módosíthatja (K-27). Mentés előtt a StaffProfile ellenőrzi a fogadóórákat; hibás adatnál nem ment (E1). A módosítás naplózásra kerül (K-46), és azonnal látható (K-28).</p>
+<figure><img src="uml/s2_seq_adatlap.svg" alt="UC-10 Saját oktatói adatok szerkesztése – szekvenciadiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/s2_seq_adatlap.puml</code></p>
+</div>
+<div class="item" id="s2_class">
+<h3>7. ábra – A Szervezet és oktatók alrendszer osztálydiagramja</h3>
+<p>Az alrendszer osztályai attribútumokkal és operációkkal. Az oktatói adatlap fiók nélkül is létezhet (az oktató még nem lépett be), ezért a User-hez fűződő kapcsolata mindkét irányban 0..1 számosságú.</p>
+<figure><img src="uml/s2_class.svg" alt="A Szervezet és oktatók alrendszer osztálydiagramja"></figure>
+<p class="where">Forrás: <code>H4/uml/s2_class.puml</code></p>
+</div>
+<div class="item" id="s3_seq_kozzetetel">
+<h3>8. ábra – UC-15 Tartalom kezelése – szekvenciadiagram (esemény közzététele)</h3>
+<p>Az adminisztrátor egy esemény szerkesztését mutatja be előnézettel és közzététellel. Az űrlap betöltésekor a felület megjegyzi a változatszámot; ha mentéskor a tárolt változatszám már nagyobb, akkor közben más is mentette az elemet, és a rendszer nem írja felül (E2).</p>
+<figure><img src="uml/s3_seq_kozzetetel.svg" alt="UC-15 Tartalom kezelése – szekvenciadiagram (esemény közzététele)"></figure>
+<p class="where">Forrás: <code>H4/uml/s3_seq_kozzetetel.puml</code></p>
+</div>
+<div class="item" id="s3_seq_esemenyek">
+<h3>9. ábra – UC-05 Események böngészése és szűrése – szekvenciadiagram</h3>
+<p>A nyilvános eseménylista betöltése és szűrése. A szűrés az Event osztályszintű search() műveletével történik; a rendszer adatai nem változnak.</p>
+<figure><img src="uml/s3_seq_esemenyek.svg" alt="UC-05 Események böngészése és szűrése – szekvenciadiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/s3_seq_esemenyek.puml</code></p>
+</div>
+<div class="item" id="s3_state_tartalom">
+<h3>10. ábra – A Content (Tartalom) osztály állapotdiagramja</h3>
+<p>A hírek, események, térképi helyek és napi étlapok közös életciklusa. Csak a Közzétett állapotú tartalom látszik a nyilvános felületen; az archivált elem az adminisztrációs listában megmarad (K-39, K-40).</p>
+<figure><img src="uml/s3_state_tartalom.svg" alt="A Content (Tartalom) osztály állapotdiagramja"></figure>
+<p class="where">Forrás: <code>H4/uml/s3_state_tartalom.puml</code></p>
+</div>
+<div class="item" id="s3_act_helykereses">
+<h3>11. ábra – UC-03 Hely keresése – aktivitásdiagram</h3>
+<p>A keresés feldolgozási lépései. A keresőkifejezést és a helyek nevét ugyanaz a normalize() művelet alakítja kisbetűs, ékezet nélküli formára, ezért a keresés nem érzékeny a kis- és nagybetűre és az ékezetekre (K-10). A javaslatok rangsorolása: pontos egyezés, szókezdő egyezés, részleges egyezés; azon belül az épületek előbb.</p>
+<figure><img src="uml/s3_act_helykereses.svg" alt="UC-03 Hely keresése – aktivitásdiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/s3_act_helykereses.puml</code></p>
+</div>
+<div class="item" id="s3_class">
+<h3>12. ábra – A Tartalomkezelés alrendszer osztálydiagramja</h3>
+<p>Az alrendszer osztályai attribútumokkal és operációkkal. A Content absztrakt bázisosztály a négy közzétehető tartalomfajta közös attribútumait és életciklus-műveleteit tartalmazza.</p>
+<figure><img src="uml/s3_class.svg" alt="A Tartalomkezelés alrendszer osztálydiagramja"></figure>
+<p class="where">Forrás: <code>H4/uml/s3_class.puml</code></p>
+</div>
+<div class="item" id="s4_seq_parkolomeres">
+<h3>13. ábra – Parkolóadat fogadása – szekvenciadiagram</h3>
+<p>A parkolóérzékelő-rendszer (A-07) adatküldése. Ez nem önálló use case, hanem az UC-04 adatforrása. Az eszközt a titkos kulcsa hitelesíti (SRS 11.3); a hibás vagy értelmetlen adat nem kerül be.</p>
+<figure><img src="uml/s4_seq_parkolomeres.svg" alt="Parkolóadat fogadása – szekvenciadiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/s4_seq_parkolomeres.puml</code></p>
+</div>
+<div class="item" id="s4_seq_parkolas">
+<h3>14. ábra – UC-04 Szabad parkolóhelyek megtekintése – szekvenciadiagram</h3>
+<p>A felület zónánként lekéri a szabad helyek számát, a színjelölést és az adat frissességét, és amíg az oldal nyitva van, percenként frissít (A1).</p>
+<figure><img src="uml/s4_seq_parkolas.svg" alt="UC-04 Szabad parkolóhelyek megtekintése – szekvenciadiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/s4_seq_parkolas.puml</code></p>
+</div>
+<div class="item" id="s4_state_zona">
+<h3>15. ábra – A ParkingZone (Parkolózóna) osztály állapotdiagramja (adatfrissesség)</h3>
+<p>A zóna adatának frissessége az időtől és a beérkező mérésektől függ. Ebből az állapotból adódik a felületen a „nem friss” és a „nincs adat” jelzés (K-13).</p>
+<figure><img src="uml/s4_state_zona.svg" alt="A ParkingZone (Parkolózóna) osztály állapotdiagramja (adatfrissesség)"></figure>
+<p class="where">Forrás: <code>H4/uml/s4_state_zona.puml</code></p>
+</div>
+<div class="item" id="s4_act_menetrend">
+<h3>16. ábra – A menetrend napi betöltése – aktivitásdiagram</h3>
+<p>A TimetableImport.run() lépései. Az új menetrend csak akkor lép érvénybe, ha a letöltés és az ellenőrzés is sikeres; a csere egy lépésben történik, így a felhasználók sosem látnak félig betöltött menetrendet. Hiba esetén az előző menetrend marad érvényben (UC-08 E1).</p>
+<figure><img src="uml/s4_act_menetrend.svg" alt="A menetrend napi betöltése – aktivitásdiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/s4_act_menetrend.puml</code></p>
+</div>
+<div class="item" id="s4_class">
+<h3>17. ábra – A Külső adatok alrendszer osztálydiagramja</h3>
+<p>Az alrendszer osztályai attribútumokkal és operációkkal. A Departure a TimetableImport része: egy betöltés minden indulása együtt keletkezik és együtt cserélődik.</p>
+<figure><img src="uml/s4_class.svg" alt="A Külső adatok alrendszer osztálydiagramja"></figure>
+<p class="where">Forrás: <code>H4/uml/s4_class.puml</code></p>
+</div>
+<div class="item" id="s5_seq_foglalas">
+<h3>18. ábra – UC-11 Ügyintézési időpont foglalása – szekvenciadiagram</h3>
+<p>A foglalás szokásos működése a két kivételes esettel. A megerősítéskor a rendszer újra ellenőrzi, hogy az időpont még szabad-e (E1), és hogy a hallgatónak nincs-e aktív foglalása az ügytípusra (K-30, E2). A visszaigazoló e-mail sikertelensége a foglalást nem érinti (E3).</p>
+<figure><img src="uml/s5_seq_foglalas.svg" alt="UC-11 Ügyintézési időpont foglalása – szekvenciadiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/s5_seq_foglalas.puml</code></p>
+</div>
+<div class="item" id="s5_seq_lemondas">
+<h3>19. ábra – UC-12 Saját foglalások kezelése – szekvenciadiagram (lemondás)</h3>
+<p>A foglalás lemondása. A lemondás csak aktív foglalásnál és legalább 2 órával az időpont előtt lehetséges (K-32); a felszabaduló időpont azonnal újra foglalható.</p>
+<figure><img src="uml/s5_seq_lemondas.svg" alt="UC-12 Saját foglalások kezelése – szekvenciadiagram (lemondás)"></figure>
+<p class="where">Forrás: <code>H4/uml/s5_seq_lemondas.puml</code></p>
+</div>
+<div class="item" id="s5_state_idopont">
+<h3>20. ábra – A Slot (Időpont) osztály állapotdiagramja</h3>
+<p>Az időpont állapotai. Foglalni csak Szabad állapotú időpontra lehet; foglalt időpont törlésekor a foglalás is törlődik, és a hallgató indoklással értesítést kap (K-42).</p>
+<figure><img src="uml/s5_state_idopont.svg" alt="A Slot (Időpont) osztály állapotdiagramja"></figure>
+<p class="where">Forrás: <code>H4/uml/s5_state_idopont.puml</code></p>
+</div>
+<div class="item" id="s5_state_foglalas">
+<h3>21. ábra – A Booking (Foglalás) osztály állapotdiagramja</h3>
+<p>A foglalás állapotai. Egy hallgatónak ügytípusonként legfeljebb egy Aktív foglalása lehet (K-30).</p>
+<figure><img src="uml/s5_state_foglalas.svg" alt="A Booking (Foglalás) osztály állapotdiagramja"></figure>
+<p class="where">Forrás: <code>H4/uml/s5_state_foglalas.puml</code></p>
+</div>
+<div class="item" id="s5_act_idopontsav">
+<h3>22. ábra – UC-16 Időpontsáv rögzítése – aktivitásdiagram</h3>
+<p>Hogyan lesz az adminisztrátor által megadott sávból foglalható időpont. Az időpontok előállítása (generateSlots) ismétlődő sávnál hetente megismétlődik az ismétlődés végéig; az átfedés-ellenőrzés minden érintett hétre lefut.</p>
+<figure><img src="uml/s5_act_idopontsav.svg" alt="UC-16 Időpontsáv rögzítése – aktivitásdiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/s5_act_idopontsav.puml</code></p>
+</div>
+<div class="item" id="s5_class">
+<h3>23. ábra – Az Ügyintézés alrendszer osztálydiagramja</h3>
+<p>Az alrendszer osztályai attribútumokkal és operációkkal. Egy időponthoz több foglalás is tartozhat időben egymás után (lemondás után újrafoglalás), de aktív foglalás egyszerre csak egy.</p>
+<figure><img src="uml/s5_class.svg" alt="Az Ügyintézés alrendszer osztálydiagramja"></figure>
+<p class="where">Forrás: <code>H4/uml/s5_class.puml</code></p>
+</div>
+<div class="item" id="s6_seq_bekuldes">
+<h3>24. ábra – UC-13 Hibabejelentés beküldése – szekvenciadiagram</h3>
+<p>A bejelentés beküldése. A kép ellenőrzése (E2) a bejelentés létrehozása előtt történik, így hibás képnél csak a kép utasítódik el. A felelős egységet a ResponsibleUnit.resolve() választja ki a kategória és az épület alapján.</p>
+<figure><img src="uml/s6_seq_bekuldes.svg" alt="UC-13 Hibabejelentés beküldése – szekvenciadiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/s6_seq_bekuldes.puml</code></p>
+</div>
+<div class="item" id="s6_seq_kezeles">
+<h3>25. ábra – UC-17 Hibabejelentések kezelése – szekvenciadiagram</h3>
+<p>A felelős (adminisztrátor vagy a tanszék oktatója) állapotot módosít és megjegyzést ír. A jogosultságot a canBeManagedBy() ellenőrzi (E2); elutasításnál az indoklás kötelező (K-44, E1). Minden változás előzménybejegyzést, értesítést és naplóbejegyzést eredményez.</p>
+<figure><img src="uml/s6_seq_kezeles.svg" alt="UC-17 Hibabejelentések kezelése – szekvenciadiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/s6_seq_kezeles.puml</code></p>
+</div>
+<div class="item" id="s6_state_bejelentes">
+<h3>26. ábra – A FaultReport (Hibabejelentés) osztály állapotdiagramja</h3>
+<p>A bejelentés négy állapota (K-35). Minden állapotváltozás előzménybejegyzést és értesítést hoz létre. Állapotváltozás nélküli megjegyzés bármelyik állapotban fűzhető a bejelentéshez.</p>
+<figure><img src="uml/s6_state_bejelentes.svg" alt="A FaultReport (Hibabejelentés) osztály állapotdiagramja"></figure>
+<p class="where">Forrás: <code>H4/uml/s6_state_bejelentes.puml</code></p>
+</div>
+<div class="item" id="s6_act_hozzarendeles">
+<h3>27. ábra – A bejelentés felelős egységhez rendelése – aktivitásdiagram</h3>
+<p>A FaultReport.submit() feldolgozási lépései. A hozzárendelési szabály (AssignmentRule) épületenként pontosítja a kategória alapértelmezett felelősét. Az azonosító éven belüli sorszám, így olvasható és egyedi.</p>
+<figure><img src="uml/s6_act_hozzarendeles.svg" alt="A bejelentés felelős egységhez rendelése – aktivitásdiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/s6_act_hozzarendeles.puml</code></p>
+</div>
+<div class="item" id="s6_class">
+<h3>28. ábra – A Hibabejelentés alrendszer osztálydiagramja</h3>
+<p>Az alrendszer osztályai attribútumokkal és operációkkal. Az AssignmentRule a kapcsolatok pontosítása során jelent meg: a kategória és az épület együtt határozza meg a felelőst.</p>
+<figure><img src="uml/s6_class.svg" alt="A Hibabejelentés alrendszer osztálydiagramja"></figure>
+<p class="where">Forrás: <code>H4/uml/s6_class.puml</code></p>
+</div>
+<div class="item" id="a99_teljes_osztalydiagram">
+<h3>29. ábra – Az analízis modell áttekintő osztálydiagramja</h3>
+<p>Az összes alrendszer osztálya és kapcsolata egy ábrán, attribútumok és operációk nélkül. Az osztályok részletes leírása az alrendszerek fejezeteiben található.</p>
+<figure><img src="uml/a99_teljes_osztalydiagram.svg" alt="Az analízis modell áttekintő osztálydiagramja"></figure>
+<p class="where">Forrás: <code>H4/uml/a99_teljes_osztalydiagram.puml</code></p>
+</div>
+<h2 class="">II. Rendszertervezés</h2>
+<p class="meta">Dokumentum: <a href="ME-nthetetlenek_RTERV10.html">Rendszertervezés 1.0</a></p>
+<div class="item" id="r01_navigacio">
+<h3>1. ábra – A felhasználói felület navigációs térképe</h3>
+<p>A képernyők és a köztük lévő átmenetek szerepkörönként. A bal oldali menüből minden nyilvános képernyő egy kattintással elérhető; a bejelentkezést igénylő képernyők csak a megfelelő szerepkörrel jelennek meg a menüben. A szaggatott nyilak a képernyők közötti hivatkozásokat jelölik (például az esemény helyszínéről a térképre).</p>
+<figure><img src="uml/r01_navigacio.svg" alt="A felhasználói felület navigációs térképe"></figure>
+<p class="where">Forrás: <code>H4/uml/r01_navigacio.puml</code></p>
+</div>
+<div class="item" id="r02_wf_kezdolap">
+<h3>2. ábra – Képernyőterv: Kezdőlap (asztali nézet)</h3>
+<p>A kezdőlap drótváza. A fejléc, a bal oldali menü és a tartalomterület elrendezése minden képernyőn azonos (SRS 11.1). A kártyák a leggyakoribb funkciókat mutatják; mobilon egymás alá kerülnek, a menü pedig a fejléc gombjával nyílik.</p>
+<figure><img src="uml/r02_wf_kezdolap.svg" alt="Képernyőterv: Kezdőlap (asztali nézet)"></figure>
+<p class="where">Forrás: <code>H4/uml/r02_wf_kezdolap.puml</code></p>
+</div>
+<div class="item" id="r03_wf_foglalas">
+<h3>3. ábra – Képernyőterv: Új foglalás (UC-11)</h3>
+<p>Az időpontfoglalás három lépése egy képernyőn: ügytípus, időpont, összegzés. A naptárban csak a szabad időpontok kattinthatók; a foglalás gomb csak az összegzés után aktív.</p>
+<figure><img src="uml/r03_wf_foglalas.svg" alt="Képernyőterv: Új foglalás (UC-11)"></figure>
+<p class="where">Forrás: <code>H4/uml/r03_wf_foglalas.puml</code></p>
+</div>
+<div class="item" id="r04_wf_bejelentes">
+<h3>4. ábra – Képernyőterv: Új hibabejelentés (UC-13)</h3>
+<p>A hibabejelentés űrlapja. A kötelező mezőket csillag jelöli; a hibaüzenet a hibás mező alatt jelenik meg, és megmondja, mit kell javítani (SRS 9.3). A helyszín a térképen is kijelölhető.</p>
+<figure><img src="uml/r04_wf_bejelentes.svg" alt="Képernyőterv: Új hibabejelentés (UC-13)"></figure>
+<p class="where">Forrás: <code>H4/uml/r04_wf_bejelentes.puml</code></p>
+</div>
+<div class="item" id="r05_wf_kezeles">
+<h3>5. ábra – Képernyőterv: Bejelentések kezelése (UC-17)</h3>
+<p>A felelősök listanézete szűrőkkel és a kiválasztott bejelentés részletei. Elutasításnál a megjegyzés mező kötelező (K-44).</p>
+<figure><img src="uml/r05_wf_kezeles.svg" alt="Képernyőterv: Bejelentések kezelése (UC-17)"></figure>
+<p class="where">Forrás: <code>H4/uml/r05_wf_kezeles.puml</code></p>
+</div>
+<div class="item" id="r06_er_szemelyek">
+<h3>6. ábra – Szemantikai adatmodell (ER) – felhasználók, szervezet és ügyintézés</h3>
+<p>Az egyedek, a kapcsolatok és a fontosabb tulajdonságok Chen-féle jelöléssel. A kulcstulajdonság aláhúzva, a kapcsolatok számossága a vonalakon látható (1, N). A szerepkör-hozzárendelés önálló egyed, mert saját tulajdonságai vannak, és oktatói szerepkörnél egy tanszékhez is kapcsolódik. A foglalás szintén önálló egyed, mert az értesítések hivatkoznak rá.</p>
+<figure><img src="uml/r06_er_szemelyek.svg" alt="Szemantikai adatmodell (ER) – felhasználók, szervezet és ügyintézés"></figure>
+<p class="where">Forrás: <code>H4/uml/r06_er_szemelyek.puml</code></p>
+</div>
+<div class="item" id="r07_er_tartalom">
+<h3>7. ábra – Szemantikai adatmodell (ER) – tartalom és külső adatok</h3>
+<p>A tartalmak és a külső forrásból érkező adatok egyedei. A zarva_tartas és az allergen többértékű tulajdonság (dupla ellipszis), a szabad_helyek származtatott tulajdonság (szaggatott ellipszis): nem tároljuk, a kapacitásból és a legutóbbi mérésből számoljuk.</p>
+<figure><img src="uml/r07_er_tartalom.svg" alt="Szemantikai adatmodell (ER) – tartalom és külső adatok"></figure>
+<p class="where">Forrás: <code>H4/uml/r07_er_tartalom.puml</code></p>
+</div>
+<div class="item" id="r08_er_bejelentes">
+<h3>8. ábra – Szemantikai adatmodell (ER) – hibabejelentés</h3>
+<p>A hibabejelentés egyedei. A HOZZARENDELESI_SZABALY háromágú kapcsolat: egy kategória és egy épület párosához egy felelős egységet rendel. Az ELOZMENY gyenge egyed, csak a bejelentéssel együtt létezik.</p>
+<figure><img src="uml/r08_er_bejelentes.svg" alt="Szemantikai adatmodell (ER) – hibabejelentés"></figure>
+<p class="where">Forrás: <code>H4/uml/r08_er_bejelentes.puml</code></p>
+</div>
+<div class="item" id="r09_relacios_szemelyek">
+<h3>9. ábra – Relációs adatmodell – felhasználók, szervezet és ügyintézés</h3>
+<p>A táblák az elsődleges kulccsal (PK), az idegen kulcsokkal (FK) és az egyedi (UQ) oszlopokkal. A csillag a kötelező (NOT NULL) oszlopot jelöli. A vonalak végén a „szarvasláb” a több oldalt jelzi.</p>
+<figure><img src="uml/r09_relacios_szemelyek.svg" alt="Relációs adatmodell – felhasználók, szervezet és ügyintézés"></figure>
+<p class="where">Forrás: <code>H4/uml/r09_relacios_szemelyek.puml</code></p>
+</div>
+<div class="item" id="r10_relacios_tartalom">
+<h3>10. ábra – Relációs adatmodell – tartalom és külső adatok</h3>
+<p>A tartalom és a külső adatok táblái. A négy tartalomtábla (places, news_items, events, daily_menus) mindegyike tartalmazza a Content bázisosztály oszlopait (status, created_by, created_at, updated_at, published_at, version); ezeket az áttekinthetőség kedvéért az ábra is mutatja.</p>
+<figure><img src="uml/r10_relacios_tartalom.svg" alt="Relációs adatmodell – tartalom és külső adatok"></figure>
+<p class="where">Forrás: <code>H4/uml/r10_relacios_tartalom.puml</code></p>
+</div>
+<div class="item" id="r11_relacios_bejelentes">
+<h3>11. ábra – Relációs adatmodell – hibabejelentés</h3>
+<p>A hibabejelentés táblái. A report_code_counters tábla az éven belüli sorszámot adja ki az azonosítóhoz.</p>
+<figure><img src="uml/r11_relacios_bejelentes.svg" alt="Relációs adatmodell – hibabejelentés"></figure>
+<p class="where">Forrás: <code>H4/uml/r11_relacios_bejelentes.puml</code></p>
+</div>
+<div class="item" id="r12_adatelero_osztalyok">
+<h3>12. ábra – Az adatbázissal kapcsolatot tartó osztályok</h3>
+<p>Az adatelérési réteg osztályai. A Database az egyetlen osztály, amely közvetlenül a mysql2 kapcsolatkészletet használja; a Repository osztályok paraméterezett SQL-utasításokkal dolgoznak (SRS 7.1), és táblasorokból az analízis modell objektumait állítják elő. A szolgáltatásosztályok (Service) csak repositorykon keresztül érik el az adatokat.</p>
+<figure><img src="uml/r12_adatelero_osztalyok.svg" alt="Az adatbázissal kapcsolatot tartó osztályok"></figure>
+<p class="where">Forrás: <code>H4/uml/r12_adatelero_osztalyok.puml</code></p>
+</div>
+<div class="item" id="r13_act_egyideju_foglalas">
+<h3>13. ábra – Egyidejű foglalás kezelése – aktivitásdiagram</h3>
+<p>Mi történik, ha két hallgató ugyanabban a pillanatban foglalja ugyanazt az időpontot (UC-11 E1). A foglalás egy tranzakcióban fut: az időpont sorát zárolja, újraellenőrzi az állapotát, és csak ezután írja. Ha a zárolás ellenére ütközés lenne, a bookings tábla egyedi indexe (active_slot, active_case) utasítja el a második írást.</p>
+<figure><img src="uml/r13_act_egyideju_foglalas.svg" alt="Egyidejű foglalás kezelése – aktivitásdiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/r13_act_egyideju_foglalas.puml</code></p>
+</div>
+<div class="item" id="r14_act_ertesites">
+<h3>14. ábra – Értesítések küldése újrapróbálással – aktivitásdiagram</h3>
+<p>Az e-mailek küldése nem a felhasználói kérés része: a kérés csak sorba állítja az értesítést, a küldést egy percenként futó háttérfeladat végzi. Így az e-mail-szolgáltatás kiesése nem lassítja és nem rontja el a foglalást vagy a bejelentést (SRS 5.6, UC-11 E3).</p>
+<figure><img src="uml/r14_act_ertesites.svg" alt="Értesítések küldése újrapróbálással – aktivitásdiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/r14_act_ertesites.puml</code></p>
+</div>
+<div class="item" id="r15_seq_keres">
+<h3>15. ábra – Egy API-kérés útja a rendszeren belül – szekvenciadiagram</h3>
+<p>Egy védett kérés feldolgozása rétegenként, a bejelentés állapotának módosításán bemutatva. A hitelesítést és a jogosultság-ellenőrzést közös köztes réteg (middleware) végzi, így ezt nem kell minden végpontnál külön megírni. Hiba esetén egységes JSON-hibaválasz megy vissza.</p>
+<figure><img src="uml/r15_seq_keres.svg" alt="Egy API-kérés útja a rendszeren belül – szekvenciadiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/r15_seq_keres.puml</code></p>
+</div>
+<div class="item" id="r16_komponens">
+<h3>16. ábra – A rendszer komponensei – komponensdiagram</h3>
+<p>Az alkalmazásszerver belső felépítése. Minden funkcionális alrendszer mindhárom rétegben megjelenik: a router fogadja a kérést, a szolgáltatás (service) végzi az üzleti logikát az analízis modell osztályaival, a repository pedig az adatbázissal tart kapcsolatot. A háttérfeladatok (menetrend-betöltés, értesítések, takarítás) ugyanezeket a szolgáltatásokat használják.</p>
+<figure><img src="uml/r16_komponens.svg" alt="A rendszer komponensei – komponensdiagram"></figure>
+<p class="where">Forrás: <code>H4/uml/r16_komponens.puml</code></p>
+</div>
+<div class="item" id="r17_telepites">
+<h3>17. ábra – Telepítési diagram</h3>
+<p>A rendszer futtatási környezete (SRS 8.6): egy bérelt Linux virtuális szerveren fut az Nginx webszerver, a pm2 által felügyelt Node.js-alkalmazás és a MySQL-adatbázis. Kívülről csak a 443-as (HTTPS) port érhető el; a MySQL csak a helyi gépről fogad kapcsolatot.</p>
+<figure><img src="uml/r17_telepites.svg" alt="Telepítési diagram"></figure>
+<p class="where">Forrás: <code>H4/uml/r17_telepites.puml</code></p>
+</div>
+</main>
+</body>
+</html>

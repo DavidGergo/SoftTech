@@ -1,0 +1,14 @@
+@startsalt
+{+
+  <b>Hibabejelentés › Új bejelentés
+  ==
+  { Kategória * | ^Világítás^ }
+  { Épület * | ^A/1 épület^ | [Kijelölés a térképen] }
+  { Terem vagy pontos hely | "Földszint, 12-es előadó  " }
+  { Leírás * | "A terem hátsó két lámpája nem világít.          " }
+  { . | <color:#B91C1C>Legalább 10 karakter szükséges. }
+  { Kép (JPEG vagy PNG, legfeljebb 5 MB) | [Fájl kiválasztása] | lampa.jpg (1,2 MB) }
+  --
+  { [Mégse] | [<b>Beküldés] }
+}
+@endsalt

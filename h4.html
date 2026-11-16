@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H4 beadandó - Vezérlőpult</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        html { scroll-behavior: smooth; }
+    </style>
+    <style type="text/tailwindcss">
+        .doc .h-part { @apply text-3xl md:text-4xl font-bold mt-16 mb-6 pb-3 text-gray-900 border-b-2 border-gray-800 uppercase tracking-wide; }
+        .doc .h-sec  { @apply text-2xl md:text-3xl font-bold mt-12 mb-4 text-gray-900 pt-4; }
+        .doc .h-sub  { @apply text-xl font-bold mt-8 mb-3 text-gray-900; }
+        .doc .h-sub2 { @apply text-lg font-bold mt-6 mb-2 text-gray-900; }
+        .doc .h-sub3 { @apply text-base font-bold mt-5 mb-2 text-gray-800 italic; }
+        .doc p { @apply mb-4; }
+        .doc ul { @apply list-disc pl-6 mb-4; }
+        .doc ol { @apply list-decimal pl-6 mb-4; }
+        .doc li { @apply mb-1; }
+        .doc td > ul, .doc td > ol { @apply mb-0; }
+        .doc .tbl { @apply overflow-x-auto mb-6; }
+        .doc table { @apply w-full border-collapse border border-gray-400 text-sm md:text-base; }
+        .doc th, .doc td { @apply border border-gray-400 p-2 md:p-3 align-top text-left; }
+        .doc th { @apply bg-gray-100; }
+        .doc .tbl-sm table { @apply text-xs md:text-sm; }
+        .doc .tbl-sm th, .doc .tbl-sm td { @apply p-1.5 md:p-2; }
+        .doc a { @apply text-[#174777] underline underline-offset-2 hover:text-blue-800; }
+        .doc code { @apply font-mono text-[0.85em] bg-gray-100 px-1 rounded; }
+        .doc pre { @apply font-mono text-xs md:text-sm bg-gray-50 border border-gray-300 p-4 mb-6 overflow-x-auto leading-snug; }
+        .doc .toc { @apply bg-gray-50 border border-gray-300 p-5 mb-10; }
+        .doc .toc ul { @apply list-none pl-0 mb-0; }
+        .doc .toc ul ul { @apply pl-6 mt-1 mb-1; }
+        .doc .note { @apply border-l-4 border-[#10365c] pl-4 bg-blue-50 py-3 pr-3 mb-6; }
+        .doc .fig { @apply border border-gray-300 bg-white p-3 mb-2 overflow-x-auto; }
+        .doc .fig img { @apply block mx-auto h-auto max-w-full; }
+        .doc .fig-cap { @apply text-sm text-gray-700 mb-8; }
+        .doc .cls-name { @apply font-bold; }
+        .doc .badge { @apply inline-block text-xs font-sans font-semibold bg-green-100 text-green-800 px-1.5 py-0.5 rounded align-middle; }
+        .doc .cover { @apply mb-10; }
+        .doc .cover-title { @apply text-2xl sm:text-3xl md:text-4xl font-bold my-8 tracking-wide uppercase break-words; }
+        .doc .cards a { @apply no-underline; }
+    </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden font-sans bg-gray-100">
+
+    <header class="bg-topbar text-white h-[60px] flex items-center justify-between w-full z-40 px-4 md:px-0 relative">
+        <div class="flex items-center h-full">
+            <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white mr-4 transition" aria-label="Menü">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <div class="md:w-64 h-full flex flex-col justify-center md:px-4 shrink-0">
+                <a href="index.html" class="leading-none select-none block text-white hover:text-gray-200">
+                    <span class="block font-semibold text-[17px] tracking-wide">MISKOLCI</span>
+                    <span class="block font-semibold text-[17px] tracking-wide mt-[2px]">EGYETEM</span>
+                    <span class="block text-[8px] tracking-widest text-gray-400 mt-1">UNIVERSITY OF MISKOLC</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex-1 flex items-center justify-end px-4"></div>
+    </header>
+
+    <div class="h-[2px] w-full flex shrink-0 z-20">
+        <div class="w-1/3 bg-red-600"></div>
+        <div class="w-1/3 bg-white"></div>
+        <div class="w-1/3 bg-green-600"></div>
+    </div>
+
+    <div class="flex flex-1 overflow-hidden relative">
+
+        <aside id="sidebar" class="hidden md:block w-full md:w-64 bg-sidebar shrink-0 relative shadow-[inset_-2px_0_5px_rgba(0,0,0,0.1)] transition-all duration-300 overflow-y-auto z-30">
+            <nav class="flex flex-col py-4 text-gray-200 text-sm font-medium">
+                <a href="index.html" class="menu-item">
+                    <i class="fas fa-home w-5 text-center"></i>
+                    <span>Főoldal</span>
+                </a>
+                <div class="border-b border-[rgba(255,255,255,0.1)] mx-4 my-2"></div>
+                <a href="h1.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H1 beadandó</span>
+                </a>
+                <a href="h2.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H2 beadandó</span>
+                </a>
+                <a href="h3.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H3 beadandó</span>
+                </a>
+                <a href="h4.html" class="menu-item border-l-4 border-blue-400 bg-[#16487a] text-white">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H4 beadandó</span>
+                </a>
+                <a href="h5.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H5 beadandó</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 bg-[#f0f2f5] relative w-full p-4 md:p-6 overflow-y-auto">
+            <div class="doc bg-white p-6 md:p-12 w-full max-w-5xl mx-auto shadow-sm border border-gray-300 font-serif text-black leading-relaxed">
+
+<h1 class="text-2xl md:text-3xl font-bold mb-2 mt-0 text-gray-900">H4 – A tervezési fázis dokumentumai</h1>
+<p class="text-gray-700">Csoport: ME-nthetetlenek · Feladat sorszáma: 19 · Dátum: 2026. 11. 16.</p>
+
+<p>A H4 határidőre a tervezett szoftver objektumorientált analízisét (az analízis modell elkészítését) és a rendszertervezés első lépéseit kell elvégezni. A <a href="https://users.iit.uni-miskolc.hu/~mileff/szt/H4_hat.html">tantárgyi követelmény</a> szerint a beadandó dokumentumok: az analízis modell, a rendszertervezés, a bővített szótár, valamint a felhasználói dokumentáció, a vízió és az SRS, ha módosultak. A dokumentumok fájlneve az előírt <code>csapatnev_ANALxx.html</code>, illetve <code>csapatnev_RTERVxx.html</code> formát követi, ahol <code>xx</code> a verziószám.</p>
+
+<h2 class="text-xl font-bold mt-8 mb-3 text-gray-900">A beadott dokumentumok</h2>
+<div class="cards grid gap-4 mb-8">
+<a href="H4/ME-nthetetlenek_ANAL10.html" class="block border border-gray-300 hover:border-[#174777] hover:bg-blue-50 p-5 transition">
+    <p class="font-sans font-bold text-lg mb-1 text-[#174777]"><i class="fas fa-sitemap mr-2"></i>Analízis modell 1.0</p>
+    <p class="mb-0 text-gray-800">Kezdeti osztálydiagram, osztálylista és alrendszerek. A gyakorlatvezetővel való egyeztetésre készült rövid változat.</p>
+</a>
+<a href="H4/ME-nthetetlenek_ANAL11.html" class="block border border-gray-300 hover:border-[#174777] hover:bg-blue-50 p-5 transition">
+    <p class="font-sans font-bold text-lg mb-1 text-[#174777]"><i class="fas fa-diagram-project mr-2"></i>Analízis modell 1.1</p>
+    <p class="mb-0 text-gray-800">A teljes modell: alrendszerenként statikus, dinamikus és funkcionális modell, operációk, osztálydiagramok és részletes osztálylisták (29 ábra).</p>
+</a>
+<a href="H4/ME-nthetetlenek_RTERV10.html" class="block border border-gray-300 hover:border-[#174777] hover:bg-blue-50 p-5 transition">
+    <p class="font-sans font-bold text-lg mb-1 text-[#174777]"><i class="fas fa-database mr-2"></i>Rendszertervezés 1.0</p>
+    <p class="mb-0 text-gray-800">Felhasználói felület, adatbázis-kezelő, ER- és relációs modell, adatelérési osztályok, kivételes folyamatok, architektúra, REST API (17 ábra).</p>
+</a>
+<a href="H4/ME-nthetetlenek_SZOTAR20.html" class="block border border-gray-300 hover:border-[#174777] hover:bg-blue-50 p-5 transition">
+    <p class="font-sans font-bold text-lg mb-1 text-[#174777]"><i class="fas fa-book mr-2"></i>Szótár 2.0</p>
+    <p class="mb-0 text-gray-800">A H3 szótár bővített, önálló változata (125 fogalom).</p>
+</a>
+<a href="H4/H4_abrak.pdf" class="block border border-gray-300 hover:border-[#174777] hover:bg-blue-50 p-5 transition">
+    <p class="font-sans font-bold text-lg mb-1 text-[#174777]"><i class="fas fa-file-pdf mr-2"></i>Ábragyűjtemény (PDF)</p>
+    <p class="mb-0 text-gray-800">Mind a H4 ábrái magyarázattal, egy nyomtatható fájlban. Böngészőben: <a href="H4/H4_abrak.html">H4_abrak.html</a>.</p>
+</a>
+</div>
+
+<h2 class="text-xl font-bold mt-8 mb-3 text-gray-900">Módosult és nem módosult dokumentumok</h2>
+<p><strong>Módosult: az <a href="h3.html">SRS</a> (0.4-es verzió).</strong> A gyakorlatvezetői visszajelzés alapján a use case modell «include» és «extend» kapcsolatokkal, hat új use case-szel (UC-19 – UC-24) és egy új aktorral (A-08 E-mail-szolgáltatás) egészült ki; a hét use case diagram újrarajzolva (<a href="H3/H3-uml.pdf">H3-uml.pdf</a>). A tantárgyi követelmény szerint a módosult SRS-t a H4-gyel együtt újra le kell adni.</p>
+<p>A <a href="h2.html">vízió dokumentum</a> és a <a href="h3.html#resz-3">felhasználói kézikönyv</a> a H3 óta nem változott, ezért ezekből nem készült új verzió. Az analízis során a követelményekkel ellentmondó részt nem találtunk; a modell pontosításai (például a felelős egység kiválasztásának szabálya vagy a menetrend betöltésenkénti kezelése) az SRS követelményeinek részletezései.</p>
+
+<h2 class="text-xl font-bold mt-8 mb-3 text-gray-900">Az ábrák forrása</h2>
+<p>Minden ábra PlantUML-lel készült; a forráskódok a <code>H4/uml</code> mappában vannak (<code>.puml</code>), a kész ábrák ugyanott (<code>.svg</code>). Egy ábra módosításához elég a forrást átírni és újra előállítani (például a Visual Studio Code PlantUML bővítményével vagy a plantuml.com oldalon).</p>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="assets/script.js"></script>
+</body>
+</html>

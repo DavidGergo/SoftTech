@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analízis modell 1.1 – ME-nthetetlenek</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/style.css">
+    <style>
+        html { scroll-behavior: smooth; }
+    </style>
+    <style type="text/tailwindcss">
+        .doc .h-part { @apply text-3xl md:text-4xl font-bold mt-16 mb-6 pb-3 text-gray-900 border-b-2 border-gray-800 uppercase tracking-wide; }
+        .doc .h-sec  { @apply text-2xl md:text-3xl font-bold mt-12 mb-4 text-gray-900 pt-4; }
+        .doc .h-sub  { @apply text-xl font-bold mt-8 mb-3 text-gray-900; }
+        .doc .h-sub2 { @apply text-lg font-bold mt-6 mb-2 text-gray-900; }
+        .doc .h-sub3 { @apply text-base font-bold mt-5 mb-2 text-gray-800 italic; }
+        .doc p { @apply mb-4; }
+        .doc ul { @apply list-disc pl-6 mb-4; }
+        .doc ol { @apply list-decimal pl-6 mb-4; }
+        .doc li { @apply mb-1; }
+        .doc td > ul, .doc td > ol { @apply mb-0; }
+        .doc .tbl { @apply overflow-x-auto mb-6; }
+        .doc table { @apply w-full border-collapse border border-gray-400 text-sm md:text-base; }
+        .doc th, .doc td { @apply border border-gray-400 p-2 md:p-3 align-top text-left; }
+        .doc th { @apply bg-gray-100; }
+        .doc .tbl-sm table { @apply text-xs md:text-sm; }
+        .doc .tbl-sm th, .doc .tbl-sm td { @apply p-1.5 md:p-2; }
+        .doc a { @apply text-[#174777] underline underline-offset-2 hover:text-blue-800; }
+        .doc code { @apply font-mono text-[0.85em] bg-gray-100 px-1 rounded; }
+        .doc pre { @apply font-mono text-xs md:text-sm bg-gray-50 border border-gray-300 p-4 mb-6 overflow-x-auto leading-snug; }
+        .doc .toc { @apply bg-gray-50 border border-gray-300 p-5 mb-10; }
+        .doc .toc ul { @apply list-none pl-0 mb-0; }
+        .doc .toc ul ul { @apply pl-6 mt-1 mb-1; }
+        .doc .note { @apply border-l-4 border-[#10365c] pl-4 bg-blue-50 py-3 pr-3 mb-6; }
+        .doc .fig { @apply border border-gray-300 bg-white p-3 mb-2 overflow-x-auto; }
+        .doc .fig img { @apply block mx-auto h-auto max-w-full; }
+        .doc .fig-cap { @apply text-sm text-gray-700 mb-8; }
+        .doc .cls-name { @apply font-bold; }
+        .doc .badge { @apply inline-block text-xs font-sans font-semibold bg-green-100 text-green-800 px-1.5 py-0.5 rounded align-middle; }
+        .doc .cover { @apply mb-10; }
+        .doc .cover-title { @apply text-2xl sm:text-3xl md:text-4xl font-bold my-8 tracking-wide uppercase break-words; }
+        .doc .cards a { @apply no-underline; }
+    </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden font-sans bg-gray-100">
+
+    <header class="bg-topbar text-white h-[60px] flex items-center justify-between w-full z-40 px-4 md:px-0 relative">
+        <div class="flex items-center h-full">
+            <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white mr-4 transition" aria-label="Menü">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <div class="md:w-64 h-full flex flex-col justify-center md:px-4 shrink-0">
+                <a href="../index.html" class="leading-none select-none block text-white hover:text-gray-200">
+                    <span class="block font-semibold text-[17px] tracking-wide">MISKOLCI</span>
+                    <span class="block font-semibold text-[17px] tracking-wide mt-[2px]">EGYETEM</span>
+                    <span class="block text-[8px] tracking-widest text-gray-400 mt-1">UNIVERSITY OF MISKOLC</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex-1 flex items-center justify-end px-4"></div>
+    </header>
+
+    <div class="h-[2px] w-full flex shrink-0 z-20">
+        <div class="w-1/3 bg-red-600"></div>
+        <div class="w-1/3 bg-white"></div>
+        <div class="w-1/3 bg-green-600"></div>
+    </div>
+
+    <div class="flex flex-1 overflow-hidden relative">
+
+        <aside id="sidebar" class="hidden md:block w-full md:w-64 bg-sidebar shrink-0 relative shadow-[inset_-2px_0_5px_rgba(0,0,0,0.1)] transition-all duration-300 overflow-y-auto z-30">
+            <nav class="flex flex-col py-4 text-gray-200 text-sm font-medium">
+                <a href="../index.html" class="menu-item">
+                    <i class="fas fa-home w-5 text-center"></i>
+                    <span>Főoldal</span>
+                </a>
+                <div class="border-b border-[rgba(255,255,255,0.1)] mx-4 my-2"></div>
+                <a href="../h1.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H1 beadandó</span>
+                </a>
+                <a href="../h2.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H2 beadandó</span>
+                </a>
+                <a href="../h3.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H3 beadandó</span>
+                </a>
+                <a href="../h4.html" class="menu-item border-l-4 border-blue-400 bg-[#16487a] text-white">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H4 beadandó</span>
+                </a>
+                <a href="../h5.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H5 beadandó</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 bg-[#f0f2f5] relative w-full p-4 md:p-6 overflow-y-auto">
+            <div class="doc bg-white p-6 md:p-12 w-full max-w-5xl mx-auto shadow-sm border border-gray-300 font-serif text-black leading-relaxed">
+<div class="cover">
+    <p class="text-sm text-gray-600 mb-6">Címlap</p>
+    <div class="space-y-2 text-lg">
+        <p class="mb-1">Csoport neve: <strong>ME-nthetetlenek</strong></p>
+        <p class="mb-1">Feladat sorszáma: <strong>19</strong></p>
+        <p class="mb-1">Feladat címe: Az uni-app jelenlegi funkcióinak gyakorlatiasabb átdolgozása</p>
+    </div>
+    <h1 class="cover-title">Analízis modell</h1>
+    <p class="mb-1">Gyakorlatvezető:</p>
+    <p class="text-xl uppercase mb-6">Tompa Tamás</p>
+    <p class="mb-2">Csoporttagok:</p>
+    <div class="tbl"><table>
+        <thead><tr><th>Név</th><th>Tankör</th><th>E-mail-cím</th></tr></thead>
+        <tbody>
+<tr><td>Csoportvezető: Dávid Gergő</td><td>G2-BP1</td><td>gergo.david@student.uni-miskolc.hu</td></tr>
+<tr><td>Győri Kristóf</td><td>G2-BP1</td><td>kristof.gyori@student.uni-miskolc.hu</td></tr>
+<tr><td>Maklári Máté</td><td>GE-BGI</td><td>mate.mate.165@gmail.com</td></tr>
+<tr><td>Balázs Csenge Málna</td><td>GE-BGI</td><td>csenge.balazs.malna@student.uni-miskolc.hu</td></tr>
+<tr><td>Nagy Virág</td><td>GE-BGI</td><td>virag.nagy@student.uni-miskolc.hu</td></tr>
+        </tbody>
+    </table></div>
+    <p>Beadás dátuma: <strong>2026. 11. 16.</strong></p>
+</div>
+<h2 id="tortenet" class="h-sub">Történet</h2>
+<div class="tbl"><table>
+    <thead><tr><th>Dátum</th><th>Verzió</th><th>Leírás</th><th>Szerző</th></tr></thead>
+    <tbody>
+<tr><td>2026. 11. 14.</td><td>1.0</td><td>Kezdeti osztálydiagram, az osztályok felsorolása és a rendszer alrendszerekre bontása. A gyakorlatvezetővel való egyeztetésre készült változat.</td><td>ME-nthetetlenek</td></tr>
+<tr><td>2026. 11. 16.</td><td>1.1</td><td>Teljes analízis modell: alrendszerenként a statikus, a dinamikus és a funkcionális modell, az operációk, a végleges osztálydiagramok és az osztályok részletes leírása.</td><td>ME-nthetetlenek</td></tr>
+    </tbody>
+</table></div>
+<div class="toc"><p class="font-bold mb-2">Tartalomjegyzék</p>
+<ul>
+<li><a href="#s1">1. Bevezetés</a></li>
+<li><a href="#s2">2. Kezdeti osztálydiagram</a></li>
+<ul>
+<li><a href="#s2-1">2.1 Osztálydiagram</a></li>
+<li><a href="#s2-2">2.2 Osztályok felsorolása</a></li>
+<li><a href="#s2-3">2.3 Alrendszerek</a></li>
+</ul>
+<li><a href="#s3">3. A Felhasználókezelés alrendszer modellje</a></li>
+<ul>
+<li><a href="#s3-1">3.1 Statikus modell</a></li>
+<li><a href="#s3-2">3.2 Dinamikus modell</a></li>
+<li><a href="#s3-3">3.3 Funkcionális modell</a></li>
+<li><a href="#s3-4">3.4 Operációk azonosítása</a></li>
+<li><a href="#s3-5">3.5 Az analízis modell osztálydiagramja</a></li>
+<li><a href="#s3-6">3.6 Az analízis modell osztályainak listája</a></li>
+</ul>
+<li><a href="#s4">4. A Szervezet és oktatók alrendszer modellje</a></li>
+<ul>
+<li><a href="#s4-1">4.1 Statikus modell</a></li>
+<li><a href="#s4-2">4.2 Dinamikus modell</a></li>
+<li><a href="#s4-3">4.3 Funkcionális modell</a></li>
+<li><a href="#s4-4">4.4 Operációk azonosítása</a></li>
+<li><a href="#s4-5">4.5 Az analízis modell osztálydiagramja</a></li>
+<li><a href="#s4-6">4.6 Az analízis modell osztályainak listája</a></li>
+</ul>
+<li><a href="#s5">5. A Tartalomkezelés alrendszer modellje</a></li>
+<ul>
+<li><a href="#s5-1">5.1 Statikus modell</a></li>
+<li><a href="#s5-2">5.2 Dinamikus modell</a></li>
+<li><a href="#s5-3">5.3 Funkcionális modell</a></li>
+<li><a href="#s5-4">5.4 Operációk azonosítása</a></li>
+<li><a href="#s5-5">5.5 Az analízis modell osztálydiagramja</a></li>
+<li><a href="#s5-6">5.6 Az analízis modell osztályainak listája</a></li>
+</ul>
+<li><a href="#s6">6. A Külső adatok alrendszer modellje</a></li>
+<ul>
+<li><a href="#s6-1">6.1 Statikus modell</a></li>
+<li><a href="#s6-2">6.2 Dinamikus modell</a></li>
+<li><a href="#s6-3">6.3 Funkcionális modell</a></li>
+<li><a href="#s6-4">6.4 Operációk azonosítása</a></li>
+<li><a href="#s6-5">6.5 Az analízis modell osztálydiagramja</a></li>
+<li><a href="#s6-6">6.6 Az analízis modell osztályainak listája</a></li>
+</ul>
+<li><a href="#s7">7. Az Ügyintézés alrendszer modellje</a></li>
+<ul>
+<li><a href="#s7-1">7.1 Statikus modell</a></li>
+<li><a href="#s7-2">7.2 Dinamikus modell</a></li>
+<li><a href="#s7-3">7.3 Funkcionális modell</a></li>
+<li><a href="#s7-4">7.4 Operációk azonosítása</a></li>
+<li><a href="#s7-5">7.5 Az analízis modell osztálydiagramja</a></li>
+<li><a href="#s7-6">7.6 Az analízis modell osztályainak listája</a></li>
+</ul>
+<li><a href="#s8">8. A Hibabejelentés alrendszer modellje</a></li>
+<ul>
+<li><a href="#s8-1">8.1 Statikus modell</a></li>
+<li><a href="#s8-2">8.2 Dinamikus modell</a></li>
+<li><a href="#s8-3">8.3 Funkcionális modell</a></li>
+<li><a href="#s8-4">8.4 Operációk azonosítása</a></li>
+<li><a href="#s8-5">8.5 Az analízis modell osztálydiagramja</a></li>
+<li><a href="#s8-6">8.6 Az analízis modell osztályainak listája</a></li>
+</ul>
+<li><a href="#s9">9. Mellékletek</a></li>
+<ul>
+<li><a href="#s9-1">9.1 Az analízis modell áttekintő osztálydiagramja</a></li>
+<li><a href="#s9-2">9.2 Ábrajegyzék</a></li>
+<li><a href="#s9-3">9.3 Az ábrák forrása</a></li>
+</ul>
+</ul>
+</div><h2 id="s1" class="h-sec">1. Bevezetés</h2>
+<p>Ez a dokumentum a Vezérlőpult nevű rendszer objektumorientált analízisének eredményét, az <strong>analízis modellt</strong> írja le. Kiindulópontja a H3 határidőre elkészült <a href="../h3.html">szoftverkövetelmény-specifikáció (SRS)</a>, elsősorban a 3. fejezet use case-leírásai és funkcionális követelményei, valamint a <a href="../h2.html">H2 vízió dokumentum</a>.</p>
+<p>A dokumentum a tantárgyi minta szerint épül fel. A 2. fejezet a kezdeti (elemzési szintű) osztálydiagramot, az osztályok rövid leírását és a rendszer alrendszerekre bontását tartalmazza; ez megegyezik a dokumentum 1.0-s verziójával. A 3–8. fejezet alrendszerenként írja le a modellt: a kapcsolatok, az attribútumok és a bázisosztályok pontosítását (statikus modell), a legfontosabb use case-ek szekvencia- és állapotdiagramjait (dinamikus modell), a fontosabb feldolgozási lépéseket (funkcionális modell), az operációk azonosítását, végül az alrendszer osztálydiagramját és osztályainak részletes listáját. A 9. fejezet a mellékleteket tartalmazza.</p>
+<p><strong>Jelölések.</strong> Az ábrák UML 2 jelölést használnak, és PlantUML-lel készültek. Az osztályok, attribútumok és operációk neve az SRS 7.2 elnevezési konvenciója szerint angol (például <code>Booking</code>, <code>canCancel()</code>), mert ezek a nevek a megvalósításban is így jelennek meg; a leírások magyarok, és minden osztálynál szerepel a magyar megnevezés. A use case-ekre (UC-xx) és a követelményekre (K-xx) az SRS azonosítóival hivatkozunk. Az új szakkifejezéseket a <a href="ME-nthetetlenek_SZOTAR20.html">szótár 2.0-s változata</a> magyarázza.</p>
+<h2 id="s2" class="h-sec">2. Kezdeti osztálydiagram</h2>
+<p>Ebben a fázisban felvettük a listára minden valószínűsíthető osztályt, amely az SRS alapján a rendszerhez tartozik. Az osztályokat a use case-leírások főneveiből (például foglalás, időpont, bejelentés, megálló) és a funkcionális követelményekből gyűjtöttük ki, majd kiszűrtük közülük azokat, amelyek csak egy másik osztály tulajdonságai (például az iroda, az ár, az állapot) vagy a felület elemei (például a gomb, az űrlap, a lista). A külső rendszerek (azonosító szolgáltatás, menetrend-adatforrás, parkolóérzékelő-rendszer, e-mail-szolgáltatás) aktorok, ezért nem osztályok; a rendszeren belüli „lenyomatuk” viszont igen (például a SensorDevice az érzékelőeszközt képviseli).</p>
+<p>Ezek a problématér osztályai, ezért ebben a munkafázisban csak a nevüket, egy rövid leírásukat és a köztük lévő asszociációkat gyűjtöttük össze.</p>
+<h3 id="s2-1" class="h-sub">2.1 Osztálydiagram</h3>
+<p>Az SRS use case-leírásaiból és követelményeiből kigyűjtött problématér-osztályok és a köztük lévő asszociációk. Ebben a fázisban csak az osztályok neve és a kapcsolatok neve szerepel; a számosságokat, az attribútumokat és az operációkat az alrendszerek modelljei pontosítják. A színek azt az alrendszert jelölik, amelybe az osztály a felbontás után kerül.</p>
+<figure class="fig" id="abra-1"><a href="uml/a01_kezdeti_osztalydiagram.svg" target="_blank" rel="noopener"><img src="uml/a01_kezdeti_osztalydiagram.svg" alt="A kezdeti (elemzési szintű) osztálydiagram" loading="lazy" style="width:780px"></a></figure>
+<p class="fig-cap"><strong>1. ábra.</strong> A kezdeti (elemzési szintű) osztálydiagram. <a href="uml/a01_kezdeti_osztalydiagram.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h3 id="s2-2" class="h-sub">2.2 Osztályok felsorolása</h3>
+<p>A kezdeti osztálydiagram osztályai alrendszerenként csoportosítva. Minden osztály neve után zárójelben a magyar megnevezés áll.</p>
+<p><span class="cls-name">User</span> (Felhasználó)<br>Az egyetemi Microsoft-fiókkal bejelentkezett személy. Tárolja az azonosításhoz szükséges adatokat (azonosító, név, e-mail-cím), és rajta keresztül érhetők el a szerepkörei, foglalásai és bejelentései.</p>
+<p><span class="cls-name">Role</span> (Szerepkör)<br>A felhasználó jogosultsági köre: hallgató, oktató vagy adminisztrátor. Egy felhasználónak több szerepköre is lehet; oktatónál a tanszék is hozzátartozik.</p>
+<p><span class="cls-name">Session</span> (Munkamenet)<br>A bejelentkezett felhasználó aktív használati időszaka; 30 perc tétlenség után lejár.</p>
+<p><span class="cls-name">AuditLogEntry</span> (Naplóbejegyzés)<br>Egy adminisztrátori vagy oktatói módosítás nyoma (ki, mit, mikor).</p>
+<p><span class="cls-name">Notification</span> (Értesítés)<br>A rendszer által küldött e-mail (visszaigazolás, emlékeztető, állapotváltozás), a küldés eredményével.</p>
+<p><span class="cls-name">Faculty</span> (Kar)<br>Az egyetem kara; tanszékekből áll.</p>
+<p><span class="cls-name">Department</span> (Tanszék)<br>A kar tanszéke; ide tartoznak az oktatók, és felelőse lehet hibabejelentéseknek.</p>
+<p><span class="cls-name">StaffProfile</span> (Oktatói adatlap)<br>Egy oktató nyilvános adatlapja: név, tanszék, iroda, e-mail-cím, fogadóórák.</p>
+<p><span class="cls-name">OfficeHour</span> (Fogadóóra)<br>Az oktató egy fogadóórája (nap, kezdés, befejezés).</p>
+<p><span class="cls-name">NewsItem</span> (Hír)<br>Egyetemi hír összefoglalóval és a teljes cikkre mutató hivatkozással.</p>
+<p><span class="cls-name">Event</span> (Esemény)<br>Egyetemi esemény időponttal, helyszínnel, típussal és szervezővel.</p>
+<p><span class="cls-name">Place</span> (Hely)<br>A campustérkép egy helye: épület, terem vagy szolgáltatás koordinátákkal; más osztályok helyszínként hivatkoznak rá.</p>
+<p><span class="cls-name">Canteen</span> (Menza)<br>Az egyetemi menza a helyével és a nyitvatartásával.</p>
+<p><span class="cls-name">Menu</span> (Étlap)<br>A menza étlapja; az ételeket tartalmazza.</p>
+<p><span class="cls-name">Dish</span> (Étel)<br>Az étlap egy tétele árral, allergénekkel és vegetáriánus jelöléssel.</p>
+<p><span class="cls-name">ParkingZone</span> (Parkolózóna)<br>A parkoló egy zónája a kapacitásával; a mérésekből a szabad helyek száma számolható.</p>
+<p><span class="cls-name">ParkingReading</span> (Parkolómérés)<br>Egy érzékelő által küldött adat: a zónában adott időpontban foglalt helyek száma.</p>
+<p><span class="cls-name">SensorDevice</span> (Érzékelőeszköz)<br>A parkolóérzékelő-rendszer egy adattovábbító eszköze, amely egy zóna adatait küldi.</p>
+<p><span class="cls-name">Stop</span> (Megálló)<br>Az MVK egy megállója az egyetem közelében.</p>
+<p><span class="cls-name">Route</span> (Járat)<br>Az MVK egy autóbusz- vagy villamosjárata.</p>
+<p><span class="cls-name">Departure</span> (Indulás)<br>Egy járat menetrend szerinti indulása egy megállóból egy irányba.</p>
+<p><span class="cls-name">CaseType</span> (Ügytípus)<br>Az ügyintézés fajtája (például igazolás kérése) helyszínnel és egy időpont hosszával.</p>
+<p><span class="cls-name">SlotRange</span> (Időpontsáv)<br>Az adminisztrátor által megadott időszak, amelyből a foglalható időpontok készülnek.</p>
+<p><span class="cls-name">Slot</span> (Időpont)<br>Egy foglalható ügyintézési időpont.</p>
+<p><span class="cls-name">Booking</span> (Foglalás)<br>Egy hallgató foglalása egy időpontra.</p>
+<p><span class="cls-name">FaultReport</span> (Hibabejelentés)<br>Hibabejelentés kategóriával, helyszínnel, leírással, állapottal és azonosítóval.</p>
+<p><span class="cls-name">ReportCategory</span> (Bejelentési kategória)<br>A hiba fajtája (világítás, fűtés, takarítás, informatika, akadálymentesség, egyéb).</p>
+<p><span class="cls-name">ResponsibleUnit</span> (Felelős egység)<br>A bejelentés megoldásáért felelős egység (például Gondnokság vagy egy tanszék).</p>
+<p><span class="cls-name">StatusChange</span> (Állapotváltozás)<br>A bejelentés előzményeinek egy bejegyzése: állapotváltozás vagy megjegyzés.</p>
+<p><span class="cls-name">Attachment</span> (Csatolmány)<br>A bejelentéshez csatolt kép.</p>
+<h3 id="s2-3" class="h-sub">2.3 Alrendszerek</h3>
+<p>A kezdeti osztálydiagram alapján a rendszert hat funkcionális alrendszerre bontottuk. A felbontás az SRS use case-csomagjait követi (3.2–3.7), két eltéréssel: (1) a Mindennapi szolgáltatások csomag osztályai szétváltak, mert a menza a többi feltöltött tartalommal együtt kezelhető (Tartalomkezelés), a menetrend pedig a parkolással együtt külső adatforrásból érkezik (Külső adatok), míg az oktatói adatbázis a szervezeti egységekhez kötődik (Szervezet és oktatók); (2) az Adminisztráció csomag use case-ei abba az alrendszerbe kerültek, amelynek adatait kezelik (például az UC-16 az Ügyintézésbe). Így minden alrendszer egy jól körülhatárolt adatkört birtokol, és a köztük lévő kapcsolatok száma kicsi.</p>
+<p>A tantárgyi minta szerint tipikus felbontás a megjelenítés, az üzleti logika és az adatkezelés szétválasztása is. Ezt a rendszerterv architektúrája valósítja meg: mindegyik funkcionális alrendszer mindhárom rétegben megjelenik (felület, szolgáltatás, adatelérés). Az analízis modellben ezért a funkcionális felbontást használjuk.</p>
+<p>A kezdeti osztálydiagram felbontása hat funkcionális alrendszerre. A szaggatott nyilak függőséget jelölnek: a nyíl kiindulópontján álló alrendszer használja a végpontján álló osztályait; a feliratok a köztük áramló információt nevezik meg. A Felhasználókezelés alrendszert minden más alrendszer használja (ki a felhasználó, milyen jogai vannak, kinek kell értesítést küldeni). A külső rendszerek a perem mentén, a hozzájuk kapcsolódó alrendszer mellett láthatók.</p>
+<figure class="fig" id="abra-2"><a href="uml/a02_alrendszerek.svg" target="_blank" rel="noopener"><img src="uml/a02_alrendszerek.svg" alt="A rendszer funkcionális alrendszerei (csomagdiagram)" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>2. ábra.</strong> A rendszer funkcionális alrendszerei (csomagdiagram). <a href="uml/a02_alrendszerek.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h4 id="s2-3-1" class="h-sub2">2.3.1 Felhasználókezelés alrendszer</h4>
+<p>A felhasználók azonosítása, a szerepkörök és a munkamenetek kezelése, valamint a két közös szolgáltatás: a módosítások naplózása és az e-mail-értesítések. Minden más alrendszer ettől kapja meg, hogy ki a bejelentkezett felhasználó, és milyen jogai vannak.</p>
+<p><strong>Use case-ek:</strong> UC-01, UC-02, UC-18, UC-20<br><strong>Osztályok:</strong> User, Role, Session, AuditLogEntry, Notification</p>
+<h4 id="s2-3-2" class="h-sub2">2.3.2 Szervezet és oktatók alrendszer</h4>
+<p>Az egyetem szervezeti egységei (karok, tanszékek) és az oktatói adatlapok a fogadóórákkal. Az oktatókereső és az oktatói adatlap szerkesztése tartozik ide; a tanszékre a szerepkörök és a hibabejelentések is hivatkoznak.</p>
+<p><strong>Use case-ek:</strong> UC-09, UC-10, UC-24<br><strong>Osztályok:</strong> Faculty, Department, StaffProfile, OfficeHour</p>
+<h4 id="s2-3-3" class="h-sub2">2.3.3 Tartalomkezelés alrendszer</h4>
+<p>Az adminisztrátorok által feltöltött, közzétehető tartalmak: hírek, események, térképi helyek és a menza napi étlapjai, valamint a menza nyitvatartása. A térképi hely a többi alrendszer közös hivatkozási pontja (helyszín, iroda, épület).</p>
+<p><strong>Use case-ek:</strong> UC-03, UC-19, UC-05, UC-06, UC-07, UC-15<br><strong>Osztályok:</strong> NewsItem, Event, Place, Canteen, Menu, Dish</p>
+<h4 id="s2-3-4" class="h-sub2">2.3.4 Külső adatok alrendszer</h4>
+<p>A külső rendszerektől érkező adatok: a parkolóérzékelők mérései és az MVK menetrendje. Az alrendszer fogadja és ellenőrzi az adatokat, és kiszámolja belőlük, amit a felület mutat (szabad helyek, következő indulások).</p>
+<p><strong>Use case-ek:</strong> UC-04, UC-08<br><strong>Osztályok:</strong> ParkingZone, ParkingReading, SensorDevice, Stop, Route, Departure</p>
+<h4 id="s2-3-5" class="h-sub2">2.3.5 Ügyintézés alrendszer</h4>
+<p>Az ügyintézési időpontfoglalás: ügytípusok, időpontsávok, az ezekből előállított időpontok és a hallgatói foglalások.</p>
+<p><strong>Use case-ek:</strong> UC-11, UC-12, UC-16<br><strong>Osztályok:</strong> CaseType, SlotRange, Slot, Booking</p>
+<h4 id="s2-3-6" class="h-sub2">2.3.6 Hibabejelentés alrendszer</h4>
+<p>A hibabejelentések beküldése, a felelős egységhez rendelése, az állapotkövetés és a bejelentések kezelése.</p>
+<p><strong>Use case-ek:</strong> UC-13, UC-14, UC-17, UC-21, UC-22, UC-23<br><strong>Osztályok:</strong> FaultReport, ReportCategory, ResponsibleUnit, StatusChange, Attachment</p>
+<h2 id="s3" class="h-sec">3. A Felhasználókezelés alrendszer modellje</h2>
+<p>A Felhasználókezelés alrendszer azonosítja a felhasználót, nyilvántartja a szerepköreit és a munkamenetét, és két közös szolgáltatást nyújt a többi alrendszernek: a módosítások naplózását (K-46) és az e-mail-értesítéseket (K-31, K-37, K-42). A hozzá tartozó use case-ek: UC-01 Bejelentkezés, UC-02 Kijelentkezés, UC-18 Szerepkörök kezelése és UC-20 Értesítés küldése. Az UC-01-et az SRS 0.4-es változata szerint minden bejelentkezést igénylő use case «include» kapcsolattal használja. Külső kapcsolata az egyetemi azonosító szolgáltatás (A-05) és az e-mail-szolgáltatás.</p>
+<h3 id="s3-1" class="h-sub">3.1 Statikus modell</h3>
+<h4 id="s3-1-1" class="h-sub2">3.1.1 Kapcsolatok pontosítása</h4>
+<p>A kezdeti diagram kapcsolatait egyenként megvizsgáltuk, megneveztük, és megadtuk a számosságukat. A következő változtatások születtek:</p>
+<ul>
+<li><strong>User – Role („rendelkezik”):</strong> a kezdeti diagramon egyszerű több-a-többhöz asszociáció volt. A K-04 és az UC-18 alapján azonban a kapcsolatnak saját adatai vannak: ki adta a szerepkört, mikor, és oktatói szerepkörnél melyik tanszékhez (UC-18, 5. lépés). Ezért a kapcsolatból új osztály lett: <strong>RoleAssignment</strong>. A User és a RoleAssignment között kompozíció van (1 – 0..*), mert a hozzárendelés a felhasználó nélkül nem értelmes. A Role ezzel egyszerű felsorolás típussá vált.</li>
+<li><strong>User – Session („nyit”):</strong> 1 – 0..*. Egy felhasználónak egyszerre több munkamenete is lehet (például telefonon és számítógépen).</li>
+<li><strong>User – AuditLogEntry („végrehajtott”):</strong> 1 – 0..*, és csak a naplóbejegyzés felől navigálható: a bejegyzés tudja, ki végezte a módosítást, de a felhasználónak nem kell ismernie a saját bejegyzéseit.</li>
+<li><strong>User – Notification („címzett”):</strong> 1 – 0..*, szintén csak az értesítés felől navigálható. A pontosítás során kiderült, hogy az értesítést mindig egy másik alrendszer eseménye váltja ki (foglalás, állapotváltozás); ezt a Booking és a FaultReport felől induló függőség jelöli. Az értesítés fajtáit a <strong>NotificationType</strong> felsorolás adja meg.</li>
+<li><strong>User – StaffProfile („tartozik hozzá”):</strong> 0..1 – 0..1. Az oktatói adatlap létezhet fiók nélkül (az oktató még nem lépett be), és nem minden felhasználónak van adatlapja. A kapcsolat leírása a Szervezet és oktatók alrendszernél szerepel.</li>
+</ul>
+<h4 id="s3-1-2" class="h-sub2">3.1.2 Attribútumok azonosítása</h4>
+<p>Az attribútumokat a K-05 korlátozza: a felhasználóról csak az azonosító szolgáltatástól kapott azonosítót, nevet és e-mail-címet, valamint a szerepköreit tároljuk. Ezért a User osztályban nincs például telefonszám vagy Neptun-kód. Az azonosítás az <code>externalId</code> alapján történik, nem az e-mail-cím alapján, mert az e-mail-cím változhat (például névváltozáskor).</p>
+<ul>
+<li>A <code>disabled</code> attribútum az UC-18 A2 (fiók letiltása) miatt került be; a letiltott felhasználó bejelentkezését az UC-01 E3 utasítja el.</li>
+<li>A Session <code>returnUrl</code> attribútuma az UC-01 6. lépéséből (vissza a kiinduló oldalra) és az A1 alternatívából (védett funkcióból indul) következik.</li>
+<li>A Session lejáratához a <code>lastActivityAt</code> elegendő; a lejárat ideje ebből és a 30 perces korlátból számolható, ezért nem tároljuk külön.</li>
+<li>A Notification <code>attempts</code> és <code>sentAt</code> attribútuma az SRS 5.6 hibatűrési követelményéből adódik: a sikertelen küldést később meg kell ismételni, a kiváltó művelet pedig ettől érvényes marad.</li>
+</ul>
+<h4 id="s3-1-3" class="h-sub2">3.1.3 Bázisosztályok keresése</h4>
+<p>Megvizsgáltuk, hogy van-e az alrendszer osztályai között közös rész. A User és az oktatói adatlap (StaffProfile) is tárol nevet és e-mail-címet, de nem vontuk össze őket közös „Személy” bázisosztályba: az adatlap fiók nélkül is létezik, és a nevét az adminisztrátor adja meg, míg a felhasználó nevét az azonosító szolgáltatás. A naplóbejegyzés és az értesítés is tartalmaz időbélyeget, ez azonban technikai közös rész, nem fogalmi; a tervezés során legfeljebb a megvalósításban emeljük ki. Az alrendszerben ezért nincs általánosítás.</p>
+<h3 id="s3-2" class="h-sub">3.2 Dinamikus modell</h3>
+<h5 id="s3-2-1" class="h-sub3">3.2.1 UC-01 Bejelentkezés</h5>
+<p>A bejelentkezés során a Vezérlőpult csak közvetít: a felhasználót átirányítja az egyetemi azonosító szolgáltatáshoz, majd a visszakapott adatok alapján megkeresi vagy létrehozza a User objektumot, és munkamenetet indít.</p>
+<p>A bejelentkezés szokásos működése, az első belépés (A3) alternatívájával. A jelszót a felhasználó az egyetemi azonosító szolgáltatás oldalán adja meg, a Vezérlőpult csak a visszakapott azonosítót, nevet és e-mail-címet látja (K-02, K-05).</p>
+<figure class="fig" id="abra-3"><a href="uml/s1_seq_bejelentkezes.svg" target="_blank" rel="noopener"><img src="uml/s1_seq_bejelentkezes.svg" alt="UC-01 Bejelentkezés – szekvenciadiagram" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>3. ábra.</strong> UC-01 Bejelentkezés – szekvenciadiagram. <a href="uml/s1_seq_bejelentkezes.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s3-2-2" class="h-sub3">3.2.2 UC-02 Kijelentkezés</h5>
+<p>A kijelentkezés egyetlen üzenetből áll: a felület meghívja a munkamenet <code>end()</code> műveletét, majd a kezdőlapra irányít. Az automatikus kijelentkezésnél (A1) a felület minden kérés előtt az <code>isExpired()</code> művelettel ellenőrzi a munkamenetet, és lejárt munkamenetnél bejelentkezést kínál. Külön ábrát ezért nem készítettünk.</p>
+<h5 id="s3-2-3" class="h-sub3">3.2.3 UC-18 Szerepkörök kezelése</h5>
+<p>Az adminisztrátor kikeresi a felhasználót, a felület megjeleníti a jelenlegi szerepköreit, majd hozzáadáskor a <code>User.grantRole(role, department, grantedBy)</code>, visszavonáskor a <code>User.revokeRole(role, revokedBy)</code> műveletet hívja. A hozzáadás új RoleAssignment objektumot hoz létre; a módosítást az <code>AuditLogEntry.record()</code> naplózza (K-46). A fiók letiltása (A2) a <code>disable(reason, by)</code> művelet. Az üzenetváltás egyszerű, a use case lényege az ellenőrzések sorrendje, ezért szekvenciadiagram helyett a funkcionális modell aktivitásdiagramja mutatja be (<a href="#abra-4">4. ábra</a>).</p>
+<h5 id="s3-2-4" class="h-sub3">3.2.4 UC-20 Értesítés küldése</h5>
+<p>Az értesítést mindig egy másik use case művelete váltja ki: a kiváltó művelet a <code>Notification.create(recipient, type, data)</code> hívással, a típusnak megfelelő sablonból előkészíti az üzenetet, a <code>send()</code> pedig átadja az e-mail-szolgáltatásnak (A-08), és siker esetén rögzíti a küldés idejét. Az emlékeztetőt (A1) a rendszer későbbre ütemezi; hogy esedékes-e, azt az <code>isDue(now)</code> mondja meg. Sikertelen küldésnél (E1) a <code>send()</code> a kísérletek számát növeli, és a rendszer később újrapróbálja; a kiváltó művelet ettől érvényes marad. Az értesítés létrehozása a kiváltó use case-ek szekvenciadiagramjain látható (UC-11: <a href="#abra-18">18. ábra</a>, UC-17: <a href="#abra-25">25. ábra</a>), ezért külön ábrát nem készítettünk.</p>
+<h5 id="s3-2-5" class="h-sub3">3.2.5 Állapotdiagramok</h5>
+<p>Az alrendszer osztályainak állapotai triviálisak (a felhasználó aktív vagy letiltott; a munkamenet él vagy lejárt), ezért állapotdiagramot nem készítettünk.</p>
+<h3 id="s3-3" class="h-sub">3.3 Funkcionális modell</h3>
+<h5 id="s3-3-1" class="h-sub3">3.3.1 Szerepkör módosítása (UC-18)</h5>
+<p>Az alrendszer legösszetettebb feldolgozása a szerepkör módosítása, mert a K-45 két tiltó szabályát a mentés előtt ellenőrizni kell, és oktatói szerepkörnél a tanszék és az adatlap is érintett.</p>
+<p>A szerepkör módosításának ellenőrzési lépései. A K-45 két szabálya (a saját adminisztrátori szerepkör és az utolsó adminisztrátor szerepköre nem vonható vissza) a mentés előtt fut le; oktatói szerepkörnél a tanszék megadása kötelező, és ilyenkor az oktatói adatlap is a fiókhoz rendelhető.</p>
+<figure class="fig" id="abra-4"><a href="uml/s1_act_szerepkor.svg" target="_blank" rel="noopener"><img src="uml/s1_act_szerepkor.svg" alt="UC-18 Szerepkörök kezelése – aktivitásdiagram" loading="lazy" style="width:897px"></a></figure>
+<p class="fig-cap"><strong>4. ábra.</strong> UC-18 Szerepkörök kezelése – aktivitásdiagram. <a href="uml/s1_act_szerepkor.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s3-3-2" class="h-sub3">3.3.2 Naplózás és értesítés</h5>
+<p>A naplózás és az értesítés más alrendszerek műveleteinek mellékhatása. A naplóbejegyzést mindig a módosítást végző művelet hozza létre, ugyanabban a lépésben, mint magát a módosítást, így nem fordulhat elő, hogy a módosítás megtörtént, de nyoma nincs. Az értesítést a kiváltó művelet csak előkészíti (<code>Notification.create</code>); az elküldés ettől függetlenül, külön lépésben történik (<code>send</code>), így az e-mail-szolgáltatás kiesése nem akadályozza a foglalást vagy a bejelentést.</p>
+<h3 id="s3-4" class="h-sub">3.4 Operációk azonosítása</h3>
+<p>Az operációkat a szekvenciadiagramok üzeneteiből és az aktivitásdiagram lépéseiből gyűjtöttük ki. A <code>findByExternalId</code>, a <code>register</code>, a <code>recordLogin</code> és a <code>Session.start</code> a bejelentkezés üzenetei; a <code>grantRole</code>, a <code>revokeRole</code> és a <code>disable</code> az UC-18 lépései. A <code>hasRole</code> műveletet minden védett funkció használja, ezért a User felelőssége lett, és nem a felületé.</p>
+<p>Döntés: a K-45 szabályainak ellenőrzése a <code>revokeRole</code> művelet része, nem a felületé, így bármelyik felületről vagy későbbi programból érkező kérésnél is érvényesül. Az „utolsó adminisztrátor” ellenőrzéséhez az összes adminisztrátort ismerni kell, ezt a tervezés során egy osztályszintű lekérdezés valósítja meg.</p>
+<h3 id="s3-5" class="h-sub">3.5 Az analízis modell osztálydiagramja</h3>
+<p>Az alrendszer osztályai attribútumokkal és operációkkal. A szürke osztályok más alrendszerhez tartoznak; leírásuk ott szerepel.</p>
+<figure class="fig" id="abra-5"><a href="uml/s1_class.svg" target="_blank" rel="noopener"><img src="uml/s1_class.svg" alt="A Felhasználókezelés alrendszer osztálydiagramja" loading="lazy" style="width:795px"></a></figure>
+<p class="fig-cap"><strong>5. ábra.</strong> A Felhasználókezelés alrendszer osztálydiagramja. <a href="uml/s1_class.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h3 id="s3-6" class="h-sub">3.6 Az analízis modell osztályainak listája</h3>
+<p>A típusoknál az analízis szintjén általános típusokat adunk meg (szöveg, egész szám, dátum és idő stb.); osztálynév típus esetén az attribútum egy másik objektumra hivatkozik. A pontos adatbázistípusokat a rendszerterv tartalmazza.</p>
+<h4 id="s3-6-1" class="h-sub2">3.6.1 User (Felhasználó)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Olyan személy, aki az egyetemi Microsoft-fiókjával legalább egyszer bejelentkezett a rendszerbe. Nyilvántartja a felhasználó azonosítását szolgáló adatokat (K-05), és megmondja, milyen szerepkörei vannak (K-03). Rajta keresztül érhetők el a felhasználó foglalásai, bejelentései és oktatói adatlapja.</li>
+<li><strong>együttműködők:</strong> RoleAssignment, Session, StaffProfile, Booking, FaultReport, AuditLogEntry, Notification</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>externalId</code></td><td>szöveg</td><td>A felhasználó azonosítója az egyetemi azonosító szolgáltatásban (Microsoft Entra ID). Ez alapján ismeri fel a rendszer a visszatérő felhasználót.</td></tr><tr><td><code>name</code></td><td>szöveg</td><td>Teljes név, ahogy az azonosító szolgáltatás visszaadja.</td></tr><tr><td><code>email</code></td><td>szöveg</td><td>Egyetemi e-mail-cím; az értesítések ide mennek.</td></tr><tr><td><code>disabled</code></td><td>logikai</td><td>Igaz, ha az adminisztrátor letiltotta a fiókot (UC-18, A2).</td></tr><tr><td><code>firstLoginAt</code></td><td>dátum és idő</td><td>Az első bejelentkezés időpontja.</td></tr><tr><td><code>lastLoginAt</code></td><td>dátum és idő</td><td>Az utolsó bejelentkezés időpontja.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>findByExternalId</code> : User</td><td>externalId</td><td>Osztályszintű művelet: megkeresi a felhasználót az azonosító szolgáltatástól kapott azonosító alapján; ha nincs ilyen, üres eredményt ad.</td></tr><tr><td><code>register</code> : User</td><td>externalId, name, email</td><td>Osztályszintű művelet: első belépéskor létrehozza a felhasználót, és hallgató szerepkört rendel hozzá (K-04, UC-01 A3).</td></tr><tr><td><code>recordLogin</code></td><td>–</td><td>Frissíti az utolsó belépés idejét, és a fiókból kapott nevet és e-mail-címet, ha azok változtak.</td></tr><tr><td><code>hasRole</code> : logikai</td><td>role</td><td>Megmondja, hogy a felhasználónak van-e a megadott szerepköre (K-03).</td></tr><tr><td><code>grantRole</code> : RoleAssignment</td><td>role, department, grantedBy</td><td>Új szerepkört rendel a felhasználóhoz. Oktatói szerepkörnél a tanszék kötelező (UC-18).</td></tr><tr><td><code>revokeRole</code></td><td>role, revokedBy</td><td>Visszavon egy szerepkört a K-45 szabályainak ellenőrzése után.</td></tr><tr><td><code>disable</code></td><td>reason, by</td><td>Letiltja a fiókot; a felhasználó ezután nem tud bejelentkezni (UC-18 A2, UC-01 E3).</td></tr><tr><td><code>getStaffProfile</code> : StaffProfile</td><td>–</td><td>Visszaadja a fiókhoz rendelt oktatói adatlapot, ha van.</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s3-6-2" class="h-sub2">3.6.2 Role (Szerepkör)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A felhasználó jogosultsági köre. Felsorolás típus. Meghatározza, hogy a felhasználó mely funkciókat érheti el (K-03).</li>
+<li><strong>együttműködők:</strong> RoleAssignment</li>
+<li><strong>értékek</strong> (felsorolás típus)<div class="tbl tbl-sm mt-2"><table><thead><tr><th>Érték</th><th>Jelentés</th></tr></thead><tbody><tr><td><code>STUDENT</code></td><td>hallgató</td></tr><tr><td><code>LECTURER</code></td><td>oktató</td></tr><tr><td><code>ADMIN</code></td><td>adminisztrátor</td></tr></tbody></table></div></li>
+<li><strong>operációk:</strong> nincsenek.</li>
+</ul>
+<h4 id="s3-6-3" class="h-sub2">3.6.3 RoleAssignment (Szerepkör-hozzárendelés)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Egy felhasználó egy szerepköre, a hozzárendelés körülményeivel együtt. Rögzíti, hogy a felhasználó milyen szerepkört kapott, ki és mikor adta, és oktatói szerepkörnél melyik tanszékhez tartozik.</li>
+<li><strong>együttműködők:</strong> User, Role, Department</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>role</code></td><td>Role</td><td>A hozzárendelt szerepkör.</td></tr><tr><td><code>department</code></td><td>Department</td><td>Oktatói szerepkörnél a tanszék (kötelező); más szerepkörnél üres.</td></tr><tr><td><code>grantedBy</code></td><td>User</td><td>Az adminisztrátor, aki a szerepkört adta; az első belépéskor kapott hallgatói szerepkörnél üres.</td></tr><tr><td><code>grantedAt</code></td><td>dátum és idő</td><td>A hozzárendelés időpontja.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>isValid</code> : logikai</td><td>–</td><td>Ellenőrzi, hogy oktatói szerepkörnél meg van-e adva a tanszék.</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s3-6-4" class="h-sub2">3.6.4 Session (Munkamenet)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Egy bejelentkezett felhasználó aktív használati időszaka a bejelentkezéstől a kijelentkezésig vagy a lejáratig. Azonosítja a bejelentkezett felhasználót a kérések között, és a 30 perces tétlenségi időkorlát után lejár (K-06).</li>
+<li><strong>együttműködők:</strong> User</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>szöveg</td><td>Véletlenszerű, kitalálhatatlan azonosító.</td></tr><tr><td><code>user</code></td><td>User</td><td>A munkamenethez tartozó felhasználó.</td></tr><tr><td><code>createdAt</code></td><td>dátum és idő</td><td>A bejelentkezés időpontja.</td></tr><tr><td><code>lastActivityAt</code></td><td>dátum és idő</td><td>Az utolsó művelet időpontja.</td></tr><tr><td><code>returnUrl</code></td><td>szöveg</td><td>Az az oldal, ahonnan a bejelentkezés indult; ide tér vissza a rendszer (UC-01, 6. lépés).</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>start</code> : Session</td><td>user, returnUrl</td><td>Osztályszintű művelet: új munkamenetet indít a felhasználónak.</td></tr><tr><td><code>touch</code></td><td>now</td><td>Frissíti az utolsó művelet időpontját.</td></tr><tr><td><code>isExpired</code> : logikai</td><td>now</td><td>Igaz, ha az utolsó művelet óta több mint 30 perc telt el (K-06).</td></tr><tr><td><code>end</code></td><td>–</td><td>Megszünteti a munkamenetet (UC-02).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s3-6-5" class="h-sub2">3.6.5 AuditLogEntry (Naplóbejegyzés)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Egy adminisztrátori vagy oktatói módosítás nyoma: ki, mit, mikor változtatott (K-46). Visszakereshetővé teszi a módosításokat. Létrehozás után nem módosítható és nem törölhető.</li>
+<li><strong>együttműködők:</strong> User</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>actor</code></td><td>User</td><td>A módosítást végző felhasználó.</td></tr><tr><td><code>action</code></td><td>szöveg</td><td>A művelet kódja, például CONTENT_PUBLISH vagy ROLE_GRANT.</td></tr><tr><td><code>entityType</code></td><td>szöveg</td><td>A módosított objektum fajtája, például Event.</td></tr><tr><td><code>entityId</code></td><td>egész szám</td><td>A módosított objektum azonosítója.</td></tr><tr><td><code>details</code></td><td>szöveg</td><td>A változás rövid leírása (régi és új érték).</td></tr><tr><td><code>createdAt</code></td><td>dátum és idő</td><td>A módosítás időpontja.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>record</code> : AuditLogEntry</td><td>actor, action, entity, details</td><td>Osztályszintű művelet: új bejegyzést rögzít.</td></tr><tr><td><code>search</code> : AuditLogEntry[]</td><td>actor, entityType, from, to</td><td>Osztályszintű művelet: a napló szűrése az adminisztrációs felülethez (SRS 7.3).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s3-6-6" class="h-sub2">3.6.6 Notification (Értesítés)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A rendszer által a felhasználónak küldött e-mail-üzenet (visszaigazolás, emlékeztető, állapotváltozás). Összeállítja és elküldi az e-mailt az e-mail-szolgáltatáson keresztül, és megjegyzi, sikerült-e. Sikertelen küldésnél később újrapróbálható, a kiváltó művelet pedig ettől függetlenül érvényes marad (UC-11 E3).</li>
+<li><strong>együttműködők:</strong> User, NotificationType, Booking, FaultReport</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>recipient</code></td><td>User</td><td>A címzett.</td></tr><tr><td><code>type</code></td><td>NotificationType</td><td>Az értesítés fajtája.</td></tr><tr><td><code>subject</code></td><td>szöveg</td><td>Az e-mail tárgya.</td></tr><tr><td><code>body</code></td><td>szöveg</td><td>Az e-mail szövege.</td></tr><tr><td><code>scheduledAt</code></td><td>dátum és idő</td><td>A küldés tervezett ideje (emlékeztetőnél az időpont előtti nap).</td></tr><tr><td><code>sentAt</code></td><td>dátum és idő</td><td>A sikeres küldés ideje; üres, ha még nem ment el.</td></tr><tr><td><code>attempts</code></td><td>egész szám</td><td>Az eddigi küldési kísérletek száma.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>create</code> : Notification</td><td>recipient, type, data</td><td>Osztályszintű művelet: a típusnak megfelelő sablonból összeállítja az üzenetet.</td></tr><tr><td><code>send</code> : logikai</td><td>–</td><td>Elküldi az e-mailt; siker esetén kitölti a küldés idejét, hiba esetén növeli a kísérletek számát.</td></tr><tr><td><code>isDue</code> : logikai</td><td>now</td><td>Igaz, ha a küldés esedékes, és még nem ment el.</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s3-6-7" class="h-sub2">3.6.7 NotificationType (Értesítéstípus)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Az értesítések fajtái. Felsorolás típus. Meghatározza az e-mail sablonját és a küldés idejét.</li>
+<li><strong>együttműködők:</strong> Notification</li>
+<li><strong>értékek</strong> (felsorolás típus)<div class="tbl tbl-sm mt-2"><table><thead><tr><th>Érték</th><th>Jelentés</th></tr></thead><tbody><tr><td><code>BOOKING_CONFIRMED</code></td><td>foglalás visszaigazolása (K-31)</td></tr><tr><td><code>BOOKING_REMINDER</code></td><td>emlékeztető az időpont előtti napon (K-31)</td></tr><tr><td><code>BOOKING_DELETED</code></td><td>az adminisztrátor törölte az időpontot (K-42)</td></tr><tr><td><code>REPORT_STATUS_CHANGED</code></td><td>a bejelentés állapota megváltozott (K-37)</td></tr></tbody></table></div></li>
+<li><strong>operációk:</strong> nincsenek.</li>
+</ul>
+<h2 id="s4" class="h-sec">4. A Szervezet és oktatók alrendszer modellje</h2>
+<p>A Szervezet és oktatók alrendszer az egyetem szervezeti egységeit (kar, tanszék) és az oktatói adatlapokat kezeli. Use case-ei: UC-09 Oktató keresése, UC-10 Saját oktatói adatok szerkesztése és UC-24 Oktatói adatlap hozzárendelése (az UC-18 bővítése). A tanszékre más alrendszerek is hivatkoznak: a szerepkör-hozzárendelés (oktatói szerepkör) és a hibabejelentések felelős egysége.</p>
+<h3 id="s4-1" class="h-sub">4.1 Statikus modell</h3>
+<h4 id="s4-1-1" class="h-sub2">4.1.1 Kapcsolatok pontosítása</h4>
+<ul>
+<li><strong>Faculty – Department („része”):</strong> kompozíció, 1 – 1..*. Tanszék kar nélkül nem létezik, és minden karnak van legalább egy tanszéke.</li>
+<li><strong>StaffProfile – Department („dolgozik”):</strong> 0..* – 1, az adatlap felől navigálható. Az SRS szerint az oktató egy tanszékhez tartozik (A-03).</li>
+<li><strong>StaffProfile – OfficeHour („meghirdet”):</strong> kompozíció, 1 – 0..*. A kezdeti diagramon egyszerű asszociáció volt; a pontosításkor kiderült, hogy a fogadóóra az adatlap része, azzal együtt jön létre és szűnik meg, és a szerkesztés (UC-10) mindig a teljes listát cseréli.</li>
+<li><strong>StaffProfile – Place („iroda”):</strong> 0..* – 0..1. Az iroda a térkép egy helye, mert az irodára kattintva a térkép is megnyitható (UC-19 «extend» UC-09). Mivel nem minden iroda szerepel a térképen teremként, az adatlap szöveges irodamegnevezést (<code>officeText</code>) is tárol.</li>
+</ul>
+<h4 id="s4-1-2" class="h-sub2">4.1.2 Attribútumok azonosítása</h4>
+<ul>
+<li>A StaffProfile <code>name</code> és <code>email</code> attribútumát az oktató nem módosíthatja (K-27). Ezeket az adminisztrátor tölti fel, fiókhoz rendeléskor pedig a fiók adataival egyeztethetők.</li>
+<li>A <code>note</code> attribútum az UC-10 A2 (ideiglenes megjegyzés) miatt került be.</li>
+<li>Az OfficeHour <code>note</code> attribútuma olyan eseteket ír le, mint „páratlan heteken”; a minta szerint ez egyszerű szöveg, nem külön ismétlődési szabály.</li>
+<li>A Faculty <code>shortName</code> attribútuma a szűrők és a listák helytakarékos megjelenítéséhez kell (például GÉIK).</li>
+</ul>
+<h4 id="s4-1-3" class="h-sub2">4.1.3 Bázisosztályok keresése</h4>
+<p>Az alrendszerben nem találtunk olyan ismétlődő attribútumokat, amelyek közös bázisosztályba lennének emelhetők. A Faculty és a Department hasonló (azonosító, név), de eltérő szerepű fogalmak, és a kompozíció jobban kifejezi a kapcsolatukat, mint egy közös „Szervezeti egység” ős.</p>
+<h3 id="s4-2" class="h-sub">4.2 Dinamikus modell</h3>
+<h5 id="s4-2-1" class="h-sub3">4.2.1 UC-10 Saját oktatói adatok szerkesztése</h5>
+<p>Az oktató az adatlapján csak az irodát, a fogadóórákat és a megjegyzést módosíthatja (K-27). Mentés előtt a StaffProfile ellenőrzi a fogadóórákat; hibás adatnál nem ment (E1). A módosítás naplózásra kerül (K-46), és azonnal látható (K-28).</p>
+<figure class="fig" id="abra-6"><a href="uml/s2_seq_adatlap.svg" target="_blank" rel="noopener"><img src="uml/s2_seq_adatlap.svg" alt="UC-10 Saját oktatói adatok szerkesztése – szekvenciadiagram" loading="lazy" style="width:792px"></a></figure>
+<p class="fig-cap"><strong>6. ábra.</strong> UC-10 Saját oktatói adatok szerkesztése – szekvenciadiagram. <a href="uml/s2_seq_adatlap.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s4-2-2" class="h-sub3">4.2.2 UC-09 Oktató keresése</h5>
+<p>A keresés egyetlen osztályszintű művelet hívása: a felület a beírt névrészlettel és a kiválasztott karral vagy tanszékkel meghívja a <code>StaffProfile.search()</code> műveletet, majd a kiválasztott oktató adatlapját jeleníti meg. A tanszék szerinti böngészés (A1) a <code>Department.getStaff()</code> művelettel történik. Az ábra szerkezete a Tartalomkezelés alrendszer UC-05 ábrájával azonos, ezért külön nem rajzoltuk meg.</p>
+<h5 id="s4-2-3" class="h-sub3">4.2.3 UC-24 Oktatói adatlap hozzárendelése</h5>
+<p>Az UC-18 bővítése: akkor fut le, amikor az adminisztrátor oktatói szerepkört ad, és kiválasztotta a tanszéket. A felület a tanszék adatlapjai közül (<code>Department.getStaff()</code>) a fiókhoz még nem rendelteket ajánlja fel, a felhasználó nevével egyezőt előre kiválasztva. Jóváhagyás után a kiválasztott adatlap <code>assignTo(user)</code> művelete a fiókhoz rendeli az adatlapot, a műveletet az <code>AuditLogEntry.record()</code> naplózza (K-46). Ha nincs megfelelő adatlap (A1), a felület új StaffProfile objektumot hoz létre a fiók nevével, e-mail-címével és a tanszékkel, majd azt rendeli hozzá. Másik fiókhoz tartozó adatlap nem rendelhető hozzá (E1). Az üzenetváltás két hívásból áll, ezért külön ábrát nem készítettünk.</p>
+<h5 id="s4-2-4" class="h-sub3">4.2.4 Állapotdiagramok</h5>
+<p>Az alrendszer osztályainak nincs nem triviális állapota.</p>
+<h3 id="s4-3" class="h-sub">4.3 Funkcionális modell</h3>
+<h5 id="s4-3-1" class="h-sub3">4.3.1 Az adatlap mentésének ellenőrzése</h5>
+<p>A <code>StaffProfile.validate()</code> a következő lépésekben ellenőrzi a fogadóórákat: (1) minden idősávnál a kezdés korábbi a befejezésnél; (2) a napok 1 és 7 közé esnek; (3) ugyanazon a napon két idősáv nem fedi át egymást (<code>OfficeHour.overlaps</code>). Ha bármelyik feltétel nem teljesül, a művelet a hibás idősávok listáját adja vissza, és a mentés nem történik meg. A sikeres mentés után a módosítás azonnal látható, mert a nyilvános adatlap mindig a tárolt adatokból készül (K-28).</p>
+<h5 id="s4-3-2" class="h-sub3">4.3.2 Oktatókeresés</h5>
+<p>A keresés ugyanazt a normalizálást használja, mint a helykeresés (kisbetű, ékezet nélkül; lásd a Tartalomkezelés alrendszer funkcionális modelljét), így a „kovacs” keresés a „Kovács” nevű oktatót is megtalálja.</p>
+<h3 id="s4-4" class="h-sub">4.4 Operációk azonosítása</h3>
+<p>Az UC-10 szekvenciadiagramjából az <code>updateOffice</code>, a <code>setOfficeHours</code>, a <code>setNote</code> és a <code>validate</code> művelet, az UC-09 leírásából a <code>search</code> és a <code>getStaff</code> művelet adódott. Az <code>assignTo</code> művelet az UC-24 Oktatói adatlap hozzárendelése use case-ből származik, amelyet a Felhasználókezelés alrendszer hív.</p>
+<h3 id="s4-5" class="h-sub">4.5 Az analízis modell osztálydiagramja</h3>
+<p>Az alrendszer osztályai attribútumokkal és operációkkal. Az oktatói adatlap fiók nélkül is létezhet (az oktató még nem lépett be), ezért a User-hez fűződő kapcsolata mindkét irányban 0..1 számosságú.</p>
+<figure class="fig" id="abra-7"><a href="uml/s2_class.svg" target="_blank" rel="noopener"><img src="uml/s2_class.svg" alt="A Szervezet és oktatók alrendszer osztálydiagramja" loading="lazy" style="width:808px"></a></figure>
+<p class="fig-cap"><strong>7. ábra.</strong> A Szervezet és oktatók alrendszer osztálydiagramja. <a href="uml/s2_class.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h3 id="s4-6" class="h-sub">4.6 Az analízis modell osztályainak listája</h3>
+<p>A típusoknál az analízis szintjén általános típusokat adunk meg (szöveg, egész szám, dátum és idő stb.); osztálynév típus esetén az attribútum egy másik objektumra hivatkozik. A pontos adatbázistípusokat a rendszerterv tartalmazza.</p>
+<h4 id="s4-6-1" class="h-sub2">4.6.1 Faculty (Kar)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Az egyetem nagyobb szervezeti egysége, amely tanszékekből áll. Csoportosítja a tanszékeket; az oktatók és az események kar szerint szűrhetők (K-15, K-25).</li>
+<li><strong>együttműködők:</strong> Department, Event</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>name</code></td><td>szöveg</td><td>A kar neve, például Gépészmérnöki és Informatikai Kar.</td></tr><tr><td><code>shortName</code></td><td>szöveg</td><td>Rövid név, például GÉIK.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>getDepartments</code> : Department[]</td><td>–</td><td>A kar tanszékei név szerinti sorrendben.</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s4-6-2" class="h-sub2">4.6.2 Department (Tanszék)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A kar oktatási és kutatási egysége, amelyhez az oktatók tartoznak. Összeköti az oktatókat a karral. A hibabejelentések felelős egysége is lehet egy tanszék (K-43).</li>
+<li><strong>együttműködők:</strong> Faculty, StaffProfile, RoleAssignment, ResponsibleUnit</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>name</code></td><td>szöveg</td><td>A tanszék neve.</td></tr><tr><td><code>faculty</code></td><td>Faculty</td><td>A kar, amelyhez a tanszék tartozik.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>getStaff</code> : StaffProfile[]</td><td>–</td><td>A tanszék oktatóinak adatlapjai név szerinti sorrendben (UC-09 A1).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s4-6-3" class="h-sub2">4.6.3 StaffProfile (Oktatói adatlap)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Egy oktató nyilvános adatlapja a nevével, tanszékével, irodájával, e-mail-címével és fogadóóráival (K-26). Tárolja és megjeleníthetővé teszi az oktató elérhetőségét. Az oktató csak az irodát, a fogadóórákat és a megjegyzést módosíthatja (K-27); a változás mentés után azonnal látható (K-28).</li>
+<li><strong>együttműködők:</strong> Department, OfficeHour, Place, User, AuditLogEntry</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>name</code></td><td>szöveg</td><td>Az oktató neve; az oktató nem módosíthatja.</td></tr><tr><td><code>email</code></td><td>szöveg</td><td>Egyetemi e-mail-cím; az oktató nem módosíthatja.</td></tr><tr><td><code>department</code></td><td>Department</td><td>A tanszék, ahol az oktató dolgozik.</td></tr><tr><td><code>office</code></td><td>Place</td><td>Az iroda helye a térképen (ha meg van adva).</td></tr><tr><td><code>officeText</code></td><td>szöveg</td><td>Az iroda szöveges megnevezése, például „A/1 épület, 312.”.</td></tr><tr><td><code>note</code></td><td>szöveg</td><td>Ideiglenes megjegyzés, például „ezen a héten elmarad” (UC-10 A2).</td></tr><tr><td><code>user</code></td><td>User</td><td>A fiók, amelyhez az adatlap tartozik; üres, ha az oktató még nem lépett be.</td></tr><tr><td><code>updatedAt</code></td><td>dátum és idő</td><td>Az utolsó módosítás ideje.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>search</code> : StaffProfile[]</td><td>query, faculty, department</td><td>Osztályszintű művelet: oktatók keresése névrészlet, kar és tanszék szerint (K-25).</td></tr><tr><td><code>updateOffice</code></td><td>office, officeText</td><td>Módosítja az irodát.</td></tr><tr><td><code>setNote</code></td><td>text</td><td>Beállítja vagy törli az ideiglenes megjegyzést.</td></tr><tr><td><code>setOfficeHours</code></td><td>hours</td><td>Lecseréli a fogadóórák listáját (UC-10 A1: több idősáv is lehet).</td></tr><tr><td><code>validate</code> : logikai</td><td>–</td><td>Ellenőrzi a fogadóórákat: kezdés a befejezés előtt, és ugyanazon a napon ne legyen átfedés (UC-10 E1).</td></tr><tr><td><code>assignTo</code></td><td>user</td><td>Az adatlapot egy fiókhoz rendeli (UC-24).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s4-6-4" class="h-sub2">4.6.4 OfficeHour (Fogadóóra)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Egy oktató egy meghirdetett idősávja, amikor a hallgatók személyesen felkereshetik. Leírja, melyik napon, mikortól meddig tart a fogadóóra.</li>
+<li><strong>együttműködők:</strong> StaffProfile</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>dayOfWeek</code></td><td>egész szám (1–7)</td><td>A hét napja, 1 = hétfő.</td></tr><tr><td><code>startTime</code></td><td>időpont</td><td>Kezdés.</td></tr><tr><td><code>endTime</code></td><td>időpont</td><td>Befejezés.</td></tr><tr><td><code>note</code></td><td>szöveg</td><td>Megjegyzés, például „páratlan heteken”.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>isValid</code> : logikai</td><td>–</td><td>Igaz, ha a kezdés korábbi a befejezésnél.</td></tr><tr><td><code>overlaps</code> : logikai</td><td>other</td><td>Igaz, ha az idősáv ugyanazon a napon átfed egy másikkal.</td></tr></tbody></table></div></li>
+</ul>
+<h2 id="s5" class="h-sec">5. A Tartalomkezelés alrendszer modellje</h2>
+<p>A Tartalomkezelés alrendszer az adminisztrátorok által feltöltött, közzétehető tartalmakat kezeli: a híreket, az eseményeket, a térképi helyeket és a menza napi étlapjait, valamint a menza nyitvatartását. Use case-ei: UC-03 Hely keresése, UC-19 Hely megjelenítése a térképen, UC-05 Események böngészése, UC-06 Hírek olvasása, UC-07 Menza-információk és UC-15 Tartalom kezelése. A Place osztály a teljes rendszer közös helyhivatkozása.</p>
+<h3 id="s5-1" class="h-sub">5.1 Statikus modell</h3>
+<h4 id="s5-1-1" class="h-sub2">5.1.1 Kapcsolatok pontosítása</h4>
+<ul>
+<li><strong>User – NewsItem, Event, Menu, Place („kezeli”):</strong> a kezdeti diagramon négy azonos asszociáció volt. Ez az ismétlődés vezetett a <strong>Content</strong> bázisosztályhoz (lásd 3.1.3); a pontosított modellben egyetlen kapcsolat maradt: Content – User („létrehozó”, 0..* – 1).</li>
+<li><strong>Event – Place („helyszín”):</strong> 0..* – 1. Minden eseménynek van helyszíne a térképen (K-16).</li>
+<li><strong>Event – Faculty („szervezi”):</strong> 0..* – 0..1, mert az egyetemi szintű eseményeknek nincs kara. A kar szerinti szűréshez (K-15) erre a kapcsolatra van szükség.</li>
+<li><strong>Place – Place („termei”):</strong> új, önmagára mutató aggregáció (0..1 – 0..*). A „terem” és az „épület” elemzésekor kiderült, hogy a terem egy épületben van; így a keresési találatnál az épület is megjeleníthető, a hibabejelentésnél pedig az épületből a termek választhatók.</li>
+<li><strong>Canteen – Menu („kínál”):</strong> a kezdeti diagramon a Menu heti étlapként szerepelt. Az UC-07 (mai és heti nézet) és az UC-15 A3 (a hét napjai egy űrlapon) alapján a tárolás egysége a nap, ezért az osztályt <strong>DailyMenu</strong>-ra neveztük át; a heti nézet a hét napi étlapjaiból áll.</li>
+<li><strong>Menu – Dish („tartalmaz”):</strong> kompozíció, 1 – 1..*: az étel csak egy étlap részeként létezik.</li>
+<li><strong>Canteen – OpeningHours:</strong> új osztály. A K-21 („zárva tartáskor megmutatja a következő nyitás időpontját”) miatt a nyitvatartást nem lehet szövegként tárolni, számolni kell vele; ezért napi idősávokra bontottuk.</li>
+</ul>
+<h4 id="s5-1-2" class="h-sub2">5.1.2 Attribútumok azonosítása</h4>
+<ul>
+<li>A Place <code>searchKey</code> attribútuma a K-10 miatt kellett: a keresés kis- és nagybetűtől, illetve ékezettől független. A normalizált nevet mentéskor egyszer állítjuk elő, nem minden kereséskor.</li>
+<li>A Place <code>latitude</code>, <code>longitude</code> attribútuma a térképi megjelenítéshez (K-08) és a kiemeléshez kell.</li>
+<li>A Content <code>version</code> attribútumát az UC-15 E2 (egyidejű szerkesztés) tette szükségessé: e nélkül a rendszer nem tudná felismerni, ha közben más is mentette az elemet.</li>
+<li>A NewsItem <code>sourceUrl</code> a K-19 hivatkozása; a hír teljes szövegét nem tároljuk.</li>
+<li>A Dish <code>allergens</code> és <code>vegetarian</code> attribútuma a K-22 ajánlott követelményből adódik; mindkettő üres lehet.</li>
+<li>A Canteen <code>closedDates</code> attribútuma a szünetek és ünnepnapok miatt kell, mert ezeken a napokon a heti nyitvatartás nem érvényes (UC-07 A1).</li>
+</ul>
+<h4 id="s5-1-3" class="h-sub2">5.1.3 Bázisosztályok keresése</h4>
+<p>A hír, az esemény, a térképi hely és a napi étlap azonos attribútumokat (állapot, létrehozó, létrehozás és módosítás ideje, közzététel ideje) és azonos műveleteket (piszkozat, közzététel, archiválás, előnézet) igényel, mert a K-39 és a K-40 mind a négyre egyformán vonatkozik. Ezért bevezettük a <strong>Content</strong> absztrakt bázisosztályt, amelyből a négy osztály általánosítással származik. A kötelező mezők ellenőrzése (<code>validate</code>) típusonként eltér, ezért ez absztrakt művelet, amelyet minden leszármazott maga valósít meg.</p>
+<p>A Canteen nem leszármazottja a Content osztálynak: a menzát nem teszik közzé és nem archiválják, csak a nyitvatartása változik.</p>
+<h3 id="s5-2" class="h-sub">5.2 Dinamikus modell</h3>
+<h5 id="s5-2-1" class="h-sub3">5.2.1 UC-15 Tartalom kezelése</h5>
+<p>A diagram egy esemény szerkesztését mutatja; a hír, a hely és a napi étlap kezelése ugyanígy zajlik, mert a műveletek a Content bázisosztályban vannak.</p>
+<p>Az adminisztrátor egy esemény szerkesztését mutatja be előnézettel és közzététellel. Az űrlap betöltésekor a felület megjegyzi a változatszámot; ha mentéskor a tárolt változatszám már nagyobb, akkor közben más is mentette az elemet, és a rendszer nem írja felül (E2).</p>
+<figure class="fig" id="abra-8"><a href="uml/s3_seq_kozzetetel.svg" target="_blank" rel="noopener"><img src="uml/s3_seq_kozzetetel.svg" alt="UC-15 Tartalom kezelése – szekvenciadiagram (esemény közzététele)" loading="lazy" style="width:924px"></a></figure>
+<p class="fig-cap"><strong>8. ábra.</strong> UC-15 Tartalom kezelése – szekvenciadiagram (esemény közzététele). <a href="uml/s3_seq_kozzetetel.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s5-2-2" class="h-sub3">5.2.2 UC-05 Események böngészése és szűrése</h5>
+<p>A nyilvános eseménylista betöltése és szűrése. A szűrés az Event osztályszintű search() műveletével történik; a rendszer adatai nem változnak.</p>
+<figure class="fig" id="abra-9"><a href="uml/s3_seq_esemenyek.svg" target="_blank" rel="noopener"><img src="uml/s3_seq_esemenyek.svg" alt="UC-05 Események böngészése és szűrése – szekvenciadiagram" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>9. ábra.</strong> UC-05 Események böngészése és szűrése – szekvenciadiagram. <a href="uml/s3_seq_esemenyek.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s5-2-3" class="h-sub3">5.2.3 UC-06 Hírek olvasása és UC-07 Menza-információk megtekintése</h5>
+<p>Mindkettő egyetlen lekérdezésből áll: a felület a <code>NewsItem.latest()</code>, illetve a <code>Canteen.menuFor()</code> / <code>menusForWeek()</code> és az <code>isOpen()</code> / <code>nextOpening()</code> műveleteket hívja, és az eredményt megjeleníti. Szerkezetük az UC-05 ábrájával egyezik, ezért külön nem rajzoltuk meg őket.</p>
+<h5 id="s5-2-4" class="h-sub3">5.2.4 UC-03 Hely keresése a campustérképen</h5>
+<p>A felület a beírt kifejezéssel és a kiválasztott kategóriával a <code>Place.search(query, category, limit)</code> osztályszintű műveletet hívja, a találatokat javaslatként listázza, a kiválasztott helyet pedig az UC-19 szerint jeleníti meg («include»). A use case lényege a keresés feldolgozása (normalizálás, rangsorolás), ezt a funkcionális modell aktivitásdiagramja mutatja be (<a href="#abra-11">11. ábra</a>); külön szekvenciadiagramot nem készítettünk.</p>
+<h5 id="s5-2-5" class="h-sub3">5.2.5 UC-19 Hely megjelenítése a térképen</h5>
+<p>Önállóan nem indítható: az UC-03 része, és az UC-04, UC-05, UC-08 és UC-09 bővítése. A kiinduló objektum (ParkingZone, Event, Stop, illetve az oktatói adatlap irodája) a <code>place</code> hivatkozásán keresztül adja át a megjelenítendő Place objektumot. A felület megnyitja a térképet, kiemeli a helyet, és megjeleníti az adatlapját; épületnél a <code>getChildren()</code> művelettel a termeket is felsorolja. Ha a helynek nincs térképi pontja (A1), csak az adatlap jelenik meg. A rendszer adatai nem változnak, a use case egyetlen lekérdezés, ezért külön ábrát nem készítettünk.</p>
+<h5 id="s5-2-6" class="h-sub3">5.2.6 A Content állapotdiagramja</h5>
+<p>A hírek, események, térképi helyek és napi étlapok közös életciklusa. Csak a Közzétett állapotú tartalom látszik a nyilvános felületen; az archivált elem az adminisztrációs listában megmarad (K-39, K-40).</p>
+<figure class="fig" id="abra-10"><a href="uml/s3_state_tartalom.svg" target="_blank" rel="noopener"><img src="uml/s3_state_tartalom.svg" alt="A Content (Tartalom) osztály állapotdiagramja" loading="lazy" style="width:635px"></a></figure>
+<p class="fig-cap"><strong>10. ábra.</strong> A Content (Tartalom) osztály állapotdiagramja. <a href="uml/s3_state_tartalom.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h3 id="s5-3" class="h-sub">5.3 Funkcionális modell</h3>
+<h5 id="s5-3-1" class="h-sub3">5.3.1 Hely keresése (UC-03)</h5>
+<p>A keresés feldolgozási lépései. A keresőkifejezést és a helyek nevét ugyanaz a normalize() művelet alakítja kisbetűs, ékezet nélküli formára, ezért a keresés nem érzékeny a kis- és nagybetűre és az ékezetekre (K-10). A javaslatok rangsorolása: pontos egyezés, szókezdő egyezés, részleges egyezés; azon belül az épületek előbb.</p>
+<figure class="fig" id="abra-11"><a href="uml/s3_act_helykereses.svg" target="_blank" rel="noopener"><img src="uml/s3_act_helykereses.svg" alt="UC-03 Hely keresése – aktivitásdiagram" loading="lazy" style="width:846px"></a></figure>
+<p class="fig-cap"><strong>11. ábra.</strong> UC-03 Hely keresése – aktivitásdiagram. <a href="uml/s3_act_helykereses.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s5-3-2" class="h-sub3">5.3.2 A menza nyitvatartásának számítása</h5>
+<p>A <code>Canteen.isOpen(at)</code> először a zárva tartási napokat nézi meg: ha a dátum köztük van, a menza zárva. Ezután megkeresi a hét napjának megfelelő nyitvatartási idősávokat, és megvizsgálja, hogy az időpont beléjük esik-e. A <code>nextOpening(at)</code> ugyanezt a vizsgálatot napról napra előre lépve végzi, legfeljebb 30 napig, és az első nyitási időpontot adja vissza (UC-07 A1).</p>
+<h5 id="s5-3-3" class="h-sub3">5.3.3 Heti étlap mentése</h5>
+<p>A <code>DailyMenu.saveWeek()</code> a táblázatos űrlap minden napjára külön napi étlapot hoz létre vagy frissít. Ha egy napra már van étlap, azt felülírja; ha egy nap üresen marad, arra a napra nem készül étlap, és a felület „Az étlap még nem érhető el” üzenetet mutat (UC-07 E1).</p>
+<h3 id="s5-4" class="h-sub">5.4 Operációk azonosítása</h3>
+<p>Az UC-15 szekvenciadiagramja a Content életciklus-műveleteit (<code>saveDraft</code>, <code>publish</code>, <code>archive</code>, <code>preview</code>) adta. Döntés: ezek a bázisosztályba kerültek, a típusfüggő ellenőrzés (<code>validate</code>) a leszármazottakba. A lekérdező műveletek (<code>Event.search</code>, <code>NewsItem.latest</code>, <code>Place.search</code>) osztályszintűek, mert nem egy objektumon, hanem az összes közzétett elemen dolgoznak. A <code>Place.normalize</code> műveletet a Szervezet és oktatók alrendszer keresése is használja.</p>
+<h3 id="s5-5" class="h-sub">5.5 Az analízis modell osztálydiagramja</h3>
+<p>Az alrendszer osztályai attribútumokkal és operációkkal. A Content absztrakt bázisosztály a négy közzétehető tartalomfajta közös attribútumait és életciklus-műveleteit tartalmazza.</p>
+<figure class="fig" id="abra-12"><a href="uml/s3_class.svg" target="_blank" rel="noopener"><img src="uml/s3_class.svg" alt="A Tartalomkezelés alrendszer osztálydiagramja" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>12. ábra.</strong> A Tartalomkezelés alrendszer osztálydiagramja. <a href="uml/s3_class.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h3 id="s5-6" class="h-sub">5.6 Az analízis modell osztályainak listája</h3>
+<p>A típusoknál az analízis szintjén általános típusokat adunk meg (szöveg, egész szám, dátum és idő stb.); osztálynév típus esetén az attribútum egy másik objektumra hivatkozik. A pontos adatbázistípusokat a rendszerterv tartalmazza.</p>
+<h4 id="s5-6-1" class="h-sub2">5.6.1 Content (Tartalom)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Absztrakt bázisosztály: az adminisztrátor által kezelt, közzétehető tartalmak (hír, esemény, térképi hely, napi étlap) közös része. Kezeli a tartalmak közös életciklusát: piszkozat, közzététel, archiválás (K-39, K-40), és az egyidejű szerkesztés felismerését (UC-15 E2). Absztrakt osztály: közvetlenül nem példányosítható.</li>
+<li><strong>együttműködők:</strong> User, ContentStatus, AuditLogEntry</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>title</code></td><td>szöveg</td><td>Cím vagy név.</td></tr><tr><td><code>status</code></td><td>ContentStatus</td><td>Piszkozat, közzétett vagy archivált.</td></tr><tr><td><code>createdBy</code></td><td>User</td><td>A tartalmat létrehozó adminisztrátor.</td></tr><tr><td><code>createdAt</code></td><td>dátum és idő</td><td>Létrehozás ideje.</td></tr><tr><td><code>updatedAt</code></td><td>dátum és idő</td><td>Utolsó módosítás ideje.</td></tr><tr><td><code>publishedAt</code></td><td>dátum és idő</td><td>Közzététel ideje; piszkozatnál üres.</td></tr><tr><td><code>version</code></td><td>egész szám</td><td>Változatszám; minden mentéskor eggyel nő. Ebből derül ki, ha közben más is mentette az elemet.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>validate</code> : logikai</td><td>–</td><td>Absztrakt: a kötelező mezők ellenőrzése, típusonként eltérő (UC-15 E1).</td></tr><tr><td><code>saveDraft</code></td><td>by, expectedVersion</td><td>Mentés piszkozatként; nyilvánosan nem jelenik meg (UC-15 A1).</td></tr><tr><td><code>publish</code></td><td>by, expectedVersion</td><td>Ellenőrzés után közzéteszi a tartalmat. Ha a változatszám nem egyezik, a mentést elutasítja (UC-15 E2).</td></tr><tr><td><code>archive</code></td><td>by</td><td>Eltávolítja a tartalmat a nyilvános felületről, de az adminisztrációs listában megmarad (UC-15 A2).</td></tr><tr><td><code>preview</code> : szöveg</td><td>–</td><td>Előállítja a nyilvános megjelenés előnézetét (K-40).</td></tr><tr><td><code>isPublic</code> : logikai</td><td>–</td><td>Igaz, ha a tartalom közzétett állapotú.</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s5-6-2" class="h-sub2">5.6.2 ContentStatus (Tartalomállapot)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A tartalom életciklusának állapotai. Felsorolás típus. Meghatározza, hogy a tartalom látható-e a nyilvános felületen.</li>
+<li><strong>együttműködők:</strong> Content</li>
+<li><strong>értékek</strong> (felsorolás típus)<div class="tbl tbl-sm mt-2"><table><thead><tr><th>Érték</th><th>Jelentés</th></tr></thead><tbody><tr><td><code>DRAFT</code></td><td>piszkozat</td></tr><tr><td><code>PUBLISHED</code></td><td>közzétett</td></tr><tr><td><code>ARCHIVED</code></td><td>archivált</td></tr></tbody></table></div></li>
+<li><strong>operációk:</strong> nincsenek.</li>
+</ul>
+<h4 id="s5-6-3" class="h-sub2">5.6.3 NewsItem (Hír)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Egyetemi hír rövid összefoglalóval és a teljes cikkre mutató hivatkozással (K-19). A hírfolyam egy eleme; időrendben, témakör szerint szűrhetően jelenik meg (K-18).</li>
+<li><strong>együttműködők:</strong> Content</li>
+<li><strong>attribútumok</strong><p class="mb-2 text-sm">Az örökölt attribútumokat (id, title, status, createdBy, createdAt, updatedAt, publishedAt, version) a Content osztály írja le; itt csak a saját attribútumok szerepelnek.</p><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>summary</code></td><td>szöveg</td><td>Rövid összefoglaló.</td></tr><tr><td><code>sourceUrl</code></td><td>szöveg</td><td>A teljes cikk címe az egyetem hivatalos honlapján.</td></tr><tr><td><code>topic</code></td><td>szöveg</td><td>Témakör, például oktatás, kutatás, sport.</td></tr><tr><td><code>newsDate</code></td><td>dátum</td><td>A hír dátuma; a sorrend ez alapján készül.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>validate</code> : logikai</td><td>–</td><td>Ellenőrzi, hogy a cím, az összefoglaló és a hivatkozás meg van-e adva.</td></tr><tr><td><code>latest</code> : NewsItem[]</td><td>topic, offset, limit</td><td>Osztályszintű művelet: a közzétett hírek a legfrissebbel kezdve, oldalanként 10 (UC-06).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s5-6-4" class="h-sub2">5.6.4 Event (Esemény)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Egyetemi program időponttal, helyszínnel, leírással és szervezővel (K-16). A naptár egy eleme; dátum, típus, kar és helyszín szerint szűrhető (K-15).</li>
+<li><strong>együttműködők:</strong> Content, Place, Faculty</li>
+<li><strong>attribútumok</strong><p class="mb-2 text-sm">Az örökölt attribútumokat (id, title, status, createdBy, createdAt, updatedAt, publishedAt, version) a Content osztály írja le; itt csak a saját attribútumok szerepelnek.</p><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>description</code></td><td>szöveg</td><td>Részletes leírás.</td></tr><tr><td><code>startsAt</code></td><td>dátum és idő</td><td>Kezdés.</td></tr><tr><td><code>endsAt</code></td><td>dátum és idő</td><td>Befejezés.</td></tr><tr><td><code>eventType</code></td><td>szöveg</td><td>Típus, például előadás, sport, kulturális, nyílt nap.</td></tr><tr><td><code>faculty</code></td><td>Faculty</td><td>A szervező kar; üres, ha egyetemi szintű.</td></tr><tr><td><code>place</code></td><td>Place</td><td>A helyszín a térképen.</td></tr><tr><td><code>organizer</code></td><td>szöveg</td><td>A szervező megnevezése.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>validate</code> : logikai</td><td>–</td><td>Ellenőrzi a kötelező mezőket, és hogy a kezdés a befejezés előtt van.</td></tr><tr><td><code>isPast</code> : logikai</td><td>now</td><td>Igaz, ha az esemény már véget ért (K-17).</td></tr><tr><td><code>search</code> : Event[]</td><td>from, to, eventType, faculty, place, includePast</td><td>Osztályszintű művelet: a közzétett események szűrése; a szűrők kombinálhatók (K-15).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s5-6-5" class="h-sub2">5.6.5 Place (Hely)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A campustérkép egy pontja vagy területe: épület, terem vagy szolgáltatás (például menza, könyvtár, parkoló, megálló). Kereshetővé és a térképen megjeleníthetővé teszi a helyeket (K-08 – K-11). Más osztályok helyszínként hivatkoznak rá.</li>
+<li><strong>együttműködők:</strong> Content, PlaceCategory, Event, StaffProfile, Canteen, ParkingZone, Stop, FaultReport</li>
+<li><strong>attribútumok</strong><p class="mb-2 text-sm">Az örökölt attribútumokat (id, title, status, createdBy, createdAt, updatedAt, publishedAt, version) a Content osztály írja le; itt csak a saját attribútumok szerepelnek.</p><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>name</code></td><td>szöveg</td><td>A hely neve, például „A/1 épület”.</td></tr><tr><td><code>category</code></td><td>PlaceCategory</td><td>A hely fajtája; a kategóriaszűrő ez alapján működik (UC-03 A2).</td></tr><tr><td><code>description</code></td><td>szöveg</td><td>Rövid leírás.</td></tr><tr><td><code>latitude</code></td><td>valós szám</td><td>Földrajzi szélesség.</td></tr><tr><td><code>longitude</code></td><td>valós szám</td><td>Földrajzi hosszúság.</td></tr><tr><td><code>openingHoursText</code></td><td>szöveg</td><td>Nyitvatartás szöveges formában, ha van (K-11).</td></tr><tr><td><code>parent</code></td><td>Place</td><td>Teremnél az épület, amelyben van; különben üres.</td></tr><tr><td><code>searchKey</code></td><td>szöveg</td><td>A név kisbetűs, ékezet nélküli alakja a kereséshez (K-10).</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>validate</code> : logikai</td><td>–</td><td>Ellenőrzi a nevet, a kategóriát és a koordinátákat.</td></tr><tr><td><code>search</code> : Place[]</td><td>query, category, limit</td><td>Osztályszintű művelet: keresés név szerint, kis- és nagybetűtől és ékezettől függetlenül, részleges egyezéssel; legfeljebb 8 javaslat (UC-03).</td></tr><tr><td><code>normalize</code> : szöveg</td><td>text</td><td>Osztályszintű művelet: kisbetűsít, eltávolítja az ékezeteket és a felesleges írásjeleket.</td></tr><tr><td><code>getChildren</code> : Place[]</td><td>–</td><td>Az épület termei.</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s5-6-6" class="h-sub2">5.6.6 PlaceCategory (Helykategória)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A helyek fajtái. Felsorolás típus. A térkép kategóriaszűrője és jelölései ez alapján készülnek.</li>
+<li><strong>együttműködők:</strong> Place</li>
+<li><strong>értékek</strong> (felsorolás típus)<div class="tbl tbl-sm mt-2"><table><thead><tr><th>Érték</th><th>Jelentés</th></tr></thead><tbody><tr><td><code>BUILDING</code></td><td>épület</td></tr><tr><td><code>ROOM</code></td><td>terem</td></tr><tr><td><code>CANTEEN</code></td><td>menza</td></tr><tr><td><code>LIBRARY</code></td><td>könyvtár</td></tr><tr><td><code>PARKING</code></td><td>parkoló</td></tr><tr><td><code>STOP</code></td><td>megálló</td></tr><tr><td><code>ENTRANCE</code></td><td>bejárat</td></tr><tr><td><code>SERVICE</code></td><td>egyéb szolgáltatás</td></tr></tbody></table></div></li>
+<li><strong>operációk:</strong> nincsenek.</li>
+</ul>
+<h4 id="s5-6-7" class="h-sub2">5.6.7 Canteen (Menza)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Az egyetemi étkezde a helyével és a nyitvatartásával. Megmondja, nyitva van-e a menza, és ha zárva, mikor nyit legközelebb (K-21). Hozzá tartoznak a napi étlapok.</li>
+<li><strong>együttműködők:</strong> Place, OpeningHours, DailyMenu</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>name</code></td><td>szöveg</td><td>A menza neve.</td></tr><tr><td><code>place</code></td><td>Place</td><td>A menza helye a térképen.</td></tr><tr><td><code>closedDates</code></td><td>dátum[]</td><td>Zárva tartási napok (szünetek, ünnepnapok).</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>isOpen</code> : logikai</td><td>at</td><td>Igaz, ha a menza a megadott időpontban nyitva van.</td></tr><tr><td><code>nextOpening</code> : dátum és idő</td><td>at</td><td>A következő nyitás időpontja (UC-07 A1).</td></tr><tr><td><code>menuFor</code> : DailyMenu</td><td>date</td><td>Az adott nap közzétett étlapja, ha van.</td></tr><tr><td><code>menusForWeek</code> : DailyMenu[]</td><td>weekStart</td><td>A hét napjainak étlapjai (UC-07, heti nézet).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s5-6-8" class="h-sub2">5.6.8 OpeningHours (Nyitvatartási idősáv)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A menza egy napi nyitvatartási idősávja. A menza heti nyitvatartásának egy eleme.</li>
+<li><strong>együttműködők:</strong> Canteen</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>dayOfWeek</code></td><td>egész szám (1–7)</td><td>A hét napja.</td></tr><tr><td><code>opensAt</code></td><td>időpont</td><td>Nyitás.</td></tr><tr><td><code>closesAt</code></td><td>időpont</td><td>Zárás.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>contains</code> : logikai</td><td>at</td><td>Igaz, ha az időpont az idősávba esik.</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s5-6-9" class="h-sub2">5.6.9 DailyMenu (Napi étlap)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A menza egy napjának étlapja (az első változatban „Menu” néven, hetinek gondolva). Összefogja egy nap ételeit; a heti nézet a hét napi étlapjaiból áll (K-20).</li>
+<li><strong>együttműködők:</strong> Content, Canteen, Dish</li>
+<li><strong>attribútumok</strong><p class="mb-2 text-sm">Az örökölt attribútumokat (id, title, status, createdBy, createdAt, updatedAt, publishedAt, version) a Content osztály írja le; itt csak a saját attribútumok szerepelnek.</p><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>canteen</code></td><td>Canteen</td><td>A menza, amelyhez az étlap tartozik.</td></tr><tr><td><code>date</code></td><td>dátum</td><td>A nap, amelyre az étlap szól.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>validate</code> : logikai</td><td>–</td><td>Ellenőrzi, hogy van-e legalább egy étel, és mindegyiknek van-e neve és ára.</td></tr><tr><td><code>addDish</code> : Dish</td><td>name, price, allergens, vegetarian</td><td>Ételt vesz fel az étlapra.</td></tr><tr><td><code>saveWeek</code> : DailyMenu[]</td><td>canteen, weekStart, days, by</td><td>Osztályszintű művelet: a heti táblázatos űrlapból egyszerre menti a hét napjait (UC-15 A3).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s5-6-10" class="h-sub2">5.6.10 Dish (Étel)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Az étlap egy tétele árral, allergénekkel és vegetáriánus jelöléssel. Leírja az ételt a felületen megjelenő adatokkal (K-20, K-22).</li>
+<li><strong>együttműködők:</strong> DailyMenu</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>name</code></td><td>szöveg</td><td>Az étel neve.</td></tr><tr><td><code>course</code></td><td>szöveg</td><td>Fogás: leves, főétel, köret, desszert.</td></tr><tr><td><code>price</code></td><td>egész szám</td><td>Ár forintban.</td></tr><tr><td><code>allergens</code></td><td>szöveg[]</td><td>Az étel allergénjei (az uniós 14 allergén közül).</td></tr><tr><td><code>vegetarian</code></td><td>logikai</td><td>Vegetáriánus-e.</td></tr></tbody></table></div></li>
+<li><strong>operációk:</strong> nincsenek; az osztály csak adatot tárol, a vele végzett műveleteket a tartalmazó osztály végzi.</li>
+</ul>
+<h2 id="s6" class="h-sec">6. A Külső adatok alrendszer modellje</h2>
+<p>A Külső adatok alrendszer a két külső adatforrás adatait fogadja és dolgozza fel: a parkolóérzékelő-rendszer (A-07) méréseit és az MVK menetrendjét (A-06). Use case-ei: UC-04 Szabad parkolóhelyek megtekintése és UC-08 MVK-menetrend megtekintése. Az alrendszer feladata, hogy a külső adatok hibája vagy hiánya ne akadályozza a többi funkciót (SRS 5.6).</p>
+<h3 id="s6-1" class="h-sub">6.1 Statikus modell</h3>
+<h4 id="s6-1-1" class="h-sub2">6.1.1 Kapcsolatok pontosítása</h4>
+<ul>
+<li><strong>ParkingZone – ParkingReading („mérése”):</strong> kompozíció, 1 – 0..*. A pontosításkor kiderült, hogy a felületnek csak a legutóbbi mérés kell, ezért a zóna közvetlenül hivatkozik a legfrissebbre (<code>latestReading</code>); a korábbi mérések csak ellenőrzésre és statisztikára maradnak meg.</li>
+<li><strong>SensorDevice – ParkingZone („figyel”):</strong> 0..* – 1. Egy zónát több eszköz is figyelhet (például a be- és a kijáratnál).</li>
+<li><strong>SensorDevice – ParkingReading („küld”):</strong> 1 – 0..*. Megtartottuk, mert hibás mérésnél tudni kell, melyik eszköz küldte.</li>
+<li><strong>Stop – Place:</strong> új kapcsolat, 0..* – 0..1. A megálló nevére kattintva a térkép is megnyitható (UC-19 «extend» UC-08), ezért a térképre lehet lépni.</li>
+<li><strong>Stop – Departure és Route – Departure:</strong> 1 – 0..*. Az indulás egy megálló és egy járat kapcsolatának időbeli példánya.</li>
+<li><strong>TimetableImport – Departure:</strong> új osztály és kompozíció. Az UC-08 E1 („az utoljára betöltött menetrendet mutatja”) azt jelenti, hogy a menetrendet betöltésenként kell kezelni: egy betöltés indulásai együtt keletkeznek, és együtt cserélődnek le.</li>
+</ul>
+<h4 id="s6-1-2" class="h-sub2">6.1.2 Attribútumok azonosítása</h4>
+<ul>
+<li>A ParkingReading <code>measuredAt</code> és <code>receivedAt</code> attribútuma közül a frissességet (K-13) a mérés ideje határozza meg; a beérkezés ideje a hibakereséshez kell (például ha egy eszköz órája rosszul jár).</li>
+<li>A SensorDevice <code>keyHash</code> attribútuma az SRS 11.3 eszközönkénti titkos kulcsából adódik. A kulcsot magát nem tároljuk, csak a kivonatát, hogy egy esetleges adatszivárgásból ne lehessen eszközt hamisítani.</li>
+<li>A Departure <code>serviceDays</code> attribútuma írja le, mely napokon közlekedik az indulás (munkanap, szabadnap, iskolai szünet). Ez a GTFS-adatforrás naptárszerkezetét követi; a pontos tárolását a rendszerterv adja meg.</li>
+<li>A Stop <code>isDefault</code> attribútuma az UC-08 2. lépéséből (alapértelmezett megálló) következik.</li>
+<li>A szabad helyek száma származtatott adat (kapacitás mínusz foglalt helyek), ezért nem attribútum, hanem művelet (<code>freeSpaces</code>).</li>
+</ul>
+<h4 id="s6-1-3" class="h-sub2">6.1.3 Bázisosztályok keresése</h4>
+<p>A parkolási és a menetrendi osztályok között nincs közös rész. Felmerült egy közös „Külső adat” bázisosztály a frissesség kezelésére, de a két adatforrás frissessége eltérően működik (percenkénti mérés, illetve napi betöltés), így a közös ős nem egyszerűsítené a modellt. Általánosítás ezért nincs az alrendszerben.</p>
+<h3 id="s6-2" class="h-sub">6.2 Dinamikus modell</h3>
+<h5 id="s6-2-1" class="h-sub3">6.2.1 Parkolóadat fogadása</h5>
+<p>A parkolóérzékelő-rendszer (A-07) adatküldése. Ez nem önálló use case, hanem az UC-04 adatforrása. Az eszközt a titkos kulcsa hitelesíti (SRS 11.3); a hibás vagy értelmetlen adat nem kerül be.</p>
+<figure class="fig" id="abra-13"><a href="uml/s4_seq_parkolomeres.svg" target="_blank" rel="noopener"><img src="uml/s4_seq_parkolomeres.svg" alt="Parkolóadat fogadása – szekvenciadiagram" loading="lazy" style="width:906px"></a></figure>
+<p class="fig-cap"><strong>13. ábra.</strong> Parkolóadat fogadása – szekvenciadiagram. <a href="uml/s4_seq_parkolomeres.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s6-2-2" class="h-sub3">6.2.2 UC-04 Szabad parkolóhelyek megtekintése</h5>
+<p>A felület zónánként lekéri a szabad helyek számát, a színjelölést és az adat frissességét, és amíg az oldal nyitva van, percenként frissít (A1).</p>
+<figure class="fig" id="abra-14"><a href="uml/s4_seq_parkolas.svg" target="_blank" rel="noopener"><img src="uml/s4_seq_parkolas.svg" alt="UC-04 Szabad parkolóhelyek megtekintése – szekvenciadiagram" loading="lazy" style="width:603px"></a></figure>
+<p class="fig-cap"><strong>14. ábra.</strong> UC-04 Szabad parkolóhelyek megtekintése – szekvenciadiagram. <a href="uml/s4_seq_parkolas.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s6-2-3" class="h-sub3">6.2.3 UC-08 MVK-menetrend megtekintése</h5>
+<p>A felület a kiválasztott megálló <code>nextDepartures(most, irány, 3)</code> műveletét hívja, és percenként csak a hátralévő perceket számolja újra (<code>Departure.minutesUntil</code>). Az ábra szerkezete az UC-04-ével egyezik, ezért külön nem rajzoltuk meg. Ha az utolsó sikeres betöltés egy napnál régebbi (<code>TimetableImport.isStale</code>), a felület jelzi, hogy az adat nem friss (E1).</p>
+<h5 id="s6-2-4" class="h-sub3">6.2.4 A ParkingZone állapotdiagramja</h5>
+<p>A zóna adatának frissessége az időtől és a beérkező mérésektől függ. Ebből az állapotból adódik a felületen a „nem friss” és a „nincs adat” jelzés (K-13).</p>
+<figure class="fig" id="abra-15"><a href="uml/s4_state_zona.svg" target="_blank" rel="noopener"><img src="uml/s4_state_zona.svg" alt="A ParkingZone (Parkolózóna) osztály állapotdiagramja (adatfrissesség)" loading="lazy" style="width:474px"></a></figure>
+<p class="fig-cap"><strong>15. ábra.</strong> A ParkingZone (Parkolózóna) osztály állapotdiagramja (adatfrissesség). <a href="uml/s4_state_zona.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h3 id="s6-3" class="h-sub">6.3 Funkcionális modell</h3>
+<h5 id="s6-3-1" class="h-sub3">6.3.1 A menetrend napi betöltése</h5>
+<p>A TimetableImport.run() lépései. Az új menetrend csak akkor lép érvénybe, ha a letöltés és az ellenőrzés is sikeres; a csere egy lépésben történik, így a felhasználók sosem látnak félig betöltött menetrendet. Hiba esetén az előző menetrend marad érvényben (UC-08 E1).</p>
+<figure class="fig" id="abra-16"><a href="uml/s4_act_menetrend.svg" target="_blank" rel="noopener"><img src="uml/s4_act_menetrend.svg" alt="A menetrend napi betöltése – aktivitásdiagram" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>16. ábra.</strong> A menetrend napi betöltése – aktivitásdiagram. <a href="uml/s4_act_menetrend.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s6-3-2" class="h-sub3">6.3.2 A következő indulások számítása</h5>
+<p>A <code>Stop.nextDepartures(at, headsign, perRoute)</code> feldolgozása: (1) az aktuális betöltés indulásai közül kiválasztja a megállóhoz tartozókat; (2) ha meg van adva irány, arra szűr; (3) megtartja azokat, amelyek az adott napon közlekednek (<code>runsOn</code>) és az indulási idejük nem korábbi a megadott időpontnál; (4) járatonként és irányonként időrendbe teszi őket, és az első hármat adja vissza. Ha egy járatnál aznap már nincs indulás, a következő nap első indulását adja vissza, megjelölve (UC-08 E2).</p>
+<h5 id="s6-3-3" class="h-sub3">6.3.3 A parkolási színjelölés</h5>
+<p>Az <code>availabilityLevel()</code> a szabad helyek arányából számol: 20% felett zöld, 1 hely és 20% között sárga, 0 szabad helynél piros (UC-04, 3. lépés). A felület a szín mellett szöveges jelzést is mutat az akadálymentesség miatt (SRS 4.6).</p>
+<h3 id="s6-4" class="h-sub">6.4 Operációk azonosítása</h3>
+<p>A fogadás szekvenciadiagramjából az <code>authenticate</code>, a <code>submitReading</code>, az <code>isValid</code> és az <code>applyReading</code>, az UC-04 ábrájából a <code>dataState</code>, a <code>freeSpaces</code> és az <code>availabilityLevel</code> művelet adódott. A menetrend-betöltés aktivitásdiagramja a <code>TimetableImport.run</code> lépéseit írja le. Döntés: a frissesség számítása a zóna felelőssége, nem a felületé, így minden felület (és a későbbi mobilalkalmazás) ugyanazt az eredményt mutatja.</p>
+<h3 id="s6-5" class="h-sub">6.5 Az analízis modell osztálydiagramja</h3>
+<p>Az alrendszer osztályai attribútumokkal és operációkkal. A Departure a TimetableImport része: egy betöltés minden indulása együtt keletkezik és együtt cserélődik.</p>
+<figure class="fig" id="abra-17"><a href="uml/s4_class.svg" target="_blank" rel="noopener"><img src="uml/s4_class.svg" alt="A Külső adatok alrendszer osztálydiagramja" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>17. ábra.</strong> A Külső adatok alrendszer osztálydiagramja. <a href="uml/s4_class.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h3 id="s6-6" class="h-sub">6.6 Az analízis modell osztályainak listája</h3>
+<p>A típusoknál az analízis szintjén általános típusokat adunk meg (szöveg, egész szám, dátum és idő stb.); osztálynév típus esetén az attribútum egy másik objektumra hivatkozik. A pontos adatbázistípusokat a rendszerterv tartalmazza.</p>
+<h4 id="s6-6-1" class="h-sub2">6.6.1 ParkingZone (Parkolózóna)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A parkoló egy elkülönített része, amelynek szabad helyeit a rendszer együtt jeleníti meg. A legfrissebb mérésből kiszámolja a szabad helyek számát, a színjelölést és az adat frissességét (K-12, K-13).</li>
+<li><strong>együttműködők:</strong> Place, ParkingReading, SensorDevice, ParkingDataState</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>name</code></td><td>szöveg</td><td>A zóna neve, például „E/7 mögötti parkoló”.</td></tr><tr><td><code>place</code></td><td>Place</td><td>A zóna helye a térképen.</td></tr><tr><td><code>capacity</code></td><td>egész szám</td><td>A zóna összes parkolóhelye.</td></tr><tr><td><code>latestReading</code></td><td>ParkingReading</td><td>A legutóbbi érvényes mérés; üres, ha még nem érkezett.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>applyReading</code></td><td>reading</td><td>Elfogad egy érvényes mérést legutóbbiként, ha az újabb a meglévőnél.</td></tr><tr><td><code>freeSpaces</code> : egész szám</td><td>–</td><td>A kapacitás és a foglalt helyek különbsége; üres, ha nincs adat.</td></tr><tr><td><code>availabilityLevel</code> : szöveg</td><td>–</td><td>Színjelölés: zöld, ha több mint 20% szabad; sárga, ha 1–20%; piros, ha tele van (UC-04).</td></tr><tr><td><code>dataState</code> : ParkingDataState</td><td>now</td><td>Friss, nem friss (10 percnél régebbi) vagy nincs adat (K-13).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s6-6-2" class="h-sub2">6.6.2 ParkingReading (Parkolómérés)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Egy érzékelőeszköz által küldött adat: egy zónában adott időpontban hány hely foglalt. Rögzíti a mérést, és ellenőrzi, hogy értelmes-e (nem negatív, nem több a kapacitásnál).</li>
+<li><strong>együttműködők:</strong> ParkingZone, SensorDevice</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>zone</code></td><td>ParkingZone</td><td>A zóna, amelyre a mérés vonatkozik.</td></tr><tr><td><code>device</code></td><td>SensorDevice</td><td>A küldő eszköz.</td></tr><tr><td><code>occupied</code></td><td>egész szám</td><td>A foglalt helyek száma.</td></tr><tr><td><code>measuredAt</code></td><td>dátum és idő</td><td>A mérés ideje az eszköz szerint.</td></tr><tr><td><code>receivedAt</code></td><td>dátum és idő</td><td>A beérkezés ideje a szerveren.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>isValid</code> : logikai</td><td>–</td><td>Igaz, ha 0 ≤ foglalt ≤ kapacitás, és a mérés ideje nem a jövőbeli.</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s6-6-3" class="h-sub2">6.6.3 SensorDevice (Érzékelőeszköz)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A parkolóérzékelő-rendszer (A-07) egy adattovábbító eszköze, amely egy zóna adatait küldi. Hitelesíti a beérkező adatot az eszköz titkos kulcsával (SRS 11.3), és mérést hoz létre belőle.</li>
+<li><strong>együttműködők:</strong> ParkingZone, ParkingReading</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>name</code></td><td>szöveg</td><td>Az eszköz megnevezése.</td></tr><tr><td><code>zone</code></td><td>ParkingZone</td><td>A figyelt zóna.</td></tr><tr><td><code>keyHash</code></td><td>szöveg</td><td>Az eszköz titkos kulcsának kivonata; a kulcsot magát nem tároljuk.</td></tr><tr><td><code>active</code></td><td>logikai</td><td>Hamis, ha az eszköz ki van vonva a használatból.</td></tr><tr><td><code>lastSeenAt</code></td><td>dátum és idő</td><td>Az utolsó adatküldés ideje.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>authenticate</code> : logikai</td><td>key</td><td>Ellenőrzi a kérésben küldött kulcsot.</td></tr><tr><td><code>submitReading</code> : ParkingReading</td><td>occupied, measuredAt</td><td>Mérést hoz létre, és átadja a zónának.</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s6-6-4" class="h-sub2">6.6.4 ParkingDataState (Parkolóadat-állapot)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A zóna adatának frissessége. Felsorolás típus. A felület ez alapján mutat „nem friss” vagy „nincs adat” jelzést (K-13).</li>
+<li><strong>együttműködők:</strong> ParkingZone</li>
+<li><strong>értékek</strong> (felsorolás típus)<div class="tbl tbl-sm mt-2"><table><thead><tr><th>Érték</th><th>Jelentés</th></tr></thead><tbody><tr><td><code>FRESH</code></td><td>friss (10 percnél újabb)</td></tr><tr><td><code>STALE</code></td><td>nem friss</td></tr><tr><td><code>NO_DATA</code></td><td>nincs adat</td></tr></tbody></table></div></li>
+<li><strong>operációk:</strong> nincsenek.</li>
+</ul>
+<h4 id="s6-6-5" class="h-sub2">6.6.5 Stop (Megálló)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Az MVK egy megállója az egyetem közelében. Kiszámolja a megállóból induló járatok következő indulásait (K-23, K-24).</li>
+<li><strong>együttműködők:</strong> Departure, Place</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>sourceId</code></td><td>szöveg</td><td>A megálló azonosítója a menetrendi adatforrásban.</td></tr><tr><td><code>name</code></td><td>szöveg</td><td>A megálló neve.</td></tr><tr><td><code>place</code></td><td>Place</td><td>A megálló a campustérképen (UC-19 «extend» UC-08); lehet üres.</td></tr><tr><td><code>isDefault</code></td><td>logikai</td><td>Igaz az egyetemhez legközelebbi, alapértelmezett megállónál.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>nextDepartures</code> : Departure[]</td><td>at, headsign, perRoute</td><td>Járatonként és irányonként a következő három indulás az adott időponttól (UC-08); ha aznap nincs több, a következő napi első (E2).</td></tr><tr><td><code>headsigns</code> : szöveg[]</td><td>–</td><td>A megállóból induló irányok a választáshoz (K-24).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s6-6-6" class="h-sub2">6.6.6 Route (Járat)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Az MVK egy autóbusz- vagy villamosvonala. Az indulásokat járatonként csoportosítja.</li>
+<li><strong>együttműködők:</strong> Departure</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>sourceId</code></td><td>szöveg</td><td>A járat azonosítója az adatforrásban.</td></tr><tr><td><code>shortName</code></td><td>szöveg</td><td>A járat száma, például 1 vagy 22.</td></tr><tr><td><code>vehicleType</code></td><td>szöveg</td><td>Autóbusz vagy villamos.</td></tr></tbody></table></div></li>
+<li><strong>operációk:</strong> nincsenek; az osztály csak adatot tárol, a vele végzett műveleteket a tartalmazó osztály végzi.</li>
+</ul>
+<h4 id="s6-6-7" class="h-sub2">6.6.7 Departure (Indulás)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Egy járat menetrend szerinti indulása egy megállóból egy irányba. Megmondja, hogy az indulás egy adott napon közlekedik-e, és hány perc múlva indul.</li>
+<li><strong>együttműködők:</strong> Stop, Route, TimetableImport</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>stop</code></td><td>Stop</td><td>A megálló.</td></tr><tr><td><code>route</code></td><td>Route</td><td>A járat.</td></tr><tr><td><code>headsign</code></td><td>szöveg</td><td>Az irány (végállomás).</td></tr><tr><td><code>departureTime</code></td><td>időpont</td><td>Menetrend szerinti indulási idő.</td></tr><tr><td><code>serviceDays</code></td><td>szöveg</td><td>A napok, amelyeken az indulás közlekedik (munkanap, szabadnap, iskolai szünet stb.).</td></tr><tr><td><code>import</code></td><td>TimetableImport</td><td>A betöltés, amelyből az indulás származik.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>runsOn</code> : logikai</td><td>date</td><td>Igaz, ha az indulás a megadott napon közlekedik.</td></tr><tr><td><code>minutesUntil</code> : egész szám</td><td>now</td><td>Hány perc van hátra az indulásig (UC-08, 3. lépés).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s6-6-8" class="h-sub2">6.6.8 TimetableImport (Menetrend-betöltés)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A menetrend egy betöltése az adatforrásból (naponta) vagy az adminisztrátor feltöltéséből (F-02). Letölti, ellenőrzi és egyben lecseréli a menetrendet. Sikertelen betöltésnél az előző menetrend marad érvényben (UC-08 E1).</li>
+<li><strong>együttműködők:</strong> Departure, Stop, Route</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>source</code></td><td>szöveg</td><td>GTFS-letöltés vagy kézi feltöltés.</td></tr><tr><td><code>startedAt</code></td><td>dátum és idő</td><td>A betöltés kezdete.</td></tr><tr><td><code>finishedAt</code></td><td>dátum és idő</td><td>A betöltés vége.</td></tr><tr><td><code>status</code></td><td>szöveg</td><td>Fut, sikeres vagy sikertelen.</td></tr><tr><td><code>validFrom</code></td><td>dátum</td><td>A menetrend érvényességének kezdete.</td></tr><tr><td><code>validTo</code></td><td>dátum</td><td>A menetrend érvényességének vége.</td></tr><tr><td><code>message</code></td><td>szöveg</td><td>Hiba esetén az ok.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>run</code> : logikai</td><td>–</td><td>Végrehajtja a betöltést (lásd a funkcionális modellt).</td></tr><tr><td><code>current</code> : TimetableImport</td><td>–</td><td>Osztályszintű művelet: az utolsó sikeres betöltés, amelyből az indulások jelenleg számolódnak.</td></tr><tr><td><code>isStale</code> : logikai</td><td>now</td><td>Igaz, ha az utolsó sikeres betöltés egy napnál régebbi; ilyenkor a felület jelzi, hogy az adat nem friss.</td></tr></tbody></table></div></li>
+</ul>
+<h2 id="s7" class="h-sec">7. Az Ügyintézés alrendszer modellje</h2>
+<p>Az Ügyintézés alrendszer az ügyintézési időpontfoglalást valósítja meg. Use case-ei: UC-11 Ügyintézési időpont foglalása, UC-12 Saját foglalások kezelése és UC-16 Ügyintézési időpontok kezelése. Az alrendszer a Felhasználókezelés alrendszerre támaszkodik (a foglaló hallgató, az értesítések és a napló).</p>
+<h3 id="s7-1" class="h-sub">7.1 Statikus modell</h3>
+<h4 id="s7-1-1" class="h-sub2">7.1.1 Kapcsolatok pontosítása</h4>
+<ul>
+<li><strong>CaseType – SlotRange („sávjai”):</strong> kompozíció, 1 – 0..*. A sáv mindig egy ügytípushoz tartozik.</li>
+<li><strong>SlotRange – Slot („előállít”):</strong> kompozíció, 1 – 0..*. Az időpontokat a sáv állítja elő; a sáv törlésekor az időpontjai is megszűnnek (a foglaltak az UC-16 E2 szerint indoklással).</li>
+<li><strong>Booking – Slot („lefoglalja”):</strong> 0..* – 1. A kezdeti modellben 1 – 1 kapcsolatnak gondoltuk, de lemondás után az időpont újra foglalható (K-32), így egy időponthoz időben egymás után több foglalás is tartozhat. Az a szabály, hogy egyszerre legfeljebb egy aktív foglalás lehet, a Slot állapotából következik (csak Szabad időpont foglalható).</li>
+<li><strong>User – Booking („foglal”):</strong> 0..* – 1, a foglalás felől navigálható; a hallgató foglalásait a <code>Booking.listFor</code> adja vissza.</li>
+<li>A foglalás és az ügytípus között nincs közvetlen kapcsolat: az ügytípus az időponton és a sávon keresztül érhető el. A K-30 ellenőrzéséhez (egy ügytípusra egy aktív foglalás) ez elegendő.</li>
+</ul>
+<h4 id="s7-1-2" class="h-sub2">7.1.2 Attribútumok azonosítása</h4>
+<ul>
+<li>A CaseType <code>slotMinutes</code> attribútuma az UC-16 2. lépéséből (egy időpont hossza) adódik; ebből bontja a sáv időpontokra magát.</li>
+<li>A SlotRange <code>repeatUntil</code> attribútuma az UC-16 A1 (heti ismétlődés) miatt kellett.</li>
+<li>A Slot <code>status</code> attribútuma négy értékű (szabad, foglalt, zárolt, törölt). A zárolt állapot az UC-16 A2, a törölt az UC-16 E2 miatt került be.</li>
+<li>A Booking <code>deleteReason</code> attribútuma a K-42 indoklása, amelyet a hallgató a foglalásai között lát (UC-12 E2).</li>
+<li>A lemondási határidő (2 óra) nem attribútum, hanem a <code>canCancel</code> művelet szabálya, mert minden foglalásra azonos.</li>
+</ul>
+<h4 id="s7-1-3" class="h-sub2">7.1.3 Bázisosztályok keresése</h4>
+<p>A Slot és a Booking állapotkezelése hasonló (állapot attribútum, állapotváltó műveletek), de az állapotaik és az átmeneteik különbözők, így közös bázisosztályuk nem egyszerűsítené a modellt. Az alrendszerben nincs általánosítás.</p>
+<h3 id="s7-2" class="h-sub">7.2 Dinamikus modell</h3>
+<h5 id="s7-2-1" class="h-sub3">7.2.1 UC-11 Ügyintézési időpont foglalása</h5>
+<p>A foglalás szokásos működése a két kivételes esettel. A megerősítéskor a rendszer újra ellenőrzi, hogy az időpont még szabad-e (E1), és hogy a hallgatónak nincs-e aktív foglalása az ügytípusra (K-30, E2). A visszaigazoló e-mail sikertelensége a foglalást nem érinti (E3).</p>
+<figure class="fig" id="abra-18"><a href="uml/s5_seq_foglalas.svg" target="_blank" rel="noopener"><img src="uml/s5_seq_foglalas.svg" alt="UC-11 Ügyintézési időpont foglalása – szekvenciadiagram" loading="lazy" style="width:997px"></a></figure>
+<p class="fig-cap"><strong>18. ábra.</strong> UC-11 Ügyintézési időpont foglalása – szekvenciadiagram. <a href="uml/s5_seq_foglalas.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s7-2-2" class="h-sub3">7.2.2 UC-12 Saját foglalások kezelése</h5>
+<p>A foglalás lemondása. A lemondás csak aktív foglalásnál és legalább 2 órával az időpont előtt lehetséges (K-32); a felszabaduló időpont azonnal újra foglalható.</p>
+<figure class="fig" id="abra-19"><a href="uml/s5_seq_lemondas.svg" target="_blank" rel="noopener"><img src="uml/s5_seq_lemondas.svg" alt="UC-12 Saját foglalások kezelése – szekvenciadiagram (lemondás)" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>19. ábra.</strong> UC-12 Saját foglalások kezelése – szekvenciadiagram (lemondás). <a href="uml/s5_seq_lemondas.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s7-2-3" class="h-sub3">7.2.3 UC-16 Ügyintézési időpontok kezelése</h5>
+<p>Az adminisztrátor egy ügytípushoz időpontsávot (SlotRange) rögzít. Mentés előtt a sáv <code>overlaps(other)</code> művelete ellenőrzi, hogy nem fed-e át az ügytípus egy meglévő sávjával; ezután a <code>generateSlots()</code> előállítja a foglalható időpontokat. Meglévő szabad időpontot a <code>Slot.lock(by)</code> zárol és az <code>unlock(by)</code> old fel (A2), törölni a <code>Slot.delete(by, reason)</code> művelettel lehet; foglalt időpont törlésekor a hallgató értesítést kap (UC-20 «extend»). A lépések sorrendjét a funkcionális modell aktivitásdiagramja mutatja be (<a href="#abra-22">22. ábra</a>), a foglalt időpont törlését ugyanott külön alpont írja le; külön szekvenciadiagramot nem készítettünk.</p>
+<h5 id="s7-2-4" class="h-sub3">7.2.4 A Slot állapotdiagramja</h5>
+<p>Az időpont állapotai. Foglalni csak Szabad állapotú időpontra lehet; foglalt időpont törlésekor a foglalás is törlődik, és a hallgató indoklással értesítést kap (K-42).</p>
+<figure class="fig" id="abra-20"><a href="uml/s5_state_idopont.svg" target="_blank" rel="noopener"><img src="uml/s5_state_idopont.svg" alt="A Slot (Időpont) osztály állapotdiagramja" loading="lazy" style="width:709px"></a></figure>
+<p class="fig-cap"><strong>20. ábra.</strong> A Slot (Időpont) osztály állapotdiagramja. <a href="uml/s5_state_idopont.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s7-2-5" class="h-sub3">7.2.5 A Booking állapotdiagramja</h5>
+<p>A foglalás állapotai. Egy hallgatónak ügytípusonként legfeljebb egy Aktív foglalása lehet (K-30).</p>
+<figure class="fig" id="abra-21"><a href="uml/s5_state_foglalas.svg" target="_blank" rel="noopener"><img src="uml/s5_state_foglalas.svg" alt="A Booking (Foglalás) osztály állapotdiagramja" loading="lazy" style="width:615px"></a></figure>
+<p class="fig-cap"><strong>21. ábra.</strong> A Booking (Foglalás) osztály állapotdiagramja. <a href="uml/s5_state_foglalas.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h3 id="s7-3" class="h-sub">7.3 Funkcionális modell</h3>
+<h5 id="s7-3-1" class="h-sub3">7.3.1 Időpontsáv rögzítése és az időpontok előállítása (UC-16)</h5>
+<p>Hogyan lesz az adminisztrátor által megadott sávból foglalható időpont. Az időpontok előállítása (generateSlots) ismétlődő sávnál hetente megismétlődik az ismétlődés végéig; az átfedés-ellenőrzés minden érintett hétre lefut.</p>
+<figure class="fig" id="abra-22"><a href="uml/s5_act_idopontsav.svg" target="_blank" rel="noopener"><img src="uml/s5_act_idopontsav.svg" alt="UC-16 Időpontsáv rögzítése – aktivitásdiagram" loading="lazy" style="width:436px"></a></figure>
+<p class="fig-cap"><strong>22. ábra.</strong> UC-16 Időpontsáv rögzítése – aktivitásdiagram. <a href="uml/s5_act_idopontsav.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s7-3-2" class="h-sub3">7.3.2 Szabad időpontok számítása</h5>
+<p>A <code>CaseType.freeSlots(from, to)</code> az ügytípus sávjaihoz tartozó időpontok közül azokat adja vissza, amelyek Szabad állapotúak, a megadott időszakba esnek, és legalább 2 óra múlva kezdődnek. (Ez utóbbi feltétel ugyanaz, mint a lemondási határidő: ha valaki 2 órán belüli időpontot foglalna, azt már nem tudná lemondani.) Ha a 14 napos időszakban nincs találat, a <code>nearestFreeSlot</code> a 14. nap utáni első szabad időpontot adja (UC-11 A1).</p>
+<h5 id="s7-3-3" class="h-sub3">7.3.3 Időpont törlése foglalással (UC-16 E2)</h5>
+<p>A <code>Slot.delete(by, reason)</code> foglalt időpontnál három lépést végez egyben: a foglalást Törölve állapotba teszi az indoklással (<code>Booking.markDeleted</code>), az időpontot Törölt állapotba teszi, és BOOKING_DELETED típusú értesítést készít a hallgatónak (K-42). Az indoklás megadása kötelező; nélküle a művelet nem hajtódik végre.</p>
+<h3 id="s7-4" class="h-sub">7.4 Operációk azonosítása</h3>
+<p>Az UC-11 szekvenciadiagramjából a <code>freeSlots</code>, a <code>hasActiveBooking</code> és a <code>book</code>, az UC-12-éből a <code>listFor</code>, a <code>canCancel</code>, a <code>cancel</code> és a <code>release</code>, az UC-16 aktivitásdiagramjából a <code>generateSlots</code> és az <code>overlaps</code> művelet adódott. A <code>lock</code>, az <code>unlock</code> és a <code>delete</code> az állapotdiagram átmeneteiből származik.</p>
+<p>Döntés: a foglalás létrehozása az időpont felelőssége (<code>Slot.book</code>), mert az időpont tudja, hogy szabad-e, és a foglalással egy lépésben kell állapotot váltania. Így két egyidejű foglalási kísérletből csak az egyik sikerülhet (UC-11 E1); a megvalósítás módját a rendszerterv írja le.</p>
+<h3 id="s7-5" class="h-sub">7.5 Az analízis modell osztálydiagramja</h3>
+<p>Az alrendszer osztályai attribútumokkal és operációkkal. Egy időponthoz több foglalás is tartozhat időben egymás után (lemondás után újrafoglalás), de aktív foglalás egyszerre csak egy.</p>
+<figure class="fig" id="abra-23"><a href="uml/s5_class.svg" target="_blank" rel="noopener"><img src="uml/s5_class.svg" alt="Az Ügyintézés alrendszer osztálydiagramja" loading="lazy" style="width:775px"></a></figure>
+<p class="fig-cap"><strong>23. ábra.</strong> Az Ügyintézés alrendszer osztálydiagramja. <a href="uml/s5_class.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h3 id="s7-6" class="h-sub">7.6 Az analízis modell osztályainak listája</h3>
+<p>A típusoknál az analízis szintjén általános típusokat adunk meg (szöveg, egész szám, dátum és idő stb.); osztálynév típus esetén az attribútum egy másik objektumra hivatkozik. A pontos adatbázistípusokat a rendszerterv tartalmazza.</p>
+<h4 id="s7-6-1" class="h-sub2">7.6.1 CaseType (Ügytípus)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Az ügyintézés egy fajtája, amelyre időpont foglalható (például igazolás kérése, tanulmányi ügy, kollégiumi ügy). Megadja az ügy helyszínét és egy időpont hosszát, és kiszámolja a szabad időpontokat (K-29).</li>
+<li><strong>együttműködők:</strong> SlotRange, Slot</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>name</code></td><td>szöveg</td><td>Az ügytípus neve.</td></tr><tr><td><code>description</code></td><td>szöveg</td><td>Rövid leírás a hallgatónak.</td></tr><tr><td><code>location</code></td><td>szöveg</td><td>Az ügyintézés helye, például „Tanulmányi Osztály, A/4 épület”.</td></tr><tr><td><code>slotMinutes</code></td><td>egész szám</td><td>Egy időpont hossza percben, például 15.</td></tr><tr><td><code>active</code></td><td>logikai</td><td>Hamis, ha az ügytípusra már nem lehet foglalni.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>freeSlots</code> : Slot[]</td><td>from, to</td><td>A szabad, nem zárolt, jövőbeli időpontok a megadott időszakban (alapértelmezetten 14 nap).</td></tr><tr><td><code>nearestFreeSlot</code> : Slot</td><td>after</td><td>A legközelebbi szabad időpont, ha 14 napon belül nincs (UC-11 A1).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s7-6-2" class="h-sub2">7.6.2 SlotRange (Időpontsáv)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Az adminisztrátor által megadott időszak (például hétfő 9–12 óra), amelyből a rendszer foglalható időpontokat készít. Az ügytípus időpont-hossza szerint időpontokra bontja magát, és ellenőrzi, hogy nem fed-e át ugyanannak az ügytípusnak egy másik sávjával (UC-16).</li>
+<li><strong>együttműködők:</strong> CaseType, Slot</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>caseType</code></td><td>CaseType</td><td>Az ügytípus.</td></tr><tr><td><code>date</code></td><td>dátum</td><td>Az első nap, amelyre a sáv vonatkozik.</td></tr><tr><td><code>startTime</code></td><td>időpont</td><td>A sáv kezdete.</td></tr><tr><td><code>endTime</code></td><td>időpont</td><td>A sáv vége.</td></tr><tr><td><code>repeatUntil</code></td><td>dátum</td><td>Heti ismétlődésnél az utolsó nap; különben üres (UC-16 A1).</td></tr><tr><td><code>createdBy</code></td><td>User</td><td>A sávot rögzítő adminisztrátor.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>generateSlots</code> : Slot[]</td><td>–</td><td>Előállítja a sávból készülő időpontokat; ezt mutatja az előnézet is (UC-16, 4. lépés).</td></tr><tr><td><code>overlaps</code> : logikai</td><td>other</td><td>Igaz, ha két sáv ugyanarra az ügytípusra időben átfed (UC-16 E1).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s7-6-3" class="h-sub2">7.6.3 Slot (Időpont)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Egy foglalható ügyintézési időpont, például hétfő 9:15–9:30. Nyilvántartja, hogy az időpont szabad, foglalt, zárolt vagy törölt, és csak szabad állapotban engedi a foglalást.</li>
+<li><strong>együttműködők:</strong> SlotRange, CaseType, Booking, SlotStatus</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>range</code></td><td>SlotRange</td><td>A sáv, amelyből az időpont készült.</td></tr><tr><td><code>startsAt</code></td><td>dátum és idő</td><td>Kezdés.</td></tr><tr><td><code>endsAt</code></td><td>dátum és idő</td><td>Befejezés.</td></tr><tr><td><code>status</code></td><td>SlotStatus</td><td>Az időpont állapota.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>book</code> : Booking</td><td>student</td><td>Ha az időpont szabad, foglalttá teszi, és létrehozza a foglalást; ha közben más lefoglalta, hibát jelez (UC-11 E1).</td></tr><tr><td><code>release</code></td><td>–</td><td>Lemondás után újra szabaddá teszi az időpontot (K-32).</td></tr><tr><td><code>lock</code></td><td>by</td><td>Zárolja a szabad időpontot (UC-16 A2).</td></tr><tr><td><code>unlock</code></td><td>by</td><td>Feloldja a zárolást.</td></tr><tr><td><code>delete</code></td><td>by, reason</td><td>Törli az időpontot. Ha foglalt volt, a foglalást is törli, és indoklással értesíti a hallgatót (K-42).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s7-6-4" class="h-sub2">7.6.4 SlotStatus (Időpontállapot)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Az időpont állapotai. Felsorolás típus. Lásd a Slot állapotdiagramját.</li>
+<li><strong>együttműködők:</strong> Slot</li>
+<li><strong>értékek</strong> (felsorolás típus)<div class="tbl tbl-sm mt-2"><table><thead><tr><th>Érték</th><th>Jelentés</th></tr></thead><tbody><tr><td><code>FREE</code></td><td>szabad</td></tr><tr><td><code>BOOKED</code></td><td>foglalt</td></tr><tr><td><code>LOCKED</code></td><td>zárolt</td></tr><tr><td><code>DELETED</code></td><td>törölt</td></tr></tbody></table></div></li>
+<li><strong>operációk:</strong> nincsenek.</li>
+</ul>
+<h4 id="s7-6-5" class="h-sub2">7.6.5 Booking (Foglalás)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Egy hallgató foglalása egy ügyintézési időpontra. Rögzíti a foglalást, és ellenőrzi a lemondás szabályait (K-32). Ügytípusonként legfeljebb egy aktív foglalás lehet (K-30).</li>
+<li><strong>együttműködők:</strong> User, Slot, Notification, BookingStatus</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>student</code></td><td>User</td><td>A foglaló hallgató.</td></tr><tr><td><code>slot</code></td><td>Slot</td><td>A lefoglalt időpont.</td></tr><tr><td><code>status</code></td><td>BookingStatus</td><td>A foglalás állapota.</td></tr><tr><td><code>createdAt</code></td><td>dátum és idő</td><td>A foglalás ideje.</td></tr><tr><td><code>cancelledAt</code></td><td>dátum és idő</td><td>A lemondás vagy törlés ideje.</td></tr><tr><td><code>deleteReason</code></td><td>szöveg</td><td>Az adminisztrátor indoklása, ha ő törölte az időpontot (UC-12 E2).</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>hasActiveBooking</code> : logikai</td><td>student, caseType</td><td>Osztályszintű művelet: van-e a hallgatónak aktív foglalása az ügytípusra (K-30).</td></tr><tr><td><code>canCancel</code> : logikai</td><td>now</td><td>Igaz, ha a foglalás aktív, és legalább 2 óra van az időpontig (K-32).</td></tr><tr><td><code>cancel</code></td><td>now</td><td>Lemondja a foglalást, és felszabadítja az időpontot.</td></tr><tr><td><code>markDeleted</code></td><td>reason</td><td>Törölt állapotba teszi a foglalást az adminisztrátor indoklásával.</td></tr><tr><td><code>listFor</code> : Booking[]</td><td>student</td><td>Osztályszintű művelet: a hallgató aktív és korábbi foglalásai (UC-12).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s7-6-6" class="h-sub2">7.6.6 BookingStatus (Foglalásállapot)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A foglalás állapotai. Felsorolás típus. Lásd a Booking állapotdiagramját.</li>
+<li><strong>együttműködők:</strong> Booking</li>
+<li><strong>értékek</strong> (felsorolás típus)<div class="tbl tbl-sm mt-2"><table><thead><tr><th>Érték</th><th>Jelentés</th></tr></thead><tbody><tr><td><code>ACTIVE</code></td><td>aktív</td></tr><tr><td><code>CANCELLED</code></td><td>lemondva</td></tr><tr><td><code>DELETED</code></td><td>törölve (az adminisztrátor törölte az időpontot)</td></tr><tr><td><code>COMPLETED</code></td><td>lezajlott</td></tr></tbody></table></div></li>
+<li><strong>operációk:</strong> nincsenek.</li>
+</ul>
+<h2 id="s8" class="h-sec">8. A Hibabejelentés alrendszer modellje</h2>
+<p>A Hibabejelentés alrendszer a hibabejelentések teljes életciklusát kezeli a beküldéstől a lezárásig. Use case-ei: UC-13 Hibabejelentés beküldése, UC-14 Hibabejelentés állapotának követése, UC-17 Hibabejelentések kezelése, valamint az ezekhez kapcsolódó UC-21 Bejelentés részleteinek megtekintése («include»), UC-22 Kép csatolása és UC-23 Bejelentés átirányítása («extend»). Kapcsolódik a Felhasználókezelés (bejelentő, értesítés, napló), a Tartalomkezelés (épület) és a Szervezet és oktatók (felelős tanszék) alrendszerhez.</p>
+<h3 id="s8-1" class="h-sub">8.1 Statikus modell</h3>
+<h4 id="s8-1-1" class="h-sub2">8.1.1 Kapcsolatok pontosítása</h4>
+<ul>
+<li><strong>FaultReport – ResponsibleUnit („felelős”):</strong> 0..* – 1. A kezdeti modellben a felelős egységet csak a kategória határozta meg. Az UC-13 9. lépése szerint azonban a hozzárendelés „a kategória és a helyszín alapján” történik, a K-43 szerint pedig az oktató a tanszékéhez rendelt bejelentéseket kezeli. Ez két új elemet hozott: a kategória <strong>alapértelmezett felelősét</strong> (ReportCategory – ResponsibleUnit, 0..* – 1) és az épületenként eltérő szabályt leíró <strong>AssignmentRule</strong> osztályt (kategória + épület → egység).</li>
+<li><strong>ResponsibleUnit – Department („lehet”):</strong> 0..* – 0..1. Ha az egység egy tanszék, a tanszék oktatói kezelhetik a bejelentéseit.</li>
+<li><strong>FaultReport – StatusChange („előzmény”):</strong> kompozíció, 1 – 1..*. Az előzmények a bejelentés részei; legalább egy bejegyzés mindig van (a beküldés).</li>
+<li><strong>StatusChange – User („módosította”):</strong> 0..* – 1. A bejelentő látja, ki és mikor módosította az állapotot (UC-14).</li>
+<li><strong>FaultReport – Attachment („csatolt kép”):</strong> kompozíció, 1 – 0..1, mert a K-34 szerint egy kép csatolható.</li>
+<li><strong>FaultReport – Place („helyszín”):</strong> 0..* – 1, „épület” szerepnévvel; a pontosabb hely szöveges attribútum (UC-13, 4. lépés).</li>
+</ul>
+<h4 id="s8-1-2" class="h-sub2">8.1.2 Attribútumok azonosítása</h4>
+<ul>
+<li>A FaultReport <code>code</code> attribútuma az UC-13 posztkondíciójából (egyedi azonosító, például HB-2026-0042) adódik. A belső <code>id</code> mellett azért kell, mert ezt a felhasználó is látja és hivatkozik rá.</li>
+<li>A <code>latitude</code> és <code>longitude</code> az UC-13 A2 (helyszín a térképen) miatt került be; üres, ha a bejelentő nem jelölt ki pontot.</li>
+<li>A StatusChange <code>fromStatus</code> és <code>toStatus</code> attribútuma lehetővé teszi, hogy ugyanaz az osztály írja le az állapotváltozást és az állapotváltozás nélküli megjegyzést (UC-17 A2).</li>
+<li>Az Attachment méretadatai a K-34 ellenőrzéséhez és az SRS 6.3 kicsinyítéséhez (legfeljebb 1600 px) kellenek.</li>
+</ul>
+<h4 id="s8-1-3" class="h-sub2">8.1.3 Bázisosztályok keresése</h4>
+<p>Megvizsgáltuk, hogy a StatusChange és a Felhasználókezelés alrendszer AuditLogEntry osztálya összevonható-e, hiszen mindkettő „ki, mit, mikor” adatot tárol. Nem vontuk össze őket: a StatusChange a bejelentés része, a bejelentő is látja, és megjegyzést tartalmaz; a naplóbejegyzés belső, csak az adminisztrátorok számára készül. Az állapotváltozáskor ezért mindkettő létrejön. Az alrendszerben nincs általánosítás.</p>
+<h3 id="s8-2" class="h-sub">8.2 Dinamikus modell</h3>
+<h5 id="s8-2-1" class="h-sub3">8.2.1 UC-13 Hibabejelentés beküldése</h5>
+<p>A bejelentés beküldése. A kép ellenőrzése (E2) a bejelentés létrehozása előtt történik, így hibás képnél csak a kép utasítódik el. A felelős egységet a ResponsibleUnit.resolve() választja ki a kategória és az épület alapján.</p>
+<figure class="fig" id="abra-24"><a href="uml/s6_seq_bekuldes.svg" target="_blank" rel="noopener"><img src="uml/s6_seq_bekuldes.svg" alt="UC-13 Hibabejelentés beküldése – szekvenciadiagram" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>24. ábra.</strong> UC-13 Hibabejelentés beküldése – szekvenciadiagram. <a href="uml/s6_seq_bekuldes.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s8-2-2" class="h-sub3">8.2.2 UC-17 Hibabejelentések kezelése</h5>
+<p>A felelős (adminisztrátor vagy a tanszék oktatója) állapotot módosít és megjegyzést ír. A jogosultságot a canBeManagedBy() ellenőrzi (E2); elutasításnál az indoklás kötelező (K-44, E1). Minden változás előzménybejegyzést, értesítést és naplóbejegyzést eredményez.</p>
+<figure class="fig" id="abra-25"><a href="uml/s6_seq_kezeles.svg" target="_blank" rel="noopener"><img src="uml/s6_seq_kezeles.svg" alt="UC-17 Hibabejelentések kezelése – szekvenciadiagram" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>25. ábra.</strong> UC-17 Hibabejelentések kezelése – szekvenciadiagram. <a href="uml/s6_seq_kezeles.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s8-2-3" class="h-sub3">8.2.3 UC-14 Hibabejelentés állapotának követése</h5>
+<p>A felület a <code>FaultReport.listFor(bejelentő)</code> művelettel kéri le a saját bejelentéseket, majd a kiválasztott bejelentés megnyitása előtt a <code>canBeViewedBy</code> művelettel ellenőrzi a hozzáférést (E1). Az ábra szerkezete az UC-12-éhez hasonló, ezért külön nem rajzoltuk meg.</p>
+<h5 id="s8-2-4" class="h-sub3">8.2.4 UC-21 Bejelentés részleteinek megtekintése</h5>
+<p>Az UC-14 és az UC-17 közös része («include»). A bejelentés megnyitása előtt a felület a <code>FaultReport.canBeViewedBy(user)</code> művelettel ellenőrzi a hozzáférést (E1), majd megjeleníti a bejelentés adatait, a csatolt képet (Attachment) és időrendben az előzményeit (StatusChange): állapot, megjegyzés, módosító, időpont. A rendszer adatai nem változnak, a use case egyetlen lekérdezés, ezért külön ábrát nem készítettünk.</p>
+<h5 id="s8-2-5" class="h-sub3">8.2.5 UC-22 Kép csatolása</h5>
+<p>Az UC-13 bővítése. A kiválasztott fájlt az <code>Attachment.validate(file)</code> ellenőrzi (JPEG vagy PNG, legfeljebb 5 MB, K-34); hibás képnél csak a képet utasítja el, a bejelentés többi adata megmarad (E1). A képet a bejelentés beküldésekor az <code>Attachment.store(file)</code> menti. Mindkét üzenet szerepel az UC-13 szekvenciadiagramján (<a href="#abra-24">24. ábra</a>), ezért külön ábrát nem készítettünk.</p>
+<h5 id="s8-2-6" class="h-sub3">8.2.6 UC-23 Bejelentés átirányítása</h5>
+<p>Az UC-17 bővítése, csak adminisztrátor végezheti. Az adminisztrátor kiválasztja az új felelős egységet, és megadja az átirányítás okát; a felület a <code>FaultReport.reassign(unit, by)</code> műveletet hívja. A művelet a bejelentést az új egységhez rendeli, előzménybejegyzést (StatusChange) készít, és a változást az <code>AuditLogEntry.record()</code> naplózza (K-46). Oktató kérését a művelet elutasítja (E1). Az üzenetváltás szerkezete az UC-17 állapotmódosításáéval egyezik (<a href="#abra-25">25. ábra</a>), ezért külön ábrát nem készítettünk.</p>
+<h5 id="s8-2-7" class="h-sub3">8.2.7 A FaultReport állapotdiagramja</h5>
+<p>A bejelentés négy állapota (K-35). Minden állapotváltozás előzménybejegyzést és értesítést hoz létre. Állapotváltozás nélküli megjegyzés bármelyik állapotban fűzhető a bejelentéshez.</p>
+<figure class="fig" id="abra-26"><a href="uml/s6_state_bejelentes.svg" target="_blank" rel="noopener"><img src="uml/s6_state_bejelentes.svg" alt="A FaultReport (Hibabejelentés) osztály állapotdiagramja" loading="lazy" style="width:615px"></a></figure>
+<p class="fig-cap"><strong>26. ábra.</strong> A FaultReport (Hibabejelentés) osztály állapotdiagramja. <a href="uml/s6_state_bejelentes.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h3 id="s8-3" class="h-sub">8.3 Funkcionális modell</h3>
+<h5 id="s8-3-1" class="h-sub3">8.3.1 A bejelentés feldolgozása beküldéskor</h5>
+<p>A FaultReport.submit() feldolgozási lépései. A hozzárendelési szabály (AssignmentRule) épületenként pontosítja a kategória alapértelmezett felelősét. Az azonosító éven belüli sorszám, így olvasható és egyedi.</p>
+<figure class="fig" id="abra-27"><a href="uml/s6_act_hozzarendeles.svg" target="_blank" rel="noopener"><img src="uml/s6_act_hozzarendeles.svg" alt="A bejelentés felelős egységhez rendelése – aktivitásdiagram" loading="lazy" style="width:473px"></a></figure>
+<p class="fig-cap"><strong>27. ábra.</strong> A bejelentés felelős egységhez rendelése – aktivitásdiagram. <a href="uml/s6_act_hozzarendeles.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h5 id="s8-3-2" class="h-sub3">8.3.2 Hozzáférési szabályok</h5>
+<p>A <code>canBeViewedBy(user)</code> igaz, ha a felhasználó (1) a bejelentő, vagy (2) adminisztrátor, vagy (3) oktató, és a bejelentés felelős egysége az ő tanszéke. A <code>canBeManagedBy(user)</code> ugyanez a (2) és (3) esetre. Minden más esetben a hozzáférés megtagadva (K-38, UC-14 E1, UC-17 E2). A listák (<code>listFor</code>) ugyanezt a feltételt használják, így a felhasználó a listában sem lát olyat, amit nem nyithat meg.</p>
+<h3 id="s8-4" class="h-sub">8.4 Operációk azonosítása</h3>
+<p>A beküldés szekvenciadiagramjából a <code>submit</code>, a <code>ResponsibleUnit.resolve</code>, a <code>nextCode</code>, valamint az <code>Attachment.validate</code> és <code>store</code>; a kezelés szekvenciadiagramjából a <code>listFor</code>, a <code>canBeManagedBy</code> és a <code>changeStatus</code>; az UC-17 alternatíváiból az <code>addComment</code> és a <code>reassign</code> művelet adódott.</p>
+<p>Döntés: a K-44 (elutasítás csak indoklással) a <code>changeStatus</code> művelet szabálya, és az is ellenőrzi, hogy a <code>reassign</code> műveletet csak adminisztrátor hívhatja (UC-23). Így a szabályok a felülettől függetlenül érvényesülnek.</p>
+<h3 id="s8-5" class="h-sub">8.5 Az analízis modell osztálydiagramja</h3>
+<p>Az alrendszer osztályai attribútumokkal és operációkkal. Az AssignmentRule a kapcsolatok pontosítása során jelent meg: a kategória és az épület együtt határozza meg a felelőst.</p>
+<figure class="fig" id="abra-28"><a href="uml/s6_class.svg" target="_blank" rel="noopener"><img src="uml/s6_class.svg" alt="A Hibabejelentés alrendszer osztálydiagramja" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>28. ábra.</strong> A Hibabejelentés alrendszer osztálydiagramja. <a href="uml/s6_class.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h3 id="s8-6" class="h-sub">8.6 Az analízis modell osztályainak listája</h3>
+<p>A típusoknál az analízis szintjén általános típusokat adunk meg (szöveg, egész szám, dátum és idő stb.); osztálynév típus esetén az attribútum egy másik objektumra hivatkozik. A pontos adatbázistípusokat a rendszerterv tartalmazza.</p>
+<h4 id="s8-6-1" class="h-sub2">8.6.1 FaultReport (Hibabejelentés)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Egy felhasználó által rögzített jelzés egy egyetemi hibáról, kategóriával, helyszínnel és leírással. Végigviszi a bejelentést az életciklusán (K-35): beküldéskor felelős egységhez rendelődik és azonosítót kap, a felelős módosítja az állapotát, és minden változás bekerül az előzményekbe. Megmondja, ki láthatja (K-38, K-43).</li>
+<li><strong>együttműködők:</strong> User, ReportCategory, Place, ResponsibleUnit, StatusChange, Attachment, Notification, ReportStatus</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>code</code></td><td>szöveg</td><td>A felhasználónak mutatott azonosító, például HB-2026-0042.</td></tr><tr><td><code>reporter</code></td><td>User</td><td>A bejelentő.</td></tr><tr><td><code>category</code></td><td>ReportCategory</td><td>A hiba kategóriája.</td></tr><tr><td><code>building</code></td><td>Place</td><td>Az épület, ahol a hiba van.</td></tr><tr><td><code>locationDetail</code></td><td>szöveg</td><td>A terem vagy a pontosabb hely.</td></tr><tr><td><code>latitude, longitude</code></td><td>valós szám</td><td>A térképen kijelölt pont, ha a bejelentő megadta (UC-13 A2).</td></tr><tr><td><code>description</code></td><td>szöveg</td><td>A hiba leírása, legalább 10 karakter.</td></tr><tr><td><code>status</code></td><td>ReportStatus</td><td>Az aktuális állapot.</td></tr><tr><td><code>unit</code></td><td>ResponsibleUnit</td><td>A felelős egység.</td></tr><tr><td><code>createdAt</code></td><td>dátum és idő</td><td>A beküldés ideje.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>submit</code></td><td>–</td><td>Ellenőrzi az adatokat, felelős egységet rendel hozzá, azonosítót ad, és Új állapotban rögzíti (UC-13).</td></tr><tr><td><code>changeStatus</code></td><td>newStatus, comment, by</td><td>Módosítja az állapotot; elutasításnál a megjegyzés kötelező (K-44). Előzménybejegyzést és értesítést hoz létre.</td></tr><tr><td><code>addComment</code></td><td>comment, by</td><td>Állapotváltozás nélküli megjegyzést fűz a bejelentéshez (UC-17 A2).</td></tr><tr><td><code>reassign</code></td><td>unit, by</td><td>Másik felelős egységhez rendeli a bejelentést; csak adminisztrátor teheti meg (UC-23).</td></tr><tr><td><code>canBeViewedBy</code> : logikai</td><td>user</td><td>A bejelentő, az adminisztrátor és a felelős tanszék oktatója láthatja (K-38, K-43).</td></tr><tr><td><code>canBeManagedBy</code> : logikai</td><td>user</td><td>Az adminisztrátor minden bejelentést, az oktató a tanszékéhez rendelteket kezelheti.</td></tr><tr><td><code>listFor</code> : FaultReport[]</td><td>user, filter</td><td>Osztályszintű művelet: a felhasználó által látható bejelentések; a kezelőnél a legrégebbi Új állapotúval kezdve (UC-14, UC-17).</td></tr><tr><td><code>nextCode</code> : szöveg</td><td>year</td><td>Osztályszintű művelet: a következő éven belüli sorszámú azonosító.</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s8-6-2" class="h-sub2">8.6.2 ReportStatus (Bejelentésállapot)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A hibabejelentés állapotai (K-35). Felsorolás típus. Lásd a FaultReport állapotdiagramját.</li>
+<li><strong>együttműködők:</strong> FaultReport, StatusChange</li>
+<li><strong>értékek</strong> (felsorolás típus)<div class="tbl tbl-sm mt-2"><table><thead><tr><th>Érték</th><th>Jelentés</th></tr></thead><tbody><tr><td><code>NEW</code></td><td>Új</td></tr><tr><td><code>IN_PROGRESS</code></td><td>Folyamatban</td></tr><tr><td><code>RESOLVED</code></td><td>Megoldva</td></tr><tr><td><code>REJECTED</code></td><td>Elutasítva</td></tr></tbody></table></div></li>
+<li><strong>operációk:</strong> nincsenek.</li>
+</ul>
+<h4 id="s8-6-3" class="h-sub2">8.6.3 ReportCategory (Bejelentési kategória)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A hiba fajtája: világítás, fűtés és szellőzés, takarítás, informatika, akadálymentesség, egyéb. Csoportosítja a bejelentéseket, és megadja az alapértelmezett felelős egységet.</li>
+<li><strong>együttműködők:</strong> FaultReport, ResponsibleUnit, AssignmentRule</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>name</code></td><td>szöveg</td><td>A kategória neve.</td></tr><tr><td><code>defaultUnit</code></td><td>ResponsibleUnit</td><td>Az egység, amely akkor kapja a bejelentést, ha nincs rá külön szabály.</td></tr></tbody></table></div></li>
+<li><strong>operációk:</strong> nincsenek; az osztály csak adatot tárol, a vele végzett műveleteket a tartalmazó osztály végzi.</li>
+</ul>
+<h4 id="s8-6-4" class="h-sub2">8.6.4 ResponsibleUnit (Felelős egység)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Az a szervezeti egység, amely egy bejelentés megoldásáért felel (például Gondnokság, Informatikai Iroda, egy tanszék). Fogadja a hozzárendelt bejelentéseket. Ha egy tanszékhez kötött, a tanszék oktatói kezelhetik a bejelentéseit (K-43).</li>
+<li><strong>együttműködők:</strong> FaultReport, Department, ReportCategory, AssignmentRule</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>id</code></td><td>egész szám</td><td>Belső azonosító.</td></tr><tr><td><code>name</code></td><td>szöveg</td><td>Az egység neve.</td></tr><tr><td><code>email</code></td><td>szöveg</td><td>Az egység közös e-mail-címe.</td></tr><tr><td><code>department</code></td><td>Department</td><td>A tanszék, ha az egység egy tanszék; különben üres.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>resolve</code> : ResponsibleUnit</td><td>category, building</td><td>Osztályszintű művelet: megkeresi a kategóriára és az épületre vonatkozó szabályt; ha nincs, a kategória alapértelmezett egységét adja (UC-13, 9. lépés).</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s8-6-5" class="h-sub2">8.6.5 AssignmentRule (Hozzárendelési szabály)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> Szabály, amely egy kategória egy épületben bejelentett hibáit egy adott egységhez irányítja (például az informatikai hibákat egy épületben az ott működő tanszékhez). Pontosítja a kategória alapértelmezett felelősét épületenként.</li>
+<li><strong>együttműködők:</strong> ReportCategory, Place, ResponsibleUnit</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>category</code></td><td>ReportCategory</td><td>A kategória.</td></tr><tr><td><code>building</code></td><td>Place</td><td>Az épület.</td></tr><tr><td><code>unit</code></td><td>ResponsibleUnit</td><td>A felelős egység.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>matches</code> : logikai</td><td>category, building</td><td>Igaz, ha a szabály a megadott kategóriára és épületre vonatkozik.</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s8-6-6" class="h-sub2">8.6.6 StatusChange (Állapotváltozás)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A bejelentés előzményeinek egy bejegyzése: állapotváltozás vagy megjegyzés, a módosító személlyel és az időponttal. Megőrzi a bejelentés teljes történetét, amelyet a bejelentő is lát (UC-14).</li>
+<li><strong>együttműködők:</strong> FaultReport, User, ReportStatus</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>report</code></td><td>FaultReport</td><td>A bejelentés.</td></tr><tr><td><code>fromStatus</code></td><td>ReportStatus</td><td>A korábbi állapot; az első bejegyzésnél üres.</td></tr><tr><td><code>toStatus</code></td><td>ReportStatus</td><td>Az új állapot; csak megjegyzésnél megegyezik a korábbival.</td></tr><tr><td><code>comment</code></td><td>szöveg</td><td>A felelős megjegyzése vagy az elutasítás indoklása.</td></tr><tr><td><code>changedBy</code></td><td>User</td><td>A módosító felhasználó.</td></tr><tr><td><code>changedAt</code></td><td>dátum és idő</td><td>A változás ideje.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>isStatusChange</code> : logikai</td><td>–</td><td>Igaz, ha a bejegyzés állapotváltozás, és nem csak megjegyzés.</td></tr></tbody></table></div></li>
+</ul>
+<h4 id="s8-6-7" class="h-sub2">8.6.7 Attachment (Csatolmány)</h4>
+<ul>
+<li><strong>felelőssége, feladata:</strong> A bejelentéshez csatolt kép. Ellenőrzi a kép formátumát és méretét (K-34), és tárolás előtt legfeljebb 1600 pixel szélesre kicsinyíti (SRS 6.3).</li>
+<li><strong>együttműködők:</strong> FaultReport</li>
+<li><strong>attribútumok</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Típus</th><th>Leírás</th></tr></thead><tbody><tr><td><code>fileName</code></td><td>szöveg</td><td>Az eredeti fájlnév.</td></tr><tr><td><code>mimeType</code></td><td>szöveg</td><td>image/jpeg vagy image/png.</td></tr><tr><td><code>sizeBytes</code></td><td>egész szám</td><td>A feltöltött fájl mérete.</td></tr><tr><td><code>storagePath</code></td><td>szöveg</td><td>A tárolt kép helye a szerveren.</td></tr><tr><td><code>width, height</code></td><td>egész szám</td><td>A tárolt kép mérete pixelben.</td></tr></tbody></table></div></li>
+<li><strong>operációk</strong><div class="tbl tbl-sm mt-2"><table><thead><tr><th>Név</th><th>Argumentumok</th><th>Működése, feladata</th></tr></thead><tbody><tr><td><code>validate</code> : logikai</td><td>file</td><td>Osztályszintű művelet: JPEG vagy PNG, legfeljebb 5 MB (UC-22 E1).</td></tr><tr><td><code>store</code> : Attachment</td><td>file</td><td>Osztályszintű művelet: kicsinyíti és tárolja a képet.</td></tr></tbody></table></div></li>
+</ul>
+<h2 id="s9" class="h-sec">9. Mellékletek</h2>
+<h3 id="s9-1" class="h-sub">9.1 Az analízis modell áttekintő osztálydiagramja</h3>
+<p>Az összes alrendszer osztálya és kapcsolata egy ábrán, attribútumok és operációk nélkül. Az osztályok részletes leírása az alrendszerek fejezeteiben található.</p>
+<figure class="fig" id="abra-29"><a href="uml/a99_teljes_osztalydiagram.svg" target="_blank" rel="noopener"><img src="uml/a99_teljes_osztalydiagram.svg" alt="Az analízis modell áttekintő osztálydiagramja" loading="lazy"></a></figure>
+<p class="fig-cap"><strong>29. ábra.</strong> Az analízis modell áttekintő osztálydiagramja. <a href="uml/a99_teljes_osztalydiagram.svg" target="_blank" rel="noopener">Megnyitás teljes méretben</a></p>
+<h3 id="s9-2" class="h-sub">9.2 Ábrajegyzék</h3>
+<ul>
+<li><a href="#abra-1">1. ábra</a> – A kezdeti (elemzési szintű) osztálydiagram</li>
+<li><a href="#abra-2">2. ábra</a> – A rendszer funkcionális alrendszerei (csomagdiagram)</li>
+<li><a href="#abra-3">3. ábra</a> – UC-01 Bejelentkezés – szekvenciadiagram</li>
+<li><a href="#abra-4">4. ábra</a> – UC-18 Szerepkörök kezelése – aktivitásdiagram</li>
+<li><a href="#abra-5">5. ábra</a> – A Felhasználókezelés alrendszer osztálydiagramja</li>
+<li><a href="#abra-6">6. ábra</a> – UC-10 Saját oktatói adatok szerkesztése – szekvenciadiagram</li>
+<li><a href="#abra-7">7. ábra</a> – A Szervezet és oktatók alrendszer osztálydiagramja</li>
+<li><a href="#abra-8">8. ábra</a> – UC-15 Tartalom kezelése – szekvenciadiagram (esemény közzététele)</li>
+<li><a href="#abra-9">9. ábra</a> – UC-05 Események böngészése és szűrése – szekvenciadiagram</li>
+<li><a href="#abra-10">10. ábra</a> – A Content (Tartalom) osztály állapotdiagramja</li>
+<li><a href="#abra-11">11. ábra</a> – UC-03 Hely keresése – aktivitásdiagram</li>
+<li><a href="#abra-12">12. ábra</a> – A Tartalomkezelés alrendszer osztálydiagramja</li>
+<li><a href="#abra-13">13. ábra</a> – Parkolóadat fogadása – szekvenciadiagram</li>
+<li><a href="#abra-14">14. ábra</a> – UC-04 Szabad parkolóhelyek megtekintése – szekvenciadiagram</li>
+<li><a href="#abra-15">15. ábra</a> – A ParkingZone (Parkolózóna) osztály állapotdiagramja (adatfrissesség)</li>
+<li><a href="#abra-16">16. ábra</a> – A menetrend napi betöltése – aktivitásdiagram</li>
+<li><a href="#abra-17">17. ábra</a> – A Külső adatok alrendszer osztálydiagramja</li>
+<li><a href="#abra-18">18. ábra</a> – UC-11 Ügyintézési időpont foglalása – szekvenciadiagram</li>
+<li><a href="#abra-19">19. ábra</a> – UC-12 Saját foglalások kezelése – szekvenciadiagram (lemondás)</li>
+<li><a href="#abra-20">20. ábra</a> – A Slot (Időpont) osztály állapotdiagramja</li>
+<li><a href="#abra-21">21. ábra</a> – A Booking (Foglalás) osztály állapotdiagramja</li>
+<li><a href="#abra-22">22. ábra</a> – UC-16 Időpontsáv rögzítése – aktivitásdiagram</li>
+<li><a href="#abra-23">23. ábra</a> – Az Ügyintézés alrendszer osztálydiagramja</li>
+<li><a href="#abra-24">24. ábra</a> – UC-13 Hibabejelentés beküldése – szekvenciadiagram</li>
+<li><a href="#abra-25">25. ábra</a> – UC-17 Hibabejelentések kezelése – szekvenciadiagram</li>
+<li><a href="#abra-26">26. ábra</a> – A FaultReport (Hibabejelentés) osztály állapotdiagramja</li>
+<li><a href="#abra-27">27. ábra</a> – A bejelentés felelős egységhez rendelése – aktivitásdiagram</li>
+<li><a href="#abra-28">28. ábra</a> – A Hibabejelentés alrendszer osztálydiagramja</li>
+<li><a href="#abra-29">29. ábra</a> – Az analízis modell áttekintő osztálydiagramja</li>
+</ul>
+<h3 id="s9-3" class="h-sub">9.3 Az ábrák forrása</h3>
+<p>Minden ábra PlantUML-forráskódja megtalálható a <code>H4/uml</code> mappában (az ábra fájlneve <code>.puml</code> kiterjesztéssel), így az ábrák a modell változásakor újra előállíthatók. Az ábrák magyarázattal együtt egy fájlban is elérhetők: <a href="H4_abrak.pdf">H4_abrak.pdf</a> (nyomtatható) és <a href="H4_abrak.html">H4_abrak.html</a>.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="../assets/script.js"></script>
+</body>
+</html>

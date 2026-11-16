@@ -1,0 +1,80 @@
+@startchen
+entity FELHASZNALO {
+  id <<key>>
+}
+entity HELY {
+  id <<key>>
+}
+entity TANSZEK {
+  id <<key>>
+}
+entity FELELOS_EGYSEG {
+  id <<key>>
+  nev
+  email
+}
+entity KATEGORIA {
+  id <<key>>
+  nev
+}
+entity BEJELENTES {
+  id <<key>>
+  azonosito
+  leiras
+  pontos_hely
+  allapot
+  bekuldve
+}
+entity ELOZMENY <<weak>> {
+  sorszam <<key>>
+  uj_allapot
+  megjegyzes
+  idopont
+}
+entity KEP {
+  id <<key>>
+  fajlnev
+  meret
+}
+relationship TANSZEKI {
+}
+relationship ALAPERTELMEZETT {
+}
+relationship HOZZARENDELESI_SZABALY {
+}
+relationship BEJELENTI {
+}
+relationship BESOROLAS {
+}
+relationship EPULETBEN {
+}
+relationship FELELOSE {
+}
+relationship TORTENETE <<identifying>> {
+}
+relationship MODOSITOTTA {
+}
+relationship CSATOLT {
+}
+TANSZEK -1- TANSZEKI
+TANSZEKI -N- FELELOS_EGYSEG
+FELELOS_EGYSEG -1- ALAPERTELMEZETT
+ALAPERTELMEZETT -N- KATEGORIA
+FELELOS_EGYSEG -1- HOZZARENDELESI_SZABALY
+HOZZARENDELESI_SZABALY -N- KATEGORIA
+HOZZARENDELESI_SZABALY -N- HELY
+FELELOS_EGYSEG -1- FELELOSE
+FELELOSE -N- BEJELENTES
+KATEGORIA -1- BESOROLAS
+BESOROLAS -N- BEJELENTES
+HELY -1- EPULETBEN
+EPULETBEN -N- BEJELENTES
+FELHASZNALO -1- BEJELENTI
+BEJELENTI -N- BEJELENTES
+BEJELENTES -1- TORTENETE
+TORTENETE =N= ELOZMENY
+FELHASZNALO -1- MODOSITOTTA
+MODOSITOTTA -N- ELOZMENY
+BEJELENTES -1- CSATOLT
+CSATOLT -1- KEP
+@endchen

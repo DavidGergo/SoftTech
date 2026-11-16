@@ -1,0 +1,79 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam classAttributeIconSize 0
+skinparam ArrowColor #10365C
+skinparam ClassBorderColor #10365C
+skinparam ClassBackgroundColor #F5F8FC
+skinparam ClassHeaderBackgroundColor #E3ECF7
+skinparam PackageBorderColor #10365C
+skinparam PackageBackgroundColor #FBFCFE
+skinparam NoteBackgroundColor #FFF8E1
+skinparam NoteBorderColor #C9A227
+skinparam ActorBorderColor #10365C
+skinparam ParticipantBorderColor #10365C
+skinparam ParticipantBackgroundColor #F5F8FC
+skinparam SequenceLifeLineBorderColor #7A8CA5
+skinparam SequenceGroupBorderColor #7A8CA5
+skinparam SequenceGroupHeaderFontStyle bold
+skinparam BoundaryBorderColor #10365C
+skinparam BoundaryBackgroundColor #F5F8FC
+skinparam EntityBorderColor #10365C
+skinparam EntityBackgroundColor #F5F8FC
+skinparam StateBorderColor #10365C
+skinparam StateBackgroundColor #F5F8FC
+skinparam ActivityBorderColor #10365C
+skinparam ActivityBackgroundColor #F5F8FC
+skinparam ActivityDiamondBorderColor #10365C
+skinparam ActivityDiamondBackgroundColor #FFFFFF
+skinparam ComponentBorderColor #10365C
+skinparam ComponentBackgroundColor #F5F8FC
+skinparam NodeBorderColor #10365C
+skinparam NodeBackgroundColor #FBFCFE
+skinparam DatabaseBorderColor #10365C
+skinparam DatabaseBackgroundColor #F5F8FC
+skinparam RectangleBorderColor #10365C
+skinparam stereotypeCBackgroundColor #E3ECF7
+skinparam stereotypeABackgroundColor #E3ECF7
+skinparam stereotypeEBackgroundColor #FFF3D6
+skinparam class {
+  BackgroundColor<<külső>> #EEEEEE
+  BorderColor<<külső>> #9AA5B1
+  FontColor<<külső>> #4B5563
+}
+title Az alkalmazásszerver komponensei
+node "Böngésző" {
+  component "Felület\n(HTML, Tailwind CSS,\nJavaScript, Leaflet)" as UI
+}
+node "Alkalmazásszerver (Node.js, Express)" {
+  component "Routerek\n/api/..." as Routers
+  component "Közös köztes rétegek\n(hitelesítés, jogosultság,\nhibakezelés, naplózás)" as MW
+  component "Szolgáltatások\n(Auth, Staff, Content, Parking,\nTransit, Appointment, Report,\nNotification, Audit)" as Services
+  component "Repositoryk" as Repos
+  component "Database\n(mysql2 kapcsolatkészlet)" as Db
+  component "Háttérfeladatok\n(ütemező)" as Jobs
+  component "Integrációk\n(MSAL Node, GTFS-olvasó,\nSMTP-kliens, képkicsinyítő)" as Integr
+}
+database "MySQL 8" as MySQL
+folder "Feltöltött képek\n(/var/lib/vezerlopult/uploads)" as Files
+cloud "Microsoft Entra ID" as Entra
+cloud "MVK GTFS" as GTFS
+cloud "SMTP-szolgáltatás" as SMTP
+cloud "Parkolóérzékelők" as Sensors
+cloud "OpenStreetMap\ncsempeszerver" as OSM
+UI --> Routers : REST/JSON (HTTPS)
+UI --> OSM : térképcsempék
+Sensors --> Routers : POST /api/parking/readings
+Routers --> MW
+MW --> Services
+Services --> Repos
+Repos --> Db
+Db --> MySQL
+Jobs --> Services
+Services --> Integr
+Integr --> Entra
+Integr --> GTFS
+Integr --> SMTP
+Services --> Files
+@enduml

@@ -1,0 +1,34 @@
+@startsalt
+{+
+  { <b>MISKOLCI EGYETEM | . | . | . | . | . | . | [Bejelentkezés] }
+  ==
+  { {
+    <b>Kezdőlap
+    Térkép
+    Parkolás
+    Események
+    Hírek
+    Menza
+    Menetrend
+    Oktatók
+    Súgó
+    } | . | {
+      <b>Jó napot! Mit keres ma?
+      { "Hely, oktató, esemény keresése      " | [Keresés] }
+      .
+      {+
+        <b>Mai menü (Menza) | <b>Következő indulások
+        Gulyásleves – 690 Ft | 1-es villamos → Diósgyőr: 3 perc
+        Rántott csirke, rizs – 1490 Ft | 1-es villamos → Tiszai pu.: 7 perc
+        [Teljes étlap] | [Menetrend]
+      }
+      {+
+        <b>Közelgő események | <b>Legfrissebb hírek
+        nov. 18. 14:00 – Nyílt nap, A/1 | Új labor nyílik a GÉIK-en
+        nov. 20. 18:00 – Egyetemi futás | Ösztöndíj-pályázat indul
+        [Összes esemény] | [Összes hír]
+      }
+    }
+  }
+}
+@endsalt

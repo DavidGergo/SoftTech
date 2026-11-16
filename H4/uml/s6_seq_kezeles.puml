@@ -1,0 +1,76 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam classAttributeIconSize 0
+skinparam ArrowColor #10365C
+skinparam ClassBorderColor #10365C
+skinparam ClassBackgroundColor #F5F8FC
+skinparam ClassHeaderBackgroundColor #E3ECF7
+skinparam PackageBorderColor #10365C
+skinparam PackageBackgroundColor #FBFCFE
+skinparam NoteBackgroundColor #FFF8E1
+skinparam NoteBorderColor #C9A227
+skinparam ActorBorderColor #10365C
+skinparam ParticipantBorderColor #10365C
+skinparam ParticipantBackgroundColor #F5F8FC
+skinparam SequenceLifeLineBorderColor #7A8CA5
+skinparam SequenceGroupBorderColor #7A8CA5
+skinparam SequenceGroupHeaderFontStyle bold
+skinparam BoundaryBorderColor #10365C
+skinparam BoundaryBackgroundColor #F5F8FC
+skinparam EntityBorderColor #10365C
+skinparam EntityBackgroundColor #F5F8FC
+skinparam StateBorderColor #10365C
+skinparam StateBackgroundColor #F5F8FC
+skinparam ActivityBorderColor #10365C
+skinparam ActivityBackgroundColor #F5F8FC
+skinparam ActivityDiamondBorderColor #10365C
+skinparam ActivityDiamondBackgroundColor #FFFFFF
+skinparam ComponentBorderColor #10365C
+skinparam ComponentBackgroundColor #F5F8FC
+skinparam NodeBorderColor #10365C
+skinparam NodeBackgroundColor #FBFCFE
+skinparam DatabaseBorderColor #10365C
+skinparam DatabaseBackgroundColor #F5F8FC
+skinparam RectangleBorderColor #10365C
+skinparam stereotypeCBackgroundColor #E3ECF7
+skinparam stereotypeABackgroundColor #E3ECF7
+skinparam stereotypeEBackgroundColor #FFF3D6
+skinparam class {
+  BackgroundColor<<külső>> #EEEEEE
+  BorderColor<<külső>> #9AA5B1
+  FontColor<<külső>> #4B5563
+}
+title UC-17 Hibabejelentések kezelése
+hide footbox
+autonumber
+actor "Oktató vagy\nadminisztrátor" as K
+boundary "Felület" as F
+participant "FaultReport" as RC <<osztály>>
+participant ":FaultReport" as R
+participant "Notification" as NC <<osztály>>
+participant "AuditLogEntry" as L <<osztály>>
+K -> F : „Bejelentések kezelése”
+F -> RC : listFor(felhasználó, szűrők)
+RC --> F : hozzáférhető bejelentések, a legrégebbi Új elöl
+K -> F : bejelentés kiválasztása
+F -> R : canBeManagedBy(felhasználó)
+alt van jogosultsága
+  F --> K : adatok és előzmények
+  K -> F : új állapot, megjegyzés, „Mentés”
+  F -> R : changeStatus(új állapot, megjegyzés, felhasználó)
+  alt elutasítás indoklás nélkül (E1)
+    R --> F : hiba: az indoklás kötelező
+    F --> K : indoklás kérése
+  else érvényes módosítás
+    create participant ":StatusChange" as SC
+    R -> SC : létrehozás
+    R -> NC : create(bejelentő, REPORT_STATUS_CHANGED, bejelentés)
+    F -> L : record(felhasználó, REPORT_STATUS_CHANGE, bejelentés)
+    F --> K : mentve
+  end
+else más tanszék bejelentése (E2)
+  F --> K : hozzáférés megtagadva
+end
+@enduml

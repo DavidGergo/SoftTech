@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Szótár 2.0 – ME-nthetetlenek</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/style.css">
+    <style>
+        html { scroll-behavior: smooth; }
+    </style>
+    <style type="text/tailwindcss">
+        .doc .h-part { @apply text-3xl md:text-4xl font-bold mt-16 mb-6 pb-3 text-gray-900 border-b-2 border-gray-800 uppercase tracking-wide; }
+        .doc .h-sec  { @apply text-2xl md:text-3xl font-bold mt-12 mb-4 text-gray-900 pt-4; }
+        .doc .h-sub  { @apply text-xl font-bold mt-8 mb-3 text-gray-900; }
+        .doc .h-sub2 { @apply text-lg font-bold mt-6 mb-2 text-gray-900; }
+        .doc .h-sub3 { @apply text-base font-bold mt-5 mb-2 text-gray-800 italic; }
+        .doc p { @apply mb-4; }
+        .doc ul { @apply list-disc pl-6 mb-4; }
+        .doc ol { @apply list-decimal pl-6 mb-4; }
+        .doc li { @apply mb-1; }
+        .doc td > ul, .doc td > ol { @apply mb-0; }
+        .doc .tbl { @apply overflow-x-auto mb-6; }
+        .doc table { @apply w-full border-collapse border border-gray-400 text-sm md:text-base; }
+        .doc th, .doc td { @apply border border-gray-400 p-2 md:p-3 align-top text-left; }
+        .doc th { @apply bg-gray-100; }
+        .doc .tbl-sm table { @apply text-xs md:text-sm; }
+        .doc .tbl-sm th, .doc .tbl-sm td { @apply p-1.5 md:p-2; }
+        .doc a { @apply text-[#174777] underline underline-offset-2 hover:text-blue-800; }
+        .doc code { @apply font-mono text-[0.85em] bg-gray-100 px-1 rounded; }
+        .doc pre { @apply font-mono text-xs md:text-sm bg-gray-50 border border-gray-300 p-4 mb-6 overflow-x-auto leading-snug; }
+        .doc .toc { @apply bg-gray-50 border border-gray-300 p-5 mb-10; }
+        .doc .toc ul { @apply list-none pl-0 mb-0; }
+        .doc .toc ul ul { @apply pl-6 mt-1 mb-1; }
+        .doc .note { @apply border-l-4 border-[#10365c] pl-4 bg-blue-50 py-3 pr-3 mb-6; }
+        .doc .fig { @apply border border-gray-300 bg-white p-3 mb-2 overflow-x-auto; }
+        .doc .fig img { @apply block mx-auto h-auto max-w-full; }
+        .doc .fig-cap { @apply text-sm text-gray-700 mb-8; }
+        .doc .cls-name { @apply font-bold; }
+        .doc .badge { @apply inline-block text-xs font-sans font-semibold bg-green-100 text-green-800 px-1.5 py-0.5 rounded align-middle; }
+        .doc .cover { @apply mb-10; }
+        .doc .cover-title { @apply text-2xl sm:text-3xl md:text-4xl font-bold my-8 tracking-wide uppercase break-words; }
+        .doc .cards a { @apply no-underline; }
+    </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden font-sans bg-gray-100">
+
+    <header class="bg-topbar text-white h-[60px] flex items-center justify-between w-full z-40 px-4 md:px-0 relative">
+        <div class="flex items-center h-full">
+            <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white mr-4 transition" aria-label="Menü">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            <div class="md:w-64 h-full flex flex-col justify-center md:px-4 shrink-0">
+                <a href="../index.html" class="leading-none select-none block text-white hover:text-gray-200">
+                    <span class="block font-semibold text-[17px] tracking-wide">MISKOLCI</span>
+                    <span class="block font-semibold text-[17px] tracking-wide mt-[2px]">EGYETEM</span>
+                    <span class="block text-[8px] tracking-widest text-gray-400 mt-1">UNIVERSITY OF MISKOLC</span>
+                </a>
+            </div>
+        </div>
+        <div class="flex-1 flex items-center justify-end px-4"></div>
+    </header>
+
+    <div class="h-[2px] w-full flex shrink-0 z-20">
+        <div class="w-1/3 bg-red-600"></div>
+        <div class="w-1/3 bg-white"></div>
+        <div class="w-1/3 bg-green-600"></div>
+    </div>
+
+    <div class="flex flex-1 overflow-hidden relative">
+
+        <aside id="sidebar" class="hidden md:block w-full md:w-64 bg-sidebar shrink-0 relative shadow-[inset_-2px_0_5px_rgba(0,0,0,0.1)] transition-all duration-300 overflow-y-auto z-30">
+            <nav class="flex flex-col py-4 text-gray-200 text-sm font-medium">
+                <a href="../index.html" class="menu-item">
+                    <i class="fas fa-home w-5 text-center"></i>
+                    <span>Főoldal</span>
+                </a>
+                <div class="border-b border-[rgba(255,255,255,0.1)] mx-4 my-2"></div>
+                <a href="../h1.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H1 beadandó</span>
+                </a>
+                <a href="../h2.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H2 beadandó</span>
+                </a>
+                <a href="../h3.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H3 beadandó</span>
+                </a>
+                <a href="../h4.html" class="menu-item border-l-4 border-blue-400 bg-[#16487a] text-white">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H4 beadandó</span>
+                </a>
+                <a href="../h5.html" class="menu-item">
+                    <i class="fas fa-file-alt w-5 text-center text-gray-400"></i>
+                    <span>H5 beadandó</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 bg-[#f0f2f5] relative w-full p-4 md:p-6 overflow-y-auto">
+            <div class="doc bg-white p-6 md:p-12 w-full max-w-5xl mx-auto shadow-sm border border-gray-300 font-serif text-black leading-relaxed">
+<div class="cover">
+    <p class="text-sm text-gray-600 mb-6">Címlap</p>
+    <div class="space-y-2 text-lg">
+        <p class="mb-1">Csoport neve: <strong>ME-nthetetlenek</strong></p>
+        <p class="mb-1">Feladat sorszáma: <strong>19</strong></p>
+        <p class="mb-1">Feladat címe: Az uni-app jelenlegi funkcióinak gyakorlatiasabb átdolgozása</p>
+    </div>
+    <h1 class="cover-title">Szótár</h1>
+    <p class="mb-1">Gyakorlatvezető:</p>
+    <p class="text-xl uppercase mb-6">Tompa Tamás</p>
+    <p class="mb-2">Csoporttagok:</p>
+    <div class="tbl"><table>
+        <thead><tr><th>Név</th><th>Tankör</th><th>E-mail-cím</th></tr></thead>
+        <tbody>
+<tr><td>Csoportvezető: Dávid Gergő</td><td>G2-BP1</td><td>gergo.david@student.uni-miskolc.hu</td></tr>
+<tr><td>Győri Kristóf</td><td>G2-BP1</td><td>kristof.gyori@student.uni-miskolc.hu</td></tr>
+<tr><td>Maklári Máté</td><td>GE-BGI</td><td>mate.mate.165@gmail.com</td></tr>
+<tr><td>Balázs Csenge Málna</td><td>GE-BGI</td><td>csenge.balazs.malna@student.uni-miskolc.hu</td></tr>
+<tr><td>Nagy Virág</td><td>GE-BGI</td><td>virag.nagy@student.uni-miskolc.hu</td></tr>
+        </tbody>
+    </table></div>
+    <p>Beadás dátuma: <strong>2026. 11. 16.</strong></p>
+</div>
+<h2 id="tortenet" class="h-sub">Történet</h2>
+<div class="tbl"><table>
+    <thead><tr><th>Dátum</th><th>Verzió</th><th>Leírás</th><th>Szerző</th></tr></thead>
+    <tbody>
+<tr><td>2026. 11. 03.</td><td>1.0</td><td>A H3 határidőre leadott változat (az SRS-sel egy oldalon), 71 fogalom.</td><td>ME-nthetetlenek</td></tr>
+<tr><td>2026. 11. 16.</td><td>1.1</td><td>Az SRS 0.4-es változatával: az «include» kapcsolat, az «extend» kapcsolat és a kiterjesztési pont fogalma, összesen 74 fogalom.</td><td>ME-nthetetlenek</td></tr>
+<tr><td>2026. 11. 16.</td><td>2.0</td><td>Önálló dokumentum. 51 új fogalom az analízis modellből és a rendszertervből (osztálymodell, adatmodell, architektúra); 3 magyarázat pontosítva. Összesen 125 fogalom.</td><td>ME-nthetetlenek</td></tr>
+    </tbody>
+</table></div>
+
+<p>Ez a szótár a H3 határidőre leadott szótár bővített változata. Az analízis és a rendszertervezés során felmerült fogalmakkal egészítettük ki; a fejlesztés során tovább bővül. A magyarázatokban csak a szótárban szereplő vagy köznapi kifejezéseket használunk. A fogalmak a magyar ábécé szerinti sorrendben szerepelnek; a tantárgyi előírás szerint a szótárnak nincs tartalomjegyzéke.</p>
+<p class="text-gray-700">Verzió: 2.0 · Utolsó módosítás: 2026. 11. 16. · Fogalmak száma: 125 · <span class="badge">új</span> = a 2.0-s változatban felvett fogalom, <span class="badge" style="background:#fef3c7;color:#92400e">módosult</span> = pontosított magyarázat</p>
+<div class="tbl"><table>
+<thead><tr><th>Fogalom</th><th>Magyarázat</th></tr></thead>
+<tbody>
+<tr><td><strong>Absztrakt osztály</strong> <span class="badge">új</span></td><td>Olyan osztály, amelyből közvetlenül nem készül objektum; csak a leszármazottai közös részét írja le (például a Tartalom).</td></tr>
+<tr><td><strong>Adatforrás</strong></td><td>Olyan külső rendszer vagy állomány, ahonnan a Vezérlőpult adatot vesz át (például a menetrend vagy a parkolóérzékelők adatai).</td></tr>
+<tr><td><strong>Adminisztrátor</strong></td><td>Az egyetem által kijelölt munkatárs, aki a rendszer tartalmát, az ügyintézési időpontokat, a hibabejelentéseket és a szerepköröket kezeli.</td></tr>
+<tr><td><strong>Ajánlott (prioritás)</strong></td><td>Olyan követelmény, amely jelentősen javítja a használatot; ha az idő engedi, elkészül.</td></tr>
+<tr><td><strong>Aktivitásdiagram</strong> <span class="badge">új</span></td><td>UML-ábra, amely egy folyamat lépéseit és döntési pontjait mutatja.</td></tr>
+<tr><td><strong>Aktor</strong></td><td>A rendszeren kívüli szereplő – személy vagy másik rendszer –, amely kapcsolatba lép a rendszerrel. A use case diagramon pálcikaember jelöli.</td></tr>
+<tr><td><strong>Állapotdiagram</strong> <span class="badge">új</span></td><td>UML-ábra, amely egy osztály objektumainak lehetséges állapotait és az állapotok közötti átmeneteket mutatja.</td></tr>
+<tr><td><strong>Alrendszer</strong> <span class="badge">új</span></td><td>A rendszer funkcionálisan összetartozó osztályainak csoportja, például az Ügyintézés alrendszer.</td></tr>
+<tr><td><strong>Általánosítás</strong> <span class="badge" style="background:#fef3c7;color:#92400e">módosult</span></td><td>Két aktor vagy két osztály közötti kapcsolat, amely azt fejezi ki, hogy az egyik a másik minden tulajdonságát és funkcióját eléri (örökli), és ezeken felül továbbiakat is. A diagramon üres hegyű nyíl jelöli.</td></tr>
+<tr><td><strong>Alternatív eset</strong></td><td>A use case olyan lefutása, amely eltér a szokásos működéstől, de előre látható és kezelni kell (például a felhasználó keresés helyett a térképen kattint).</td></tr>
+<tr><td><strong>Analízis modell</strong> <span class="badge">új</span></td><td>A tervezett szoftver objektumorientált modellje (osztályok, kapcsolatok, működés), amely a követelményekből készül, a megvalósítás részletei nélkül (H4).</td></tr>
+<tr><td><strong>Archiválás</strong></td><td>A tartalom eltávolítása a nyilvános felületről törlés nélkül; az adminisztrátor később is megtalálja.</td></tr>
+<tr><td><strong>Asszociáció</strong> <span class="badge">új</span></td><td>Két osztály közötti tartós kapcsolat, például a foglalás és a hallgató között.</td></tr>
+<tr><td><strong>Áteresztőképesség</strong></td><td>Az egy másodperc alatt kiszolgált kérések száma.</td></tr>
+<tr><td><strong>Attribútum</strong> <span class="badge">új</span></td><td>Az osztály egy tulajdonsága, például a foglalás állapota.</td></tr>
+<tr><td><strong>Backend</strong></td><td>A rendszernek a szerveren futó része, amely az adatokat kezeli, és kiszolgálja a felületet.</td></tr>
+<tr><td><strong>Bázisosztály</strong> <span class="badge">új</span></td><td>Olyan osztály, amelynek attribútumait és operációit más osztályok öröklik.</td></tr>
+<tr><td><strong>Bejelentés (hibabejelentés)</strong></td><td>Egy felhasználó által rögzített jelzés egy egyetemi hibáról vagy problémáról, kategóriával, helyszínnel és leírással.</td></tr>
+<tr><td><strong>Bővítés</strong></td><td>Olyan funkció, amely a félévi célok után, külső partnerséggel vagy több idővel készülhet el.</td></tr>
+<tr><td><strong>Csatolmány</strong> <span class="badge">új</span></td><td>A hibabejelentéshez feltöltött kép.</td></tr>
+<tr><td><strong>Csomagdiagram</strong> <span class="badge">új</span></td><td>UML-ábra, amely a rendszer részeit (csomagjait, alrendszereit) és a köztük lévő függőségeket mutatja.</td></tr>
+<tr><td><strong>Csomag (use case csomag)</strong></td><td>Összetartozó use case-ek csoportja. Az SRS 3. fejezete csomagonként tárgyalja őket.</td></tr>
+<tr><td><strong>Drótváz</strong> <span class="badge">új</span></td><td>Egy képernyő egyszerűsített terve, amely az elemek elrendezését és feliratait mutatja, színek és képek nélkül.</td></tr>
+<tr><td><strong>Egyed</strong> <span class="badge">új</span></td><td>Az adatmodellben egy önállóan azonosítható dolog típusa, amelyről adatot tárolunk (például a hibabejelentés).</td></tr>
+<tr><td><strong>Egyetemi azonosító szolgáltatás</strong></td><td>Az egyetemi Microsoft-fiókokat kezelő szolgáltatás, amely a bejelentkezést ellenőrzi (lásd: Microsoft Entra ID).</td></tr>
+<tr><td><strong>Elsődleges kulcs</strong> <span class="badge">új</span></td><td>Az adatbázistábla azon oszlopa (vagy oszlopai), amely minden sort egyértelműen azonosít.</td></tr>
+<tr><td><strong>ER-diagram</strong> <span class="badge">új</span></td><td>Az egyedeket, a tulajdonságaikat és a köztük lévő kapcsolatokat ábrázoló adatmodell-ábra.</td></tr>
+<tr><td><strong>Érintett</strong></td><td>Olyan személy vagy szervezet, akit a termék érint, de nem feltétlenül használja.</td></tr>
+<tr><td><strong>Értesítés</strong> <span class="badge">új</span></td><td>A rendszer által a felhasználónak küldött e-mail (visszaigazolás, emlékeztető, állapotváltozás).</td></tr>
+<tr><td><strong>Esemény</strong></td><td>Egyetemi program időponttal, helyszínnel és leírással (például előadás, nyílt nap, sportesemény).</td></tr>
+<tr><td><strong>Extend kapcsolat («extend»)</strong></td><td>Két use case közötti kapcsolat: a kiterjesztő use case csak egy feltétel teljesülésekor, az alap use case egy kiterjesztési pontján épül be annak működésébe (például a kép csatolása a hibabejelentésbe). A diagramon szaggatott nyíl jelöli, amely a kiterjesztő use case-től az alap use case felé mutat.</td></tr>
+<tr><td><strong>Felelős egység</strong> <span class="badge">új</span></td><td>Az a szervezeti egység (például a Gondnokság vagy egy tanszék), amely egy hibabejelentés megoldásáért felel.</td></tr>
+<tr><td><strong>Felhasználó</strong></td><td>Aki a terméket ténylegesen használja.</td></tr>
+<tr><td><strong>Felhasználói kézikönyv</strong></td><td>A rendszer használatát lépésenként bemutató dokumentum a felhasználók számára.</td></tr>
+<tr><td><strong>Fogadóóra</strong></td><td>Az oktató által meghirdetett idősáv, amikor a hallgatók személyesen felkereshetik.</td></tr>
+<tr><td><strong>Foglalás</strong></td><td>Egy hallgató által lefoglalt ügyintézési időpont.</td></tr>
+<tr><td><strong>Frontend</strong></td><td>A rendszernek a böngészőben megjelenő része, amelyet a felhasználó lát és használ.</td></tr>
+<tr><td><strong>Függőség</strong> <span class="badge">új</span></td><td>Két modellelem közötti kapcsolat, amelyben az egyik használja a másikat; az ábrákon szaggatott nyíl jelöli.</td></tr>
+<tr><td><strong>GDPR</strong></td><td>Az Európai Unió általános adatvédelmi rendelete.</td></tr>
+<tr><td><strong>GTFS</strong></td><td>A tömegközlekedési menetrendek közzétételére használt, nemzetközileg elterjedt adatformátum.</td></tr>
+<tr><td><strong>Gyenge egyed</strong> <span class="badge">új</span></td><td>Olyan egyed, amely csak egy másik egyeddel együtt azonosítható (például a fogadóóra az oktatói adatlappal).</td></tr>
+<tr><td><strong>Hallgató</strong></td><td>Az egyetem bejelentkezett hallgatója; a Látogató funkcióin túl időpontot foglalhat és hibát jelenthet be.</td></tr>
+<tr><td><strong>Hozzárendelési szabály</strong> <span class="badge">új</span></td><td>Szabály, amely egy kategória egy épületben bejelentett hibáit egy adott felelős egységhez irányítja.</td></tr>
+<tr><td><strong>Idegen kulcs</strong> <span class="badge">új</span></td><td>Olyan oszlop, amely egy másik tábla sorára hivatkozik annak elsődleges kulcsával.</td></tr>
+<tr><td><strong>Időpontsáv</strong></td><td>Az adminisztrátor által megadott időszak (például hétfő 9–12 óra), amelyből a rendszer foglalható időpontokat készít.</td></tr>
+<tr><td><strong>Időpont (ügyintézési)</strong> <span class="badge">új</span></td><td>Egy foglalható idősáv, amely az időpontsávból készül, például hétfő 9:15–9:30.</td></tr>
+<tr><td><strong>Include kapcsolat («include»)</strong></td><td>Két use case közötti kapcsolat: az alap use case működésének mindig része a befoglalt use case (például a bejelentkezést igénylő funkcióknak a bejelentkezés). Közös részek kiemelésére szolgál. A diagramon szaggatott nyíl jelöli, amely az alap use case-től a befoglalt felé mutat.</td></tr>
+<tr><td><strong>Index</strong> <span class="badge">új</span></td><td>Az adatbázis segédszerkezete, amely gyorsítja a keresést egy vagy több oszlop szerint.</td></tr>
+<tr><td><strong>Indulás</strong> <span class="badge">új</span></td><td>Egy járat menetrend szerinti indulása egy megállóból egy irányba.</td></tr>
+<tr><td><strong>Infotv.</strong></td><td>Az információs önrendelkezési jogról és az információszabadságról szóló 2011. évi CXII. törvény.</td></tr>
+<tr><td><strong>Járat</strong> <span class="badge">új</span></td><td>Az MVK egy autóbusz- vagy villamosvonala.</td></tr>
+<tr><td><strong>JSON</strong></td><td>Szöveges adatformátum, amellyel a felület és a szerver adatot cserél.</td></tr>
+<tr><td><strong>Kar</strong></td><td>Az egyetem nagyobb szervezeti egysége, amely tanszékekből áll.</td></tr>
+<tr><td><strong>Kiterjesztési pont</strong></td><td>Az alap use case működésének az a pontja, ahol egy «extend» kapcsolattal kapcsolódó use case beépülhet. A diagramon az ellipszisben, vonal alatt szerepel.</td></tr>
+<tr><td><strong>Kivételes eset</strong></td><td>A use case váratlan, hibás lefutása (például egy külső szolgáltatás nem érhető el).</td></tr>
+<tr><td><strong>Komponensdiagram</strong> <span class="badge">új</span></td><td>UML-ábra, amely a rendszer programrészeit és a köztük lévő kapcsolatokat mutatja.</td></tr>
+<tr><td><strong>Kompozíció</strong> <span class="badge">új</span></td><td>Olyan rész–egész kapcsolat, amelyben a rész nem létezik az egész nélkül (például az étel az étlap része). A diagramon teli rombusz jelöli.</td></tr>
+<tr><td><strong>Kötelező (prioritás)</strong></td><td>Olyan követelmény, amelynek a félév végi bemutatóra el kell készülnie.</td></tr>
+<tr><td><strong>Köztes réteg (middleware)</strong> <span class="badge">új</span></td><td>A szerveren a kérés és a végpont között lefutó közös programrész, például a jogosultság-ellenőrzés.</td></tr>
+<tr><td><strong>Közzététel</strong> <span class="badge">új</span></td><td>A tartalom nyilvánossá tétele; ettől kezdve a látogatók is látják.</td></tr>
+<tr><td><strong>Látogató</strong></td><td>Bárki, aki bejelentkezés nélkül használja a rendszert; csak a nyilvános funkciókat éri el.</td></tr>
+<tr><td><strong>Leaflet</strong></td><td>Nyílt forráskódú programkönyvtár interaktív térképek megjelenítéséhez a böngészőben.</td></tr>
+<tr><td><strong>Megálló</strong> <span class="badge">új</span></td><td>Az MVK egy megállója; a menetrend megállónként mutatja az indulásokat.</td></tr>
+<tr><td><strong>Megbízhatóság</strong></td><td>A rendszer azon tulajdonsága, hogy mennyire működik folyamatosan és hibamentesen.</td></tr>
+<tr><td><strong>Menetrend-betöltés</strong> <span class="badge">új</span></td><td>A menetrend naponta egyszeri frissítése az adatforrásból.</td></tr>
+<tr><td><strong>Menza</strong></td><td>Az egyetemi étkezde.</td></tr>
+<tr><td><strong>Mérföldkő</strong></td><td>A félév meghatározott hete, amikor a csapat egy részfeladatot bemutat.</td></tr>
+<tr><td><strong>Microsoft Entra ID</strong></td><td>A Microsoft azonosítási szolgáltatása, amely az egyetemi Microsoft-fiókokkal való bejelentkezést kezeli.</td></tr>
+<tr><td><strong>MTBF</strong></td><td>Két hiba között eltelt átlagos idő.</td></tr>
+<tr><td><strong>MTTR</strong></td><td>A hiba bekövetkezésétől a javításig eltelt átlagos idő.</td></tr>
+<tr><td><strong>Munkamenet</strong></td><td>A bejelentkezéstől a kijelentkezésig vagy a lejáratig tartó időszak, amely alatt a rendszer felismeri a felhasználót.</td></tr>
+<tr><td><strong>Munkanapló</strong></td><td>A csapattagok projektre fordított munkáját dátum, tevékenység és időtartam szerint rögzítő nyilvántartás.</td></tr>
+<tr><td><strong>MVK</strong></td><td>Miskolc helyi tömegközlekedési szolgáltatója, amely autóbusz- és villamosjáratokat üzemeltet.</td></tr>
+<tr><td><strong>MySQL</strong></td><td>Elterjedt adatbázis-kezelő rendszer, amelyben a Vezérlőpult adatai tárolódnak.</td></tr>
+<tr><td><strong>Naplóbejegyzés</strong> <span class="badge">új</span></td><td>Egy adminisztrátori vagy oktatói módosítás rögzített nyoma: ki, mit, mikor változtatott.</td></tr>
+<tr><td><strong>Navigációs térkép</strong> <span class="badge">új</span></td><td>Ábra, amely a felület képernyőit és a köztük lévő átmeneteket mutatja.</td></tr>
+<tr><td><strong>Neptun</strong></td><td>Az egyetem tanulmányi nyilvántartó rendszere.</td></tr>
+<tr><td><strong>Node.js</strong></td><td>Szerveroldali futtatókörnyezet, amelyen a Vezérlőpult backendje JavaScript nyelven fut.</td></tr>
+<tr><td><strong>Normalizálás</strong> <span class="badge">új</span></td><td>Az adatbázistáblák olyan kialakítása, amely megszünteti a felesleges ismétlődést és az ebből adódó ellentmondásokat.</td></tr>
+<tr><td><strong>Nyilvános funkció</strong></td><td>Bejelentkezés nélkül is elérhető funkció.</td></tr>
+<tr><td><strong>Objektum</strong> <span class="badge">új</span></td><td>Egy osztály egy konkrét példánya, például egy adott foglalás.</td></tr>
+<tr><td><strong>Oktató</strong></td><td>Bejelentkezett felhasználó oktató szerepkörrel, aki egy tanszékhez tartozik; szerkesztheti a saját adatlapját, és kezelheti a tanszékéhez rendelt bejelentéseket.</td></tr>
+<tr><td><strong>Opcionális (prioritás)</strong></td><td>Olyan követelmény, amely csak külső feltétel teljesülése vagy elegendő idő esetén készül el.</td></tr>
+<tr><td><strong>OpenID Connect</strong></td><td>Szabványos bejelentkezési eljárás, amellyel egy alkalmazás egy külső azonosító szolgáltatásra bízza a felhasználó azonosítását.</td></tr>
+<tr><td><strong>OpenStreetMap</strong></td><td>Szabadon felhasználható, közösségi térképadatbázis.</td></tr>
+<tr><td><strong>Operáció</strong> <span class="badge">új</span></td><td>Az osztály által végezhető művelet, például a foglalás lemondása.</td></tr>
+<tr><td><strong>Osztály</strong> <span class="badge">új</span></td><td>Azonos tulajdonságú és viselkedésű objektumok közös leírása, például a Foglalás.</td></tr>
+<tr><td><strong>Osztálydiagram</strong> <span class="badge">új</span></td><td>UML-ábra, amely az osztályokat, attribútumaikat, operációikat és kapcsolataikat mutatja.</td></tr>
+<tr><td><strong>Parkolóérzékelő</strong></td><td>Eszköz, amely jelzi, hogy egy parkolóhely foglalt-e.</td></tr>
+<tr><td><strong>Parkolómérés</strong> <span class="badge">új</span></td><td>Az érzékelőeszköz által küldött adat egy zóna foglalt helyeinek számáról.</td></tr>
+<tr><td><strong>Parkolózóna</strong></td><td>A parkoló egy elkülönített része, amelynek szabad helyeit a rendszer együtt jeleníti meg.</td></tr>
+<tr><td><strong>Piszkozat</strong> <span class="badge">új</span></td><td>Mentett, de még nem közzétett tartalom; csak az adminisztrátorok látják.</td></tr>
+<tr><td><strong>PlantUML</strong> <span class="badge">új</span></td><td>Szöveges leírásból UML-ábrákat készítő eszköz; a projekt ábrái ezzel készültek.</td></tr>
+<tr><td><strong>Posztkondíció</strong></td><td>Az az állapot, amely a use case befejeződése után fennáll.</td></tr>
+<tr><td><strong>Prekondíció</strong></td><td>Azok a feltételek, amelyeknek a use case megkezdése előtt teljesülniük kell.</td></tr>
+<tr><td><strong>Relációs adatmodell</strong> <span class="badge">új</span></td><td>Az adatok táblákba szervezett leírása oszlopokkal, kulcsokkal és hivatkozásokkal.</td></tr>
+<tr><td><strong>Rendelkezésre állás</strong></td><td>Az idő százalékos aránya, amikor a rendszer használható.</td></tr>
+<tr><td><strong>Rendszerterv</strong> <span class="badge">új</span></td><td>A rendszer megvalósításához szükséges tervezési döntéseket (felület, adatmodell, architektúra) leíró dokumentum (H4).</td></tr>
+<tr><td><strong>Repository (adattár-osztály)</strong> <span class="badge">új</span></td><td>Olyan osztály, amely egy adott fajta adat adatbázisba írását és onnan olvasását végzi; a program többi része csak rajta keresztül éri el az adatbázist.</td></tr>
+<tr><td><strong>REST API</strong></td><td>A szerver által kínált, webcímeken elérhető programozói felület, amelyen keresztül a frontend adatot kér és küld.</td></tr>
+<tr><td><strong>Reszponzív</strong></td><td>Olyan felület, amely a képernyő méretéhez igazodik, így telefonon és számítógépen is jól használható.</td></tr>
+<tr><td><strong>SRS</strong></td><td>Szoftverkövetelmény-specifikáció: a rendszer funkcionális és nem funkcionális követelményeit leíró dokumentum (H3).</td></tr>
+<tr><td><strong>Statikus oldal</strong></td><td>Olyan weboldal, amelynek tartalma nem függ a látogatótól, és adatbázis nélkül működik.</td></tr>
+<tr><td><strong>Számosság</strong> <span class="badge">új</span></td><td>Megadja, hogy egy kapcsolatban az egyik oldal egy objektumához a másik oldalról hány objektum tartozhat (például 1, 0..1, 0..*).</td></tr>
+<tr><td><strong>Szekvenciadiagram</strong> <span class="badge">új</span></td><td>UML-ábra, amely egy folyamatban részt vevő objektumok közötti üzeneteket időrendben mutatja.</td></tr>
+<tr><td><strong>Szemantikai adatmodell</strong> <span class="badge">új</span></td><td>Az adatok jelentését leíró, az adatbázis-kezelőtől független modell; a projektben ER-diagram szemlélteti.</td></tr>
+<tr><td><strong>Szerepkör</strong></td><td>A felhasználó jogosultsági köre: hallgató, oktató vagy adminisztrátor.</td></tr>
+<tr><td><strong>Szokásos működés</strong></td><td>A use case leggyakoribb, hibamentes lefutása.</td></tr>
+<tr><td><strong>Szótár</strong> <span class="badge" style="background:#fef3c7;color:#92400e">módosult</span></td><td>A projekt fogalmait magyarázó, folyamatosan bővülő dokumentum (ez a dokumentum).</td></tr>
+<tr><td><strong>Tanszék</strong></td><td>A kar oktatási és kutatási egysége, amelyhez az oktatók tartoznak.</td></tr>
+<tr><td><strong>Tartalom</strong> <span class="badge">új</span></td><td>Az adminisztrátor által kezelt, közzétehető elem: hír, esemény, térképi hely vagy napi étlap.</td></tr>
+<tr><td><strong>Telepítési diagram</strong> <span class="badge">új</span></td><td>UML-ábra, amely megmutatja, milyen gépeken és szoftverkörnyezetben futnak a rendszer részei.</td></tr>
+<tr><td><strong>Terhelésteszt</strong></td><td>Olyan vizsgálat, amely megmutatja, hogyan működik a rendszer sok egyidejű felhasználó mellett.</td></tr>
+<tr><td><strong>Tranzakció</strong> <span class="badge">új</span></td><td>Adatbázis-műveletek olyan sorozata, amely vagy teljes egészében végrehajtódik, vagy egyáltalán nem.</td></tr>
+<tr><td><strong>UML</strong> <span class="badge" style="background:#fef3c7;color:#92400e">módosult</span></td><td>Szabványos jelölésrendszer szoftverrendszerek modellezésére; a projekt use case-, osztály-, szekvencia-, állapot-, aktivitás-, csomag-, komponens- és telepítési diagramjai ezt használják.</td></tr>
+<tr><td><strong>Use case diagram</strong></td><td>UML-ábra, amely az aktorokat, a use case-eket és a kapcsolataikat mutatja.</td></tr>
+<tr><td><strong>Use case (használati eset)</strong></td><td>A rendszer egy olyan szolgáltatása, amely egy aktor számára értékelhető eredményt ad.</td></tr>
+<tr><td><strong>Ügytípus</strong></td><td>Az ügyintézés fajtája (például igazolás kérése), amelyre időpont foglalható.</td></tr>
+<tr><td><strong>Válaszidő</strong></td><td>A felhasználó művelete és a rendszer válaszának megjelenése között eltelt idő.</td></tr>
+<tr><td><strong>Változatszám</strong> <span class="badge">új</span></td><td>A tartalom minden mentéskor növekvő sorszáma, amelyből kiderül, ha közben más is módosította.</td></tr>
+<tr><td><strong>Vezérlőpult</strong></td><td>A projekt munkaneve: egységes webes felület a Miskolci Egyetem információihoz és szolgáltatásaihoz.</td></tr>
+<tr><td><strong>Vízió dokumentum</strong></td><td>A projekt célját és környezetét leíró dokumentum, a RUP módszertan első lépése (H2).</td></tr>
+<tr><td><strong>VPS</strong></td><td>Virtuális szerver, amelyet havi díjért lehet bérelni.</td></tr>
+<tr><td><strong>WCAG</strong></td><td>A webes akadálymentességi irányelvek nemzetközi szabványa.</td></tr>
+<tr><td><strong>Zárolt időpont</strong> <span class="badge">új</span></td><td>Az adminisztrátor által foglalásra letiltott, egyébként szabad időpont (például szabadság miatt).</td></tr>
+</tbody>
+</table></div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="../assets/script.js"></script>
+</body>
+</html>

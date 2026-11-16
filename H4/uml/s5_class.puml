@@ -1,0 +1,119 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam classAttributeIconSize 0
+skinparam ArrowColor #10365C
+skinparam ClassBorderColor #10365C
+skinparam ClassBackgroundColor #F5F8FC
+skinparam ClassHeaderBackgroundColor #E3ECF7
+skinparam PackageBorderColor #10365C
+skinparam PackageBackgroundColor #FBFCFE
+skinparam NoteBackgroundColor #FFF8E1
+skinparam NoteBorderColor #C9A227
+skinparam ActorBorderColor #10365C
+skinparam ParticipantBorderColor #10365C
+skinparam ParticipantBackgroundColor #F5F8FC
+skinparam SequenceLifeLineBorderColor #7A8CA5
+skinparam SequenceGroupBorderColor #7A8CA5
+skinparam SequenceGroupHeaderFontStyle bold
+skinparam BoundaryBorderColor #10365C
+skinparam BoundaryBackgroundColor #F5F8FC
+skinparam EntityBorderColor #10365C
+skinparam EntityBackgroundColor #F5F8FC
+skinparam StateBorderColor #10365C
+skinparam StateBackgroundColor #F5F8FC
+skinparam ActivityBorderColor #10365C
+skinparam ActivityBackgroundColor #F5F8FC
+skinparam ActivityDiamondBorderColor #10365C
+skinparam ActivityDiamondBackgroundColor #FFFFFF
+skinparam ComponentBorderColor #10365C
+skinparam ComponentBackgroundColor #F5F8FC
+skinparam NodeBorderColor #10365C
+skinparam NodeBackgroundColor #FBFCFE
+skinparam DatabaseBorderColor #10365C
+skinparam DatabaseBackgroundColor #F5F8FC
+skinparam RectangleBorderColor #10365C
+skinparam stereotypeCBackgroundColor #E3ECF7
+skinparam stereotypeABackgroundColor #E3ECF7
+skinparam stereotypeEBackgroundColor #FFF3D6
+skinparam class {
+  BackgroundColor<<külső>> #EEEEEE
+  BorderColor<<külső>> #9AA5B1
+  FontColor<<külső>> #4B5563
+}
+title Ügyintézés alrendszer – az analízis modell osztálydiagramja
+hide <<külső>> members
+package "Ügyintézés" <<Rectangle>> {
+class CaseType {
+  id : Integer
+  name : String
+  description : String
+  location : String
+  slotMinutes : Integer
+  active : Boolean
+  --
+  freeSlots(from, to) : Slot[]
+  nearestFreeSlot(after) : Slot
+}
+class SlotRange {
+  caseType : CaseType
+  date : Date
+  startTime : Time
+  endTime : Time
+  repeatUntil : Date
+  createdBy : User
+  --
+  generateSlots() : Slot[]
+  overlaps(other) : Boolean
+}
+class Slot {
+  range : SlotRange
+  startsAt : DateTime
+  endsAt : DateTime
+  status : SlotStatus
+  --
+  book(student) : Booking
+  release()
+  lock(by)
+  unlock(by)
+  delete(by, reason)
+}
+enum SlotStatus {
+  FREE
+  BOOKED
+  LOCKED
+  DELETED
+}
+class Booking {
+  id : Integer
+  student : User
+  slot : Slot
+  status : BookingStatus
+  createdAt : DateTime
+  cancelledAt : DateTime
+  deleteReason : String
+  --
+  {static} hasActiveBooking(student, caseType) : Boolean
+  canCancel(now) : Boolean
+  cancel(now)
+  markDeleted(reason)
+  {static} listFor(student) : Booking[]
+}
+enum BookingStatus {
+  ACTIVE
+  CANCELLED
+  DELETED
+  COMPLETED
+}
+}
+class User <<külső>>
+class Notification <<külső>>
+CaseType "1" *-- "0..*" SlotRange : sávjai
+SlotRange "1" *-- "0..*" Slot : előállítja
+Booking "0..*" --> "1" Slot
+Booking "0..*" --> "1" User : hallgató
+Slot "0..*" --> "1" SlotStatus
+Booking "0..*" --> "1" BookingStatus
+Booking ..> Notification : kivált
+@enduml

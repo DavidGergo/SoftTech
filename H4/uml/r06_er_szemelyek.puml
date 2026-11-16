@@ -1,0 +1,101 @@
+@startchen
+entity KAR {
+  id <<key>>
+  nev
+  rovid_nev
+}
+entity TANSZEK {
+  id <<key>>
+  nev
+}
+entity OKTATOI_ADATLAP {
+  id <<key>>
+  nev
+  email
+  iroda
+  megjegyzes
+}
+entity FOGADOORA <<weak>> {
+  nap <<key>>
+  kezdes <<key>>
+  vege
+}
+entity FELHASZNALO {
+  id <<key>>
+  kulso_azonosito
+  nev
+  email
+  letiltva
+}
+entity SZEREPKOR_HOZZARENDELES {
+  id <<key>>
+  szerepkor
+  adta
+  datum
+}
+entity UGYTIPUS {
+  id <<key>>
+  nev
+  helyszin
+  idopont_hossz
+}
+entity IDOPONTSAV {
+  id <<key>>
+  kezdo_nap
+  kezdes
+  vege
+  ismetlodes_vege
+}
+entity IDOPONT {
+  id <<key>>
+  kezdes
+  vege
+  allapot
+}
+entity FOGLALAS {
+  id <<key>>
+  allapot
+  letrehozva
+  torles_oka
+}
+relationship RESZE {
+}
+relationship DOLGOZIK {
+}
+relationship MEGHIRDET <<identifying>> {
+}
+relationship FIOKJA {
+}
+relationship KAPJA {
+}
+relationship TANSZEKHEZ {
+}
+relationship SAVJAI {
+}
+relationship ELOALLITJA {
+}
+relationship FOGLAL {
+}
+relationship VONATKOZIK {
+}
+KAR -1- RESZE
+RESZE -N- TANSZEK
+TANSZEK -1- DOLGOZIK
+DOLGOZIK -N- OKTATOI_ADATLAP
+OKTATOI_ADATLAP -1- MEGHIRDET
+MEGHIRDET =N= FOGADOORA
+OKTATOI_ADATLAP -1- FIOKJA
+FIOKJA -1- FELHASZNALO
+TANSZEK -1- TANSZEKHEZ
+TANSZEKHEZ -N- SZEREPKOR_HOZZARENDELES
+FELHASZNALO -1- KAPJA
+KAPJA -N- SZEREPKOR_HOZZARENDELES
+FELHASZNALO -1- FOGLAL
+FOGLAL -N- FOGLALAS
+UGYTIPUS -1- SAVJAI
+SAVJAI -N- IDOPONTSAV
+IDOPONTSAV -1- ELOALLITJA
+ELOALLITJA -N- IDOPONT
+IDOPONT -1- VONATKOZIK
+VONATKOZIK -N- FOGLALAS
+@endchen

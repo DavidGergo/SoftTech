@@ -1,0 +1,134 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam classAttributeIconSize 0
+skinparam ArrowColor #10365C
+skinparam ClassBorderColor #10365C
+skinparam ClassBackgroundColor #F5F8FC
+skinparam ClassHeaderBackgroundColor #E3ECF7
+skinparam PackageBorderColor #10365C
+skinparam PackageBackgroundColor #FBFCFE
+skinparam NoteBackgroundColor #FFF8E1
+skinparam NoteBorderColor #C9A227
+skinparam ActorBorderColor #10365C
+skinparam ParticipantBorderColor #10365C
+skinparam ParticipantBackgroundColor #F5F8FC
+skinparam SequenceLifeLineBorderColor #7A8CA5
+skinparam SequenceGroupBorderColor #7A8CA5
+skinparam SequenceGroupHeaderFontStyle bold
+skinparam BoundaryBorderColor #10365C
+skinparam BoundaryBackgroundColor #F5F8FC
+skinparam EntityBorderColor #10365C
+skinparam EntityBackgroundColor #F5F8FC
+skinparam StateBorderColor #10365C
+skinparam StateBackgroundColor #F5F8FC
+skinparam ActivityBorderColor #10365C
+skinparam ActivityBackgroundColor #F5F8FC
+skinparam ActivityDiamondBorderColor #10365C
+skinparam ActivityDiamondBackgroundColor #FFFFFF
+skinparam ComponentBorderColor #10365C
+skinparam ComponentBackgroundColor #F5F8FC
+skinparam NodeBorderColor #10365C
+skinparam NodeBackgroundColor #FBFCFE
+skinparam DatabaseBorderColor #10365C
+skinparam DatabaseBackgroundColor #F5F8FC
+skinparam RectangleBorderColor #10365C
+skinparam stereotypeCBackgroundColor #E3ECF7
+skinparam stereotypeABackgroundColor #E3ECF7
+skinparam stereotypeEBackgroundColor #FFF3D6
+skinparam class {
+  BackgroundColor<<külső>> #EEEEEE
+  BorderColor<<külső>> #9AA5B1
+  FontColor<<külső>> #4B5563
+}
+title Relációs adatmodell – hibabejelentés
+hide circle
+hide empty members
+skinparam linetype ortho
+skinparam nodesep 40
+skinparam ranksep 50
+entity "fault_reports" as fault_reports {
+  * id : INT <<PK>>
+  --
+  * code : VARCHAR(20) <<UQ>>
+  * reporter_id : INT <<FK>>
+  * category_id : INT <<FK>>
+  * building_id : INT <<FK>>
+  location_detail : VARCHAR(200)
+  latitude : DECIMAL(9,6)
+  longitude : DECIMAL(9,6)
+  * description : TEXT
+  * status : ENUM
+  * unit_id : INT <<FK>>
+  * created_at : DATETIME
+  * updated_at : DATETIME
+}
+entity "report_categories" as report_categories {
+  * id : INT <<PK>>
+  --
+  * name : VARCHAR(50) <<UQ>>
+  * default_unit_id : INT <<FK>>
+}
+entity "responsible_units" as responsible_units {
+  * id : INT <<PK>>
+  --
+  * name : VARCHAR(150) <<UQ>>
+  email : VARCHAR(254)
+  department_id : INT <<FK>>
+}
+entity "assignment_rules" as assignment_rules {
+  * id : INT <<PK>>
+  --
+  * category_id : INT <<FK>>
+  * building_id : INT <<FK>>
+  * unit_id : INT <<FK>>
+}
+entity "status_changes" as status_changes {
+  * id : INT <<PK>>
+  --
+  * report_id : INT <<FK>>
+  from_status : ENUM
+  * to_status : ENUM
+  comment : TEXT
+  * changed_by : INT <<FK>>
+  * changed_at : DATETIME
+}
+entity "attachments" as attachments {
+  * id : INT <<PK>>
+  --
+  * report_id : INT <<FK>>
+  * file_name : VARCHAR(200)
+  * mime_type : ENUM
+  * size_bytes : INT
+  * storage_path : VARCHAR(300)
+  * width : SMALLINT
+  * height : SMALLINT
+}
+entity "report_code_counters" as report_code_counters {
+  * year : SMALLINT <<PK>>
+  --
+  * last_number : INT
+}
+entity "users" as users #EEEEEE {
+  * id <<PK>>
+}
+entity "places" as places #EEEEEE {
+  * id <<PK>>
+}
+entity "departments" as departments #EEEEEE {
+  * id <<PK>>
+}
+users ||--o{ fault_reports
+report_categories ||--o{ fault_reports
+places ||--o{ fault_reports
+responsible_units ||--o{ fault_reports
+responsible_units ||--o{ report_categories
+departments |o--o{ responsible_units
+report_categories ||--o{ assignment_rules
+places ||--o{ assignment_rules
+responsible_units ||--o{ assignment_rules
+fault_reports ||--o{ status_changes
+users ||--o{ status_changes
+fault_reports ||--o| attachments
+@enduml
