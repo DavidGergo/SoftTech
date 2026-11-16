@@ -12,6 +12,15 @@ class MenuController {
     initEvents() {
         // Eseményfigyelő hozzáadása (arrow function a 'this' kontextus megtartása miatt)
         this.menuBtn.addEventListener('click', () => this.toggleMenu());
+
+        // Mobilon az oldalon belüli hivatkozásra (például a H4 gyorsmenüjére) kattintva a menü bezárul
+        this.sidebar.addEventListener('click', (event) => {
+            const isInPageLink = event.target.closest('a[href^="#"]');
+            const isOpenOnMobile = this.sidebar.classList.contains('absolute');
+            if (isInPageLink && isOpenOnMobile) {
+                this.toggleMenu();
+            }
+        });
     }
 
     toggleMenu() {
